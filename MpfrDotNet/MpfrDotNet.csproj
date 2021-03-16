@@ -5,6 +5,16 @@
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
+    <Version>1.0.0</Version>
+    <Authors>David Le Bansais</Authors>
+    <Company />
+    <Product />
+    <Description>Binding of MPFR (Multiple Precision Floating-Point) for .NET</Description>
+    <Copyright>Copyright © 2021 David Le Bansais</Copyright>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <RepositoryUrl>https://github.com/dlebansais/MpfrDotNet</RepositoryUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
