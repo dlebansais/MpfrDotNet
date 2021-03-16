@@ -1,4 +1,4 @@
-﻿namespace MpfrDotNet.mpfr
+﻿namespace MpfrDotNet
 {
     public static partial class mpfr
     {

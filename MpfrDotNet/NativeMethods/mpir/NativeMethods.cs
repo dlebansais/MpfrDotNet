@@ -12,7 +12,8 @@
             {
                 Assembly Current = Assembly.GetExecutingAssembly();
                 string Location = Current.Location;
-                string LibraryLocation = Path.Combine(Path.GetDirectoryName(Location), "mpir.dll");
+                string DirectoryName = Path.GetDirectoryName(Location)!;
+                string LibraryLocation = Path.Combine(DirectoryName, "mpir.dll");
                 hMpirLib = LoadLibrary(LibraryLocation);
 
                 if (hMpirLib == IntPtr.Zero)

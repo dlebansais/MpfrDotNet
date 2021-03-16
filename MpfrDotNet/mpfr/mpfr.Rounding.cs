@@ -1,4 +1,4 @@
-﻿namespace MpfrDotNet.mpfr
+﻿namespace MpfrDotNet
 {
     using System;
     using System.Runtime.InteropServices;
@@ -118,7 +118,7 @@
         public static string print_rnd_mode(mpfr_rnd_t rnd)
         {
             IntPtr Str = NativeMethods.mpfr_print_rnd_mode(rnd);
-            string Result = Marshal.PtrToStringAnsi(Str);
+            string Result = Marshal.PtrToStringAnsi(Str)!;
 
             return Result;
         }

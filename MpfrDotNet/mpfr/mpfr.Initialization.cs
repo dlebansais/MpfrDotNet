@@ -1,4 +1,4 @@
-﻿namespace MpfrDotNet.mpfr
+﻿namespace MpfrDotNet
 {
     using System;
 
@@ -46,7 +46,7 @@
 
         public static ulong PrecisionMin { get { return NativeMethods.PrecisionMin; } }
         public static ulong PrecisionMax { get { return NativeMethods.PrecisionMax; } }
-        public static ulong tPrecisionDefaul { get { return NativeMethods.PrecisionDefault; } }
+        public static ulong PrecisionDefault { get { return NativeMethods.PrecisionDefault; } }
 
         public static void set_prec(mpfr_t x, ulong prec)
         {

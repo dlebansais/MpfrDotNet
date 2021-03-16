@@ -1,7 +1,7 @@
 namespace Test
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using MpfrDotNet.mpfr;
+    using MpfrDotNet;
     using MpirDotNet;
 
     [TestClass]

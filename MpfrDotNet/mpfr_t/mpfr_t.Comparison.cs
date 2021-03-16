@@ -1,4 +1,4 @@
-﻿namespace MpfrDotNet.mpfr
+﻿namespace MpfrDotNet
 {
     using MpirDotNet;
     using System;
@@ -48,7 +48,7 @@
         public bool IsRegular { get { return mpfr_regular_p(ref Value) != 0; } }
         public int Sign { get { return mpfr_sgn(ref Value); } }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is mpfr_t other)
                 return mpfr_equal_p(ref Value, ref other.Value) == 0;

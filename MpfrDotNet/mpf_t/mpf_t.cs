@@ -671,7 +671,7 @@
             return x.CompareTo(y) != 0;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is mpf_t other)
                 return CompareTo(other) != 0;
@@ -726,9 +726,12 @@
         #endregion
 
         #region Comparison
-        public int CompareTo(mpf_t other)
+        public int CompareTo(mpf_t? other)
         {
-            return mpf_cmp(ref Value, ref other.Value);
+            if (ReferenceEquals(other, null))
+                throw new ArgumentNullException(nameof(other));
+            else
+                return mpf_cmp(ref Value, ref other.Value);
         }
 
         public int CompareTo(int other)
@@ -829,12 +832,15 @@
         #endregion
 
         #region Implementation of IEquatable<mpf_t>
-        public bool Equals(mpf_t other)
+        public bool Equals(mpf_t? other)
         {
-            return mpf_cmp(ref Value, ref other.Value) == 0;
+            if (ReferenceEquals(other, null))
+                throw new ArgumentNullException(nameof(other));
+            else
+                return mpf_cmp(ref Value, ref other.Value) == 0;
         }
 
-        bool IEquatable<mpf_t>.Equals(mpf_t other)
+        bool IEquatable<mpf_t>.Equals(mpf_t? other)
         {
             return this.Equals(other);
         }
@@ -858,127 +864,127 @@
             return TypeCode.Object;
         }
 
-        public bool ToBoolean(IFormatProvider provider)
+        public bool ToBoolean(IFormatProvider? provider)
         {
             throw new InvalidCastException();
         }
 
-        bool IConvertible.ToBoolean(IFormatProvider provider)
+        bool IConvertible.ToBoolean(IFormatProvider? provider)
         {
             return this.ToBoolean(provider);
         }
 
-        public byte ToByte(IFormatProvider provider)
+        public byte ToByte(IFormatProvider? provider)
         {
             return (byte)(int)this;
         }
 
-        byte IConvertible.ToByte(IFormatProvider provider)
+        byte IConvertible.ToByte(IFormatProvider? provider)
         {
             return this.ToByte(provider);
         }
 
-        public char ToChar(IFormatProvider provider)
+        public char ToChar(IFormatProvider? provider)
         {
             throw new InvalidCastException();
         }
 
-        char IConvertible.ToChar(IFormatProvider provider)
+        char IConvertible.ToChar(IFormatProvider? provider)
         {
             return this.ToChar(provider);
         }
 
-        public DateTime ToDateTime(IFormatProvider provider)
+        public DateTime ToDateTime(IFormatProvider? provider)
         {
             throw new InvalidCastException();
         }
 
-        DateTime IConvertible.ToDateTime(IFormatProvider provider)
+        DateTime IConvertible.ToDateTime(IFormatProvider? provider)
         {
             return this.ToDateTime(provider);
         }
 
-        public decimal ToDecimal(IFormatProvider provider)
+        public decimal ToDecimal(IFormatProvider? provider)
         {
             throw new InvalidCastException();
         }
 
-        decimal IConvertible.ToDecimal(IFormatProvider provider)
+        decimal IConvertible.ToDecimal(IFormatProvider? provider)
         {
             return this.ToDecimal(provider);
         }
 
-        public double ToDouble(IFormatProvider provider)
+        public double ToDouble(IFormatProvider? provider)
         {
             return (double)this;
         }
 
-        double IConvertible.ToDouble(IFormatProvider provider)
+        double IConvertible.ToDouble(IFormatProvider? provider)
         {
             return this.ToDouble(provider);
         }
 
-        public short ToInt16(IFormatProvider provider)
+        public short ToInt16(IFormatProvider? provider)
         {
             return (short)(int)this;
         }
 
-        short IConvertible.ToInt16(IFormatProvider provider)
+        short IConvertible.ToInt16(IFormatProvider? provider)
         {
             return this.ToInt16(provider);
         }
 
-        public int ToInt32(IFormatProvider provider)
+        public int ToInt32(IFormatProvider? provider)
         {
             return (int)this;
         }
 
-        int IConvertible.ToInt32(IFormatProvider provider)
+        int IConvertible.ToInt32(IFormatProvider? provider)
         {
             return this.ToInt32(provider);
         }
 
-        public long ToInt64(IFormatProvider provider)
+        public long ToInt64(IFormatProvider? provider)
         {
             return (long)this;
         }
 
-        long IConvertible.ToInt64(IFormatProvider provider)
+        long IConvertible.ToInt64(IFormatProvider? provider)
         {
             return this.ToInt64(provider);
         }
 
-        public sbyte ToSByte(IFormatProvider provider)
+        public sbyte ToSByte(IFormatProvider? provider)
         {
             return (sbyte)this;
         }
 
-        sbyte IConvertible.ToSByte(IFormatProvider provider)
+        sbyte IConvertible.ToSByte(IFormatProvider? provider)
         {
             return this.ToSByte(provider);
         }
 
-        public float ToSingle(IFormatProvider provider)
+        public float ToSingle(IFormatProvider? provider)
         {
             return (float)this;
         }
 
-        float IConvertible.ToSingle(IFormatProvider provider)
+        float IConvertible.ToSingle(IFormatProvider? provider)
         {
             return this.ToSingle(provider);
         }
 
-        public string ToString(IFormatProvider provider)
+        public string ToString(IFormatProvider? provider)
         {
             return this.ToString();
         }
 
-        string IConvertible.ToString(IFormatProvider provider)
+        string IConvertible.ToString(IFormatProvider? provider)
         {
             return this.ToString(provider);
         }
 
-        public object ToType(Type targetType, IFormatProvider provider)
+        public object ToType(Type targetType, IFormatProvider? provider)
         {
             if (targetType == typeof(mpf_t))
                 return this;
@@ -1015,44 +1021,44 @@
                 throw new InvalidCastException();
         }
 
-        object IConvertible.ToType(Type targetType, IFormatProvider provider)
+        object IConvertible.ToType(Type targetType, IFormatProvider? provider)
         {
             return this.ToType(targetType, provider);
         }
 
-        public ushort ToUInt16(IFormatProvider provider)
+        public ushort ToUInt16(IFormatProvider? provider)
         {
             return this.ToUInt16(provider);
         }
 
-        ushort IConvertible.ToUInt16(IFormatProvider provider)
+        ushort IConvertible.ToUInt16(IFormatProvider? provider)
         {
             return (ushort)(uint)this;
         }
 
-        public uint ToUInt32(IFormatProvider provider)
+        public uint ToUInt32(IFormatProvider? provider)
         {
             return (uint)this;
         }
 
-        uint IConvertible.ToUInt32(IFormatProvider provider)
+        uint IConvertible.ToUInt32(IFormatProvider? provider)
         {
             return this.ToUInt32(provider);
         }
 
-        public ulong ToUInt64(IFormatProvider provider)
+        public ulong ToUInt64(IFormatProvider? provider)
         {
             return (ulong)this;
         }
 
-        ulong IConvertible.ToUInt64(IFormatProvider provider)
+        ulong IConvertible.ToUInt64(IFormatProvider? provider)
         {
             return this.ToUInt64(provider);
         }
         #endregion
 
         #region Implementation of IComparable
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
             if (obj is mpf_t other)
                 return CompareTo(other);
@@ -1060,7 +1066,7 @@
                 throw new ArgumentException();
         }
 
-        int IComparable.CompareTo(object obj)
+        int IComparable.CompareTo(object? obj)
         {
             return this.CompareTo(obj);
         }

@@ -1,4 +1,4 @@
-﻿namespace MpfrDotNet.mpfr
+﻿namespace MpfrDotNet
 {
     using MpirDotNet;
     using System;
@@ -84,7 +84,7 @@
         public static string get_version()
         {
             IntPtr Str = NativeMethods.mpfr_get_version();
-            string Result = Marshal.PtrToStringAnsi(Str);
+            string Result = Marshal.PtrToStringAnsi(Str)!;
 
             return Result;
         }
@@ -92,7 +92,7 @@
         public static string get_patches()
         {
             IntPtr Str = NativeMethods.mpfr_get_patches();
-            string Result = Marshal.PtrToStringAnsi(Str);
+            string Result = Marshal.PtrToStringAnsi(Str)!;
 
             return Result;
         }
@@ -125,7 +125,7 @@
         public static string buildopt_tune_case()
         {
             IntPtr Str = NativeMethods.mpfr_buildopt_tune_case();
-            string Result = Marshal.PtrToStringAnsi(Str);
+            string Result = Marshal.PtrToStringAnsi(Str)!;
 
             return Result;
         }

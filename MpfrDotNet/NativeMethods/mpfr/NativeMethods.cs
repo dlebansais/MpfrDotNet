@@ -1,4 +1,4 @@
-﻿namespace MpfrDotNet.mpfr
+﻿namespace MpfrDotNet
 {
     using System;
     using System.IO;
@@ -19,7 +19,8 @@
             {
                 Assembly Current = Assembly.GetExecutingAssembly();
                 string Location = Current.Location;
-                string LibraryLocation = Path.Combine(Path.GetDirectoryName(Location), "mpfr.dll");
+                string DirectoryName = Path.GetDirectoryName(Location)!;
+                string LibraryLocation = Path.Combine(DirectoryName, "mpfr.dll");
                 hMpfrLib = LoadLibrary(LibraryLocation);
 
                 if (hMpfrLib == IntPtr.Zero)
