@@ -1,0 +1,862 @@
+﻿namespace MpirDotNet
+{
+    using System.IO;
+    using System.Text;
+
+    public static class mpz
+    {
+        #region Initialization Functions
+        public static void init(mpz_t integer)
+        {
+            NativeMethods.mpz_init(ref integer.Value);
+        }
+
+        public static void inits(params mpz_t[] integers)
+        {
+            //TODO
+            throw new System.NotImplementedException();
+        }
+
+        public static void init2(mpz_t integer, ulong n)
+        {
+            NativeMethods.mpz_init2(ref integer.Value, n);
+        }
+
+        public static void clear(mpz_t integer)
+        {
+            NativeMethods.mpz_clear(ref integer.Value);
+        }
+
+        public static void clears(params mpz_t[] x)
+        {
+            //TODO
+            throw new System.NotImplementedException();
+        }
+
+        public static void realloc2(mpz_t integer, ulong n)
+        {
+            NativeMethods.mpz_realloc2(ref integer.Value, n);
+        }
+        #endregion
+
+        #region Assignment Functions
+        public static void set(mpz_t rop, mpz_t op)
+        {
+            NativeMethods.mpz_set(ref rop.Value, ref op.Value);
+        }
+
+        public static void set_ui(mpz_t rop, uint op)
+        {
+            NativeMethods.mpz_set_ui(ref rop.Value, op);
+        }
+
+        public static void set_si(mpz_t rop, int op)
+        {
+            NativeMethods.mpz_set_si(ref rop.Value, op);
+        }
+
+        public static void set_ux(mpz_t rop, ulong op)
+        {
+            NativeMethods.mpz_set_ux(ref rop.Value, op);
+        }
+
+        public static void set_sx(mpz_t rop, long op)
+        {
+            NativeMethods.mpz_set_sx(ref rop.Value, op);
+        }
+
+        public static void set_d(mpz_t rop, double op)
+        {
+            NativeMethods.mpz_set_d(ref rop.Value, op);
+        }
+
+        public static void set_q(mpz_t rop, mpq_t op)
+        {
+            NativeMethods.mpz_set_q(ref rop.Value, ref op.Value);
+        }
+
+        public static void set_f(mpz_t rop, mpf_t op)
+        {
+            NativeMethods.mpz_set_f(ref rop.Value, ref op.Value);
+        }
+
+        public static int set_str(mpz_t rop, string str, uint strbase)
+        {
+            return NativeMethods.mpz_set_str(ref rop.Value, str, strbase);
+        }
+
+        public static void swap(mpz_t rop1, mpz_t rop2)
+        {
+            NativeMethods.mpz_swap(ref rop1.Value, ref rop2.Value);
+        }
+        #endregion
+
+        #region Combined Initialization and Assignment Functions
+        public static void init_set(mpz_t rop, mpz_t op)
+        {
+            NativeMethods.mpz_init_set(ref rop.Value, ref op.Value);
+        }
+
+        public static void init_set_ui(mpz_t rop, uint op)
+        {
+            NativeMethods.mpz_init_set_ui(ref rop.Value, op);
+        }
+
+        public static void init_set_si(mpz_t rop, int op)
+        {
+            NativeMethods.mpz_init_set_si(ref rop.Value, op);
+        }
+
+        public static void init_set_ux(mpz_t rop, ulong op)
+        {
+            NativeMethods.mpz_init_set_ux(ref rop.Value, op);
+        }
+
+        public static void init_set_sx(mpz_t rop, long op)
+        {
+            NativeMethods.mpz_init_set_sx(ref rop.Value, op);
+        }
+
+        public static void init_set_d(mpz_t rop, double op)
+        {
+            NativeMethods.mpz_init_set_d(ref rop.Value, op);
+        }
+        #endregion
+
+        #region Conversion Functions
+        public static uint get_ui(mpz_t op)
+        {
+            return NativeMethods.mpz_get_ui(ref op.Value);
+        }
+
+        public static int get_si(mpz_t op)
+        {
+            return NativeMethods.mpz_get_si(ref op.Value);
+        }
+
+        public static ulong get_ux(mpz_t op)
+        {
+            return NativeMethods.mpz_get_ux(ref op.Value);
+        }
+
+        public static long get_sx(mpz_t op)
+        {
+            return NativeMethods.mpz_get_sx(ref op.Value);
+        }
+
+        public static double get_d(mpz_t op)
+        {
+            return NativeMethods.mpz_get_d(ref op.Value);
+        }
+
+        public static double get_d_2exp(out int exp, mpz_t op)
+        {
+            return NativeMethods.mpz_get_d_2exp(out exp, ref op.Value);
+        }
+
+        public static void get_str(StringBuilder str, int _base, mpz_t op)
+        {
+            NativeMethods.mpz_get_str(str, _base, ref op.Value);
+        }
+        #endregion
+
+        #region Arithmetic Functions
+        public static void add(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_add(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void add_ui(mpz_t rop, mpz_t op1, uint op2)
+        {
+            NativeMethods.mpz_add_ui(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static void sub(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_sub(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void sub_ui(mpz_t rop, mpz_t op1, uint op2)
+        {
+            NativeMethods.mpz_sub_ui(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static void ui_sub(mpz_t rop, uint op1, mpz_t op2)
+        {
+            NativeMethods.mpz_ui_sub(ref rop.Value, op1, ref op2.Value);
+        }
+
+        public static void mul(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_mul(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void mul_si(mpz_t rop, mpz_t op1, int op2)
+        {
+            NativeMethods.mpz_mul_si(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static void mul_ui(mpz_t rop, mpz_t op1, uint op2)
+        {
+            NativeMethods.mpz_mul_ui(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static void addmul(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_addmul(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void addmul_ui(mpz_t rop, mpz_t op1, uint op2)
+        {
+            NativeMethods.mpz_addmul_ui(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static void submul(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_submul(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void submul_ui(mpz_t rop, mpz_t op1, uint op2)
+        {
+            NativeMethods.mpz_submul_ui(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static void mul_2exp(mpz_t rop, mpz_t op1, ulong op2)
+        {
+            NativeMethods.mpz_mul_2exp(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static void neg(mpz_t rop, mpz_t op)
+        {
+            NativeMethods.mpz_neg(ref rop.Value, ref op.Value);
+        }
+
+        public static void abs(mpz_t rop, mpz_t op)
+        {
+            NativeMethods.mpz_abs(ref rop.Value, ref op.Value);
+        }
+        #endregion
+
+        #region Division Functions
+        public static void cdiv_q(mpz_t q, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_cdiv_q(ref q.Value, ref n.Value, ref d.Value);
+        }
+
+        public static void cdiv_r(mpz_t r, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_cdiv_r(ref r.Value, ref n.Value, ref d.Value);
+        }
+
+        public static void cdiv_qr(mpz_t q, mpz_t r, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_cdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
+        }
+
+        public static uint cdiv_q_ui(mpz_t q, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_cdiv_q_ui(ref q.Value, ref n.Value, d);
+        }
+
+        public static uint cdiv_r_ui(mpz_t r, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_cdiv_r_ui(ref r.Value, ref n.Value, d);
+        }
+
+        public static uint cdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_cdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, d);
+        }
+
+        public static uint cdiv_ui(mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_cdiv_ui(ref n.Value, d);
+        }
+
+        public static void cdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
+        {
+            NativeMethods.mpz_cdiv_q_2exp(ref q.Value, ref n.Value, b);
+        }
+
+        public static void cdiv_r_2exp(mpz_t r, mpz_t n, ulong b)
+        {
+            NativeMethods.mpz_cdiv_r_2exp(ref r.Value, ref n.Value, b);
+        }
+
+        public static void fdiv_q(mpz_t q, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_fdiv_q(ref q.Value, ref n.Value, ref d.Value);
+        }
+
+        public static void fdiv_r(mpz_t r, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_fdiv_r(ref r.Value, ref n.Value, ref d.Value);
+        }
+
+        public static void fdiv_qr(mpz_t q, mpz_t r, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_fdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
+        }
+
+        public static uint fdiv_q_ui(mpz_t q, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_fdiv_q_ui(ref q.Value, ref n.Value, d);
+        }
+
+        public static uint fdiv_r_ui(mpz_t r, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_fdiv_r_ui(ref r.Value, ref n.Value, d);
+        }
+
+        public static uint fdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_fdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, d);
+        }
+
+        public static uint fdiv_ui(mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_fdiv_ui(ref n.Value, d);
+        }
+
+        public static void fdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
+        {
+            NativeMethods.mpz_fdiv_q_2exp(ref q.Value, ref n.Value, b);
+        }
+
+        public static void fdiv_r_2exp(mpz_t r, mpz_t n, ulong b)
+        {
+            NativeMethods.mpz_fdiv_r_2exp(ref r.Value, ref n.Value, b);
+        }
+
+        public static void tdiv_q(mpz_t q, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_tdiv_q(ref q.Value, ref n.Value, ref d.Value);
+        }
+
+        public static void tdiv_r(mpz_t r, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_tdiv_r(ref r.Value, ref n.Value, ref d.Value);
+        }
+
+        public static void tdiv_qr(mpz_t q, mpz_t r, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_tdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
+        }
+
+        public static uint tdiv_q_ui(mpz_t q, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_tdiv_q_ui(ref q.Value, ref n.Value, d);
+        }
+
+        public static uint tdiv_r_ui(mpz_t r, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_tdiv_r_ui(ref r.Value, ref n.Value, d);
+        }
+
+        public static uint tdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_tdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, d);
+        }
+
+        public static uint tdiv_ui(mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_tdiv_ui(ref n.Value, d);
+        }
+
+        public static void tdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
+        {
+            NativeMethods.mpz_tdiv_q_2exp(ref q.Value, ref n.Value, b);
+        }
+
+        public static void tdiv_r_2exp(mpz_t r, mpz_t n, ulong b)
+        {
+            NativeMethods.mpz_tdiv_r_2exp(ref r.Value, ref n.Value, b);
+        }
+
+        public static void mod(mpz_t r, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_mod(ref r.Value, ref n.Value, ref d.Value);
+        }
+
+        public static uint mod_ui(mpz_t r, mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_fdiv_r_ui(ref r.Value, ref n.Value, d);
+        }
+
+        public static void divexact(mpz_t q, mpz_t n, mpz_t d)
+        {
+            NativeMethods.mpz_divexact(ref q.Value, ref n.Value, ref d.Value);
+        }
+
+        public static void divexact_ui(mpz_t q, mpz_t n, uint d)
+        {
+            NativeMethods.mpz_divexact_ui(ref q.Value, ref n.Value, d);
+        }
+
+        public static bool divisible_p(mpz_t n, mpz_t d)
+        {
+            return NativeMethods.mpz_divisible_p(ref n.Value, ref d.Value) != 0;
+        }
+
+        public static bool divisible_ui_p(mpz_t n, uint d)
+        {
+            return NativeMethods.mpz_divisible_ui_p(ref n.Value, d) != 0;
+        }
+
+        public static bool divisible_2exp_p(mpz_t n, ulong b)
+        {
+            return NativeMethods.mpz_divisible_2exp_p(ref n.Value, b) != 0;
+        }
+
+        public static bool congruent_p(mpz_t n, mpz_t c, mpz_t d)
+        {
+            return NativeMethods.mpz_congruent_p(ref n.Value, ref c.Value, ref d.Value) != 0;
+        }
+
+        public static bool congruent_ui_p(mpz_t n, uint c, uint d)
+        {
+            return NativeMethods.mpz_congruent_ui_p(ref n.Value, c, d) != 0;
+        }
+
+        public static bool congruent_2exp_p(mpz_t n, mpz_t c, ulong b)
+        {
+            return NativeMethods.mpz_congruent_2exp_p(ref n.Value, ref c.Value, b) != 0;
+        }
+        #endregion
+
+        #region Exponentiation Functions
+        public static void powm(mpz_t rop, mpz_t _base, mpz_t exp, mpz_t mod)
+        {
+            NativeMethods.mpz_powm(ref rop.Value, ref _base.Value, ref exp.Value, ref mod.Value);
+        }
+
+        public static void powm_ui(mpz_t rop, mpz_t _base, uint exp, mpz_t mod)
+        {
+            NativeMethods.mpz_powm_ui(ref rop.Value, ref _base.Value, exp, ref mod.Value);
+        }
+
+        public static void pow_ui(mpz_t rop, mpz_t _base, uint exp)
+        {
+            NativeMethods.mpz_pow_ui(ref rop.Value, ref _base.Value, exp);
+        }
+
+        public static void ui_pow_ui(mpz_t rop, uint _base, uint exp)
+        {
+            NativeMethods.mpz_ui_pow_ui(ref rop.Value, _base, exp);
+        }
+        #endregion
+
+        #region Root Extraction Functions
+        public static bool root(mpz_t rop, mpz_t op, uint n)
+        {
+            return NativeMethods.mpz_root(ref rop.Value, ref op.Value, n) != 0;
+        }
+
+        public static void nthroot(mpz_t rop, mpz_t op, uint n)
+        {
+            NativeMethods.mpz_nthroot(ref rop.Value, ref op.Value, n);
+        }
+
+        public static void rootrem(mpz_t root, mpz_t rem, mpz_t u, uint n)
+        {
+            NativeMethods.mpz_rootrem(ref root.Value, ref rem.Value, ref u.Value, n);
+        }
+
+        public static void sqrt(mpz_t rop, mpz_t op)
+        {
+            NativeMethods.mpz_sqrt(ref rop.Value, ref op.Value);
+        }
+
+        public static void sqrtrem(mpz_t rop1, mpz_t rop2, mpz_t op)
+        {
+            NativeMethods.mpz_sqrtrem(ref rop1.Value, ref rop2.Value, ref op.Value);
+        }
+
+        public static bool perfect_power_p(mpz_t op)
+        {
+            return NativeMethods.mpz_perfect_power_p(ref op.Value) != 0;
+        }
+
+        public static bool perfect_square_p(mpz_t op)
+        {
+            return NativeMethods.mpz_perfect_square_p(ref op.Value) != 0;
+        }
+        #endregion
+
+        #region Number Theoretic Functions
+        public static bool probable_prime_p(mpz_t n, randstate_t state, int prob, uint div)
+        {
+            return NativeMethods.mpz_probable_prime_p(ref n.Value, ref state.Value, prob, div) != 0;
+        }
+
+        public static bool likely_prime_p(mpz_t n, randstate_t state, uint div)
+        {
+            return NativeMethods.mpz_likely_prime_p(ref n.Value, ref state.Value, div) != 0;
+        }
+
+        public static void next_prime_candidate(mpz_t rop, mpz_t op, randstate_t state)
+        {
+            NativeMethods.mpz_next_prime_candidate(ref rop.Value, ref op.Value, ref state.Value);
+        }
+
+        public static void gcd(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_gcd(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static uint gcd_ui(mpz_t rop, mpz_t op1, uint op2)
+        {
+            return NativeMethods.mpz_gcd_ui(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static void gcdext(mpz_t g, mpz_t s, mpz_t t, mpz_t a, mpz_t b)
+        {
+            NativeMethods.mpz_gcdext(ref g.Value, ref s.Value, ref t.Value, ref a.Value, ref b.Value);
+        }
+
+        public static void lcm(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_lcm(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void lcm_ui(mpz_t rop, mpz_t op1, uint op2)
+        {
+            NativeMethods.mpz_lcm_ui(ref rop.Value, ref op1.Value, op2);
+        }
+
+        public static bool invert(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            return NativeMethods.mpz_invert(ref rop.Value, ref op1.Value, ref op2.Value) != 0;
+        }
+
+        public static int jacobi(mpz_t a, mpz_t b)
+        {
+            return NativeMethods.mpz_jacobi(ref a.Value, ref b.Value);
+        }
+
+        public static int legendre(mpz_t a, mpz_t b)
+        {
+            return NativeMethods.mpz_jacobi(ref a.Value, ref b.Value);
+        }
+
+        public static int kronecker(mpz_t a, mpz_t b)
+        {
+            return NativeMethods.mpz_jacobi(ref a.Value, ref b.Value);
+        }
+
+        public static int kronecker_si(mpz_t a, int b)
+        {
+            return NativeMethods.mpz_kronecker_si(ref a.Value, b);
+        }
+
+        public static int kronecker_ui(mpz_t a, uint b)
+        {
+            return NativeMethods.mpz_kronecker_ui(ref a.Value, b);
+        }
+
+        public static int si_kronecker(int a, mpz_t b)
+        {
+            return NativeMethods.mpz_si_kronecker(a, ref b.Value);
+        }
+
+        public static int ui_kronecker(uint a, mpz_t b)
+        {
+            return NativeMethods.mpz_ui_kronecker(a, ref b.Value);
+        }
+
+        public static ulong remove(mpz_t rop, mpz_t op, mpz_t f)
+        {
+            return NativeMethods.mpz_remove(ref rop.Value, ref op.Value, ref f.Value);
+        }
+
+        public static void fac_ui(mpz_t rop, ulong n)
+        {
+            NativeMethods.mpz_fac_ui(ref rop.Value, n);
+        }
+
+        public static void fac_ui2(mpz_t rop, ulong n)
+        {
+            NativeMethods.mpz_2fac_ui(ref rop.Value, n);
+        }
+
+        public static void mfac_uiui(mpz_t rop, ulong n, ulong m)
+        {
+            NativeMethods.mpz_mfac_uiui(ref rop.Value, n, m);
+        }
+
+        public static void primorial_ui(mpz_t rop, ulong n)
+        {
+            NativeMethods.mpz_primorial_ui(ref rop.Value, n);
+        }
+
+        public static void bin_ui(mpz_t rop, mpz_t n, uint k)
+        {
+            NativeMethods.mpz_bin_ui(ref rop.Value, ref n.Value, k);
+        }
+
+        public static void bin_uiui(mpz_t rop, uint n, uint k)
+        {
+            NativeMethods.mpz_bin_uiui(ref rop.Value, n, k);
+        }
+
+        public static void fib_ui(mpz_t fn, uint n)
+        {
+            NativeMethods.mpz_fib_ui(ref fn.Value, n);
+        }
+
+        public static void fib2_ui(mpz_t fn, mpz_t fnsub1, uint n)
+        {
+            NativeMethods.mpz_fib2_ui(ref fn.Value, ref fnsub1.Value, n);
+        }
+
+        public static void lucnum_ui(mpz_t ln, uint n)
+        {
+            NativeMethods.mpz_lucnum_ui(ref ln.Value, n);
+        }
+
+        public static void lucnum2_ui(mpz_t ln, mpz_t lnsub1, uint n)
+        {
+            NativeMethods.mpz_lucnum2_ui(ref ln.Value, ref lnsub1.Value, n);
+        }
+        #endregion
+
+        #region Comparison Functions
+        public static int cmp(mpz_t op1, mpz_t op2)
+        {
+            return NativeMethods.mpz_cmp(ref op1.Value, ref op2.Value);
+        }
+
+        public static int cmp_d(mpz_t op1, double op2)
+        {
+            return NativeMethods.mpz_cmp_d(ref op1.Value, op2);
+        }
+
+        public static int cmp_si(mpz_t op1, int op2)
+        {
+            return NativeMethods.mpz_cmp_si(ref op1.Value, op2);
+        }
+
+        public static int cmp_ui(mpz_t op1, uint op2)
+        {
+            return NativeMethods.mpz_cmp_ui(ref op1.Value, op2);
+        }
+
+        public static int cmpabs(mpz_t op1, mpz_t op2)
+        {
+            return NativeMethods.mpz_cmpabs(ref op1.Value, ref op2.Value);
+        }
+
+        public static int cmpabs_d(mpz_t op1, double op2)
+        {
+            return NativeMethods.mpz_cmpabs_d(ref op1.Value, op2);
+        }
+
+        public static int cmpabs_ui(mpz_t op1, uint op2)
+        {
+            return NativeMethods.mpz_cmpabs_ui(ref op1.Value, op2);
+        }
+
+        public static int sgn(mpz_t op)
+        {
+            return NativeMethods.mpz_sgn(ref op.Value);
+        }
+        #endregion
+
+        #region Logical and Bit Manipulation Functions
+        public static void and(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_and(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void ior(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_ior(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void xor(mpz_t rop, mpz_t op1, mpz_t op2)
+        {
+            NativeMethods.mpz_xor(ref rop.Value, ref op1.Value, ref op2.Value);
+        }
+
+        public static void com(mpz_t rop, mpz_t op)
+        {
+            NativeMethods.mpz_com(ref rop.Value, ref op.Value);
+        }
+
+        public static ulong popcount(mpz_t op)
+        {
+            return NativeMethods.mpz_popcount(ref op.Value);
+        }
+
+        public static ulong hamdist(mpz_t op1, mpz_t op2)
+        {
+            return NativeMethods.mpz_hamdist(ref op1.Value, ref op2.Value);
+        }
+
+        public static ulong scan0(mpz_t op, ulong startingBit)
+        {
+            return NativeMethods.mpz_scan0(ref op.Value, startingBit);
+        }
+
+        public static ulong scan1(mpz_t op, ulong startingBit)
+        {
+            return NativeMethods.mpz_scan1(ref op.Value, startingBit);
+        }
+
+        public static void setbit(mpz_t rop, ulong bitIndex)
+        {
+            NativeMethods.mpz_setbit(ref rop.Value, bitIndex);
+        }
+
+        public static void clrbit(mpz_t rop, ulong bitIndex)
+        {
+            NativeMethods.mpz_clrbit(ref rop.Value, bitIndex);
+        }
+
+        public static void combit(mpz_t rop, ulong bitIndex)
+        {
+            NativeMethods.mpz_combit(ref rop.Value, bitIndex);
+        }
+
+        public static bool tstbit(mpz_t op, ulong bitIndex)
+        {
+            return NativeMethods.mpz_tstbit(ref op.Value, bitIndex) != 0;
+        }
+        #endregion
+
+        #region  Input and Output Functions
+        public static long out_str(StreamWriter writer, int _base, mpz_t op)
+        {
+            long SizeInDigits = NativeMethods.mpz_sizeinbase(ref op.Value, (uint)(_base > 0 ? _base : -_base));
+            SizeInDigits += 2;
+
+            if (SizeInDigits > int.MaxValue)
+                return 0;
+
+            StringBuilder Data = new StringBuilder((int)SizeInDigits);
+            NativeMethods.mpz_get_str(Data, _base, ref op.Value);
+
+            string Content = Data.ToString();
+            writer.Write(Content);
+
+            return Content.Length;
+        }
+
+        public static long inp_str(mpz_t rop, StreamReader reader, int _base)
+        {
+            string Content = reader.ReadToEnd();
+
+            NativeMethods.mpz_init_set_str(ref rop.Value, Content, (uint)_base);
+
+            return Content.Length;
+        }
+
+        public static long out_raw(BinaryWriter writer, mpz_t op)
+        {
+            long SizeInBits = NativeMethods.mpz_sizeinbase(ref op.Value, 2);
+            byte[] Content = new byte[(SizeInBits + 7) / 8];
+
+            NativeMethods.mpz_export(Content, out long countp, 0, sizeof(byte), 0, 0, ref op.Value);
+
+            writer.Write(Content);
+
+            return Content.Length;
+        }
+
+        public static long inp_raw(mpz_t rop, BinaryReader reader)
+        {
+            long ContentLength = reader.BaseStream.Length;
+            if (ContentLength > int.MaxValue)
+                return 0;
+
+            byte[] Content = reader.ReadBytes((int)ContentLength);
+
+            NativeMethods.mpz_import(ref rop.Value, Content.Length, 0, sizeof(byte), 0, 0, Content);
+
+            return Content.Length;
+        }
+        #endregion
+
+        #region Integer Import and Export
+        public static void import(mpz_t rop, long count, int order, long size, int endian, long nails, byte[] op)
+        {
+            NativeMethods.mpz_import(ref rop.Value, count, order, size, endian, nails, op);
+        }
+
+        public static void export(byte[] rop, out long countp, int order, long size, int endian, long nails, mpz_t op)
+        {
+            NativeMethods.mpz_export(rop, out countp, order, size, endian, nails, ref op.Value);
+        }
+        #endregion
+
+        #region Random Number Functions
+        public static void urandomb(mpz_t rop, randstate_t state, ulong n)
+        {
+            NativeMethods.mpz_urandomb(ref rop.Value, ref state.Value, n);
+        }
+
+        public static void urandomm(mpz_t rop, randstate_t state, mpz_t n)
+        {
+            NativeMethods.mpz_urandomm(ref rop.Value, ref state.Value, ref n.Value);
+        }
+
+        public static void rrandomb(mpz_t rop, randstate_t state, ulong n)
+        {
+            NativeMethods.mpz_rrandomb(ref rop.Value, ref state.Value, n);
+        }
+        #endregion
+
+        #region Miscellaneous Functions
+        public static bool fits_ulong_p(mpz_t op)
+        {
+            return NativeMethods.mpz_fits_ulong_p(ref op.Value) != 0;
+        }
+
+        public static bool fits_slong_p(mpz_t op)
+        {
+            return NativeMethods.mpz_fits_slong_p(ref op.Value) != 0;
+        }
+
+        public static bool fits_uint_p(mpz_t op)
+        {
+            return NativeMethods.mpz_fits_uint_p(ref op.Value) != 0;
+        }
+
+        public static bool fits_sint_p(mpz_t op)
+        {
+            return NativeMethods.mpz_fits_sint_p(ref op.Value) != 0;
+        }
+
+        public static bool fits_ushort_p(mpz_t op)
+        {
+            return NativeMethods.mpz_fits_ushort_p(ref op.Value) != 0;
+        }
+
+        public static bool fits_sshort_p(mpz_t op)
+        {
+            return NativeMethods.mpz_fits_sshort_p(ref op.Value) != 0;
+        }
+
+        public static bool odd_p(mpz_t op)
+        {
+            if (op.Value.LimbCount == 0 || op.Value.Limbs == System.IntPtr.Zero)
+                return false;
+
+            return (System.Runtime.InteropServices.Marshal.ReadByte(op.Value.Limbs, 0) & 1) != 0;
+        }
+
+        public static bool even_p(mpz_t op)
+        {
+            if (op.Value.LimbCount == 0 || op.Value.Limbs == System.IntPtr.Zero)
+                return false;
+
+            return (System.Runtime.InteropServices.Marshal.ReadByte(op.Value.Limbs, 0) & 1) == 0;
+        }
+
+        public static long sizeinbase(mpz_t op, uint resultbase)
+        {
+            return NativeMethods.mpz_sizeinbase(ref op.Value, resultbase);
+        }
+        #endregion
+    }
+}
