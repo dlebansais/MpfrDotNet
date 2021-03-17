@@ -9,7 +9,7 @@
     <Authors>David Le Bansais</Authors>
     <Company />
     <Product />
-    <Description>Binding of MPFR (Multiple Precision Floating-Point) for .NET</Description>
+    <Description>Binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET</Description>
     <Copyright>Copyright © 2021 David Le Bansais</Copyright>
     <AssemblyVersion>1.0.2.3</AssemblyVersion>
     <FileVersion>1.0.2.3</FileVersion>

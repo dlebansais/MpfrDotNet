@@ -9,11 +9,11 @@ Resulting files are in the `MpfrDotNet\bin\x64` subdirectory:
 
 + mpfr.dll, for multiple precision floating-point support.
 + mpir.dll, for multiple precision integer and rational support.
-+ MpfrDotNet assembly
++ MpfrDotNet assembly.
 
 # Package
 
-This project is also available as a package. See the right side of the project page for links.
+This project is also available as a package. See the right pane of the project page for links.
 
 The package includes: 
 
