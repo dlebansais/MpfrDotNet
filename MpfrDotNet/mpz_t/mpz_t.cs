@@ -24,49 +24,49 @@
         #endregion
 
         #region Init
-        /// Initializes a new mpz_t to 0.
+        // Initializes a new mpz_t to 0.
         public mpz_t()
         {
             mpz_init(ref Value);
         }
 
-        /// Initializes a new mpz_t to the same value as op.
+        // Initializes a new mpz_t to the same value as op.
         public mpz_t(mpz_t op)
         {
             mpz_init_set(ref Value, ref op.Value);
         }
 
-        /// Initializes a new mpz_t to the unsigned int op.
+        // Initializes a new mpz_t to the unsigned int op.
         public mpz_t(uint op)
         {
             mpz_init_set_ui(ref Value, op);
         }
 
-        /// Initializes a new mpz_t to the int op.
+        // Initializes a new mpz_t to the int op.
         public mpz_t(int op)
         {
             mpz_init_set_si(ref Value, op);
         }
 
-        /// Initializes a new mpz_t to the unsigned long op.
+        // Initializes a new mpz_t to the unsigned long op.
         public mpz_t(ulong op)
         {
-            mpz_init_set_ux(ref Value, op);
+            mpz_init_set_ux(ref Value, (uintmax_t)op);
         }
 
-        /// Initializes a new mpz_t to the long op.
+        // Initializes a new mpz_t to the long op.
         public mpz_t(long op)
         {
             mpz_init_set_sx(ref Value, op);
         }
 
-        /// Initializes a new mpz_t to the double op.
+        // Initializes a new mpz_t to the double op.
         public mpz_t(double op)
         {
             mpz_init_set_d(ref Value, op);
         }
 
-        /// Initializes a new mpz_t to string s, parsed as an integer in the specified base.
+        // Initializes a new mpz_t to string s, parsed as an integer in the specified base.
         public mpz_t(string s, uint strBase)
         {
             int Success = mpz_init_set_str(ref Value, s, strBase);
@@ -74,26 +74,26 @@
                 throw new ArgumentException();
         }
 
-        /// Initializes a new mpz_t to string s, parsed as an integer in base 10.
+        // Initializes a new mpz_t to string s, parsed as an integer in base 10.
         public mpz_t(string s)
             : this(s, DefaultBase)
         {
         }
 
-        /// Initializes a new mpz_t to the BigInteger op.
+        // Initializes a new mpz_t to the BigInteger op.
         public mpz_t(BigInteger op)
             : this(op.ToByteArray())
         {
         }
 
-        /// Initializes a new mpz_t to using MPIR mpz_init2. Only use if you need to
-        /// avoid reallocations.
+        // Initializes a new mpz_t to using MPIR mpz_init2. Only use if you need to
+        // avoid reallocations.
         public mpz_t(bitcount_t size)
         {
-            mpz_init2(ref Value, size.Count);
+            mpz_init2(ref Value, (mp_bitcnt_t)size.Count);
         }
 
-        /// Initializes a new mpz_t to the integer in the byte array bytes.
+        // Initializes a new mpz_t to the integer in the byte array bytes.
         public mpz_t(byte[] bytes)
             : this()
         {
@@ -109,7 +109,7 @@
         #endregion
 
         #region Conversions
-        /// Export to the value to a byte array.
+        // Export to the value to a byte array.
         public byte[] ToByteArray()
         {
             long SizeInBits = mpz_sizeinbase(ref Value, 2);
@@ -431,7 +431,7 @@
             mpz_t z = new mpz_t();
 
             if (count >= 0)
-                mpz_mul_2exp(ref z.Value, ref x.Value, (ulong)count);
+                mpz_mul_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
 
             return z;
         }
@@ -441,7 +441,7 @@
             mpz_t z = new mpz_t();
 
             if (count >= 0)
-                mpz_tdiv_q_2exp(ref z.Value, ref x.Value, (ulong)count);
+                mpz_tdiv_q_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
 
             return z;
         }
@@ -1170,15 +1170,15 @@
             {
                 default:
                 case Rounding.TowardZero:
-                    mpz_tdiv_q_2exp(ref quotient.Value, ref Value, y);
+                    mpz_tdiv_q_2exp(ref quotient.Value, ref Value, (mp_bitcnt_t)y);
                     break;
 
                 case Rounding.TowardPositiveInfinity:
-                    mpz_cdiv_q_2exp(ref quotient.Value, ref Value, y);
+                    mpz_cdiv_q_2exp(ref quotient.Value, ref Value, (mp_bitcnt_t)y);
                     break;
 
                 case Rounding.TowardNegativeInfinity:
-                    mpz_fdiv_q_2exp(ref quotient.Value, ref Value, y);
+                    mpz_fdiv_q_2exp(ref quotient.Value, ref Value, (mp_bitcnt_t)y);
                     break;
             }
 
@@ -1193,15 +1193,15 @@
             {
                 default:
                 case Rounding.TowardZero:
-                    mpz_tdiv_r_2exp(ref remainder.Value, ref Value, y);
+                    mpz_tdiv_r_2exp(ref remainder.Value, ref Value, (mp_bitcnt_t)y);
                     break;
 
                 case Rounding.TowardPositiveInfinity:
-                    mpz_cdiv_r_2exp(ref remainder.Value, ref Value, y);
+                    mpz_cdiv_r_2exp(ref remainder.Value, ref Value, (mp_bitcnt_t)y);
                     break;
 
                 case Rounding.TowardNegativeInfinity:
-                    mpz_fdiv_r_2exp(ref remainder.Value, ref Value, y);
+                    mpz_fdiv_r_2exp(ref remainder.Value, ref Value, (mp_bitcnt_t)y);
                     break;
             }
 
@@ -1238,7 +1238,7 @@
 
         public bool IsDivisibleByPowerOfTwo(uint y)
         {
-            return mpz_divisible_2exp_p(ref Value, y) != 0;
+            return mpz_divisible_2exp_p(ref Value, (mp_bitcnt_t)y) != 0;
         }
 
         public bool IsCongruent(mpz_t c, mpz_t d)
@@ -1253,7 +1253,7 @@
 
         public bool IsCongruentPowerOfTwo(mpz_t c, int d)
         {
-            return mpz_congruent_2exp_p(ref Value, ref c.Value, (uint)d) != 0;
+            return mpz_congruent_2exp_p(ref Value, ref c.Value, (mp_bitcnt_t)(ulong)d) != 0;
         }
 
         public mpz_t PowerMod(mpz_t exp, mpz_t mod)
@@ -1368,30 +1368,30 @@
         #region Bitwise
         public void SetBit(ulong index)
         {
-            mpz_setbit(ref Value, index);
+            mpz_setbit(ref Value, (mp_bitcnt_t)index);
         }
 
         public void ClearBit(ulong index)
         {
-            mpz_clrbit(ref Value, index);
+            mpz_clrbit(ref Value, (mp_bitcnt_t)index);
         }
 
         public void ComplementBit(ulong index)
         {
-            mpz_combit(ref Value, index);
+            mpz_combit(ref Value, (mp_bitcnt_t)index);
         }
 
         public void ChangeBit(ulong index, bool isSet)
         {
             if (isSet)
-                mpz_setbit(ref Value, index);
+                mpz_setbit(ref Value, (mp_bitcnt_t)index);
             else
-                mpz_clrbit(ref Value, index);
+                mpz_clrbit(ref Value, (mp_bitcnt_t)index);
         }
 
         public bool GetBit(ulong index)
         {
-            return mpz_tstbit(ref Value, index) != 0;
+            return mpz_tstbit(ref Value, (mp_bitcnt_t)index) != 0;
         }
         #endregion
 

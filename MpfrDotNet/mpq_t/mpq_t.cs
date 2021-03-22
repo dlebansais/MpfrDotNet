@@ -162,7 +162,7 @@
             mpq_t z = new mpq_t();
 
             if (count >= 0)
-                mpq_mul_2exp(ref z.Value, ref x.Value, (ulong)count);
+                mpq_mul_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
 
             return z;
         }
@@ -172,7 +172,7 @@
             mpq_t z = new mpq_t();
 
             if (count >= 0)
-                mpq_div_2exp(ref z.Value, ref x.Value, (ulong)count);
+                mpq_div_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
 
             return z;
         }

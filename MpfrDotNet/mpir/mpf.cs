@@ -7,12 +7,12 @@
         #region Initialization Functions
         public static void set_default_prec(ulong prec)
         {
-            NativeMethods.mpf_set_default_prec(prec);
+            NativeMethods.mpf_set_default_prec((NativeMethods.mp_bitcnt_t)prec);
         }
 
         public static ulong get_default_prec()
         {
-            return NativeMethods.mpf_get_default_prec();
+            return (ulong)NativeMethods.mpf_get_default_prec();
         }
 
         public static void init(mpf_t x)
@@ -22,7 +22,7 @@
 
         public static void init2(mpf_t x, ulong prec)
         {
-            NativeMethods.mpf_init2(ref x.Value, prec);
+            NativeMethods.mpf_init2(ref x.Value, (NativeMethods.mp_bitcnt_t)prec);
         }
 
         public static void inits(params mpf_t[] floatings)
@@ -42,17 +42,17 @@
 
         public static ulong get_prec(mpf_t op)
         {
-            return NativeMethods.mpf_get_prec(ref op.Value);
+            return (ulong)NativeMethods.mpf_get_prec(ref op.Value);
         }
 
         public static void set_prec(mpf_t op, ulong prec)
         {
-            NativeMethods.mpf_set_prec(ref op.Value, prec);
+            NativeMethods.mpf_set_prec(ref op.Value, (NativeMethods.mp_bitcnt_t)prec);
         }
 
         public static void set_prec_raw(mpf_t op, ulong prec)
         {
-            NativeMethods.mpf_set_prec_raw(ref op.Value, prec);
+            NativeMethods.mpf_set_prec_raw(ref op.Value, (NativeMethods.mp_bitcnt_t)prec);
         }
         #endregion
 
@@ -138,7 +138,7 @@
 
         public static ulong get_ui(mpf_t op)
         {
-            return NativeMethods.mpf_get_ui(ref op.Value);
+            return (ulong)NativeMethods.mpf_get_ui(ref op.Value);
         }
 
         public static long get_si(mpf_t op)
@@ -148,7 +148,8 @@
 
         public static void get_str(StringBuilder str, out int expptr, int strBase, ulong n_digits, mpf_t op)
         {
-            NativeMethods.mpf_get_str(str, out expptr, strBase, n_digits, ref op.Value);
+            NativeMethods.mpf_get_str(str, out NativeMethods.mp_exp_t expstr, strBase, (NativeMethods.size_t)n_digits, ref op.Value);
+            expptr = (int)expstr;
         }
         #endregion
 
@@ -230,12 +231,12 @@
 
         public static void mul_2exp(mpf_t rop, mpf_t op1, ulong op2)
         {
-            NativeMethods.mpf_mul_2exp(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpf_mul_2exp(ref rop.Value, ref op1.Value, (NativeMethods.mp_bitcnt_t)op2);
         }
 
         public static void div_2exp(mpf_t rop, mpf_t op1, ulong op2)
         {
-            NativeMethods.mpf_div_2exp(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpf_div_2exp(ref rop.Value, ref op1.Value, (NativeMethods.mp_bitcnt_t)op2);
         }
         #endregion
 
@@ -262,7 +263,7 @@
 
         public static int eq(mpf_t op1, mpf_t op2, ulong op3)
         {
-            return NativeMethods.mpf_eq(ref op1.Value, ref op2.Value, op3);
+            return NativeMethods.mpf_eq(ref op1.Value, ref op2.Value, (NativeMethods.mp_bitcnt_t)op3);
         }
 
         public static void reldiff(mpf_t rop, mpf_t op1, mpf_t op2)
@@ -329,12 +330,12 @@
 
         public static void urandomb(mpf_t rop, randstate_t state, ulong nbits)
         {
-            NativeMethods.mpf_urandomb(ref rop.Value, ref state.Value, nbits);
+            NativeMethods.mpf_urandomb(ref rop.Value, ref state.Value, (NativeMethods.mp_bitcnt_t)nbits);
         }
 
-        public static void rrandomb(mpf_t rop, randstate_t state, ulong max_size, ulong exp)
+        public static void rrandomb(mpf_t rop, randstate_t state, ulong max_size, int exp)
         {
-            NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, max_size, exp);
+            NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.size_t)max_size, (NativeMethods.mp_exp_t)exp);
         }
         #endregion
     }

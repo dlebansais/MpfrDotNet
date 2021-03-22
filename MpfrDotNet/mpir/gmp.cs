@@ -15,12 +15,12 @@
 
         public static void randinit_lc_2exp(randstate_t state, mpz_t a, uint c, ulong m2exp)
         {
-            NativeMethods.mp_randinit_lc_2exp(ref state.Value, ref a.Value, c, m2exp);
+            NativeMethods.mp_randinit_lc_2exp(ref state.Value, ref a.Value, c, (NativeMethods.mp_bitcnt_t)m2exp);
         }
 
         public static void randinit_lc_2exp_size(randstate_t state, ulong size)
         {
-            NativeMethods.mp_randinit_lc_2exp_size(ref state.Value, size);
+            NativeMethods.mp_randinit_lc_2exp_size(ref state.Value, (NativeMethods.mp_bitcnt_t)size);
         }
 
         public static void randinit_set(randstate_t rop, randstate_t op)

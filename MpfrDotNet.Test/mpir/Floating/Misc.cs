@@ -77,6 +77,49 @@ namespace TestFloating
             using mpf_t m = l.Abs();
             AsString = m.ToString();
             Assert.AreEqual("2.22509832503450298345E+24", AsString);
+
+            using mpf_t p = new mpf_t("68719476735");
+            AsString = p.ToString();
+            Assert.AreEqual("6.8719476735E+10", AsString);
+            ulong UlongCast = (ulong)p;
+            Assert.AreEqual(UlongCast, 68719476735UL);
+
+            using mpf_t q = new mpf_t("2147483647");
+            AsString = q.ToString();
+            Assert.AreEqual("2.147483647E+9", AsString);
+            uint UintCast = (uint)q;
+            Assert.AreEqual(UintCast, 2147483647U);
+        }
+
+        [TestMethod]
+        public void Precision()
+        {
+            ulong DefaultPrecision;
+
+            DefaultPrecision = mpf_t.DefaultPrecision;
+            Assert.IsTrue(DefaultPrecision == 64);
+
+            mpf_t.DefaultPrecision = 128;
+
+            DefaultPrecision = mpf_t.DefaultPrecision;
+            Assert.IsTrue(DefaultPrecision == 128);
+
+            mpf_t.DefaultPrecision = 0x7FFFFFFF;
+
+            DefaultPrecision = mpf_t.DefaultPrecision;
+            Assert.IsTrue(DefaultPrecision >= 0x7FFFFFFF);
+
+            mpf_t.DefaultPrecision = 0xFFFFFFFF;
+
+            DefaultPrecision = mpf_t.DefaultPrecision;
+            Assert.IsTrue(DefaultPrecision >= 0xFFFFFFFF);
+
+            mpf_t.DefaultPrecision = 0x1FFFFFFFF;
+
+            DefaultPrecision = mpf_t.DefaultPrecision;
+            Assert.IsTrue(DefaultPrecision >= 0x1FFFFFFFF);
+
+            mpf_t.DefaultPrecision = 64;
         }
 
         [TestMethod]

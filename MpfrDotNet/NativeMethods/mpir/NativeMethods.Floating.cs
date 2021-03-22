@@ -8,11 +8,11 @@
     {
         #region Initialization Functions
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_set_default_prec(ulong prec);
+        public delegate void __mpf_set_default_prec(mp_bitcnt_t prec);
         public static __mpf_set_default_prec mpf_set_default_prec = Marshal.GetDelegateForFunctionPointer<__mpf_set_default_prec>(GetMpirPointer(nameof(mpf_set_default_prec)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate ulong __mpf_get_default_prec();
+        public delegate mp_bitcnt_t __mpf_get_default_prec();
         public static __mpf_get_default_prec mpf_get_default_prec = Marshal.GetDelegateForFunctionPointer<__mpf_get_default_prec>(GetMpirPointer(nameof(mpf_get_default_prec)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -20,7 +20,7 @@
         public static __mpf_init mpf_init = Marshal.GetDelegateForFunctionPointer<__mpf_init>(GetMpirPointer(nameof(mpf_init)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_init2(ref __mpf_t x, ulong prec);
+        public delegate void __mpf_init2(ref __mpf_t x, mp_bitcnt_t prec);
         public static __mpf_init2 mpf_init2 = Marshal.GetDelegateForFunctionPointer<__mpf_init2>(GetMpirPointer(nameof(mpf_init2)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -36,15 +36,15 @@
         public static __mpf_clears mpf_clears = Marshal.GetDelegateForFunctionPointer<__mpf_clears>(GetMpirPointer(nameof(mpf_clears)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate ulong __mpf_get_prec(ref __mpf_t x);
+        public delegate mp_bitcnt_t __mpf_get_prec(ref __mpf_t x);
         public static __mpf_get_prec mpf_get_prec = Marshal.GetDelegateForFunctionPointer<__mpf_get_prec>(GetMpirPointer(nameof(mpf_get_prec)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate ulong __mpf_set_prec(ref __mpf_t x, ulong prec);
+        public delegate void __mpf_set_prec(ref __mpf_t x, mp_bitcnt_t prec);
         public static __mpf_set_prec mpf_set_prec = Marshal.GetDelegateForFunctionPointer<__mpf_set_prec>(GetMpirPointer(nameof(mpf_set_prec)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate ulong __mpf_set_prec_raw(ref __mpf_t x, ulong prec);
+        public delegate void __mpf_set_prec_raw(ref __mpf_t x, mp_bitcnt_t prec);
         public static __mpf_set_prec_raw mpf_set_prec_raw = Marshal.GetDelegateForFunctionPointer<__mpf_set_prec_raw>(GetMpirPointer(nameof(mpf_set_prec_raw)));
         #endregion
 
@@ -118,11 +118,11 @@
         public static __mpf_get_si mpf_get_si = Marshal.GetDelegateForFunctionPointer<__mpf_get_si>(GetMpirPointer(nameof(mpf_get_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate ulong __mpf_get_ui(ref __mpf_t op);
+        public delegate mpir_ui __mpf_get_ui(ref __mpf_t op);
         public static __mpf_get_ui mpf_get_ui = Marshal.GetDelegateForFunctionPointer<__mpf_get_ui>(GetMpirPointer(nameof(mpf_get_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public delegate IntPtr __mpf_get_str(StringBuilder str, out int expptr, int _base, ulong n_digits, ref __mpf_t op);
+        public delegate IntPtr __mpf_get_str(StringBuilder str, out mp_exp_t expptr, int _base, size_t n_digits, ref __mpf_t op);
         public static __mpf_get_str mpf_get_str = Marshal.GetDelegateForFunctionPointer<__mpf_get_str>(GetMpirPointer(nameof(mpf_get_str)));
         #endregion
 
@@ -188,11 +188,11 @@
         public static __mpf_abs mpf_abs = Marshal.GetDelegateForFunctionPointer<__mpf_abs>(GetMpirPointer(nameof(mpf_abs)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_mul_2exp(ref __mpf_t rop, ref __mpf_t op1, ulong op2);
+        public delegate void __mpf_mul_2exp(ref __mpf_t rop, ref __mpf_t op1, mp_bitcnt_t op2);
         public static __mpf_mul_2exp mpf_mul_2exp = Marshal.GetDelegateForFunctionPointer<__mpf_mul_2exp>(GetMpirPointer(nameof(mpf_mul_2exp)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_div_2exp(ref __mpf_t rop, ref __mpf_t op1, ulong op2);
+        public delegate void __mpf_div_2exp(ref __mpf_t rop, ref __mpf_t op1, mp_bitcnt_t op2);
         public static __mpf_div_2exp mpf_div_2exp = Marshal.GetDelegateForFunctionPointer<__mpf_div_2exp>(GetMpirPointer(nameof(mpf_div_2exp)));
         #endregion
 
@@ -214,7 +214,7 @@
         public static __mpf_cmp_si mpf_cmp_si = Marshal.GetDelegateForFunctionPointer<__mpf_cmp_si>(GetMpirPointer(nameof(mpf_cmp_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpf_eq(ref __mpf_t op1, ref __mpf_t op2, ulong op3);
+        public delegate int __mpf_eq(ref __mpf_t op1, ref __mpf_t op2, mp_bitcnt_t op3);
         public static __mpf_eq mpf_eq = Marshal.GetDelegateForFunctionPointer<__mpf_eq>(GetMpirPointer(nameof(mpf_eq)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -269,11 +269,11 @@
         public static __mpf_fits_sshort_p mpf_fits_sshort_p = Marshal.GetDelegateForFunctionPointer<__mpf_fits_sshort_p>(GetMpirPointer(nameof(mpf_fits_sshort_p)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpf_urandomb(ref __mpf_t rop, ref __gmp_randstate_t state, ulong nbits);
+        public delegate int __mpf_urandomb(ref __mpf_t rop, ref __gmp_randstate_t state, mp_bitcnt_t nbits);
         public static __mpf_urandomb mpf_urandomb = Marshal.GetDelegateForFunctionPointer<__mpf_urandomb>(GetMpirPointer(nameof(mpf_urandomb)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpf_rrandomb(ref __mpf_t rop, ref __gmp_randstate_t state, ulong max_size, ulong exp);
+        public delegate int __mpf_rrandomb(ref __mpf_t rop, ref __gmp_randstate_t state, size_t max_size, mp_exp_t exp);
         public static __mpf_rrandomb mpf_rrandomb = Marshal.GetDelegateForFunctionPointer<__mpf_rrandomb>(GetMpirPointer(nameof(mpf_rrandomb)));
         #endregion
     }

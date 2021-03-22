@@ -19,7 +19,7 @@
 
         public static void init2(mpz_t integer, ulong n)
         {
-            NativeMethods.mpz_init2(ref integer.Value, n);
+            NativeMethods.mpz_init2(ref integer.Value, (NativeMethods.mp_bitcnt_t)n);
         }
 
         public static void clear(mpz_t integer)
@@ -34,7 +34,7 @@
 
         public static void realloc2(mpz_t integer, ulong n)
         {
-            NativeMethods.mpz_realloc2(ref integer.Value, n);
+            NativeMethods.mpz_realloc2(ref integer.Value, (NativeMethods.mp_bitcnt_t)n);
         }
         #endregion
 
@@ -56,7 +56,7 @@
 
         public static void set_ux(mpz_t rop, ulong op)
         {
-            NativeMethods.mpz_set_ux(ref rop.Value, op);
+            NativeMethods.mpz_set_ux(ref rop.Value, (NativeMethods.uintmax_t)op);
         }
 
         public static void set_sx(mpz_t rop, long op)
@@ -108,7 +108,7 @@
 
         public static void init_set_ux(mpz_t rop, ulong op)
         {
-            NativeMethods.mpz_init_set_ux(ref rop.Value, op);
+            NativeMethods.mpz_init_set_ux(ref rop.Value, (NativeMethods.uintmax_t)op);
         }
 
         public static void init_set_sx(mpz_t rop, long op)
@@ -135,7 +135,7 @@
 
         public static ulong get_ux(mpz_t op)
         {
-            return NativeMethods.mpz_get_ux(ref op.Value);
+            return (ulong)NativeMethods.mpz_get_ux(ref op.Value);
         }
 
         public static long get_sx(mpz_t op)
@@ -222,7 +222,7 @@
 
         public static void mul_2exp(mpz_t rop, mpz_t op1, ulong op2)
         {
-            NativeMethods.mpz_mul_2exp(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpz_mul_2exp(ref rop.Value, ref op1.Value, (NativeMethods.mp_bitcnt_t)op2);
         }
 
         public static void neg(mpz_t rop, mpz_t op)
@@ -274,12 +274,12 @@
 
         public static void cdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
         {
-            NativeMethods.mpz_cdiv_q_2exp(ref q.Value, ref n.Value, b);
+            NativeMethods.mpz_cdiv_q_2exp(ref q.Value, ref n.Value, (NativeMethods.mp_bitcnt_t)b);
         }
 
         public static void cdiv_r_2exp(mpz_t r, mpz_t n, ulong b)
         {
-            NativeMethods.mpz_cdiv_r_2exp(ref r.Value, ref n.Value, b);
+            NativeMethods.mpz_cdiv_r_2exp(ref r.Value, ref n.Value, (NativeMethods.mp_bitcnt_t)b);
         }
 
         public static void fdiv_q(mpz_t q, mpz_t n, mpz_t d)
@@ -319,12 +319,12 @@
 
         public static void fdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
         {
-            NativeMethods.mpz_fdiv_q_2exp(ref q.Value, ref n.Value, b);
+            NativeMethods.mpz_fdiv_q_2exp(ref q.Value, ref n.Value, (NativeMethods.mp_bitcnt_t)b);
         }
 
         public static void fdiv_r_2exp(mpz_t r, mpz_t n, ulong b)
         {
-            NativeMethods.mpz_fdiv_r_2exp(ref r.Value, ref n.Value, b);
+            NativeMethods.mpz_fdiv_r_2exp(ref r.Value, ref n.Value, (NativeMethods.mp_bitcnt_t)b);
         }
 
         public static void tdiv_q(mpz_t q, mpz_t n, mpz_t d)
@@ -364,12 +364,12 @@
 
         public static void tdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
         {
-            NativeMethods.mpz_tdiv_q_2exp(ref q.Value, ref n.Value, b);
+            NativeMethods.mpz_tdiv_q_2exp(ref q.Value, ref n.Value, (NativeMethods.mp_bitcnt_t)b);
         }
 
         public static void tdiv_r_2exp(mpz_t r, mpz_t n, ulong b)
         {
-            NativeMethods.mpz_tdiv_r_2exp(ref r.Value, ref n.Value, b);
+            NativeMethods.mpz_tdiv_r_2exp(ref r.Value, ref n.Value, (NativeMethods.mp_bitcnt_t)b);
         }
 
         public static void mod(mpz_t r, mpz_t n, mpz_t d)
@@ -404,7 +404,7 @@
 
         public static bool divisible_2exp_p(mpz_t n, ulong b)
         {
-            return NativeMethods.mpz_divisible_2exp_p(ref n.Value, b) != 0;
+            return NativeMethods.mpz_divisible_2exp_p(ref n.Value, (NativeMethods.mp_bitcnt_t)b) != 0;
         }
 
         public static bool congruent_p(mpz_t n, mpz_t c, mpz_t d)
@@ -419,7 +419,7 @@
 
         public static bool congruent_2exp_p(mpz_t n, mpz_t c, ulong b)
         {
-            return NativeMethods.mpz_congruent_2exp_p(ref n.Value, ref c.Value, b) != 0;
+            return NativeMethods.mpz_congruent_2exp_p(ref n.Value, ref c.Value, (NativeMethods.mp_bitcnt_t)b) != 0;
         }
         #endregion
 
@@ -565,27 +565,27 @@
 
         public static ulong remove(mpz_t rop, mpz_t op, mpz_t f)
         {
-            return NativeMethods.mpz_remove(ref rop.Value, ref op.Value, ref f.Value);
+            return (ulong)NativeMethods.mpz_remove(ref rop.Value, ref op.Value, ref f.Value);
         }
 
         public static void fac_ui(mpz_t rop, ulong n)
         {
-            NativeMethods.mpz_fac_ui(ref rop.Value, n);
+            NativeMethods.mpz_fac_ui(ref rop.Value, (NativeMethods.unsignedlongint)n);
         }
 
         public static void fac_ui2(mpz_t rop, ulong n)
         {
-            NativeMethods.mpz_2fac_ui(ref rop.Value, n);
+            NativeMethods.mpz_2fac_ui(ref rop.Value, (NativeMethods.unsignedlongint)n);
         }
 
         public static void mfac_uiui(mpz_t rop, ulong n, ulong m)
         {
-            NativeMethods.mpz_mfac_uiui(ref rop.Value, n, m);
+            NativeMethods.mpz_mfac_uiui(ref rop.Value, (NativeMethods.unsignedlongint)n, (NativeMethods.unsignedlongint)m);
         }
 
         public static void primorial_ui(mpz_t rop, ulong n)
         {
-            NativeMethods.mpz_primorial_ui(ref rop.Value, n);
+            NativeMethods.mpz_primorial_ui(ref rop.Value, (NativeMethods.unsignedlongint)n);
         }
 
         public static void bin_ui(mpz_t rop, mpz_t n, uint k)
@@ -684,42 +684,42 @@
 
         public static ulong popcount(mpz_t op)
         {
-            return NativeMethods.mpz_popcount(ref op.Value);
+            return (ulong)NativeMethods.mpz_popcount(ref op.Value);
         }
 
         public static ulong hamdist(mpz_t op1, mpz_t op2)
         {
-            return NativeMethods.mpz_hamdist(ref op1.Value, ref op2.Value);
+            return (ulong)NativeMethods.mpz_hamdist(ref op1.Value, ref op2.Value);
         }
 
         public static ulong scan0(mpz_t op, ulong startingBit)
         {
-            return NativeMethods.mpz_scan0(ref op.Value, startingBit);
+            return (ulong)NativeMethods.mpz_scan0(ref op.Value, (NativeMethods.mp_bitcnt_t)startingBit);
         }
 
         public static ulong scan1(mpz_t op, ulong startingBit)
         {
-            return NativeMethods.mpz_scan1(ref op.Value, startingBit);
+            return (ulong)NativeMethods.mpz_scan1(ref op.Value, (NativeMethods.mp_bitcnt_t)startingBit);
         }
 
         public static void setbit(mpz_t rop, ulong bitIndex)
         {
-            NativeMethods.mpz_setbit(ref rop.Value, bitIndex);
+            NativeMethods.mpz_setbit(ref rop.Value, (NativeMethods.mp_bitcnt_t)bitIndex);
         }
 
         public static void clrbit(mpz_t rop, ulong bitIndex)
         {
-            NativeMethods.mpz_clrbit(ref rop.Value, bitIndex);
+            NativeMethods.mpz_clrbit(ref rop.Value, (NativeMethods.mp_bitcnt_t)bitIndex);
         }
 
         public static void combit(mpz_t rop, ulong bitIndex)
         {
-            NativeMethods.mpz_combit(ref rop.Value, bitIndex);
+            NativeMethods.mpz_combit(ref rop.Value, (NativeMethods.mp_bitcnt_t)bitIndex);
         }
 
         public static bool tstbit(mpz_t op, ulong bitIndex)
         {
-            return NativeMethods.mpz_tstbit(ref op.Value, bitIndex) != 0;
+            return NativeMethods.mpz_tstbit(ref op.Value, (NativeMethods.mp_bitcnt_t)bitIndex) != 0;
         }
         #endregion
 
@@ -791,7 +791,7 @@
         #region Random Number Functions
         public static void urandomb(mpz_t rop, randstate_t state, ulong n)
         {
-            NativeMethods.mpz_urandomb(ref rop.Value, ref state.Value, n);
+            NativeMethods.mpz_urandomb(ref rop.Value, ref state.Value, (NativeMethods.mp_bitcnt_t)n);
         }
 
         public static void urandomm(mpz_t rop, randstate_t state, mpz_t n)
@@ -801,7 +801,7 @@
 
         public static void rrandomb(mpz_t rop, randstate_t state, ulong n)
         {
-            NativeMethods.mpz_rrandomb(ref rop.Value, ref state.Value, n);
+            NativeMethods.mpz_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.mp_bitcnt_t)n);
         }
         #endregion
 

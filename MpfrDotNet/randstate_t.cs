@@ -36,9 +36,9 @@
 
                 case RngAlgorithm.LinearCongruential:
                     if (parameters.Length == 3 && parameters[0] is mpz_t a && parameters[1] is uint c && parameters[2] is ulong m2exp)
-                        mp_randinit_lc_2exp(ref Value, ref a.Value, c, m2exp);
+                        mp_randinit_lc_2exp(ref Value, ref a.Value, c, (mp_bitcnt_t)m2exp);
                     else if (parameters.Length == 1 && parameters[0] is ulong size)
-                        mp_randinit_lc_2exp_size(ref Value, size);
+                        mp_randinit_lc_2exp_size(ref Value, (mp_bitcnt_t)size);
                     else
                         throw new ArgumentException();
                     break;

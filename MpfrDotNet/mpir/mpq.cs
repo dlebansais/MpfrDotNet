@@ -97,7 +97,7 @@
 
         public static void mul_2exp(mpq_t rop, mpq_t op1, ulong op2)
         {
-            NativeMethods.mpq_mul_2exp(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpq_mul_2exp(ref rop.Value, ref op1.Value, (NativeMethods.mp_bitcnt_t)op2);
         }
 
         public static void div(mpq_t rop, mpq_t op1, mpq_t op2)
@@ -107,7 +107,7 @@
 
         public static void div_2exp(mpq_t rop, mpq_t op1, ulong op2)
         {
-            NativeMethods.mpq_div_2exp(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpq_div_2exp(ref rop.Value, ref op1.Value, (NativeMethods.mp_bitcnt_t)op2);
         }
 
         public static void neg(mpq_t rop, mpq_t op)

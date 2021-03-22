@@ -7,13 +7,13 @@
     public class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConvertible, IComparable, IComparable<mpf_t>
     {
         #region Init
-        /// Initializes a new mpf_t to 0.
+        // Initializes a new mpf_t to 0.
         public mpf_t(ulong precision = ulong.MaxValue)
         {
             if (precision == ulong.MaxValue)
                 mpf_init(ref Value);
             else
-                mpf_init2(ref Value, precision);
+                mpf_init2(ref Value, (mp_bitcnt_t)precision);
         }
 
         public mpf_t(uint n, ulong precision = ulong.MaxValue)
@@ -22,7 +22,7 @@
                 mpf_init_set_ui(ref Value, n);
             else
             {
-                mpf_init2(ref Value, precision);
+                mpf_init2(ref Value, (mp_bitcnt_t)precision);
                 mpf_set_ui(ref Value, n);
             }
         }
@@ -33,7 +33,7 @@
                 mpf_init_set_si(ref Value, n);
             else
             {
-                mpf_init2(ref Value, precision);
+                mpf_init2(ref Value, (mp_bitcnt_t)precision);
                 mpf_set_si(ref Value, n);
             }
         }
@@ -44,7 +44,7 @@
                 mpf_init_set_d(ref Value, d);
             else
             {
-                mpf_init2(ref Value, precision);
+                mpf_init2(ref Value, (mp_bitcnt_t)precision);
                 mpf_set_d(ref Value, d);
             }
         }
@@ -62,7 +62,7 @@
                 Success = mpf_init_set_str(ref Value, s, strBase);
             else
             {
-                mpf_init2(ref Value, precision);
+                mpf_init2(ref Value, (mp_bitcnt_t)precision);
                 Success = mpf_set_str(ref Value, s, strBase);
             }
 
@@ -78,8 +78,7 @@
             }
             else
             {
-                ulong OtherPrecision = mpf_get_prec(ref other.Value);
-                mpf_init2(ref Value, OtherPrecision);
+                mpf_init2(ref Value, mpf_get_prec(ref other.Value));
                 mpf_set(ref Value, ref other.Value);
             }
         }
@@ -92,11 +91,11 @@
         {
             get
             {
-                return mpf_get_default_prec();
+                return (ulong)mpf_get_default_prec();
             }
             set
             {
-                mpf_set_default_prec(value);
+                mpf_set_default_prec((mp_bitcnt_t)value);
             }
         }
 
@@ -104,11 +103,11 @@
         {
             get
             {
-                return mpf_get_prec(ref Value);
+                return (ulong)mpf_get_prec(ref Value);
             }
             set
             {
-                mpf_set_prec(ref Value, value);
+                mpf_set_prec(ref Value, (mp_bitcnt_t)value);
             }
         }
 
@@ -130,10 +129,12 @@
         public string ToString(int resultbase)
         {
             ulong SizeInDigits = Precision;
+
             StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
 
-            int Exponent;
-            mpf_get_str(Data, out Exponent, resultbase, SizeInDigits, ref Value);
+            mp_exp_t ExponentStruct;
+            mpf_get_str(Data, out ExponentStruct, resultbase, (size_t)SizeInDigits, ref Value);
+            int Exponent = (int)ExponentStruct;
 
             string Result = Data.ToString();
 
@@ -188,7 +189,7 @@
 
         public static explicit operator ulong(mpf_t value)
         {
-            return mpf_get_ui(ref value.Value);
+            return (ulong)mpf_get_ui(ref value.Value);
         }
 
         public static explicit operator long(mpf_t value)
@@ -351,7 +352,7 @@
             mpf_t z = new mpf_t();
 
             if (count >= 0)
-                mpf_mul_2exp(ref z.Value, ref x.Value, (ulong)count);
+                mpf_mul_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
 
             return z;
         }
@@ -361,7 +362,7 @@
             mpf_t z = new mpf_t();
 
             if (count >= 0)
-                mpf_div_2exp(ref z.Value, ref x.Value, (ulong)count);
+                mpf_div_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
 
             return z;
         }
@@ -685,8 +686,8 @@
             ulong SizeInDigits = 5;
             StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
 
-            int Exponent;
-            mpf_get_str(Data, out Exponent, mpz_t.DefaultBase, SizeInDigits, ref Value);
+            mp_exp_t ExponentStruct;
+            mpf_get_str(Data, out ExponentStruct, mpz_t.DefaultBase, (size_t)SizeInDigits, ref Value);
 
             return Data.ToString().GetHashCode();
         }
@@ -756,7 +757,7 @@
         }
         #endregion
 
-        #region Miscellaneous Functions
+        #region Rounding
         public mpf_t Ceil()
         {
             mpf_t z = new mpf_t(Precision);

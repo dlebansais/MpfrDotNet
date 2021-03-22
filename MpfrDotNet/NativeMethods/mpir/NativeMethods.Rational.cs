@@ -91,7 +91,7 @@
         public static __mpq_mul mpq_mul = Marshal.GetDelegateForFunctionPointer<__mpq_mul>(GetMpirPointer(nameof(mpq_mul)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpq_mul_2exp(ref __mpq_t rop, ref __mpq_t op1, ulong op2);
+        public delegate void __mpq_mul_2exp(ref __mpq_t rop, ref __mpq_t op1, mp_bitcnt_t op2);
         public static __mpq_mul_2exp mpq_mul_2exp = Marshal.GetDelegateForFunctionPointer<__mpq_mul_2exp>(GetMpirPointer(nameof(mpq_mul_2exp)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -99,7 +99,7 @@
         public static __mpq_div mpq_div = Marshal.GetDelegateForFunctionPointer<__mpq_div>(GetMpirPointer(nameof(mpq_div)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpq_div_2exp(ref __mpq_t rop, ref __mpq_t op1, ulong op2);
+        public delegate void __mpq_div_2exp(ref __mpq_t rop, ref __mpq_t op1, mp_bitcnt_t op2);
         public static __mpq_div_2exp mpq_div_2exp = Marshal.GetDelegateForFunctionPointer<__mpq_div_2exp>(GetMpirPointer(nameof(mpq_div_2exp)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
