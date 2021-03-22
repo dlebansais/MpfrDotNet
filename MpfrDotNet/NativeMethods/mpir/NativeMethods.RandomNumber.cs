@@ -14,7 +14,7 @@
         public static __mp_randinit_mt mp_randinit_mt = Marshal.GetDelegateForFunctionPointer<__mp_randinit_mt>(GetMpirPointer(nameof(mp_randinit_mt)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mp_randinit_lc_2exp(ref __gmp_randstate_t state, ref __mpz_t a, uint c, mp_bitcnt_t m2exp);
+        public delegate void __mp_randinit_lc_2exp(ref __gmp_randstate_t state, ref __mpz_t a, mpir_ui c, mp_bitcnt_t m2exp);
         public static __mp_randinit_lc_2exp mp_randinit_lc_2exp = Marshal.GetDelegateForFunctionPointer<__mp_randinit_lc_2exp>(GetMpirPointer(nameof(mp_randinit_lc_2exp)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -36,17 +36,17 @@
         public static __mp_randseed mp_randseed = Marshal.GetDelegateForFunctionPointer<__mp_randseed>(GetMpirPointer(nameof(mp_randseed)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mp_randseed_ui(ref __gmp_randstate_t state, uint seed);
+        public delegate void __mp_randseed_ui(ref __gmp_randstate_t state, mpir_ui seed);
         public static __mp_randseed_ui mp_randseed_ui = Marshal.GetDelegateForFunctionPointer<__mp_randseed_ui>(GetMpirPointer(nameof(mp_randseed_ui)));
         #endregion
 
         #region Random State Miscellaneous
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mp_urandomb_ui(ref __gmp_randstate_t state, uint m2exp);
+        public delegate mpir_ui __mp_urandomb_ui(ref __gmp_randstate_t state, mpir_ui m2exp);
         public static __mp_urandomb_ui mp_urandomb_ui = Marshal.GetDelegateForFunctionPointer<__mp_urandomb_ui>(GetMpirPointer(nameof(mp_urandomb_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mp_urandomm_ui(ref __gmp_randstate_t state, uint n);
+        public delegate mpir_ui __mp_urandomm_ui(ref __gmp_randstate_t state, mpir_ui n);
         public static __mp_urandomm_ui mp_urandomm_ui = Marshal.GetDelegateForFunctionPointer<__mp_urandomm_ui>(GetMpirPointer(nameof(mp_urandomm_ui)));
         #endregion
     }

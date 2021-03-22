@@ -36,11 +36,11 @@
         public static __mpz_set mpz_set = Marshal.GetDelegateForFunctionPointer<__mpz_set>(GetMpirPointer(nameof(mpz_set)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_set_ui(ref __mpz_t rop, uint op);
+        public delegate void __mpz_set_ui(ref __mpz_t rop, mpir_ui op);
         public static __mpz_set_ui mpz_set_ui = Marshal.GetDelegateForFunctionPointer<__mpz_set_ui>(GetMpirPointer(nameof(mpz_set_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_set_si(ref __mpz_t rop, int op);
+        public delegate void __mpz_set_si(ref __mpz_t rop, mpir_si op);
         public static __mpz_set_si mpz_set_si = Marshal.GetDelegateForFunctionPointer<__mpz_set_si>(GetMpirPointer(nameof(mpz_set_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -78,11 +78,11 @@
         public static __mpz_init_set mpz_init_set = Marshal.GetDelegateForFunctionPointer<__mpz_init_set>(GetMpirPointer(nameof(mpz_init_set)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_init_set_ui(ref __mpz_t rop, uint op);
+        public delegate void __mpz_init_set_ui(ref __mpz_t rop, mpir_ui op);
         public static __mpz_init_set_ui mpz_init_set_ui = Marshal.GetDelegateForFunctionPointer<__mpz_init_set_ui>(GetMpirPointer(nameof(mpz_init_set_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_init_set_si(ref __mpz_t rop, int op);
+        public delegate void __mpz_init_set_si(ref __mpz_t rop, mpir_si op);
         public static __mpz_init_set_si mpz_init_set_si = Marshal.GetDelegateForFunctionPointer<__mpz_init_set_si>(GetMpirPointer(nameof(mpz_init_set_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -104,11 +104,11 @@
 
         #region Conversion Functions
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_get_ui(ref __mpz_t op);
+        public delegate mpir_ui __mpz_get_ui(ref __mpz_t op);
         public static __mpz_get_ui mpz_get_ui = Marshal.GetDelegateForFunctionPointer<__mpz_get_ui>(GetMpirPointer(nameof(mpz_get_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_get_si(ref __mpz_t op);
+        public delegate mpir_si __mpz_get_si(ref __mpz_t op);
         public static __mpz_get_si mpz_get_si = Marshal.GetDelegateForFunctionPointer<__mpz_get_si>(GetMpirPointer(nameof(mpz_get_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -138,7 +138,7 @@
         public static __mpz_add mpz_add = Marshal.GetDelegateForFunctionPointer<__mpz_add>(GetMpirPointer(nameof(mpz_add)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_add_ui(ref __mpz_t rop, ref __mpz_t op1, uint op2);
+        public delegate void __mpz_add_ui(ref __mpz_t rop, ref __mpz_t op1, mpir_ui op2);
         public static __mpz_add_ui mpz_add_ui = Marshal.GetDelegateForFunctionPointer<__mpz_add_ui>(GetMpirPointer(nameof(mpz_add_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -146,11 +146,11 @@
         public static __mpz_sub mpz_sub = Marshal.GetDelegateForFunctionPointer<__mpz_sub>(GetMpirPointer(nameof(mpz_sub)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_sub_ui(ref __mpz_t rop, ref __mpz_t op1, uint op2);
+        public delegate void __mpz_sub_ui(ref __mpz_t rop, ref __mpz_t op1, mpir_ui op2);
         public static __mpz_sub_ui mpz_sub_ui = Marshal.GetDelegateForFunctionPointer<__mpz_sub_ui>(GetMpirPointer(nameof(mpz_sub_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_ui_sub(ref __mpz_t rop, uint op1, ref __mpz_t op2);
+        public delegate void __mpz_ui_sub(ref __mpz_t rop, mpir_ui op1, ref __mpz_t op2);
         public static __mpz_ui_sub mpz_ui_sub = Marshal.GetDelegateForFunctionPointer<__mpz_ui_sub>(GetMpirPointer(nameof(mpz_ui_sub)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -158,11 +158,11 @@
         public static __mpz_mul mpz_mul = Marshal.GetDelegateForFunctionPointer<__mpz_mul>(GetMpirPointer(nameof(mpz_mul)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_mul_si(ref __mpz_t rop, ref __mpz_t op1, int op2);
+        public delegate void __mpz_mul_si(ref __mpz_t rop, ref __mpz_t op1, mpir_si op2);
         public static __mpz_mul_si mpz_mul_si = Marshal.GetDelegateForFunctionPointer<__mpz_mul_si>(GetMpirPointer(nameof(mpz_mul_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_mul_ui(ref __mpz_t rop, ref __mpz_t op1, uint op2);
+        public delegate void __mpz_mul_ui(ref __mpz_t rop, ref __mpz_t op1, mpir_ui op2);
         public static __mpz_mul_ui mpz_mul_ui = Marshal.GetDelegateForFunctionPointer<__mpz_mul_ui>(GetMpirPointer(nameof(mpz_mul_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -170,7 +170,7 @@
         public static __mpz_addmul mpz_addmul = Marshal.GetDelegateForFunctionPointer<__mpz_addmul>(GetMpirPointer(nameof(mpz_addmul)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_addmul_ui(ref __mpz_t rop, ref __mpz_t op1, uint op2);
+        public delegate void __mpz_addmul_ui(ref __mpz_t rop, ref __mpz_t op1, mpir_ui op2);
         public static __mpz_addmul_ui mpz_addmul_ui = Marshal.GetDelegateForFunctionPointer<__mpz_addmul_ui>(GetMpirPointer(nameof(mpz_addmul_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -178,7 +178,7 @@
         public static __mpz_submul mpz_submul = Marshal.GetDelegateForFunctionPointer<__mpz_submul>(GetMpirPointer(nameof(mpz_submul)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_submul_ui(ref __mpz_t rop, ref __mpz_t op1, uint op2);
+        public delegate void __mpz_submul_ui(ref __mpz_t rop, ref __mpz_t op1, mpir_ui op2);
         public static __mpz_submul_ui mpz_submul_ui = Marshal.GetDelegateForFunctionPointer<__mpz_submul_ui>(GetMpirPointer(nameof(mpz_submul_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -208,19 +208,19 @@
         public static __mpz_cdiv_qr mpz_cdiv_qr = Marshal.GetDelegateForFunctionPointer<__mpz_cdiv_qr>(GetMpirPointer(nameof(mpz_cdiv_qr)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_cdiv_q_ui(ref __mpz_t q, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_cdiv_q_ui(ref __mpz_t q, ref __mpz_t n, mpir_ui d);
         public static __mpz_cdiv_q_ui mpz_cdiv_q_ui = Marshal.GetDelegateForFunctionPointer<__mpz_cdiv_q_ui>(GetMpirPointer(nameof(mpz_cdiv_q_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_cdiv_r_ui(ref __mpz_t r, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_cdiv_r_ui(ref __mpz_t r, ref __mpz_t n, mpir_ui d);
         public static __mpz_cdiv_r_ui mpz_cdiv_r_ui = Marshal.GetDelegateForFunctionPointer<__mpz_cdiv_r_ui>(GetMpirPointer(nameof(mpz_cdiv_r_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_cdiv_qr_ui(ref __mpz_t q, ref __mpz_t r, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_cdiv_qr_ui(ref __mpz_t q, ref __mpz_t r, ref __mpz_t n, mpir_ui d);
         public static __mpz_cdiv_qr_ui mpz_cdiv_qr_ui = Marshal.GetDelegateForFunctionPointer<__mpz_cdiv_qr_ui>(GetMpirPointer(nameof(mpz_cdiv_qr_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_cdiv_ui(ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_cdiv_ui(ref __mpz_t n, mpir_ui d);
         public static __mpz_cdiv_ui mpz_cdiv_ui = Marshal.GetDelegateForFunctionPointer<__mpz_cdiv_ui>(GetMpirPointer(nameof(mpz_cdiv_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -244,19 +244,19 @@
         public static __mpz_fdiv_qr mpz_fdiv_qr = Marshal.GetDelegateForFunctionPointer<__mpz_fdiv_qr>(GetMpirPointer(nameof(mpz_fdiv_qr)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_fdiv_q_ui(ref __mpz_t q, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_fdiv_q_ui(ref __mpz_t q, ref __mpz_t n, mpir_ui d);
         public static __mpz_fdiv_q_ui mpz_fdiv_q_ui = Marshal.GetDelegateForFunctionPointer<__mpz_fdiv_q_ui>(GetMpirPointer(nameof(mpz_fdiv_q_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_fdiv_r_ui(ref __mpz_t r, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_fdiv_r_ui(ref __mpz_t r, ref __mpz_t n, mpir_ui d);
         public static __mpz_fdiv_r_ui mpz_fdiv_r_ui = Marshal.GetDelegateForFunctionPointer<__mpz_fdiv_r_ui>(GetMpirPointer(nameof(mpz_fdiv_r_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_fdiv_qr_ui(ref __mpz_t q, ref __mpz_t r, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_fdiv_qr_ui(ref __mpz_t q, ref __mpz_t r, ref __mpz_t n, mpir_ui d);
         public static __mpz_fdiv_qr_ui mpz_fdiv_qr_ui = Marshal.GetDelegateForFunctionPointer<__mpz_fdiv_qr_ui>(GetMpirPointer(nameof(mpz_fdiv_qr_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_fdiv_ui(ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_fdiv_ui(ref __mpz_t n, mpir_ui d);
         public static __mpz_fdiv_ui mpz_fdiv_ui = Marshal.GetDelegateForFunctionPointer<__mpz_fdiv_ui>(GetMpirPointer(nameof(mpz_fdiv_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -280,19 +280,19 @@
         public static __mpz_tdiv_qr mpz_tdiv_qr = Marshal.GetDelegateForFunctionPointer<__mpz_tdiv_qr>(GetMpirPointer(nameof(mpz_tdiv_qr)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_tdiv_q_ui(ref __mpz_t q, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_tdiv_q_ui(ref __mpz_t q, ref __mpz_t n, mpir_ui d);
         public static __mpz_tdiv_q_ui mpz_tdiv_q_ui = Marshal.GetDelegateForFunctionPointer<__mpz_tdiv_q_ui>(GetMpirPointer(nameof(mpz_tdiv_q_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_tdiv_r_ui(ref __mpz_t r, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_tdiv_r_ui(ref __mpz_t r, ref __mpz_t n, mpir_ui d);
         public static __mpz_tdiv_r_ui mpz_tdiv_r_ui = Marshal.GetDelegateForFunctionPointer<__mpz_tdiv_r_ui>(GetMpirPointer(nameof(mpz_tdiv_r_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_tdiv_qr_ui(ref __mpz_t q, ref __mpz_t r, ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_tdiv_qr_ui(ref __mpz_t q, ref __mpz_t r, ref __mpz_t n, mpir_ui d);
         public static __mpz_tdiv_qr_ui mpz_tdiv_qr_ui = Marshal.GetDelegateForFunctionPointer<__mpz_tdiv_qr_ui>(GetMpirPointer(nameof(mpz_tdiv_qr_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_tdiv_ui(ref __mpz_t n, uint d);
+        public delegate mpir_ui __mpz_tdiv_ui(ref __mpz_t n, mpir_ui d);
         public static __mpz_tdiv_ui mpz_tdiv_ui = Marshal.GetDelegateForFunctionPointer<__mpz_tdiv_ui>(GetMpirPointer(nameof(mpz_tdiv_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -312,7 +312,7 @@
         public static __mpz_divexact mpz_divexact = Marshal.GetDelegateForFunctionPointer<__mpz_divexact>(GetMpirPointer(nameof(mpz_divexact)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_divexact_ui(ref __mpz_t q, ref __mpz_t n, uint d);
+        public delegate void __mpz_divexact_ui(ref __mpz_t q, ref __mpz_t n, mpir_ui d);
         public static __mpz_divexact_ui mpz_divexact_ui = Marshal.GetDelegateForFunctionPointer<__mpz_divexact_ui>(GetMpirPointer(nameof(mpz_divexact_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -320,7 +320,7 @@
         public static __mpz_divisible_p mpz_divisible_p = Marshal.GetDelegateForFunctionPointer<__mpz_divisible_p>(GetMpirPointer(nameof(mpz_divisible_p)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_divisible_ui_p(ref __mpz_t n, uint d);
+        public delegate int __mpz_divisible_ui_p(ref __mpz_t n, mpir_ui d);
         public static __mpz_divisible_ui_p mpz_divisible_ui_p = Marshal.GetDelegateForFunctionPointer<__mpz_divisible_ui_p>(GetMpirPointer(nameof(mpz_divisible_ui_p)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -332,7 +332,7 @@
         public static __mpz_congruent_p mpz_congruent_p = Marshal.GetDelegateForFunctionPointer<__mpz_congruent_p>(GetMpirPointer(nameof(mpz_congruent_p)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_congruent_ui_p(ref __mpz_t n, uint c, uint d);
+        public delegate int __mpz_congruent_ui_p(ref __mpz_t n, mpir_ui c, mpir_ui d);
         public static __mpz_congruent_ui_p mpz_congruent_ui_p = Marshal.GetDelegateForFunctionPointer<__mpz_congruent_ui_p>(GetMpirPointer(nameof(mpz_congruent_ui_p)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -346,29 +346,29 @@
         public static __mpz_powm mpz_powm = Marshal.GetDelegateForFunctionPointer<__mpz_powm>(GetMpirPointer(nameof(mpz_powm)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_powm_ui(ref __mpz_t rop, ref __mpz_t _base, uint exp, ref __mpz_t mod);
+        public delegate void __mpz_powm_ui(ref __mpz_t rop, ref __mpz_t _base, mpir_ui exp, ref __mpz_t mod);
         public static __mpz_powm_ui mpz_powm_ui = Marshal.GetDelegateForFunctionPointer<__mpz_powm_ui>(GetMpirPointer(nameof(mpz_powm_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_pow_ui(ref __mpz_t rop, ref __mpz_t _base, uint exp);
+        public delegate void __mpz_pow_ui(ref __mpz_t rop, ref __mpz_t _base, mpir_ui exp);
         public static __mpz_pow_ui mpz_pow_ui = Marshal.GetDelegateForFunctionPointer<__mpz_pow_ui>(GetMpirPointer(nameof(mpz_pow_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_ui_pow_ui(ref __mpz_t rop, uint _base, uint exp);
+        public delegate void __mpz_ui_pow_ui(ref __mpz_t rop, mpir_ui _base, mpir_ui exp);
         public static __mpz_ui_pow_ui mpz_ui_pow_ui = Marshal.GetDelegateForFunctionPointer<__mpz_ui_pow_ui>(GetMpirPointer(nameof(mpz_ui_pow_ui)));
         #endregion
 
         #region Root Extraction Functions
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_root(ref __mpz_t rop, ref __mpz_t op, uint n);
+        public delegate int __mpz_root(ref __mpz_t rop, ref __mpz_t op, mpir_ui n);
         public static __mpz_root mpz_root = Marshal.GetDelegateForFunctionPointer<__mpz_root>(GetMpirPointer(nameof(mpz_root)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_nthroot(ref __mpz_t rop, ref __mpz_t op, uint n);
+        public delegate void __mpz_nthroot(ref __mpz_t rop, ref __mpz_t op, mpir_ui n);
         public static __mpz_nthroot mpz_nthroot = Marshal.GetDelegateForFunctionPointer<__mpz_nthroot>(GetMpirPointer(nameof(mpz_nthroot)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_rootrem(ref __mpz_t root, ref __mpz_t rem, ref __mpz_t u, uint n);
+        public delegate void __mpz_rootrem(ref __mpz_t root, ref __mpz_t rem, ref __mpz_t u, mpir_ui n);
         public static __mpz_rootrem mpz_rootrem = Marshal.GetDelegateForFunctionPointer<__mpz_rootrem>(GetMpirPointer(nameof(mpz_rootrem)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -390,11 +390,11 @@
 
         #region Number Theoretic Functions
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_probable_prime_p(ref __mpz_t n, ref __gmp_randstate_t state, int prob, uint div);
+        public delegate int __mpz_probable_prime_p(ref __mpz_t n, ref __gmp_randstate_t state, int prob, mpir_ui div);
         public static __mpz_probable_prime_p mpz_probable_prime_p = Marshal.GetDelegateForFunctionPointer<__mpz_probable_prime_p>(GetMpirPointer(nameof(mpz_probable_prime_p)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_likely_prime_p(ref __mpz_t n, ref __gmp_randstate_t state, uint div);
+        public delegate int __mpz_likely_prime_p(ref __mpz_t n, ref __gmp_randstate_t state, mpir_ui div);
         public static __mpz_likely_prime_p mpz_likely_prime_p = Marshal.GetDelegateForFunctionPointer<__mpz_likely_prime_p>(GetMpirPointer(nameof(mpz_likely_prime_p)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -406,7 +406,7 @@
         public static __mpz_gcd mpz_gcd = Marshal.GetDelegateForFunctionPointer<__mpz_gcd>(GetMpirPointer(nameof(mpz_gcd)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint __mpz_gcd_ui(ref __mpz_t rop, ref __mpz_t op1, uint op2);
+        public delegate mpir_ui __mpz_gcd_ui(ref __mpz_t rop, ref __mpz_t op1, mpir_ui op2);
         public static __mpz_gcd_ui mpz_gcd_ui = Marshal.GetDelegateForFunctionPointer<__mpz_gcd_ui>(GetMpirPointer(nameof(mpz_gcd_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -418,7 +418,7 @@
         public static __mpz_lcm mpz_lcm = Marshal.GetDelegateForFunctionPointer<__mpz_lcm>(GetMpirPointer(nameof(mpz_lcm)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_lcm_ui(ref __mpz_t rop, ref __mpz_t op1, uint op2);
+        public delegate void __mpz_lcm_ui(ref __mpz_t rop, ref __mpz_t op1, mpir_ui op2);
         public static __mpz_lcm_ui mpz_lcm_ui = Marshal.GetDelegateForFunctionPointer<__mpz_lcm_ui>(GetMpirPointer(nameof(mpz_lcm_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -430,19 +430,19 @@
         public static __mpz_jacobi mpz_jacobi = Marshal.GetDelegateForFunctionPointer<__mpz_jacobi>(GetMpirPointer(nameof(mpz_jacobi)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_kronecker_si(ref __mpz_t a, int b);
+        public delegate int __mpz_kronecker_si(ref __mpz_t a, mpir_si b);
         public static __mpz_kronecker_si mpz_kronecker_si = Marshal.GetDelegateForFunctionPointer<__mpz_kronecker_si>(GetMpirPointer(nameof(mpz_kronecker_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_kronecker_ui(ref __mpz_t a, uint b);
+        public delegate int __mpz_kronecker_ui(ref __mpz_t a, mpir_ui b);
         public static __mpz_kronecker_ui mpz_kronecker_ui = Marshal.GetDelegateForFunctionPointer<__mpz_kronecker_ui>(GetMpirPointer(nameof(mpz_kronecker_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_si_kronecker(int a, ref __mpz_t b);
+        public delegate int __mpz_si_kronecker(mpir_si a, ref __mpz_t b);
         public static __mpz_si_kronecker mpz_si_kronecker = Marshal.GetDelegateForFunctionPointer<__mpz_si_kronecker>(GetMpirPointer(nameof(mpz_si_kronecker)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_ui_kronecker(uint a, ref __mpz_t b);
+        public delegate int __mpz_ui_kronecker(mpir_ui a, ref __mpz_t b);
         public static __mpz_ui_kronecker mpz_ui_kronecker = Marshal.GetDelegateForFunctionPointer<__mpz_ui_kronecker>(GetMpirPointer(nameof(mpz_ui_kronecker)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -466,27 +466,27 @@
         public static __mpz_primorial_ui mpz_primorial_ui = Marshal.GetDelegateForFunctionPointer<__mpz_primorial_ui>(GetMpirPointer(nameof(mpz_primorial_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_bin_ui(ref __mpz_t rop, ref __mpz_t n, uint k);
+        public delegate void __mpz_bin_ui(ref __mpz_t rop, ref __mpz_t n, mpir_ui k);
         public static __mpz_bin_ui mpz_bin_ui = Marshal.GetDelegateForFunctionPointer<__mpz_bin_ui>(GetMpirPointer(nameof(mpz_bin_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_bin_uiui(ref __mpz_t rop, uint n, uint k);
+        public delegate void __mpz_bin_uiui(ref __mpz_t rop, mpir_ui n, mpir_ui k);
         public static __mpz_bin_uiui mpz_bin_uiui = Marshal.GetDelegateForFunctionPointer<__mpz_bin_uiui>(GetMpirPointer(nameof(mpz_bin_uiui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_fib_ui(ref __mpz_t fn, uint n);
+        public delegate void __mpz_fib_ui(ref __mpz_t fn, mpir_ui n);
         public static __mpz_fib_ui mpz_fib_ui = Marshal.GetDelegateForFunctionPointer<__mpz_fib_ui>(GetMpirPointer(nameof(mpz_fib_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_fib2_ui(ref __mpz_t fn, ref __mpz_t fnsub1, uint n);
+        public delegate void __mpz_fib2_ui(ref __mpz_t fn, ref __mpz_t fnsub1, mpir_ui n);
         public static __mpz_fib2_ui mpz_fib2_ui = Marshal.GetDelegateForFunctionPointer<__mpz_fib2_ui>(GetMpirPointer(nameof(mpz_fib2_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_lucnum_ui(ref __mpz_t ln, uint n);
+        public delegate void __mpz_lucnum_ui(ref __mpz_t ln, mpir_ui n);
         public static __mpz_lucnum_ui mpz_lucnum_ui = Marshal.GetDelegateForFunctionPointer<__mpz_lucnum_ui>(GetMpirPointer(nameof(mpz_lucnum_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_lucnum2_ui(ref __mpz_t ln, ref __mpz_t lnsub1, uint n);
+        public delegate void __mpz_lucnum2_ui(ref __mpz_t ln, ref __mpz_t lnsub1, mpir_ui n);
         public static __mpz_lucnum2_ui mpz_lucnum2_ui = Marshal.GetDelegateForFunctionPointer<__mpz_lucnum2_ui>(GetMpirPointer(nameof(mpz_lucnum2_ui)));
         #endregion
 
@@ -500,11 +500,11 @@
         public static __mpz_cmp_d mpz_cmp_d = Marshal.GetDelegateForFunctionPointer<__mpz_cmp_d>(GetMpirPointer(nameof(mpz_cmp_d)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_cmp_si(ref __mpz_t op1, int op2);
+        public delegate int __mpz_cmp_si(ref __mpz_t op1, mpir_si op2);
         public static __mpz_cmp_si mpz_cmp_si = Marshal.GetDelegateForFunctionPointer<__mpz_cmp_si>(GetMpirPointer(nameof(mpz_cmp_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_cmp_ui(ref __mpz_t op1, uint op2);
+        public delegate int __mpz_cmp_ui(ref __mpz_t op1, mpir_ui op2);
         public static __mpz_cmp_ui mpz_cmp_ui = Marshal.GetDelegateForFunctionPointer<__mpz_cmp_ui>(GetMpirPointer(nameof(mpz_cmp_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -516,7 +516,7 @@
         public static __mpz_cmpabs_d mpz_cmpabs_d = Marshal.GetDelegateForFunctionPointer<__mpz_cmpabs_d>(GetMpirPointer(nameof(mpz_cmpabs_d)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpz_cmpabs_ui(ref __mpz_t op1, uint op2);
+        public delegate int __mpz_cmpabs_ui(ref __mpz_t op1, mpir_ui op2);
         public static __mpz_cmpabs_ui mpz_cmpabs_ui = Marshal.GetDelegateForFunctionPointer<__mpz_cmpabs_ui>(GetMpirPointer(nameof(mpz_cmpabs_ui)));
         #endregion
 

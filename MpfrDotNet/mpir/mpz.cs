@@ -44,14 +44,14 @@
             NativeMethods.mpz_set(ref rop.Value, ref op.Value);
         }
 
-        public static void set_ui(mpz_t rop, uint op)
+        public static void set_ui(mpz_t rop, ulong op)
         {
-            NativeMethods.mpz_set_ui(ref rop.Value, op);
+            NativeMethods.mpz_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
         }
 
-        public static void set_si(mpz_t rop, int op)
+        public static void set_si(mpz_t rop, long op)
         {
-            NativeMethods.mpz_set_si(ref rop.Value, op);
+            NativeMethods.mpz_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
         }
 
         public static void set_ux(mpz_t rop, ulong op)
@@ -96,14 +96,14 @@
             NativeMethods.mpz_init_set(ref rop.Value, ref op.Value);
         }
 
-        public static void init_set_ui(mpz_t rop, uint op)
+        public static void init_set_ui(mpz_t rop, ulong op)
         {
-            NativeMethods.mpz_init_set_ui(ref rop.Value, op);
+            NativeMethods.mpz_init_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
         }
 
-        public static void init_set_si(mpz_t rop, int op)
+        public static void init_set_si(mpz_t rop, long op)
         {
-            NativeMethods.mpz_init_set_si(ref rop.Value, op);
+            NativeMethods.mpz_init_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
         }
 
         public static void init_set_ux(mpz_t rop, ulong op)
@@ -123,14 +123,14 @@
         #endregion
 
         #region Conversion Functions
-        public static uint get_ui(mpz_t op)
+        public static ulong get_ui(mpz_t op)
         {
-            return NativeMethods.mpz_get_ui(ref op.Value);
+            return (ulong)NativeMethods.mpz_get_ui(ref op.Value);
         }
 
-        public static int get_si(mpz_t op)
+        public static long get_si(mpz_t op)
         {
-            return NativeMethods.mpz_get_si(ref op.Value);
+            return (long)NativeMethods.mpz_get_si(ref op.Value);
         }
 
         public static ulong get_ux(mpz_t op)
@@ -165,9 +165,9 @@
             NativeMethods.mpz_add(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void add_ui(mpz_t rop, mpz_t op1, uint op2)
+        public static void add_ui(mpz_t rop, mpz_t op1, ulong op2)
         {
-            NativeMethods.mpz_add_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpz_add_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void sub(mpz_t rop, mpz_t op1, mpz_t op2)
@@ -175,14 +175,14 @@
             NativeMethods.mpz_sub(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void sub_ui(mpz_t rop, mpz_t op1, uint op2)
+        public static void sub_ui(mpz_t rop, mpz_t op1, ulong op2)
         {
-            NativeMethods.mpz_sub_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpz_sub_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
-        public static void ui_sub(mpz_t rop, uint op1, mpz_t op2)
+        public static void ui_sub(mpz_t rop, ulong op1, mpz_t op2)
         {
-            NativeMethods.mpz_ui_sub(ref rop.Value, op1, ref op2.Value);
+            NativeMethods.mpz_ui_sub(ref rop.Value, (NativeMethods.mpir_ui)op1, ref op2.Value);
         }
 
         public static void mul(mpz_t rop, mpz_t op1, mpz_t op2)
@@ -190,14 +190,14 @@
             NativeMethods.mpz_mul(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void mul_si(mpz_t rop, mpz_t op1, int op2)
+        public static void mul_si(mpz_t rop, mpz_t op1, long op2)
         {
-            NativeMethods.mpz_mul_si(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpz_mul_si(ref rop.Value, ref op1.Value, (NativeMethods.mpir_si)op2);
         }
 
-        public static void mul_ui(mpz_t rop, mpz_t op1, uint op2)
+        public static void mul_ui(mpz_t rop, mpz_t op1, ulong op2)
         {
-            NativeMethods.mpz_mul_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpz_mul_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void addmul(mpz_t rop, mpz_t op1, mpz_t op2)
@@ -205,9 +205,9 @@
             NativeMethods.mpz_addmul(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void addmul_ui(mpz_t rop, mpz_t op1, uint op2)
+        public static void addmul_ui(mpz_t rop, mpz_t op1, ulong op2)
         {
-            NativeMethods.mpz_addmul_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpz_addmul_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void submul(mpz_t rop, mpz_t op1, mpz_t op2)
@@ -215,9 +215,9 @@
             NativeMethods.mpz_submul(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void submul_ui(mpz_t rop, mpz_t op1, uint op2)
+        public static void submul_ui(mpz_t rop, mpz_t op1, ulong op2)
         {
-            NativeMethods.mpz_submul_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpz_submul_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void mul_2exp(mpz_t rop, mpz_t op1, ulong op2)
@@ -252,24 +252,24 @@
             NativeMethods.mpz_cdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
         }
 
-        public static uint cdiv_q_ui(mpz_t q, mpz_t n, uint d)
+        public static ulong cdiv_q_ui(mpz_t q, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_cdiv_q_ui(ref q.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_cdiv_q_ui(ref q.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint cdiv_r_ui(mpz_t r, mpz_t n, uint d)
+        public static ulong cdiv_r_ui(mpz_t r, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_cdiv_r_ui(ref r.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_cdiv_r_ui(ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint cdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, uint d)
+        public static ulong cdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_cdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_cdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint cdiv_ui(mpz_t n, uint d)
+        public static ulong cdiv_ui(mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_cdiv_ui(ref n.Value, d);
+            return (ulong)NativeMethods.mpz_cdiv_ui(ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
         public static void cdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
@@ -297,24 +297,24 @@
             NativeMethods.mpz_fdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
         }
 
-        public static uint fdiv_q_ui(mpz_t q, mpz_t n, uint d)
+        public static ulong fdiv_q_ui(mpz_t q, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_fdiv_q_ui(ref q.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_fdiv_q_ui(ref q.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint fdiv_r_ui(mpz_t r, mpz_t n, uint d)
+        public static ulong fdiv_r_ui(mpz_t r, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_fdiv_r_ui(ref r.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_fdiv_r_ui(ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint fdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, uint d)
+        public static ulong fdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_fdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_fdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint fdiv_ui(mpz_t n, uint d)
+        public static ulong fdiv_ui(mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_fdiv_ui(ref n.Value, d);
+            return (ulong)NativeMethods.mpz_fdiv_ui(ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
         public static void fdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
@@ -342,24 +342,24 @@
             NativeMethods.mpz_tdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
         }
 
-        public static uint tdiv_q_ui(mpz_t q, mpz_t n, uint d)
+        public static ulong tdiv_q_ui(mpz_t q, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_tdiv_q_ui(ref q.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_tdiv_q_ui(ref q.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint tdiv_r_ui(mpz_t r, mpz_t n, uint d)
+        public static ulong tdiv_r_ui(mpz_t r, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_tdiv_r_ui(ref r.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_tdiv_r_ui(ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint tdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, uint d)
+        public static ulong tdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_tdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_tdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
-        public static uint tdiv_ui(mpz_t n, uint d)
+        public static ulong tdiv_ui(mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_tdiv_ui(ref n.Value, d);
+            return (ulong)NativeMethods.mpz_tdiv_ui(ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
         public static void tdiv_q_2exp(mpz_t q, mpz_t n, ulong b)
@@ -377,9 +377,9 @@
             NativeMethods.mpz_mod(ref r.Value, ref n.Value, ref d.Value);
         }
 
-        public static uint mod_ui(mpz_t r, mpz_t n, uint d)
+        public static ulong mod_ui(mpz_t r, mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_fdiv_r_ui(ref r.Value, ref n.Value, d);
+            return (ulong)NativeMethods.mpz_fdiv_r_ui(ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
         public static void divexact(mpz_t q, mpz_t n, mpz_t d)
@@ -387,9 +387,9 @@
             NativeMethods.mpz_divexact(ref q.Value, ref n.Value, ref d.Value);
         }
 
-        public static void divexact_ui(mpz_t q, mpz_t n, uint d)
+        public static void divexact_ui(mpz_t q, mpz_t n, ulong d)
         {
-            NativeMethods.mpz_divexact_ui(ref q.Value, ref n.Value, d);
+            NativeMethods.mpz_divexact_ui(ref q.Value, ref n.Value, (NativeMethods.mpir_ui)d);
         }
 
         public static bool divisible_p(mpz_t n, mpz_t d)
@@ -397,9 +397,9 @@
             return NativeMethods.mpz_divisible_p(ref n.Value, ref d.Value) != 0;
         }
 
-        public static bool divisible_ui_p(mpz_t n, uint d)
+        public static bool divisible_ui_p(mpz_t n, ulong d)
         {
-            return NativeMethods.mpz_divisible_ui_p(ref n.Value, d) != 0;
+            return NativeMethods.mpz_divisible_ui_p(ref n.Value, (NativeMethods.mpir_ui)d) != 0;
         }
 
         public static bool divisible_2exp_p(mpz_t n, ulong b)
@@ -412,9 +412,9 @@
             return NativeMethods.mpz_congruent_p(ref n.Value, ref c.Value, ref d.Value) != 0;
         }
 
-        public static bool congruent_ui_p(mpz_t n, uint c, uint d)
+        public static bool congruent_ui_p(mpz_t n, ulong c, ulong d)
         {
-            return NativeMethods.mpz_congruent_ui_p(ref n.Value, c, d) != 0;
+            return NativeMethods.mpz_congruent_ui_p(ref n.Value, (NativeMethods.mpir_ui)c, (NativeMethods.mpir_ui)d) != 0;
         }
 
         public static bool congruent_2exp_p(mpz_t n, mpz_t c, ulong b)
@@ -429,36 +429,36 @@
             NativeMethods.mpz_powm(ref rop.Value, ref opBase.Value, ref exp.Value, ref mod.Value);
         }
 
-        public static void powm_ui(mpz_t rop, mpz_t opBase, uint exp, mpz_t mod)
+        public static void powm_ui(mpz_t rop, mpz_t opBase, ulong exp, mpz_t mod)
         {
-            NativeMethods.mpz_powm_ui(ref rop.Value, ref opBase.Value, exp, ref mod.Value);
+            NativeMethods.mpz_powm_ui(ref rop.Value, ref opBase.Value, (NativeMethods.mpir_ui)exp, ref mod.Value);
         }
 
-        public static void pow_ui(mpz_t rop, mpz_t opBase, uint exp)
+        public static void pow_ui(mpz_t rop, mpz_t opBase, ulong exp)
         {
-            NativeMethods.mpz_pow_ui(ref rop.Value, ref opBase.Value, exp);
+            NativeMethods.mpz_pow_ui(ref rop.Value, ref opBase.Value, (NativeMethods.mpir_ui)exp);
         }
 
-        public static void ui_pow_ui(mpz_t rop, uint opBase, uint exp)
+        public static void ui_pow_ui(mpz_t rop, ulong opBase, ulong exp)
         {
-            NativeMethods.mpz_ui_pow_ui(ref rop.Value, opBase, exp);
+            NativeMethods.mpz_ui_pow_ui(ref rop.Value, (NativeMethods.mpir_ui)opBase, (NativeMethods.mpir_ui)exp);
         }
         #endregion
 
         #region Root Extraction Functions
-        public static bool root(mpz_t rop, mpz_t op, uint n)
+        public static bool root(mpz_t rop, mpz_t op, ulong n)
         {
-            return NativeMethods.mpz_root(ref rop.Value, ref op.Value, n) != 0;
+            return NativeMethods.mpz_root(ref rop.Value, ref op.Value, (NativeMethods.mpir_ui)n) != 0;
         }
 
-        public static void nthroot(mpz_t rop, mpz_t op, uint n)
+        public static void nthroot(mpz_t rop, mpz_t op, ulong n)
         {
-            NativeMethods.mpz_nthroot(ref rop.Value, ref op.Value, n);
+            NativeMethods.mpz_nthroot(ref rop.Value, ref op.Value, (NativeMethods.mpir_ui)n);
         }
 
-        public static void rootrem(mpz_t root, mpz_t rem, mpz_t u, uint n)
+        public static void rootrem(mpz_t root, mpz_t rem, mpz_t u, ulong n)
         {
-            NativeMethods.mpz_rootrem(ref root.Value, ref rem.Value, ref u.Value, n);
+            NativeMethods.mpz_rootrem(ref root.Value, ref rem.Value, ref u.Value, (NativeMethods.mpir_ui)n);
         }
 
         public static void sqrt(mpz_t rop, mpz_t op)
@@ -483,14 +483,14 @@
         #endregion
 
         #region Number Theoretic Functions
-        public static bool probable_prime_p(mpz_t n, randstate_t state, int prob, uint div)
+        public static bool probable_prime_p(mpz_t n, randstate_t state, int prob, ulong div)
         {
-            return NativeMethods.mpz_probable_prime_p(ref n.Value, ref state.Value, prob, div) != 0;
+            return NativeMethods.mpz_probable_prime_p(ref n.Value, ref state.Value, prob, (NativeMethods.mpir_ui)div) != 0;
         }
 
-        public static bool likely_prime_p(mpz_t n, randstate_t state, uint div)
+        public static bool likely_prime_p(mpz_t n, randstate_t state, ulong div)
         {
-            return NativeMethods.mpz_likely_prime_p(ref n.Value, ref state.Value, div) != 0;
+            return NativeMethods.mpz_likely_prime_p(ref n.Value, ref state.Value, (NativeMethods.mpir_ui)div) != 0;
         }
 
         public static void next_prime_candidate(mpz_t rop, mpz_t op, randstate_t state)
@@ -503,9 +503,9 @@
             NativeMethods.mpz_gcd(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static uint gcd_ui(mpz_t rop, mpz_t op1, uint op2)
+        public static ulong gcd_ui(mpz_t rop, mpz_t op1, ulong op2)
         {
-            return NativeMethods.mpz_gcd_ui(ref rop.Value, ref op1.Value, op2);
+            return (ulong)NativeMethods.mpz_gcd_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void gcdext(mpz_t g, mpz_t s, mpz_t t, mpz_t a, mpz_t b)
@@ -518,9 +518,9 @@
             NativeMethods.mpz_lcm(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void lcm_ui(mpz_t rop, mpz_t op1, uint op2)
+        public static void lcm_ui(mpz_t rop, mpz_t op1, ulong op2)
         {
-            NativeMethods.mpz_lcm_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpz_lcm_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static bool invert(mpz_t rop, mpz_t op1, mpz_t op2)
@@ -543,24 +543,24 @@
             return NativeMethods.mpz_jacobi(ref a.Value, ref b.Value);
         }
 
-        public static int kronecker_si(mpz_t a, int b)
+        public static int kronecker_si(mpz_t a, long b)
         {
-            return NativeMethods.mpz_kronecker_si(ref a.Value, b);
+            return NativeMethods.mpz_kronecker_si(ref a.Value, (NativeMethods.mpir_si)b);
         }
 
-        public static int kronecker_ui(mpz_t a, uint b)
+        public static int kronecker_ui(mpz_t a, ulong b)
         {
-            return NativeMethods.mpz_kronecker_ui(ref a.Value, b);
+            return NativeMethods.mpz_kronecker_ui(ref a.Value, (NativeMethods.mpir_ui)b);
         }
 
-        public static int si_kronecker(int a, mpz_t b)
+        public static int si_kronecker(long a, mpz_t b)
         {
-            return NativeMethods.mpz_si_kronecker(a, ref b.Value);
+            return NativeMethods.mpz_si_kronecker((NativeMethods.mpir_si)a, ref b.Value);
         }
 
-        public static int ui_kronecker(uint a, mpz_t b)
+        public static int ui_kronecker(ulong a, mpz_t b)
         {
-            return NativeMethods.mpz_ui_kronecker(a, ref b.Value);
+            return NativeMethods.mpz_ui_kronecker((NativeMethods.mpir_ui)a, ref b.Value);
         }
 
         public static ulong remove(mpz_t rop, mpz_t op, mpz_t f)
@@ -588,34 +588,34 @@
             NativeMethods.mpz_primorial_ui(ref rop.Value, (NativeMethods.unsignedlongint)n);
         }
 
-        public static void bin_ui(mpz_t rop, mpz_t n, uint k)
+        public static void bin_ui(mpz_t rop, mpz_t n, ulong k)
         {
-            NativeMethods.mpz_bin_ui(ref rop.Value, ref n.Value, k);
+            NativeMethods.mpz_bin_ui(ref rop.Value, ref n.Value, (NativeMethods.mpir_ui)k);
         }
 
-        public static void bin_uiui(mpz_t rop, uint n, uint k)
+        public static void bin_uiui(mpz_t rop, ulong n, ulong k)
         {
-            NativeMethods.mpz_bin_uiui(ref rop.Value, n, k);
+            NativeMethods.mpz_bin_uiui(ref rop.Value, (NativeMethods.mpir_ui)n, (NativeMethods.mpir_ui)k);
         }
 
-        public static void fib_ui(mpz_t fn, uint n)
+        public static void fib_ui(mpz_t fn, ulong n)
         {
-            NativeMethods.mpz_fib_ui(ref fn.Value, n);
+            NativeMethods.mpz_fib_ui(ref fn.Value, (NativeMethods.mpir_ui)n);
         }
 
-        public static void fib2_ui(mpz_t fn, mpz_t fnsub1, uint n)
+        public static void fib2_ui(mpz_t fn, mpz_t fnsub1, ulong n)
         {
-            NativeMethods.mpz_fib2_ui(ref fn.Value, ref fnsub1.Value, n);
+            NativeMethods.mpz_fib2_ui(ref fn.Value, ref fnsub1.Value, (NativeMethods.mpir_ui)n);
         }
 
-        public static void lucnum_ui(mpz_t ln, uint n)
+        public static void lucnum_ui(mpz_t ln, ulong n)
         {
-            NativeMethods.mpz_lucnum_ui(ref ln.Value, n);
+            NativeMethods.mpz_lucnum_ui(ref ln.Value, (NativeMethods.mpir_ui)n);
         }
 
-        public static void lucnum2_ui(mpz_t ln, mpz_t lnsub1, uint n)
+        public static void lucnum2_ui(mpz_t ln, mpz_t lnsub1, ulong n)
         {
-            NativeMethods.mpz_lucnum2_ui(ref ln.Value, ref lnsub1.Value, n);
+            NativeMethods.mpz_lucnum2_ui(ref ln.Value, ref lnsub1.Value, (NativeMethods.mpir_ui)n);
         }
         #endregion
 
@@ -630,14 +630,14 @@
             return NativeMethods.mpz_cmp_d(ref op1.Value, op2);
         }
 
-        public static int cmp_si(mpz_t op1, int op2)
+        public static int cmp_si(mpz_t op1, long op2)
         {
-            return NativeMethods.mpz_cmp_si(ref op1.Value, op2);
+            return NativeMethods.mpz_cmp_si(ref op1.Value, (NativeMethods.mpir_si)op2);
         }
 
-        public static int cmp_ui(mpz_t op1, uint op2)
+        public static int cmp_ui(mpz_t op1, ulong op2)
         {
-            return NativeMethods.mpz_cmp_ui(ref op1.Value, op2);
+            return NativeMethods.mpz_cmp_ui(ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static int cmpabs(mpz_t op1, mpz_t op2)
@@ -650,9 +650,9 @@
             return NativeMethods.mpz_cmpabs_d(ref op1.Value, op2);
         }
 
-        public static int cmpabs_ui(mpz_t op1, uint op2)
+        public static int cmpabs_ui(mpz_t op1, ulong op2)
         {
-            return NativeMethods.mpz_cmpabs_ui(ref op1.Value, op2);
+            return NativeMethods.mpz_cmpabs_ui(ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static int sgn(mpz_t op)

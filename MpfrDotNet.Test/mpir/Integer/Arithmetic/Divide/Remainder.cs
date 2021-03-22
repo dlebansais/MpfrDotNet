@@ -133,13 +133,13 @@ namespace TestInteger.Arithmetic.Divide
             AsString = a.ToString();
             Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 17835;
+            ulong b = 17835;
 
-            uint c = a.AbsRemainder(b);
+            ulong c = a.AbsRemainder(b);
 
             Assert.AreEqual(16785U, c);
 
-            uint d = a.AbsRemainder(b, Rounding.TowardZero);
+            ulong d = a.AbsRemainder(b, Rounding.TowardZero);
 
             Assert.AreEqual(16785U, d);
         }
@@ -153,9 +153,9 @@ namespace TestInteger.Arithmetic.Divide
             AsString = a.ToString();
             Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 17835;
+            ulong b = 17835;
 
-            uint c = a.AbsRemainder(b, Rounding.TowardPositiveInfinity);
+            ulong c = a.AbsRemainder(b, Rounding.TowardPositiveInfinity);
 
             Assert.AreEqual(16785U, c);
         }
@@ -169,9 +169,9 @@ namespace TestInteger.Arithmetic.Divide
             AsString = a.ToString();
             Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 17835;
+            ulong b = 17835;
 
-            uint c = a.AbsRemainder(b, Rounding.TowardNegativeInfinity);
+            ulong c = a.AbsRemainder(b, Rounding.TowardNegativeInfinity);
 
             AsString = c.ToString();
             Assert.AreEqual(1050U, c);

@@ -36,14 +36,14 @@
             NativeMethods.mpq_set_z(ref rop.Value, ref op.Value);
         }
 
-        public static void set_ui(mpq_t rop, uint op1, uint op2)
+        public static void set_ui(mpq_t rop, ulong op1, ulong op2)
         {
-            NativeMethods.mpq_set_ui(ref rop.Value, op1, op2);
+            NativeMethods.mpq_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op1, (NativeMethods.mpir_ui)op2);
         }
 
-        public static void set_si(mpq_t rop, int op1, uint op2)
+        public static void set_si(mpq_t rop, long op1, ulong op2)
         {
-            NativeMethods.mpq_set_si(ref rop.Value, op1, op2);
+            NativeMethods.mpq_set_si(ref rop.Value, (NativeMethods.mpir_si)op1, (NativeMethods.mpir_ui)op2);
         }
 
         public static bool set_str(mpq_t rop, string str, int strBase)
@@ -137,14 +137,14 @@
             return NativeMethods.mpq_cmp_z(ref op1.Value, ref op2.Value);
         }
 
-        public static int cmp_ui(mpq_t op1, uint num2, uint den2)
+        public static int cmp_ui(mpq_t op1, ulong num2, ulong den2)
         {
-            return NativeMethods.mpq_cmp_ui(ref op1.Value, num2, den2);
+            return NativeMethods.mpq_cmp_ui(ref op1.Value, (NativeMethods.mpir_ui)num2, (NativeMethods.mpir_ui)den2);
         }
 
-        public static int cmp_si(mpq_t op1, int num2, uint den2)
+        public static int cmp_si(mpq_t op1, long num2, ulong den2)
         {
-            return NativeMethods.mpq_cmp_si(ref op1.Value, num2, den2);
+            return NativeMethods.mpq_cmp_si(ref op1.Value, (NativeMethods.mpir_si)num2, (NativeMethods.mpir_ui)den2);
         }
 
         public static int sgn(mpq_t op)

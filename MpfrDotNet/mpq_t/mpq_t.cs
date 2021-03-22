@@ -31,19 +31,19 @@
             mpq_set_z(ref Value, ref other.Value);
         }
 
-        public mpq_t(uint n, uint d, bool canonicalize = false)
+        public mpq_t(ulong n, ulong d, bool canonicalize = false)
         {
             mpq_init(ref Value);
-            mpq_set_ui(ref Value, n, d);
+            mpq_set_ui(ref Value, (mpir_ui)n, (mpir_ui)d);
 
             if (canonicalize)
                 mpq_canonicalize(ref Value);
         }
 
-        public mpq_t(int n, uint d, bool canonicalize = false)
+        public mpq_t(long n, ulong d, bool canonicalize = false)
         {
             mpq_init(ref Value);
-            mpq_set_si(ref Value, n, d);
+            mpq_set_si(ref Value, (mpir_si)n, (mpir_ui)d);
 
             if (canonicalize)
                 mpq_canonicalize(ref Value);

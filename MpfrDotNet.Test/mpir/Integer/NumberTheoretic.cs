@@ -100,14 +100,14 @@ namespace TestInteger
             AsString = a.ToString();
             Assert.AreEqual("29927402397991286489627837734179186385188296382227", AsString);
 
-            uint c = 80;
+            ulong c = 80;
 
             using mpz_t b = a * c;
             AsString = b.ToString();
             Assert.AreEqual("2394192191839302919170227018734334910815063710578160", AsString);
 
             using mpz_t d = new();
-            uint Gcd = mpz.gcd_ui(d, b, c);
+            ulong Gcd = mpz.gcd_ui(d, b, c);
 
             AsString = d.ToString();
             Assert.AreEqual("80", AsString);

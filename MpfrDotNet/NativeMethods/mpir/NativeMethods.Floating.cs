@@ -54,11 +54,11 @@
         public static __mpf_set mpf_set = Marshal.GetDelegateForFunctionPointer<__mpf_set>(GetMpirPointer(nameof(mpf_set)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_set_ui(ref __mpf_t rop, uint op);
+        public delegate void __mpf_set_ui(ref __mpf_t rop, mpir_ui op);
         public static __mpf_set_ui mpf_set_ui = Marshal.GetDelegateForFunctionPointer<__mpf_set_ui>(GetMpirPointer(nameof(mpf_set_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_set_si(ref __mpf_t rop, int op);
+        public delegate void __mpf_set_si(ref __mpf_t rop, mpir_si op);
         public static __mpf_set_si mpf_set_si = Marshal.GetDelegateForFunctionPointer<__mpf_set_si>(GetMpirPointer(nameof(mpf_set_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -88,11 +88,11 @@
         public static __mpf_init_set mpf_init_set = Marshal.GetDelegateForFunctionPointer<__mpf_init_set>(GetMpirPointer(nameof(mpf_init_set)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_init_set_ui(ref __mpf_t rop, uint op);
+        public delegate void __mpf_init_set_ui(ref __mpf_t rop, mpir_ui op);
         public static __mpf_init_set_ui mpf_init_set_ui = Marshal.GetDelegateForFunctionPointer<__mpf_init_set_ui>(GetMpirPointer(nameof(mpf_init_set_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_init_set_si(ref __mpf_t rop, int op);
+        public delegate void __mpf_init_set_si(ref __mpf_t rop, mpir_si op);
         public static __mpf_init_set_si mpf_init_set_si = Marshal.GetDelegateForFunctionPointer<__mpf_init_set_si>(GetMpirPointer(nameof(mpf_init_set_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -132,7 +132,7 @@
         public static __mpf_add mpf_add = Marshal.GetDelegateForFunctionPointer<__mpf_add>(GetMpirPointer(nameof(mpf_add)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_add_ui(ref __mpf_t rop, ref __mpf_t op1, uint op2);
+        public delegate void __mpf_add_ui(ref __mpf_t rop, ref __mpf_t op1, mpir_ui op2);
         public static __mpf_add_ui mpf_add_ui = Marshal.GetDelegateForFunctionPointer<__mpf_add_ui>(GetMpirPointer(nameof(mpf_add_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -140,11 +140,11 @@
         public static __mpf_sub mpf_sub = Marshal.GetDelegateForFunctionPointer<__mpf_sub>(GetMpirPointer(nameof(mpf_sub)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_ui_sub(ref __mpf_t rop, uint op1, ref __mpf_t op2);
+        public delegate void __mpf_ui_sub(ref __mpf_t rop, mpir_ui op1, ref __mpf_t op2);
         public static __mpf_ui_sub mpf_ui_sub = Marshal.GetDelegateForFunctionPointer<__mpf_ui_sub>(GetMpirPointer(nameof(mpf_ui_sub)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_sub_ui(ref __mpf_t rop, ref __mpf_t op1, uint op2);
+        public delegate void __mpf_sub_ui(ref __mpf_t rop, ref __mpf_t op1, mpir_ui op2);
         public static __mpf_sub_ui mpf_sub_ui = Marshal.GetDelegateForFunctionPointer<__mpf_sub_ui>(GetMpirPointer(nameof(mpf_sub_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -152,7 +152,7 @@
         public static __mpf_mul mpf_mul = Marshal.GetDelegateForFunctionPointer<__mpf_mul>(GetMpirPointer(nameof(mpf_mul)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_mul_ui(ref __mpf_t rop, ref __mpf_t op1, uint op2);
+        public delegate void __mpf_mul_ui(ref __mpf_t rop, ref __mpf_t op1, mpir_ui op2);
         public static __mpf_mul_ui mpf_mul_ui = Marshal.GetDelegateForFunctionPointer<__mpf_mul_ui>(GetMpirPointer(nameof(mpf_mul_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -160,11 +160,11 @@
         public static __mpf_div mpf_div = Marshal.GetDelegateForFunctionPointer<__mpf_div>(GetMpirPointer(nameof(mpf_div)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_ui_div(ref __mpf_t rop, uint op1, ref __mpf_t op2);
+        public delegate void __mpf_ui_div(ref __mpf_t rop, mpir_ui op1, ref __mpf_t op2);
         public static __mpf_ui_div mpf_ui_div = Marshal.GetDelegateForFunctionPointer<__mpf_ui_div>(GetMpirPointer(nameof(mpf_ui_div)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_div_ui(ref __mpf_t rop, ref __mpf_t op1, uint op2);
+        public delegate void __mpf_div_ui(ref __mpf_t rop, ref __mpf_t op1, mpir_ui op2);
         public static __mpf_div_ui mpf_div_ui = Marshal.GetDelegateForFunctionPointer<__mpf_div_ui>(GetMpirPointer(nameof(mpf_div_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -172,11 +172,11 @@
         public static __mpf_sqrt mpf_sqrt = Marshal.GetDelegateForFunctionPointer<__mpf_sqrt>(GetMpirPointer(nameof(mpf_sqrt)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_sqrt_ui(ref __mpf_t rop, uint op);
+        public delegate void __mpf_sqrt_ui(ref __mpf_t rop, mpir_ui op);
         public static __mpf_sqrt_ui mpf_sqrt_ui = Marshal.GetDelegateForFunctionPointer<__mpf_sqrt_ui>(GetMpirPointer(nameof(mpf_sqrt_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpf_pow_ui(ref __mpf_t rop, ref __mpf_t op1, uint op2);
+        public delegate void __mpf_pow_ui(ref __mpf_t rop, ref __mpf_t op1, mpir_ui op2);
         public static __mpf_pow_ui mpf_pow_ui = Marshal.GetDelegateForFunctionPointer<__mpf_pow_ui>(GetMpirPointer(nameof(mpf_pow_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -206,11 +206,11 @@
         public static __mpf_cmp_d mpf_cmp_d = Marshal.GetDelegateForFunctionPointer<__mpf_cmp_d>(GetMpirPointer(nameof(mpf_cmp_d)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpf_cmp_ui(ref __mpf_t op1, uint op2);
+        public delegate int __mpf_cmp_ui(ref __mpf_t op1, mpir_ui op2);
         public static __mpf_cmp_ui mpf_cmp_ui = Marshal.GetDelegateForFunctionPointer<__mpf_cmp_ui>(GetMpirPointer(nameof(mpf_cmp_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpf_cmp_si(ref __mpf_t op1, int op2);
+        public delegate int __mpf_cmp_si(ref __mpf_t op1, mpir_si op2);
         public static __mpf_cmp_si mpf_cmp_si = Marshal.GetDelegateForFunctionPointer<__mpf_cmp_si>(GetMpirPointer(nameof(mpf_cmp_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

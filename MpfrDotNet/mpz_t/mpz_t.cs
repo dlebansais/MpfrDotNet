@@ -39,13 +39,13 @@
         // Initializes a new mpz_t to the unsigned int op.
         public mpz_t(uint op)
         {
-            mpz_init_set_ui(ref Value, op);
+            mpz_init_set_ui(ref Value, (mpir_ui)op);
         }
 
         // Initializes a new mpz_t to the int op.
         public mpz_t(int op)
         {
-            mpz_init_set_si(ref Value, op);
+            mpz_init_set_si(ref Value, (mpir_si)op);
         }
 
         // Initializes a new mpz_t to the unsigned long op.
@@ -194,12 +194,12 @@
 
         public static explicit operator int(mpz_t value)
         {
-            return mpz_get_si(ref value.Value);
+            return (int)(long)mpz_get_si(ref value.Value);
         }
 
         public static explicit operator uint(mpz_t value)
         {
-            return mpz_get_ui(ref value.Value);
+            return (uint)(ulong)mpz_get_ui(ref value.Value);
         }
 
         public static explicit operator short(mpz_t value)
@@ -259,44 +259,44 @@
             return z;
         }
 
-        public static mpz_t operator +(mpz_t x, int y)
+        public static mpz_t operator +(mpz_t x, long y)
         {
             mpz_t z = new();
 
             if (y >= 0)
-                mpz_add_ui(ref z.Value, ref x.Value, (uint)y);
+                mpz_add_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)y);
             else
-                mpz_sub_ui(ref z.Value, ref x.Value, (uint)(-y));
+                mpz_sub_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)-y);
 
             return z;
         }
 
-        public static mpz_t operator +(int x, mpz_t y)
+        public static mpz_t operator +(long x, mpz_t y)
         {
             mpz_t z = new();
 
             if (x >= 0)
-                mpz_add_ui(ref z.Value, ref y.Value, (uint)x);
+                mpz_add_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)x);
             else
-                mpz_sub_ui(ref z.Value, ref y.Value, (uint)(-x));
+                mpz_sub_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)-x);
 
             return z;
         }
 
-        public static mpz_t operator +(mpz_t x, uint y)
+        public static mpz_t operator +(mpz_t x, ulong y)
         {
             mpz_t z = new mpz_t();
 
-            mpz_add_ui(ref z.Value, ref x.Value, y);
+            mpz_add_ui(ref z.Value, ref x.Value, (mpir_ui)y);
 
             return z;
         }
 
-        public static mpz_t operator +(uint x, mpz_t y)
+        public static mpz_t operator +(ulong x, mpz_t y)
         {
             mpz_t z = new mpz_t();
 
-            mpz_add_ui(ref z.Value, ref y.Value, x);
+            mpz_add_ui(ref z.Value, ref y.Value, (mpir_ui)x);
 
             return z;
         }
@@ -305,7 +305,7 @@
         {
             using mpz_t z = new mpz_t();
 
-            mpz_add_ui(ref z.Value, ref x.Value, 1);
+            mpz_add_ui(ref z.Value, ref x.Value, (mpir_ui)1UL);
             mpz_set(ref x.Value, ref z.Value);
 
             return x;
@@ -320,13 +320,13 @@
             return z;
         }
 
-        public static mpz_t operator -(int x, mpz_t y)
+        public static mpz_t operator -(long x, mpz_t y)
         {
             if (x >= 0)
             {
                 mpz_t z = new mpz_t();
 
-                mpz_ui_sub(ref z.Value, (uint)x, ref y.Value);
+                mpz_ui_sub(ref z.Value, (mpir_ui)(ulong)x, ref y.Value);
 
                 return z;
             }
@@ -334,39 +334,39 @@
             {
                 mpz_t z = new mpz_t();
 
-                mpz_add_ui(ref z.Value, ref y.Value, (uint)(-x));
+                mpz_add_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)-x);
                 mpz_neg(ref z.Value, ref z.Value);
 
                 return z;
             }
         }
 
-        public static mpz_t operator -(mpz_t x, int y)
+        public static mpz_t operator -(mpz_t x, long y)
         {
             mpz_t z = new mpz_t();
 
             if (y >= 0)
-                mpz_sub_ui(ref z.Value, ref x.Value, (uint)y);
+                mpz_sub_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)y);
             else
-                mpz_add_ui(ref z.Value, ref x.Value, (uint)(-y));
+                mpz_add_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)-y);
 
             return z;
         }
 
-        public static mpz_t operator -(uint x, mpz_t y)
+        public static mpz_t operator -(ulong x, mpz_t y)
         {
             mpz_t z = new mpz_t();
 
-            mpz_ui_sub(ref z.Value, x, ref y.Value);
+            mpz_ui_sub(ref z.Value, (mpir_ui)x, ref y.Value);
 
             return z;
         }
 
-        public static mpz_t operator -(mpz_t x, uint y)
+        public static mpz_t operator -(mpz_t x, ulong y)
         {
             mpz_t z = new mpz_t();
 
-            mpz_sub_ui(ref z.Value, ref x.Value, y);
+            mpz_sub_ui(ref z.Value, ref x.Value, (mpir_ui)y);
 
             return z;
         }
@@ -375,7 +375,7 @@
         {
             using mpz_t z = new mpz_t();
 
-            mpz_sub_ui(ref z.Value, ref x.Value, 1);
+            mpz_sub_ui(ref z.Value, ref x.Value, (mpir_ui)1UL);
             mpz_set(ref x.Value, ref z.Value);
 
             return x;
@@ -390,38 +390,38 @@
             return z;
         }
 
-        public static mpz_t operator *(int x, mpz_t y)
+        public static mpz_t operator *(long x, mpz_t y)
         {
             mpz_t z = new mpz_t();
 
-            mpz_mul_si(ref z.Value, ref y.Value, x);
+            mpz_mul_si(ref z.Value, ref y.Value, (mpir_si)x);
 
             return z;
         }
 
-        public static mpz_t operator *(mpz_t x, int y)
+        public static mpz_t operator *(mpz_t x, long y)
         {
             mpz_t z = new mpz_t();
 
-            mpz_mul_si(ref z.Value, ref x.Value, y);
+            mpz_mul_si(ref z.Value, ref x.Value, (mpir_si)y);
 
             return z;
         }
 
-        public static mpz_t operator *(uint x, mpz_t y)
+        public static mpz_t operator *(ulong x, mpz_t y)
         {
             mpz_t z = new mpz_t();
 
-            mpz_mul_ui(ref z.Value, ref y.Value, x);
+            mpz_mul_ui(ref z.Value, ref y.Value, (mpir_ui)x);
 
             return z;
         }
 
-        public static mpz_t operator *(mpz_t x, uint y)
+        public static mpz_t operator *(mpz_t x, ulong y)
         {
             mpz_t z = new mpz_t();
 
-            mpz_mul_ui(ref z.Value, ref x.Value, y);
+            mpz_mul_ui(ref z.Value, ref x.Value, (mpir_ui)y);
 
             return z;
         }
@@ -464,13 +464,13 @@
             return quotient;
         }
 
-        public static mpz_t operator /(mpz_t x, int y)
+        public static mpz_t operator /(mpz_t x, long y)
         {
             if (y >= 0)
             {
                 mpz_t quotient = new mpz_t();
 
-                mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, (uint)y);
+                mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, (mpir_ui)(ulong)y);
 
                 return quotient;
             }
@@ -478,18 +478,18 @@
             {
                 mpz_t quotient = new mpz_t();
 
-                mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, (uint)(-y));
+                mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, (mpir_ui)(ulong)-y);
                 mpz_neg(ref quotient.Value, ref quotient.Value);
 
                 return quotient;
             }
         }
 
-        public static mpz_t operator /(mpz_t x, uint y)
+        public static mpz_t operator /(mpz_t x, ulong y)
         {
             mpz_t quotient = new mpz_t();
 
-            mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, y);
+            mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, (mpir_ui)y);
 
             return quotient;
         }
@@ -503,23 +503,23 @@
             return z;
         }
 
-        public static mpz_t operator %(mpz_t x, int mod)
+        public static mpz_t operator %(mpz_t x, long mod)
         {
             if (mod < 0)
                 throw new ArgumentOutOfRangeException(nameof(mod));
 
             mpz_t z = new mpz_t();
 
-            mpz_fdiv_r_ui(ref z.Value, ref x.Value, (uint)mod);
+            mpz_fdiv_r_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)mod);
 
             return z;
         }
 
-        public static mpz_t operator %(mpz_t x, uint mod)
+        public static mpz_t operator %(mpz_t x, ulong mod)
         {
             mpz_t z = new mpz_t();
 
-            mpz_fdiv_r_ui(ref z.Value, ref x.Value, mod);
+            mpz_fdiv_r_ui(ref z.Value, ref x.Value, (mpir_ui)mod);
 
             return z;
         }
@@ -1071,7 +1071,7 @@
             }
         }
 
-        public mpz_t Quotient(uint y, Rounding rounding = Rounding.TowardZero)
+        public mpz_t Quotient(ulong y, Rounding rounding = Rounding.TowardZero)
         {
             mpz_t quotient = new mpz_t();
 
@@ -1079,22 +1079,22 @@
             {
                 default:
                 case Rounding.TowardZero:
-                    mpz_tdiv_q_ui(ref quotient.Value, ref Value, y);
+                    mpz_tdiv_q_ui(ref quotient.Value, ref Value, (mpir_ui)y);
                     break;
 
                 case Rounding.TowardPositiveInfinity:
-                    mpz_cdiv_q_ui(ref quotient.Value, ref Value, y);
+                    mpz_cdiv_q_ui(ref quotient.Value, ref Value, (mpir_ui)y);
                     break;
 
                 case Rounding.TowardNegativeInfinity:
-                    mpz_fdiv_q_ui(ref quotient.Value, ref Value, y);
+                    mpz_fdiv_q_ui(ref quotient.Value, ref Value, (mpir_ui)y);
                     break;
             }
 
             return quotient;
         }
 
-        public mpz_t Remainder(uint y, Rounding rounding = Rounding.TowardZero)
+        public mpz_t Remainder(ulong y, Rounding rounding = Rounding.TowardZero)
         {
             mpz_t remainder = new mpz_t();
 
@@ -1102,22 +1102,22 @@
             {
                 default:
                 case Rounding.TowardZero:
-                    mpz_tdiv_r_ui(ref remainder.Value, ref Value, y);
+                    mpz_tdiv_r_ui(ref remainder.Value, ref Value, (mpir_ui)y);
                     break;
 
                 case Rounding.TowardPositiveInfinity:
-                    mpz_cdiv_r_ui(ref remainder.Value, ref Value, y);
+                    mpz_cdiv_r_ui(ref remainder.Value, ref Value, (mpir_ui)y);
                     break;
 
                 case Rounding.TowardNegativeInfinity:
-                    mpz_fdiv_r_ui(ref remainder.Value, ref Value, y);
+                    mpz_fdiv_r_ui(ref remainder.Value, ref Value, (mpir_ui)y);
                     break;
             }
 
             return remainder;
         }
 
-        public static void Divide(mpz_t x, uint y, out mpz_t quotient, out mpz_t remainder, Rounding rounding = Rounding.TowardZero)
+        public static void Divide(mpz_t x, ulong y, out mpz_t quotient, out mpz_t remainder, Rounding rounding = Rounding.TowardZero)
         {
             quotient = new mpz_t();
             remainder = new mpz_t();
@@ -1126,43 +1126,43 @@
             {
                 default:
                 case Rounding.TowardZero:
-                    mpz_tdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, y);
+                    mpz_tdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, (mpir_ui)y);
                     break;
 
                 case Rounding.TowardPositiveInfinity:
-                    mpz_cdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, y);
+                    mpz_cdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, (mpir_ui)y);
                     break;
 
                 case Rounding.TowardNegativeInfinity:
-                    mpz_fdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, y);
+                    mpz_fdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, (mpir_ui)y);
                     break;
             }
         }
 
-        public uint AbsRemainder(uint y, Rounding rounding = Rounding.TowardZero)
+        public ulong AbsRemainder(ulong y, Rounding rounding = Rounding.TowardZero)
         {
-            uint remainder;
+            ulong remainder;
 
             switch (rounding)
             {
                 default:
                 case Rounding.TowardZero:
-                    remainder = mpz_tdiv_ui(ref Value, y);
+                    remainder = (ulong)mpz_tdiv_ui(ref Value, (mpir_ui)y);
                     break;
 
                 case Rounding.TowardPositiveInfinity:
-                    remainder = mpz_cdiv_ui(ref Value, y);
+                    remainder = (ulong)mpz_cdiv_ui(ref Value, (mpir_ui)y);
                     break;
 
                 case Rounding.TowardNegativeInfinity:
-                    remainder = mpz_fdiv_ui(ref Value, y);
+                    remainder = (ulong)mpz_fdiv_ui(ref Value, (mpir_ui)y);
                     break;
             }
 
             return remainder;
         }
 
-        public mpz_t RightShift(uint y, Rounding rounding = Rounding.TowardZero)
+        public mpz_t RightShift(ulong y, Rounding rounding = Rounding.TowardZero)
         {
             mpz_t quotient = new mpz_t();
 
@@ -1185,7 +1185,7 @@
             return quotient;
         }
 
-        public mpz_t RightShiftRemainder(uint y, Rounding rounding = Rounding.TowardZero)
+        public mpz_t RightShiftRemainder(ulong y, Rounding rounding = Rounding.TowardZero)
         {
             mpz_t remainder = new mpz_t();
 
@@ -1217,11 +1217,11 @@
             return quotient;
         }
 
-        public mpz_t DivExact(uint y)
+        public mpz_t DivExact(ulong y)
         {
             mpz_t quotient = new mpz_t();
 
-            mpz_divexact_ui(ref quotient.Value, ref Value, y);
+            mpz_divexact_ui(ref quotient.Value, ref Value, (mpir_ui)y);
 
             return quotient;
         }
@@ -1231,12 +1231,12 @@
             return mpz_divisible_p(ref Value, ref y.Value) != 0;
         }
 
-        public bool IsDivisible(uint y)
+        public bool IsDivisible(ulong y)
         {
-            return mpz_divisible_ui_p(ref Value, y) != 0;
+            return mpz_divisible_ui_p(ref Value, (mpir_ui)y) != 0;
         }
 
-        public bool IsDivisibleByPowerOfTwo(uint y)
+        public bool IsDivisibleByPowerOfTwo(ulong y)
         {
             return mpz_divisible_2exp_p(ref Value, (mp_bitcnt_t)y) != 0;
         }
@@ -1246,12 +1246,12 @@
             return mpz_congruent_p(ref Value, ref c.Value, ref d.Value) != 0;
         }
 
-        public bool IsCongruent(uint c, uint d)
+        public bool IsCongruent(ulong c, ulong d)
         {
-            return mpz_congruent_ui_p(ref Value, c, d) != 0;
+            return mpz_congruent_ui_p(ref Value, (mpir_ui)c, (mpir_ui)d) != 0;
         }
 
-        public bool IsCongruentPowerOfTwo(mpz_t c, int d)
+        public bool IsCongruentPowerOfTwo(mpz_t c, long d)
         {
             return mpz_congruent_2exp_p(ref Value, ref c.Value, (mp_bitcnt_t)(ulong)d) != 0;
         }
@@ -1265,46 +1265,46 @@
             return Result;
         }
 
-        public mpz_t PowerMod(uint exp, mpz_t mod)
+        public mpz_t PowerMod(ulong exp, mpz_t mod)
         {
             mpz_t Result = new mpz_t();
 
-            mpz_powm_ui(ref Result.Value, ref Value, exp, ref mod.Value);
+            mpz_powm_ui(ref Result.Value, ref Value, (mpir_ui)exp, ref mod.Value);
 
             return Result;
         }
 
-        public mpz_t Pow(uint exp)
+        public mpz_t Pow(ulong exp)
         {
             mpz_t Result = new mpz_t();
 
-            mpz_pow_ui(ref Result.Value, ref Value, exp);
+            mpz_pow_ui(ref Result.Value, ref Value, (mpir_ui)exp);
 
             return Result;
         }
 
-        public bool IsRootExact(uint n)
+        public bool IsRootExact(ulong n)
         {
             using mpz_t Result = new mpz_t();
 
-            return mpz_root(ref Result.Value, ref Value, n) != 0;
+            return mpz_root(ref Result.Value, ref Value, (mpir_ui)n) != 0;
         }
 
-        public mpz_t NthRoot(uint n)
+        public mpz_t NthRoot(ulong n)
         {
             mpz_t Result = new mpz_t();
 
-            mpz_nthroot(ref Result.Value, ref Value, n);
+            mpz_nthroot(ref Result.Value, ref Value, (mpir_ui)n);
 
             return Result;
         }
 
-        public static void NthRoot(mpz_t x, uint n, out mpz_t root, out mpz_t remainder)
+        public static void NthRoot(mpz_t x, ulong n, out mpz_t root, out mpz_t remainder)
         {
             root = new mpz_t();
             remainder = new mpz_t();
 
-            mpz_rootrem(ref root.Value, ref remainder.Value, ref x.Value, n);
+            mpz_rootrem(ref root.Value, ref remainder.Value, ref x.Value, (mpir_ui)n);
         }
 
         public mpz_t Sqrt()
@@ -1344,19 +1344,19 @@
                 return mpz_cmp(ref Value, ref other.Value);
         }
 
-        public int CompareTo(int other)
+        public int CompareTo(long other)
         {
-            return mpz_cmp_si(ref Value, other);
+            return mpz_cmp_si(ref Value, (mpir_si)other);
         }
 
-        public int CompareTo(uint other)
+        public int CompareTo(ulong other)
         {
-            return mpz_cmp_ui(ref Value, other);
+            return mpz_cmp_ui(ref Value, (mpir_ui)other);
         }
 
         public int CompareTo(float other)
         {
-            return mpz_cmp_d(ref Value, (double)other);
+            return mpz_cmp_d(ref Value, other);
         }
 
         public int CompareTo(double other)

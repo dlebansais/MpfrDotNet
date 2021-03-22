@@ -16,25 +16,25 @@
                 mpf_init2(ref Value, (mp_bitcnt_t)precision);
         }
 
-        public mpf_t(uint n, ulong precision = ulong.MaxValue)
+        public mpf_t(ulong n, ulong precision = ulong.MaxValue)
         {
             if (precision == ulong.MaxValue)
-                mpf_init_set_ui(ref Value, n);
+                mpf_init_set_ui(ref Value, (mpir_ui)n);
             else
             {
                 mpf_init2(ref Value, (mp_bitcnt_t)precision);
-                mpf_set_ui(ref Value, n);
+                mpf_set_ui(ref Value, (mpir_ui)n);
             }
         }
 
-        public mpf_t(int n, ulong precision = ulong.MaxValue)
+        public mpf_t(long n, ulong precision = ulong.MaxValue)
         {
             if (precision == ulong.MaxValue)
-                mpf_init_set_si(ref Value, n);
+                mpf_init_set_si(ref Value, (mpir_si)n);
             else
             {
                 mpf_init2(ref Value, (mp_bitcnt_t)precision);
-                mpf_set_si(ref Value, n);
+                mpf_set_si(ref Value, (mpir_si)n);
             }
         }
 
@@ -218,44 +218,44 @@
             return z;
         }
 
-        public static mpf_t operator +(mpf_t x, int y)
+        public static mpf_t operator +(mpf_t x, long y)
         {
             mpf_t z = new();
 
             if (y >= 0)
-                mpf_add_ui(ref z.Value, ref x.Value, (uint)y);
+                mpf_add_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)y);
             else
-                mpf_sub_ui(ref z.Value, ref x.Value, (uint)(-y));
+                mpf_sub_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)-y);
 
             return z;
         }
 
-        public static mpf_t operator +(int x, mpf_t y)
+        public static mpf_t operator +(long x, mpf_t y)
         {
             mpf_t z = new();
 
             if (x >= 0)
-                mpf_add_ui(ref z.Value, ref y.Value, (uint)x);
+                mpf_add_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)x);
             else
-                mpf_sub_ui(ref z.Value, ref y.Value, (uint)(-x));
+                mpf_sub_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)-x);
 
             return z;
         }
 
-        public static mpf_t operator +(mpf_t x, uint y)
+        public static mpf_t operator +(mpf_t x, ulong y)
         {
             mpf_t z = new mpf_t();
 
-            mpf_add_ui(ref z.Value, ref x.Value, y);
+            mpf_add_ui(ref z.Value, ref x.Value, (mpir_ui)y);
 
             return z;
         }
 
-        public static mpf_t operator +(uint x, mpf_t y)
+        public static mpf_t operator +(ulong x, mpf_t y)
         {
             mpf_t z = new mpf_t();
 
-            mpf_add_ui(ref z.Value, ref y.Value, x);
+            mpf_add_ui(ref z.Value, ref y.Value, (mpir_ui)x);
 
             return z;
         }
@@ -269,13 +269,13 @@
             return z;
         }
 
-        public static mpf_t operator -(int x, mpf_t y)
+        public static mpf_t operator -(long x, mpf_t y)
         {
             if (x >= 0)
             {
                 mpf_t z = new mpf_t();
 
-                mpf_ui_sub(ref z.Value, (uint)x, ref y.Value);
+                mpf_ui_sub(ref z.Value, (mpir_ui)(ulong)x, ref y.Value);
 
                 return z;
             }
@@ -283,39 +283,39 @@
             {
                 mpf_t z = new mpf_t();
 
-                mpf_add_ui(ref z.Value, ref y.Value, (uint)(-x));
+                mpf_add_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)-x);
                 mpf_neg(ref z.Value, ref z.Value);
 
                 return z;
             }
         }
 
-        public static mpf_t operator -(mpf_t x, int y)
+        public static mpf_t operator -(mpf_t x, long y)
         {
             mpf_t z = new mpf_t();
 
             if (y >= 0)
-                mpf_sub_ui(ref z.Value, ref x.Value, (uint)y);
+                mpf_sub_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)y);
             else
-                mpf_add_ui(ref z.Value, ref x.Value, (uint)(-y));
+                mpf_add_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)-y);
 
             return z;
         }
 
-        public static mpf_t operator -(uint x, mpf_t y)
+        public static mpf_t operator -(ulong x, mpf_t y)
         {
             mpf_t z = new mpf_t();
 
-            mpf_ui_sub(ref z.Value, x, ref y.Value);
+            mpf_ui_sub(ref z.Value, (mpir_ui)x, ref y.Value);
 
             return z;
         }
 
-        public static mpf_t operator -(mpf_t x, uint y)
+        public static mpf_t operator -(mpf_t x, ulong y)
         {
             mpf_t z = new mpf_t();
 
-            mpf_sub_ui(ref z.Value, ref x.Value, y);
+            mpf_sub_ui(ref z.Value, ref x.Value, (mpir_ui)y);
 
             return z;
         }
@@ -329,20 +329,20 @@
             return z;
         }
 
-        public static mpf_t operator *(uint x, mpf_t y)
+        public static mpf_t operator *(ulong x, mpf_t y)
         {
             mpf_t z = new mpf_t();
 
-            mpf_mul_ui(ref z.Value, ref y.Value, x);
+            mpf_mul_ui(ref z.Value, ref y.Value, (mpir_ui)x);
 
             return z;
         }
 
-        public static mpf_t operator *(mpf_t x, uint y)
+        public static mpf_t operator *(mpf_t x, ulong y)
         {
             mpf_t z = new mpf_t();
 
-            mpf_mul_ui(ref z.Value, ref x.Value, y);
+            mpf_mul_ui(ref z.Value, ref x.Value, (mpir_ui)y);
 
             return z;
         }
@@ -385,20 +385,20 @@
             return quotient;
         }
 
-        public static mpf_t operator /(mpf_t x, uint y)
+        public static mpf_t operator /(mpf_t x, ulong y)
         {
             mpf_t quotient = new mpf_t();
 
-            mpf_div_ui(ref quotient.Value, ref x.Value, y);
+            mpf_div_ui(ref quotient.Value, ref x.Value, (mpir_ui)y);
 
             return quotient;
         }
 
-        public static mpf_t operator /(uint x, mpf_t y)
+        public static mpf_t operator /(ulong x, mpf_t y)
         {
             mpf_t quotient = new mpf_t();
 
-            mpf_ui_div(ref quotient.Value, x, ref y.Value);
+            mpf_ui_div(ref quotient.Value, (mpir_ui)x, ref y.Value);
 
             return quotient;
         }
@@ -408,22 +408,22 @@
             return x.CompareTo(y) < 0;
         }
 
-        public static bool operator <(int x, mpf_t y)
+        public static bool operator <(long x, mpf_t y)
         {
             return y.CompareTo(x) > 0;
         }
 
-        public static bool operator <(mpf_t x, int y)
+        public static bool operator <(mpf_t x, long y)
         {
             return x.CompareTo(y) < 0;
         }
 
-        public static bool operator <(uint x, mpf_t y)
+        public static bool operator <(ulong x, mpf_t y)
         {
             return y.CompareTo(x) > 0;
         }
 
-        public static bool operator <(mpf_t x, uint y)
+        public static bool operator <(mpf_t x, ulong y)
         {
             return x.CompareTo(y) < 0;
         }
@@ -453,22 +453,22 @@
             return x.CompareTo(y) <= 0;
         }
 
-        public static bool operator <=(int x, mpf_t y)
+        public static bool operator <=(long x, mpf_t y)
         {
             return y.CompareTo(x) >= 0;
         }
 
-        public static bool operator <=(mpf_t x, int y)
+        public static bool operator <=(mpf_t x, long y)
         {
             return x.CompareTo(y) <= 0;
         }
 
-        public static bool operator <=(uint x, mpf_t y)
+        public static bool operator <=(ulong x, mpf_t y)
         {
             return y.CompareTo(x) >= 0;
         }
 
-        public static bool operator <=(mpf_t x, uint y)
+        public static bool operator <=(mpf_t x, ulong y)
         {
             return x.CompareTo(y) <= 0;
         }
@@ -498,22 +498,22 @@
             return x.CompareTo(y) > 0;
         }
 
-        public static bool operator >(int x, mpf_t y)
+        public static bool operator >(long x, mpf_t y)
         {
             return y.CompareTo(x) < 0;
         }
 
-        public static bool operator >(mpf_t x, int y)
+        public static bool operator >(mpf_t x, long y)
         {
             return x.CompareTo(y) > 0;
         }
 
-        public static bool operator >(uint x, mpf_t y)
+        public static bool operator >(ulong x, mpf_t y)
         {
             return y.CompareTo(x) < 0;
         }
 
-        public static bool operator >(mpf_t x, uint y)
+        public static bool operator >(mpf_t x, ulong y)
         {
             return x.CompareTo(y) > 0;
         }
@@ -543,22 +543,22 @@
             return x.CompareTo(y) >= 0;
         }
 
-        public static bool operator >=(int x, mpf_t y)
+        public static bool operator >=(long x, mpf_t y)
         {
             return y.CompareTo(x) <= 0;
         }
 
-        public static bool operator >=(mpf_t x, int y)
+        public static bool operator >=(mpf_t x, long y)
         {
             return x.CompareTo(y) >= 0;
         }
 
-        public static bool operator >=(uint x, mpf_t y)
+        public static bool operator >=(ulong x, mpf_t y)
         {
             return y.CompareTo(x) <= 0;
         }
 
-        public static bool operator >=(mpf_t x, uint y)
+        public static bool operator >=(mpf_t x, ulong y)
         {
             return x.CompareTo(y) >= 0;
         }
@@ -588,22 +588,22 @@
             return x.CompareTo(y) == 0;
         }
 
-        public static bool operator ==(int x, mpf_t y)
+        public static bool operator ==(long x, mpf_t y)
         {
             return y.CompareTo(x) == 0;
         }
 
-        public static bool operator ==(mpf_t x, int y)
+        public static bool operator ==(mpf_t x, long y)
         {
             return x.CompareTo(y) == 0;
         }
 
-        public static bool operator ==(uint x, mpf_t y)
+        public static bool operator ==(ulong x, mpf_t y)
         {
             return y.CompareTo(x) == 0;
         }
 
-        public static bool operator ==(mpf_t x, uint y)
+        public static bool operator ==(mpf_t x, ulong y)
         {
             return x.CompareTo(y) == 0;
         }
@@ -633,22 +633,22 @@
             return x.CompareTo(y) != 0;
         }
 
-        public static bool operator !=(int x, mpf_t y)
+        public static bool operator !=(long x, mpf_t y)
         {
             return y.CompareTo(x) != 0;
         }
 
-        public static bool operator !=(mpf_t x, int y)
+        public static bool operator !=(mpf_t x, long y)
         {
             return x.CompareTo(y) != 0;
         }
 
-        public static bool operator !=(uint x, mpf_t y)
+        public static bool operator !=(ulong x, mpf_t y)
         {
             return y.CompareTo(x) != 0;
         }
 
-        public static bool operator !=(mpf_t x, uint y)
+        public static bool operator !=(mpf_t x, ulong y)
         {
             return x.CompareTo(y) != 0;
         }
@@ -717,11 +717,11 @@
             return Result;
         }
 
-        public mpf_t Pow(uint exp)
+        public mpf_t Pow(ulong exp)
         {
             mpf_t Result = new mpf_t();
 
-            mpf_pow_ui(ref Result.Value, ref Value, exp);
+            mpf_pow_ui(ref Result.Value, ref Value, (mpir_ui)exp);
 
             return Result;
         }
@@ -736,14 +736,14 @@
                 return mpf_cmp(ref Value, ref other.Value);
         }
 
-        public int CompareTo(int other)
+        public int CompareTo(long other)
         {
-            return mpf_cmp_si(ref Value, other);
+            return mpf_cmp_si(ref Value, (mpir_si)other);
         }
 
-        public int CompareTo(uint other)
+        public int CompareTo(ulong other)
         {
-            return mpf_cmp_ui(ref Value, other);
+            return mpf_cmp_ui(ref Value, (mpir_ui)other);
         }
 
         public int CompareTo(float other)

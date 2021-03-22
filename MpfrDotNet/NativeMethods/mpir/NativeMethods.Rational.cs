@@ -43,11 +43,11 @@
         public static __mpq_set_z mpq_set_z = Marshal.GetDelegateForFunctionPointer<__mpq_set_z>(GetMpirPointer(nameof(mpq_set_z)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpq_set_ui(ref __mpq_t rop, uint op1, uint op2);
+        public delegate void __mpq_set_ui(ref __mpq_t rop, mpir_ui op1, mpir_ui op2);
         public static __mpq_set_ui mpq_set_ui = Marshal.GetDelegateForFunctionPointer<__mpq_set_ui>(GetMpirPointer(nameof(mpq_set_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpq_set_si(ref __mpq_t rop, int op1, uint op2);
+        public delegate void __mpq_set_si(ref __mpq_t rop, mpir_si op1, mpir_ui op2);
         public static __mpq_set_si mpq_set_si = Marshal.GetDelegateForFunctionPointer<__mpq_set_si>(GetMpirPointer(nameof(mpq_set_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -125,11 +125,11 @@
         public static __mpq_cmp_z mpq_cmp_z = Marshal.GetDelegateForFunctionPointer<__mpq_cmp_z>(GetMpirPointer(nameof(mpq_cmp_z)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpq_cmp_ui(ref __mpq_t op1, uint num2, uint den2);
+        public delegate int __mpq_cmp_ui(ref __mpq_t op1, mpir_ui num2, mpir_ui den2);
         public static __mpq_cmp_ui mpq_cmp_ui = Marshal.GetDelegateForFunctionPointer<__mpq_cmp_ui>(GetMpirPointer(nameof(mpq_cmp_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpq_cmp_si(ref __mpq_t op1, int num2, uint den2);
+        public delegate int __mpq_cmp_si(ref __mpq_t op1, mpir_si num2, mpir_ui den2);
         public static __mpq_cmp_si mpq_cmp_si = Marshal.GetDelegateForFunctionPointer<__mpq_cmp_si>(GetMpirPointer(nameof(mpq_cmp_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

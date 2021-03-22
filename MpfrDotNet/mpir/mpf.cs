@@ -62,14 +62,14 @@
             NativeMethods.mpf_set(ref rop.Value, ref op.Value);
         }
 
-        public static void set_ui(mpf_t rop, uint op)
+        public static void set_ui(mpf_t rop, ulong op)
         {
-            NativeMethods.mpf_set_ui(ref rop.Value, op);
+            NativeMethods.mpf_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
         }
 
-        public static void set_si(mpf_t rop, int op)
+        public static void set_si(mpf_t rop, long op)
         {
-            NativeMethods.mpf_set_si(ref rop.Value, op);
+            NativeMethods.mpf_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
         }
 
         public static void set_d(mpf_t rop, double op)
@@ -104,14 +104,14 @@
             NativeMethods.mpf_init_set(ref rop.Value, ref op.Value);
         }
 
-        public static void init_set_ui(mpf_t rop, uint op)
+        public static void init_set_ui(mpf_t rop, ulong op)
         {
-            NativeMethods.mpf_init_set_ui(ref rop.Value, op);
+            NativeMethods.mpf_init_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
         }
 
-        public static void init_set_si(mpf_t rop, int op)
+        public static void init_set_si(mpf_t rop, long op)
         {
-            NativeMethods.mpf_init_set_si(ref rop.Value, op);
+            NativeMethods.mpf_init_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
         }
 
         public static void init_set_d(mpf_t rop, double op)
@@ -159,9 +159,9 @@
             NativeMethods.mpf_add(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void add_ui(mpf_t rop, mpf_t op1, uint op2)
+        public static void add_ui(mpf_t rop, mpf_t op1, ulong op2)
         {
-            NativeMethods.mpf_add_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpf_add_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void sub(mpf_t rop, mpf_t op1, mpf_t op2)
@@ -169,14 +169,14 @@
             NativeMethods.mpf_sub(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void ui_sub(mpf_t rop, uint op1, mpf_t op2)
+        public static void ui_sub(mpf_t rop, ulong op1, mpf_t op2)
         {
-            NativeMethods.mpf_ui_sub(ref rop.Value, op1, ref op2.Value);
+            NativeMethods.mpf_ui_sub(ref rop.Value, (NativeMethods.mpir_ui)op1, ref op2.Value);
         }
 
-        public static void sub_ui(mpf_t rop, mpf_t op1, uint op2)
+        public static void sub_ui(mpf_t rop, mpf_t op1, ulong op2)
         {
-            NativeMethods.mpf_sub_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpf_sub_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void mul(mpf_t rop, mpf_t op1, mpf_t op2)
@@ -184,9 +184,9 @@
             NativeMethods.mpf_mul(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void mul_ui(mpf_t rop, mpf_t op1, uint op2)
+        public static void mul_ui(mpf_t rop, mpf_t op1, ulong op2)
         {
-            NativeMethods.mpf_mul_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpf_mul_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void div(mpf_t rop, mpf_t op1, mpf_t op2)
@@ -194,14 +194,14 @@
             NativeMethods.mpf_div(ref rop.Value, ref op1.Value, ref op2.Value);
         }
 
-        public static void ui_div(mpf_t rop, uint op1, mpf_t op2)
+        public static void ui_div(mpf_t rop, ulong op1, mpf_t op2)
         {
-            NativeMethods.mpf_ui_div(ref rop.Value, op1, ref op2.Value);
+            NativeMethods.mpf_ui_div(ref rop.Value, (NativeMethods.mpir_ui)op1, ref op2.Value);
         }
 
-        public static void div_ui(mpf_t rop, mpf_t op1, uint op2)
+        public static void div_ui(mpf_t rop, mpf_t op1, ulong op2)
         {
-            NativeMethods.mpf_div_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpf_div_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void sqrt(mpf_t rop, mpf_t op)
@@ -209,14 +209,14 @@
             NativeMethods.mpf_sqrt(ref rop.Value, ref op.Value);
         }
 
-        public static void sqrt_ui(mpf_t rop, uint op)
+        public static void sqrt_ui(mpf_t rop, ulong op)
         {
-            NativeMethods.mpf_sqrt_ui(ref rop.Value, op);
+            NativeMethods.mpf_sqrt_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
         }
 
-        public static void pow_ui(mpf_t rop, mpf_t op1, uint op2)
+        public static void pow_ui(mpf_t rop, mpf_t op1, ulong op2)
         {
-            NativeMethods.mpf_pow_ui(ref rop.Value, ref op1.Value, op2);
+            NativeMethods.mpf_pow_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static void neg(mpf_t rop, mpf_t op)
@@ -251,14 +251,14 @@
             return NativeMethods.mpf_cmp_d(ref op1.Value, op2);
         }
 
-        public static int cmp_si(mpf_t op1, int op2)
+        public static int cmp_si(mpf_t op1, long op2)
         {
-            return NativeMethods.mpf_cmp_si(ref op1.Value, op2);
+            return NativeMethods.mpf_cmp_si(ref op1.Value, (NativeMethods.mpir_si)op2);
         }
 
-        public static int cmp_ui(mpf_t op1, uint op2)
+        public static int cmp_ui(mpf_t op1, ulong op2)
         {
-            return NativeMethods.mpf_cmp_ui(ref op1.Value, op2);
+            return NativeMethods.mpf_cmp_ui(ref op1.Value, (NativeMethods.mpir_ui)op2);
         }
 
         public static int eq(mpf_t op1, mpf_t op2, ulong op3)

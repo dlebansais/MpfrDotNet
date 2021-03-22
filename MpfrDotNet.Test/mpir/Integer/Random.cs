@@ -55,8 +55,8 @@ namespace TestInteger
             string AsString1 = a.ToString();
             Assert.AreNotEqual(AsString0, AsString1);
 
-            uint c = 100;
-            uint RandomNumber = gmp.urandomm_ui(state, c);
+            ulong c = 100;
+            ulong RandomNumber = gmp.urandomm_ui(state, c);
             IsLesserThan = RandomNumber < c;
 
             Assert.IsTrue(IsLesserThan);
@@ -89,7 +89,7 @@ namespace TestInteger
             using randstate_t state1 = randstate_t.Create(RngAlgorithm.LinearCongruential, 10UL);
 
             using mpz_t a = new mpz_t(10);
-            using randstate_t state2 = randstate_t.Create(RngAlgorithm.LinearCongruential, a, 10U, 10UL);
+            using randstate_t state2 = randstate_t.Create(RngAlgorithm.LinearCongruential, a, 10UL, 10UL);
             using randstate_t state3 = new randstate_t(state2);
         }
 
@@ -106,15 +106,15 @@ namespace TestInteger
         [TestMethod]
         public void Misc()
         {
-            uint Result;
+            ulong Result;
             bool IsLesserThan;
 
             using randstate_t state = new();
-            uint n = 10;
+            ulong n = 10;
 
             Result = gmp.urandomb_ui(state, n);
 
-            IsLesserThan = Result < (1 << (int)n);
+            IsLesserThan = Result < (1UL << (int)n);
             Assert.IsTrue(IsLesserThan);
 
             Result = gmp.urandomm_ui(state, n);
