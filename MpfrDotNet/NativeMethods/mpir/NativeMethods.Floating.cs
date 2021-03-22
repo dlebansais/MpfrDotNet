@@ -114,7 +114,7 @@
         public static __mpf_get_d_2exp mpf_get_d_2exp = Marshal.GetDelegateForFunctionPointer<__mpf_get_d_2exp>(GetMpirPointer(nameof(mpf_get_d_2exp)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate long __mpf_get_si(ref __mpf_t op);
+        public delegate mpir_si __mpf_get_si(ref __mpf_t op);
         public static __mpf_get_si mpf_get_si = Marshal.GetDelegateForFunctionPointer<__mpf_get_si>(GetMpirPointer(nameof(mpf_get_si)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

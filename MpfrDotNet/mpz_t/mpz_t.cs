@@ -57,7 +57,7 @@
         // Initializes a new mpz_t to the long op.
         public mpz_t(long op)
         {
-            mpz_init_set_sx(ref Value, op);
+            mpz_init_set_sx(ref Value, (intmax_t)op);
         }
 
         // Initializes a new mpz_t to the double op.
@@ -97,7 +97,7 @@
         public mpz_t(byte[] bytes)
             : this()
         {
-            mpz_import(ref Value, bytes.LongLength, 0, sizeof(byte), 0, 0, bytes);
+            mpz_import(ref Value, (size_t)(ulong)bytes.LongLength, 0, (size_t)sizeof(byte), 0, (size_t)0UL, bytes);
         }
 
         internal mpz_t(__mpz_t value)
@@ -112,11 +112,11 @@
         // Export to the value to a byte array.
         public byte[] ToByteArray()
         {
-            long SizeInBits = mpz_sizeinbase(ref Value, 2);
+            ulong SizeInBits = (ulong)mpz_sizeinbase(ref Value, 2);
             byte[] Result = new byte[(SizeInBits + 7) / 8];
 
-            long countp;
-            mpz_export(Result, out countp, 0, sizeof(byte), 0, 0, ref Value);
+            size_t countp;
+            mpz_export(Result, out countp, 0, (size_t)sizeof(byte), 0, (size_t)0UL, ref Value);
 
             return Result;
         }
@@ -128,9 +128,9 @@
 
         public string ToString(int resultbase)
         {
-            int SizeInDigits = (int)mpz_sizeinbase(ref Value, (uint)resultbase);
+            ulong SizeInDigits = (ulong)mpz_sizeinbase(ref Value, (uint)resultbase);
 
-            StringBuilder Data = new StringBuilder(SizeInDigits + 2);
+            StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
             mpz_get_str(Data, resultbase, ref Value);
 
             string Result = Data.ToString();
@@ -216,7 +216,7 @@
         {
             byte[] Bytes = new byte[8];
 
-            mpz_import(ref value.Value, Bytes.LongLength, 0, sizeof(byte), 0, 0, Bytes);
+            mpz_import(ref value.Value, (size_t)(ulong)Bytes.LongLength, 0, (size_t)sizeof(byte), 0, (size_t)0UL, Bytes);
             long Int64Result = BitConverter.ToInt64(Bytes, 0);
 
             return Int64Result;
@@ -226,7 +226,7 @@
         {
             byte[] Bytes = new byte[8];
 
-            mpz_import(ref value.Value, Bytes.LongLength, 0, sizeof(byte), 0, 0, Bytes);
+            mpz_import(ref value.Value, (size_t)(ulong)Bytes.LongLength, 0, (size_t)sizeof(byte), 0, (size_t)0UL, Bytes);
             ulong UInt64Result = BitConverter.ToUInt64(Bytes, 0);
 
             return UInt64Result;

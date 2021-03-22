@@ -61,7 +61,7 @@
 
         public static void set_sx(mpz_t rop, long op)
         {
-            NativeMethods.mpz_set_sx(ref rop.Value, op);
+            NativeMethods.mpz_set_sx(ref rop.Value, (NativeMethods.intmax_t)op);
         }
 
         public static void set_d(mpz_t rop, double op)
@@ -113,7 +113,7 @@
 
         public static void init_set_sx(mpz_t rop, long op)
         {
-            NativeMethods.mpz_init_set_sx(ref rop.Value, op);
+            NativeMethods.mpz_init_set_sx(ref rop.Value, (NativeMethods.intmax_t)op);
         }
 
         public static void init_set_d(mpz_t rop, double op)
@@ -140,7 +140,7 @@
 
         public static long get_sx(mpz_t op)
         {
-            return NativeMethods.mpz_get_sx(ref op.Value);
+            return (long)NativeMethods.mpz_get_sx(ref op.Value);
         }
 
         public static double get_d(mpz_t op)
@@ -726,7 +726,7 @@
         #region  Input and Output Functions
         public static long out_str(StreamWriter writer, int strBase, mpz_t op)
         {
-            long SizeInDigits = NativeMethods.mpz_sizeinbase(ref op.Value, (uint)(strBase > 0 ? strBase : -strBase));
+            ulong SizeInDigits = (ulong)NativeMethods.mpz_sizeinbase(ref op.Value, (uint)(strBase > 0 ? strBase : -strBase));
             SizeInDigits += 2;
 
             if (SizeInDigits > int.MaxValue)
@@ -752,10 +752,10 @@
 
         public static long out_raw(BinaryWriter writer, mpz_t op)
         {
-            long SizeInBits = NativeMethods.mpz_sizeinbase(ref op.Value, 2);
+            ulong SizeInBits = (ulong)NativeMethods.mpz_sizeinbase(ref op.Value, 2);
             byte[] Content = new byte[(SizeInBits + 7) / 8];
 
-            NativeMethods.mpz_export(Content, out long countp, 0, sizeof(byte), 0, 0, ref op.Value);
+            NativeMethods.mpz_export(Content, out NativeMethods.size_t countp, 0, (NativeMethods.size_t)sizeof(byte), 0, (NativeMethods.size_t)0UL, ref op.Value);
 
             writer.Write(Content);
 
@@ -770,21 +770,22 @@
 
             byte[] Content = reader.ReadBytes((int)ContentLength);
 
-            NativeMethods.mpz_import(ref rop.Value, Content.Length, 0, sizeof(byte), 0, 0, Content);
+            NativeMethods.mpz_import(ref rop.Value, (NativeMethods.size_t)(ulong)Content.Length, 0, (NativeMethods.size_t)sizeof(byte), 0, (NativeMethods.size_t)0UL, Content);
 
             return Content.Length;
         }
         #endregion
 
         #region Integer Import and Export
-        public static void import(mpz_t rop, long count, int order, long size, int endian, long nails, byte[] op)
+        public static void import(mpz_t rop, ulong count, int order, ulong size, int endian, ulong nails, byte[] op)
         {
-            NativeMethods.mpz_import(ref rop.Value, count, order, size, endian, nails, op);
+            NativeMethods.mpz_import(ref rop.Value, (NativeMethods.size_t)count, order, (NativeMethods.size_t)size, endian, (NativeMethods.size_t)nails, op);
         }
 
-        public static void export(byte[] rop, out long countp, int order, long size, int endian, long nails, mpz_t op)
+        public static void export(byte[] rop, out ulong countp, int order, ulong size, int endian, ulong nails, mpz_t op)
         {
-            NativeMethods.mpz_export(rop, out countp, order, size, endian, nails, ref op.Value);
+            NativeMethods.mpz_export(rop, out NativeMethods.size_t countpStruct, order, (NativeMethods.size_t)size, endian, (NativeMethods.size_t)nails, ref op.Value);
+            countp = (ulong)countpStruct;
         }
         #endregion
 
@@ -852,9 +853,9 @@
             return (System.Runtime.InteropServices.Marshal.ReadByte(op.Value.Limbs, 0) & 1) == 0;
         }
 
-        public static long sizeinbase(mpz_t op, uint resultbase)
+        public static ulong sizeinbase(mpz_t op, uint resultbase)
         {
-            return NativeMethods.mpz_sizeinbase(ref op.Value, resultbase);
+            return (ulong)NativeMethods.mpz_sizeinbase(ref op.Value, resultbase);
         }
         #endregion
     }

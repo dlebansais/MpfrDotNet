@@ -143,7 +143,7 @@
 
         public static long get_si(mpf_t op)
         {
-            return NativeMethods.mpf_get_si(ref op.Value);
+            return (long)NativeMethods.mpf_get_si(ref op.Value);
         }
 
         public static void get_str(StringBuilder str, out int expptr, int strBase, ulong n_digits, mpf_t op)

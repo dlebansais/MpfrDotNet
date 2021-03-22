@@ -73,6 +73,22 @@
         }
 
         [StructLayout(LayoutKind.Sequential)]
+        public struct mpir_si
+        {
+            public long Value;
+
+            public static explicit operator mpir_si(long value)
+            {
+                return new mpir_si() { Value = value };
+            }
+
+            public static explicit operator long(mpir_si value)
+            {
+                return value.Value;
+            }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
         public struct mpir_ui
         {
             public ulong Value;
@@ -101,6 +117,22 @@
             public static explicit operator int(mp_exp_t value)
             {
                 return value.Value;
+            }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct intmax_t
+        {
+            public long Size;
+
+            public static explicit operator intmax_t(long size)
+            {
+                return new intmax_t() { Size = size };
+            }
+
+            public static explicit operator long(intmax_t size)
+            {
+                return size.Size;
             }
         }
 

@@ -48,7 +48,7 @@
         public static __mpz_set_ux mpz_set_ux = Marshal.GetDelegateForFunctionPointer<__mpz_set_ux>(GetMpirPointer(nameof(mpz_set_ux)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_set_sx(ref __mpz_t rop, long op);
+        public delegate void __mpz_set_sx(ref __mpz_t rop, intmax_t op);
         public static __mpz_set_sx mpz_set_sx = Marshal.GetDelegateForFunctionPointer<__mpz_set_sx>(GetMpirPointer(nameof(mpz_set_sx)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -90,7 +90,7 @@
         public static __mpz_init_set_ux mpz_init_set_ux = Marshal.GetDelegateForFunctionPointer<__mpz_init_set_ux>(GetMpirPointer(nameof(mpz_init_set_ux)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_init_set_sx(ref __mpz_t rop, long op);
+        public delegate void __mpz_init_set_sx(ref __mpz_t rop, intmax_t op);
         public static __mpz_init_set_sx mpz_init_set_sx = Marshal.GetDelegateForFunctionPointer<__mpz_init_set_sx>(GetMpirPointer(nameof(mpz_init_set_sx)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -116,7 +116,7 @@
         public static __mpz_get_ux mpz_get_ux = Marshal.GetDelegateForFunctionPointer<__mpz_get_ux>(GetMpirPointer(nameof(mpz_get_ux)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate long __mpz_get_sx(ref __mpz_t op);
+        public delegate intmax_t __mpz_get_sx(ref __mpz_t op);
         public static __mpz_get_sx mpz_get_sx = Marshal.GetDelegateForFunctionPointer<__mpz_get_sx>(GetMpirPointer(nameof(mpz_get_sx)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -586,11 +586,11 @@
 
         #region Integer Import and Export
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_import(ref __mpz_t rop, long count, int order, long size, int endian, long nails, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] op);
+        public delegate void __mpz_import(ref __mpz_t rop, size_t count, int order, size_t size, int endian, size_t nails, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] op);
         public static __mpz_import mpz_import = Marshal.GetDelegateForFunctionPointer<__mpz_import>(GetMpirPointer(nameof(mpz_import)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpz_export([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)] byte[] rop, out long countp, int order, long size, int endian, long nails, ref __mpz_t op);
+        public delegate void __mpz_export([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)] byte[] rop, out size_t countp, int order, size_t size, int endian, size_t nails, ref __mpz_t op);
         public static __mpz_export mpz_export = Marshal.GetDelegateForFunctionPointer<__mpz_export>(GetMpirPointer(nameof(mpz_export)));
         #endregion
 
@@ -620,7 +620,7 @@
         public static __mpz_fits_sshort_p mpz_fits_sshort_p = Marshal.GetDelegateForFunctionPointer<__mpz_fits_sshort_p>(GetMpirPointer(nameof(mpz_fits_sshort_p)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate long __mpz_sizeinbase(ref __mpz_t op, uint resultbase);
+        public delegate size_t __mpz_sizeinbase(ref __mpz_t op, uint resultbase);
         public static __mpz_sizeinbase mpz_sizeinbase = Marshal.GetDelegateForFunctionPointer<__mpz_sizeinbase>(GetMpirPointer(nameof(mpz_sizeinbase)));
 
         public static int mpz_sgn(ref __mpz_t op)

@@ -194,7 +194,7 @@
 
         public static explicit operator long(mpf_t value)
         {
-            return mpf_get_si(ref value.Value);
+            return (long)mpf_get_si(ref value.Value);
         }
 
         public static explicit operator float(mpf_t value)

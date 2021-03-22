@@ -99,9 +99,9 @@
             using mpz_t Denominator = new();
             mpq_get_den(ref Denominator.Value, ref Value);
 
-            int SizeInDigits = (int)mpz_sizeinbase(ref Numerator.Value, (uint)resultbase) + (int)mpz_sizeinbase(ref Denominator.Value, (uint)resultbase);
+            ulong SizeInDigits = (ulong)mpz_sizeinbase(ref Numerator.Value, (uint)resultbase) + (ulong)mpz_sizeinbase(ref Denominator.Value, (uint)resultbase);
 
-            StringBuilder Data = new StringBuilder(SizeInDigits + 3);
+            StringBuilder Data = new StringBuilder((int)(SizeInDigits + 3));
             mpq_get_str(Data, resultbase, ref Value);
 
             string Result = Data.ToString();
