@@ -65,7 +65,8 @@
                 mpq_canonicalize(ref Value);
         }
 
-        public mpq_t(string s, bool canonicalize = false) : this(s, mpz_t.DefaultBase, canonicalize)
+        public mpq_t(string s, bool canonicalize = false)
+            : this(s, mpz_t.DefaultBase, canonicalize)
         {
         }
 

@@ -74,6 +74,10 @@
         public static __mpfr_remquo mpfr_remquo = Marshal.GetDelegateForFunctionPointer<__mpfr_remquo>(GetMpfrPointer(nameof(mpfr_remquo)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int __mpfr_integer_p(ref __mpfr_t op);
+        public static __mpfr_integer_p mpfr_integer_p = Marshal.GetDelegateForFunctionPointer<__mpfr_integer_p>(GetMpfrPointer(nameof(mpfr_integer_p)));
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void __mpfr_set_default_rounding_mode(mpfr_rnd_t rnd);
         public static __mpfr_set_default_rounding_mode mpfr_set_default_rounding_mode = Marshal.GetDelegateForFunctionPointer<__mpfr_set_default_rounding_mode>(GetMpfrPointer(nameof(mpfr_set_default_rounding_mode)));
 

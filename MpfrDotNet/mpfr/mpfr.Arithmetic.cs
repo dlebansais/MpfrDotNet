@@ -1,7 +1,7 @@
 ﻿namespace MpfrDotNet
 {
-    using MpirDotNet;
     using System;
+    using MpirDotNet;
 
     public static partial class mpfr
     {

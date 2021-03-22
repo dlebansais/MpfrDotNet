@@ -1,8 +1,8 @@
 ﻿namespace MpfrDotNet
 {
-    using MpirDotNet;
     using System;
     using System.Text;
+    using MpirDotNet;
     using static NativeMethods;
 
     public partial class mpfr_t : IDisposable
@@ -37,6 +37,7 @@
                     IsZero = false;
                     break;
                 }
+
             if (IsZero)
                 return IsNegative ? "-0" : "0";
 

@@ -8,10 +8,10 @@
         [StructLayout(LayoutKind.Sequential)]
         public struct __mpfr_t
         {
-            long Precision;
-            int Sign;
-            long Exponent;
-            IntPtr Limbs;
+            public long Precision;
+            public int Sign;
+            public long Exponent;
+            public IntPtr Limbs;
         }
     }
 }

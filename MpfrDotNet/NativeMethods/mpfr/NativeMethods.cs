@@ -8,10 +8,10 @@
     internal static partial class NativeMethods
     {
         [DllImport("kernel32")]
-        private extern static IntPtr LoadLibrary(string libraryName);
+        private static extern IntPtr LoadLibrary(string libraryName);
 
         [DllImport("kernel32", CharSet = CharSet.Ansi)]
-        private extern static IntPtr GetProcAddress(IntPtr hwnd, string procedureName);
+        private static extern IntPtr GetProcAddress(IntPtr hwnd, string procedureName);
 
         private static IntPtr GetMpfrPointer(string name)
         {

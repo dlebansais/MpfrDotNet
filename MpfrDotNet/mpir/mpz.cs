@@ -1,5 +1,6 @@
 ﻿namespace MpirDotNet
 {
+    using System;
     using System.IO;
     using System.Text;
 
@@ -13,8 +14,7 @@
 
         public static void inits(params mpz_t[] integers)
         {
-            //TODO
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public static void init2(mpz_t integer, ulong n)
@@ -29,8 +29,7 @@
 
         public static void clears(params mpz_t[] x)
         {
-            //TODO
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public static void realloc2(mpz_t integer, ulong n)
@@ -154,9 +153,9 @@
             return NativeMethods.mpz_get_d_2exp(out exp, ref op.Value);
         }
 
-        public static void get_str(StringBuilder str, int _base, mpz_t op)
+        public static void get_str(StringBuilder str, int strBase, mpz_t op)
         {
-            NativeMethods.mpz_get_str(str, _base, ref op.Value);
+            NativeMethods.mpz_get_str(str, strBase, ref op.Value);
         }
         #endregion
 
@@ -425,24 +424,24 @@
         #endregion
 
         #region Exponentiation Functions
-        public static void powm(mpz_t rop, mpz_t _base, mpz_t exp, mpz_t mod)
+        public static void powm(mpz_t rop, mpz_t opBase, mpz_t exp, mpz_t mod)
         {
-            NativeMethods.mpz_powm(ref rop.Value, ref _base.Value, ref exp.Value, ref mod.Value);
+            NativeMethods.mpz_powm(ref rop.Value, ref opBase.Value, ref exp.Value, ref mod.Value);
         }
 
-        public static void powm_ui(mpz_t rop, mpz_t _base, uint exp, mpz_t mod)
+        public static void powm_ui(mpz_t rop, mpz_t opBase, uint exp, mpz_t mod)
         {
-            NativeMethods.mpz_powm_ui(ref rop.Value, ref _base.Value, exp, ref mod.Value);
+            NativeMethods.mpz_powm_ui(ref rop.Value, ref opBase.Value, exp, ref mod.Value);
         }
 
-        public static void pow_ui(mpz_t rop, mpz_t _base, uint exp)
+        public static void pow_ui(mpz_t rop, mpz_t opBase, uint exp)
         {
-            NativeMethods.mpz_pow_ui(ref rop.Value, ref _base.Value, exp);
+            NativeMethods.mpz_pow_ui(ref rop.Value, ref opBase.Value, exp);
         }
 
-        public static void ui_pow_ui(mpz_t rop, uint _base, uint exp)
+        public static void ui_pow_ui(mpz_t rop, uint opBase, uint exp)
         {
-            NativeMethods.mpz_ui_pow_ui(ref rop.Value, _base, exp);
+            NativeMethods.mpz_ui_pow_ui(ref rop.Value, opBase, exp);
         }
         #endregion
 
@@ -725,16 +724,16 @@
         #endregion
 
         #region  Input and Output Functions
-        public static long out_str(StreamWriter writer, int _base, mpz_t op)
+        public static long out_str(StreamWriter writer, int strBase, mpz_t op)
         {
-            long SizeInDigits = NativeMethods.mpz_sizeinbase(ref op.Value, (uint)(_base > 0 ? _base : -_base));
+            long SizeInDigits = NativeMethods.mpz_sizeinbase(ref op.Value, (uint)(strBase > 0 ? strBase : -strBase));
             SizeInDigits += 2;
 
             if (SizeInDigits > int.MaxValue)
                 return 0;
 
             StringBuilder Data = new StringBuilder((int)SizeInDigits);
-            NativeMethods.mpz_get_str(Data, _base, ref op.Value);
+            NativeMethods.mpz_get_str(Data, strBase, ref op.Value);
 
             string Content = Data.ToString();
             writer.Write(Content);
@@ -742,11 +741,11 @@
             return Content.Length;
         }
 
-        public static long inp_str(mpz_t rop, StreamReader reader, int _base)
+        public static long inp_str(mpz_t rop, StreamReader reader, int strBase)
         {
             string Content = reader.ReadToEnd();
 
-            NativeMethods.mpz_init_set_str(ref rop.Value, Content, (uint)_base);
+            NativeMethods.mpz_init_set_str(ref rop.Value, Content, (uint)strBase);
 
             return Content.Length;
         }

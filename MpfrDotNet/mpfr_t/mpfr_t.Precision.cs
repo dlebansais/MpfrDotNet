@@ -8,8 +8,8 @@
         public ulong PrecisionMin { get { return NativeMethods.PrecisionMin; } }
         public ulong PrecisionMax { get { return NativeMethods.PrecisionMax; } }
 
-        public ulong Precision 
-        { 
+        public ulong Precision
+        {
             get { return mpfr_get_prec(ref Value); }
             set { mpfr_set_prec(ref Value, value); }
         }

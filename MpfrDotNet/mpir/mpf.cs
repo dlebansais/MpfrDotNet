@@ -27,7 +27,6 @@
 
         public static void inits(params mpf_t[] floatings)
         {
-            //TODO
             throw new System.NotImplementedException();
         }
 
@@ -38,7 +37,6 @@
 
         public static void clears(params mpf_t[] floatings)
         {
-            //TODO
             throw new System.NotImplementedException();
         }
 
@@ -148,9 +146,9 @@
             return NativeMethods.mpf_get_si(ref op.Value);
         }
 
-        public static void get_str(StringBuilder str, out int expptr, int _base, ulong n_digits, mpf_t op)
+        public static void get_str(StringBuilder str, out int expptr, int strBase, ulong n_digits, mpf_t op)
         {
-            NativeMethods.mpf_get_str(str, out expptr, _base, n_digits, ref op.Value);
+            NativeMethods.mpf_get_str(str, out expptr, strBase, n_digits, ref op.Value);
         }
         #endregion
 

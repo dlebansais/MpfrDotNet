@@ -25,25 +25,25 @@
 
         #region Init
         /// Initializes a new mpz_t to 0.
-        public mpz_t() 
+        public mpz_t()
         {
             mpz_init(ref Value);
         }
 
         /// Initializes a new mpz_t to the same value as op.
-        public mpz_t(mpz_t op) 
+        public mpz_t(mpz_t op)
         {
             mpz_init_set(ref Value, ref op.Value);
         }
 
         /// Initializes a new mpz_t to the unsigned int op.
-        public mpz_t(uint op) 
+        public mpz_t(uint op)
         {
-            mpz_init_set_ui(ref Value, op); 
+            mpz_init_set_ui(ref Value, op);
         }
 
         /// Initializes a new mpz_t to the int op.
-        public mpz_t(int op) 
+        public mpz_t(int op)
         {
             mpz_init_set_si(ref Value, op);
         }
@@ -61,7 +61,7 @@
         }
 
         /// Initializes a new mpz_t to the double op.
-        public mpz_t(double op) 
+        public mpz_t(double op)
         {
             mpz_init_set_d(ref Value, op);
         }
@@ -75,13 +75,15 @@
         }
 
         /// Initializes a new mpz_t to string s, parsed as an integer in base 10.
-        public mpz_t(string s) : this(s, DefaultBase) 
-        { 
+        public mpz_t(string s)
+            : this(s, DefaultBase)
+        {
         }
 
         /// Initializes a new mpz_t to the BigInteger op.
-        public mpz_t(BigInteger op) : this(op.ToByteArray())
-        { 
+        public mpz_t(BigInteger op)
+            : this(op.ToByteArray())
+        {
         }
 
         /// Initializes a new mpz_t to using MPIR mpz_init2. Only use if you need to
@@ -92,7 +94,8 @@
         }
 
         /// Initializes a new mpz_t to the integer in the byte array bytes.
-        public mpz_t(byte[] bytes) : this()
+        public mpz_t(byte[] bytes)
+            : this()
         {
             mpz_import(ref Value, bytes.LongLength, 0, sizeof(byte), 0, 0, bytes);
         }
@@ -250,7 +253,7 @@
         public static mpz_t operator +(mpz_t x, mpz_t y)
         {
             mpz_t z = new();
-            
+
             mpz_add(ref z.Value, ref x.Value, ref y.Value);
 
             return z;
@@ -283,18 +286,18 @@
         public static mpz_t operator +(mpz_t x, uint y)
         {
             mpz_t z = new mpz_t();
-            
+
             mpz_add_ui(ref z.Value, ref x.Value, y);
-            
+
             return z;
         }
 
         public static mpz_t operator +(uint x, mpz_t y)
         {
             mpz_t z = new mpz_t();
-            
+
             mpz_add_ui(ref z.Value, ref y.Value, x);
-            
+
             return z;
         }
 
@@ -426,10 +429,10 @@
         public static mpz_t operator <<(mpz_t x, int count)
         {
             mpz_t z = new mpz_t();
-            
+
             if (count >= 0)
                 mpz_mul_2exp(ref z.Value, ref x.Value, (ulong)count);
-            
+
             return z;
         }
 
@@ -439,7 +442,7 @@
 
             if (count >= 0)
                 mpz_tdiv_q_2exp(ref z.Value, ref x.Value, (ulong)count);
-            
+
             return z;
         }
 
@@ -809,9 +812,9 @@
         public static mpz_t operator |(mpz_t x, mpz_t y)
         {
             mpz_t z = new mpz_t();
-            
+
             mpz_ior(ref z.Value, ref x.Value, ref y.Value);
-            
+
             return z;
         }
 
@@ -827,9 +830,9 @@
         public static mpz_t operator ~(mpz_t x)
         {
             mpz_t z = new mpz_t();
-            
+
             mpz_com(ref z.Value, ref x.Value);
-            
+
             return z;
         }
 

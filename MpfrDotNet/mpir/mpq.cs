@@ -1,5 +1,6 @@
 ﻿namespace MpirDotNet
 {
+    using System;
     using System.Text;
 
     public static class mpq
@@ -12,8 +13,7 @@
 
         public static void inits(params mpq_t[] rationals)
         {
-            //TODO
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public static void clear(mpq_t rational_number)
@@ -23,8 +23,7 @@
 
         public static void clears(params mpq_t[] rationals)
         {
-            //TODO
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public static void set(mpq_t rop, mpq_t op)
@@ -47,9 +46,9 @@
             NativeMethods.mpq_set_si(ref rop.Value, op1, op2);
         }
 
-        public static bool set_str(mpq_t rop, string str, int _base)
+        public static bool set_str(mpq_t rop, string str, int strBase)
         {
-            return NativeMethods.mpq_set_str(ref rop.Value, str, _base) == 0;
+            return NativeMethods.mpq_set_str(ref rop.Value, str, strBase) == 0;
         }
 
         public static void swap(mpq_t rop1, mpq_t rop2)
@@ -74,9 +73,9 @@
             NativeMethods.mpq_set_f(ref rop.Value, ref op.Value);
         }
 
-        public static void get_str(StringBuilder str, int _base, mpq_t op)
+        public static void get_str(StringBuilder str, int strBase, mpq_t op)
         {
-            NativeMethods.mpq_get_str(str, _base, ref op.Value);
+            NativeMethods.mpq_get_str(str, strBase, ref op.Value);
         }
         #endregion
 

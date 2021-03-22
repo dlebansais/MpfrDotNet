@@ -49,7 +49,8 @@
             }
         }
 
-        public mpf_t(string s, ulong precision = ulong.MaxValue) : this(s, mpz_t.DefaultBase, precision)
+        public mpf_t(string s, ulong precision = ulong.MaxValue)
+            : this(s, mpz_t.DefaultBase, precision)
         {
         }
 
@@ -88,7 +89,7 @@
 
         #region Properties
         public static ulong DefaultPrecision
-        { 
+        {
             get
             {
                 return mpf_get_default_prec();
@@ -759,7 +760,7 @@
         public mpf_t Ceil()
         {
             mpf_t z = new mpf_t(Precision);
-            
+
             mpf_ceil(ref z.Value, ref Value);
 
             return z;
@@ -768,7 +769,7 @@
         public mpf_t Floor()
         {
             mpf_t z = new mpf_t(Precision);
-            
+
             mpf_floor(ref z.Value, ref Value);
 
             return z;
@@ -777,7 +778,7 @@
         public mpf_t Trunc()
         {
             mpf_t z = new mpf_t(Precision);
-            
+
             mpf_trunc(ref z.Value, ref Value);
 
             return z;

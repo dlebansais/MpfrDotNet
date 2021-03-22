@@ -1,8 +1,8 @@
 ﻿namespace MpfrDotNet
 {
-    using MpirDotNet;
     using System;
     using System.Runtime.InteropServices;
+    using MpirDotNet;
 
     public static partial class mpfr
     {

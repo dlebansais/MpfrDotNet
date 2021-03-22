@@ -27,8 +27,8 @@
         private static ThreadLocal<ulong> ObjectCount = new ThreadLocal<ulong>();
 
         public static ulong LiveObjectCount()
-        { 
-            return ObjectCount.Value; 
+        {
+            return ObjectCount.Value;
         }
 
         public bool IsCacheInitialized { get; private set; }
