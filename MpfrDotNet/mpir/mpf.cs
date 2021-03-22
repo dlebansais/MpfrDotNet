@@ -131,9 +131,10 @@
             return NativeMethods.mpf_get_d(ref op.Value);
         }
 
-        public static void get_d_2exp(mpf_t op, out double d, out int exp)
+        public static void get_d_2exp(mpf_t op, out double d, out long exp)
         {
-            d = NativeMethods.mpf_get_d_2exp(out exp, ref op.Value);
+            d = NativeMethods.mpf_get_d_2exp(out NativeMethods.mpir_si expStr, ref op.Value);
+            exp = (long)expStr;
         }
 
         public static ulong get_ui(mpf_t op)

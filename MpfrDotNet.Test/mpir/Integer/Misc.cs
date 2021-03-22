@@ -167,9 +167,9 @@ namespace TestInteger
             mpz.set_d(a, -45487.0);
             Assert.AreEqual(mpz.get_d(a), -45487.0);
 
-            double d = mpz.get_d_2exp(out int exp, a);
+            mpz.get_d_2exp(a, out double d, out long exp);
             Assert.AreEqual(d, -0.6940765380859375);
-            Assert.AreEqual(exp, 16);
+            Assert.AreEqual(exp, 16L);
 
             StringBuilder str = new();
             mpz.get_str(str, 10, a);

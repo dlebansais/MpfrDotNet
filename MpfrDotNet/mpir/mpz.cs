@@ -148,9 +148,10 @@
             return NativeMethods.mpz_get_d(ref op.Value);
         }
 
-        public static double get_d_2exp(out int exp, mpz_t op)
+        public static void get_d_2exp(mpz_t op, out double d, out long exp)
         {
-            return NativeMethods.mpz_get_d_2exp(out exp, ref op.Value);
+            d = NativeMethods.mpz_get_d_2exp(out NativeMethods.mpir_si expStr, ref op.Value);
+            exp = (long)expStr;
         }
 
         public static void get_str(StringBuilder str, int strBase, mpz_t op)

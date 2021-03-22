@@ -124,7 +124,7 @@
         public static __mpz_get_d mpz_get_d = Marshal.GetDelegateForFunctionPointer<__mpz_get_d>(GetMpirPointer(nameof(mpz_get_d)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate double __mpz_get_d_2exp(out int exp, ref __mpz_t op);
+        public delegate double __mpz_get_d_2exp(out mpir_si exp, ref __mpz_t op);
         public static __mpz_get_d_2exp mpz_get_d_2exp = Marshal.GetDelegateForFunctionPointer<__mpz_get_d_2exp>(GetMpirPointer(nameof(mpz_get_d_2exp)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
