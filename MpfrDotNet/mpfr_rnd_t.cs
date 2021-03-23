@@ -3,6 +3,11 @@
     public enum mpfr_rnd_t
     {
         /// <summary>
+        /// Round to nearest, with ties away from zero (mpfr_round).
+        /// </summary>
+        MPFR_RNDNA = -1,
+
+        /// <summary>
         /// Round to nearest, with ties to even.
         /// </summary>
         MPFR_RNDN = 0,
@@ -31,10 +36,5 @@
         /// Faithful rounding.
         /// </summary>
         MPFR_RNDF,
-
-        /// <summary>
-        /// Round to nearest, with ties away from zero (mpfr_round).
-        /// </summary>
-        MPFR_RNDNA = -1,
     }
 }
