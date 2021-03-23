@@ -24,7 +24,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_sqrt_ui (mpfr_ptr r, unsigned long u, mpfr_rnd_t rnd_mode)
+mpfr_sqrt_ui (mpfr_ptr r, mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   if (u)
     {
@@ -46,7 +46,7 @@ mpfr_sqrt_ui (mpfr_ptr r, unsigned long u, mpfr_rnd_t rnd_mode)
 #else
       MPFR_SAVE_EXPO_DECL (expo);
 
-      mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
+      mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
       /* Warning: u might be outside the current exponent range! */
       MPFR_SAVE_EXPO_MARK (expo);
       mpfr_set_ui (uu, u, MPFR_RNDZ);

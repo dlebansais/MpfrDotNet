@@ -23,11 +23,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_ui_pow_ui (mpfr_ptr x, unsigned long int y, unsigned long int n,
+mpfr_ui_pow_ui (mpfr_ptr x, mpfr_ui y, mpfr_ui n,
                 mpfr_rnd_t rnd)
 {
   mpfr_exp_t err;
-  unsigned long m;
+  mpfr_ui m;
   mpfr_t res;
   mpfr_prec_t prec;
   int size_n;
@@ -68,7 +68,7 @@ mpfr_ui_pow_ui (mpfr_ptr x, unsigned long int y, unsigned long int n,
         {
           inexact |= mpfr_sqr (res, res, MPFR_RNDU);
           err++;
-          if (n & (1UL << i))
+          if (n & (((mpfr_ui)1) << i))
             inexact |= mpfr_mul_ui (res, res, y, MPFR_RNDU);
         }
       /* since the loop is executed floor(log2(n)) times,

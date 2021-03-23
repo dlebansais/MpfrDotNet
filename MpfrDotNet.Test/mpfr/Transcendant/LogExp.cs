@@ -76,16 +76,25 @@
 
             Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
-            ulong a = 2225098325034502UL;
+            ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+            mpfr_t.DefaultPrecision = 2048;
+
+            uint a = 3466500406U;
 
             using mpfr_t b = mpfr_t.Log(a);
-            AsString = b.ToString();
-            Assert.AreEqual("1.9593251069248712070702822529710829257965087890625E+1", AsString);
+            using mpfr_t c = b * 10000000;
+            using mpfr_t d = c.Round();
 
-            using mpfr_t c = b.Exp();
+            AsString = d.ToString();
+            Assert.AreEqual("2.19664114E+8", AsString);
 
-            AsString = c.ToString();
-            Assert.AreEqual("3.23028485999999523162841796875E+8", AsString);
+            using mpfr_t e = b.Exp();
+            using mpfr_t f = e.Round();
+
+            AsString = f.ToString();
+            Assert.AreEqual("3.466500406E+9", AsString);
+
+            mpfr_t.DefaultPrecision = DefaultPrecision;
         }
 
         [TestMethod]

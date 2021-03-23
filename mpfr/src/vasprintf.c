@@ -65,6 +65,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 # else
 /* autoconf manual advocates this fallback.
    This is also the solution chosen by gmp */
+#undef va_copy
 #  define va_copy(dst,src) \
   do { memcpy(&(dst), &(src), sizeof(va_list)); } while (0)
 # endif /* HAVE___VA_COPY */

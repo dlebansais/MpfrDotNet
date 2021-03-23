@@ -41,11 +41,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
  */
 
 static int
-mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, unsigned long k,
+mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, mpfr_ui k,
                mpfr_rnd_t rnd_mode);
 
 int
-mpfr_rootn_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
+mpfr_rootn_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui k, mpfr_rnd_t rnd_mode)
 {
   mpz_t m;
   mpfr_exp_t e, r, sh, f;
@@ -208,7 +208,7 @@ mpfr_rootn_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
    an underflow is not possible before the MPFR_GET_EXP.
 */
 static int
-mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
+mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, mpfr_ui k, mpfr_rnd_t rnd_mode)
 {
   int inexact, exact_root = 0;
   mpfr_prec_t w; /* working precision */
@@ -298,7 +298,7 @@ mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
 }
 
 int
-mpfr_root (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
+mpfr_root (mpfr_ptr y, mpfr_srcptr x, mpfr_ui k, mpfr_rnd_t rnd_mode)
 {
   MPFR_LOG_FUNC
     (("x[%Pu]=%.*Rg k=%lu rnd=%d",

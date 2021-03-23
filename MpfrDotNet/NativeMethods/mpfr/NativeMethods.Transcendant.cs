@@ -11,7 +11,7 @@
         public static __mpfr_log mpfr_log = Marshal.GetDelegateForFunctionPointer<__mpfr_log>(GetMpfrPointer(nameof(mpfr_log)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpfr_log_ui(ref __mpfr_t rop, ulong op, mpfr_rnd_t rnd);
+        public delegate int __mpfr_log_ui(ref __mpfr_t rop, uint op, mpfr_rnd_t rnd);
         public static __mpfr_log_ui mpfr_log_ui = Marshal.GetDelegateForFunctionPointer<__mpfr_log_ui>(GetMpfrPointer(nameof(mpfr_log_ui)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

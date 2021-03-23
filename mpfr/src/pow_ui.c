@@ -26,9 +26,9 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 /* sets y to x^n, and return 0 if exact, non-zero otherwise */
 int
-mpfr_pow_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int n, mpfr_rnd_t rnd)
+mpfr_pow_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui n, mpfr_rnd_t rnd)
 {
-  unsigned long m;
+  mpfr_ui m;
   mpfr_t res;
   mpfr_prec_t prec, err;
   int inexact;
@@ -110,12 +110,12 @@ mpfr_pow_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int n, mpfr_rnd_t rnd)
       MPFR_BLOCK (flags,
                   inexact = mpfr_sqr (res, x, MPFR_RNDU);
                   MPFR_ASSERTD (i >= 2);
-                  if (n & (1UL << (i-2)))
+                  if (n & (((mpfr_ui)1) << (i-2)))
                     inexact |= mpfr_mul (res, res, x, rnd1);
                   for (i -= 3; i >= 0 && !MPFR_BLOCK_EXCEP; i--)
                     {
                       inexact |= mpfr_sqr (res, res, MPFR_RNDU);
-                      if (n & (1UL << i))
+                      if (n & (((mpfr_ui)1) << i))
                         inexact |= mpfr_mul (res, res, x, rnd1);
                     });
       /* let r(n) be the number of roundings: we have r(2)=1, r(3)=2,

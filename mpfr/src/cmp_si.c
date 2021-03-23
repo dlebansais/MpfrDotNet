@@ -31,7 +31,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 */
 
 int
-mpfr_cmp_si_2exp (mpfr_srcptr b, long int i, mpfr_exp_t f)
+mpfr_cmp_si_2exp (mpfr_srcptr b, mpfr_si i, mpfr_exp_t f)
 {
   int si;
 
@@ -52,12 +52,12 @@ mpfr_cmp_si_2exp (mpfr_srcptr b, long int i, mpfr_exp_t f)
 #ifdef MPFR_LONG_WITHIN_LIMB
     {
       mpfr_exp_t e;
-      unsigned long ai;
+      mpir_ui ai;
       int k;
       mp_size_t bn;
       mp_limb_t c, *bp;
 
-      ai = SAFE_ABS(unsigned long, i);
+      ai = SAFE_ABS(mpir_ui, i);
 
       /* ai must be representable in a mp_limb_t */
       MPFR_ASSERTN(ai == (mp_limb_t) ai);
@@ -98,7 +98,7 @@ mpfr_cmp_si_2exp (mpfr_srcptr b, long int i, mpfr_exp_t f)
       int ret;
       MPFR_SAVE_EXPO_DECL (expo);
 
-      mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
+      mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
       /* Warning: i*2^f might be outside the current exponent range! */
       MPFR_SAVE_EXPO_MARK (expo);
       mpfr_set_si_2exp (uu, i, f, MPFR_RNDZ);
@@ -112,7 +112,7 @@ mpfr_cmp_si_2exp (mpfr_srcptr b, long int i, mpfr_exp_t f)
 
 #undef mpfr_cmp_si
 int
-mpfr_cmp_si (mpfr_srcptr b, long int i)
+mpfr_cmp_si (mpfr_srcptr b, mpfr_si i)
 {
   return mpfr_cmp_si_2exp (b, i, 0);
 }

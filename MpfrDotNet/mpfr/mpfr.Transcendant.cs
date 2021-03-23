@@ -10,7 +10,7 @@
             return NativeMethods.mpfr_log(ref rop.Value, ref op.Value, rnd);
         }
 
-        public static int log_ui(mpfr_t rop, ulong op, mpfr_rnd_t rnd)
+        public static int log_ui(mpfr_t rop, uint op, mpfr_rnd_t rnd)
         {
             return NativeMethods.mpfr_log_ui(ref rop.Value, op, rnd);
         }

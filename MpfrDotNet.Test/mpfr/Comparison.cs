@@ -15,13 +15,16 @@ namespace Test
 
             Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
-            using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
-            AsString = a.ToString();
-            Assert.AreEqual("2.225098325034502799228928E+25", AsString);
+            ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+            mpfr_t.DefaultPrecision = 128;
 
-            using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+            using mpfr_t a = new mpfr_t("8720124937520142.5");
+            AsString = a.ToString();
+            Assert.AreEqual("8.7201249375201425E+15", AsString);
+
+            using mpfr_t b = new mpfr_t("22298.125");
             AsString = b.ToString();
-            Assert.AreEqual("2.22987435987982725E+15", AsString);
+            Assert.AreEqual("2.2298125E+4", AsString);
 
             IsGreaterThan = a > b;
             Assert.IsTrue(IsGreaterThan);
@@ -29,27 +32,39 @@ namespace Test
             IsGreaterThan = b > a;
             Assert.IsFalse(IsGreaterThan);
 
-            IsGreaterThan = a > 1UL;
+            IsGreaterThan = a > 8720124937520142UL;
             Assert.IsTrue(IsGreaterThan);
 
-            IsGreaterThan = 1UL > a;
+            IsGreaterThan = a > 8720124937520143UL;
             Assert.IsFalse(IsGreaterThan);
 
-            IsGreaterThan = a > 1L;
+            IsGreaterThan = 8720124937520142UL > a;
+            Assert.IsFalse(IsGreaterThan);
+
+            IsGreaterThan = 8720124937520143UL > a;
             Assert.IsTrue(IsGreaterThan);
 
-            IsGreaterThan = 1L > a;
-            Assert.IsFalse(IsGreaterThan);
-
-            IsGreaterThan = a > 1.0;
+            IsGreaterThan = a > 8720124937520142L;
             Assert.IsTrue(IsGreaterThan);
 
-            IsGreaterThan = 1.0 > a;
+            IsGreaterThan = a > 8720124937520143L;
             Assert.IsFalse(IsGreaterThan);
 
-            using mpz_t c = new mpz_t("222509832503450298345029");
+            IsGreaterThan = 8720124937520142L > a;
+            Assert.IsFalse(IsGreaterThan);
+
+            IsGreaterThan = 8720124937520143L > a;
+            Assert.IsTrue(IsGreaterThan);
+
+            IsGreaterThan = a > 8720124937520142.1;
+            Assert.IsTrue(IsGreaterThan);
+
+            IsGreaterThan = 8720124937520142.9 > a;
+            Assert.IsTrue(IsGreaterThan);
+
+            using mpz_t c = new mpz_t("1720124937520142");
             AsString = c.ToString();
-            Assert.AreEqual("222509832503450298345029", AsString);
+            Assert.AreEqual("1720124937520142", AsString);
 
             IsGreaterThan = a > c;
             Assert.IsTrue(IsGreaterThan);
@@ -67,15 +82,17 @@ namespace Test
             IsGreaterThan = d > a;
             Assert.IsFalse(IsGreaterThan);
 
-            using mpf_t e = new mpf_t("222583250345029834502983.5");
+            using mpf_t e = new mpf_t("8720124937520142.1");
             AsString = e.ToString();
-            Assert.AreEqual("2.22583250345029834503E+23", AsString);
+            Assert.AreEqual("8.7201249375201421E+15", AsString);
 
             IsGreaterThan = a > e;
             Assert.IsTrue(IsGreaterThan);
 
             IsGreaterThan = e > a;
             Assert.IsFalse(IsGreaterThan);
+
+            mpfr_t.DefaultPrecision = DefaultPrecision;
         }
 
         [TestMethod]

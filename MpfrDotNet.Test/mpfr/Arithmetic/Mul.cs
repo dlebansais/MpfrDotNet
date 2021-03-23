@@ -40,21 +40,36 @@
 
             Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+            ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+            mpfr_t.DefaultPrecision = 128;
+
             using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
             AsString = a.ToString();
-            Assert.AreEqual("2.225098325034502799228928E+25", AsString);
+            Assert.AreEqual("2.2250983250345029834502983574029384571986156515777111053466796875E+25", AsString);
 
-            ulong b = 8720124937520142UL;
+            ulong b = 8720124937520142L;
 
             using mpfr_t c = a * b;
 
             AsString = c.ToString();
-            Assert.AreEqual("2.8856049449603966523209433598656512E+34", AsString);
+            Assert.AreEqual("1.94031353925676679443659414572973072859136E+41", AsString);
 
             using mpfr_t d = b * a;
 
             AsString = d.ToString();
-            Assert.AreEqual("2.8856049449603966523209433598656512E+34", AsString);
+            Assert.AreEqual("1.94031353925676679443659414572973072859136E+41", AsString);
+
+            using mpfr_t e = c / a;
+
+            AsString = e.ToString();
+            Assert.AreEqual("8.720124937520142E+15", AsString);
+
+            using mpfr_t f = d / a;
+
+            AsString = f.ToString();
+            Assert.AreEqual("8.720124937520142E+15", AsString);
+
+            mpfr_t.DefaultPrecision = DefaultPrecision;
         }
 
         [TestMethod]
@@ -64,21 +79,36 @@
 
             Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+            ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+            mpfr_t.DefaultPrecision = 128;
+
             using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
             AsString = a.ToString();
-            Assert.AreEqual("2.225098325034502799228928E+25", AsString);
+            Assert.AreEqual("2.2250983250345029834502983574029384571986156515777111053466796875E+25", AsString);
 
-            ulong b = 8720124937520142L;
+            long b = -8720124937520142L;
 
             using mpfr_t c = a * b;
 
             AsString = c.ToString();
-            Assert.AreEqual("2.8856049449603966523209433598656512E+34", AsString);
+            Assert.AreEqual("-1.94031353925676679443659414572973072859136E+41", AsString);
 
             using mpfr_t d = b * a;
 
             AsString = d.ToString();
-            Assert.AreEqual("2.8856049449603966523209433598656512E+34", AsString);
+            Assert.AreEqual("-1.94031353925676679443659414572973072859136E+41", AsString);
+
+            using mpfr_t e = c / a;
+
+            AsString = e.ToString();
+            Assert.AreEqual("-8.720124937520142E+15", AsString);
+
+            using mpfr_t f = d / a;
+
+            AsString = f.ToString();
+            Assert.AreEqual("-8.720124937520142E+15", AsString);
+
+            mpfr_t.DefaultPrecision = DefaultPrecision;
         }
 
         [TestMethod]

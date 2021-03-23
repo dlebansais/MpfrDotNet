@@ -22,11 +22,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 #include "mpfr-impl.h"
 
-unsigned long
+mpfr_ui
 mpfr_get_ui (mpfr_srcptr f, mpfr_rnd_t rnd)
 {
   mpfr_prec_t prec;
-  unsigned long s;
+  mpfr_ui s;
   mpfr_t x;
   mp_size_t n;
   mpfr_exp_t exp;
@@ -36,13 +36,13 @@ mpfr_get_ui (mpfr_srcptr f, mpfr_rnd_t rnd)
     {
       MPFR_SET_ERANGEFLAG ();
       return MPFR_IS_NAN (f) || MPFR_IS_NEG (f) ?
-        (unsigned long) 0 : ULONG_MAX;
+        (mpfr_ui) 0 : MPFR_UI_MAX;
     }
 
   if (MPFR_IS_ZERO (f))
-    return (unsigned long) 0;
+    return (mpfr_ui) 0;
 
-  for (s = ULONG_MAX, prec = 0; s != 0; s /= 2, prec ++)
+  for (s = MPFR_UI_MAX, prec = 0; s != 0; s /= 2, prec ++)
     { }
 
   MPFR_SAVE_EXPO_MARK (expo);
@@ -67,7 +67,7 @@ mpfr_get_ui (mpfr_srcptr f, mpfr_rnd_t rnd)
       while (exp > GMP_NUMB_BITS)
         {
           MPFR_ASSERTD (n > 0);
-          s += (unsigned long) MPFR_MANT(x)[n - 1] << (exp - GMP_NUMB_BITS);
+          s += (mpfr_ui) MPFR_MANT(x)[n - 1] << (exp - GMP_NUMB_BITS);
           n--;
           exp -= GMP_NUMB_BITS;
         }

@@ -26,7 +26,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 /* count the number of significant bits of n, i.e.,
    nbits(unsigned long) - count_leading_zeros (n) */
 int
-mpfr_nbits_ulong (unsigned long n)
+mpfr_nbits_ulong (mpfr_ui n)
 {
   int cnt;
 

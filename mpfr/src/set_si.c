@@ -24,7 +24,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 #undef mpfr_set_si
 int
-mpfr_set_si (mpfr_ptr x, long i, mpfr_rnd_t rnd_mode)
+mpfr_set_si (mpfr_ptr x, mpfr_si i, mpfr_rnd_t rnd_mode)
 {
   return mpfr_set_si_2exp (x, i, 0, rnd_mode);
 }

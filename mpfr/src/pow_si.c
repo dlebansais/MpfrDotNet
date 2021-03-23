@@ -29,7 +29,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
  */
 
 int
-mpfr_pow_si (mpfr_ptr y, mpfr_srcptr x, long int n, mpfr_rnd_t rnd)
+mpfr_pow_si (mpfr_ptr y, mpfr_srcptr x, mpfr_si n, mpfr_rnd_t rnd)
 {
   MPFR_LOG_FUNC
     (("x[%Pu]=%.*Rg n=%ld rnd=%d",
@@ -49,7 +49,7 @@ mpfr_pow_si (mpfr_ptr y, mpfr_srcptr x, long int n, mpfr_rnd_t rnd)
             }
           else
             {
-              int positive = MPFR_IS_POS (x) || ((unsigned long) n & 1) == 0;
+              int positive = MPFR_IS_POS (x) || ((mpfr_ui) n & 1) == 0;
               if (MPFR_IS_INF (x))
                 MPFR_SET_ZERO (y);
               else /* x is zero */
@@ -144,11 +144,11 @@ mpfr_pow_si (mpfr_ptr y, mpfr_srcptr x, long int n, mpfr_rnd_t rnd)
         mpfr_rnd_t rnd1;
         int size_n;
         int inexact;
-        unsigned long abs_n;
+        mpfr_ui abs_n;
         MPFR_SAVE_EXPO_DECL (expo);
         MPFR_ZIV_DECL (loop);
 
-        abs_n = - (unsigned long) n;
+        abs_n = - (mpfr_ui) n;
         size_n = mpfr_nbits_ulong (abs_n);
 
         /* initial working precision */
@@ -210,7 +210,7 @@ mpfr_pow_si (mpfr_ptr y, mpfr_srcptr x, long int n, mpfr_rnd_t rnd)
                     MPFR_ASSERTD (mpfr_cmp_si_2exp (x, MPFR_SIGN (x),
                                                     MPFR_EXP (x) - 1) != 0);
                     mpfr_init2 (y2, 2);
-                    mpfr_init2 (nn, sizeof (long) * CHAR_BIT);
+                    mpfr_init2 (nn, sizeof (mpfr_si) * CHAR_BIT);
                     inexact = mpfr_set_si (nn, n, MPFR_RNDN);
                     MPFR_ASSERTN (inexact == 0);
                     inexact = mpfr_pow_general (y2, x, nn, rnd, 1,

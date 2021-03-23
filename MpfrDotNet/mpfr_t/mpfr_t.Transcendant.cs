@@ -16,7 +16,7 @@
             return z;
         }
 
-        public static mpfr_t Log(ulong op, mpfr_rnd_t rounding = DefaultRounding)
+        public static mpfr_t Log(uint op, mpfr_rnd_t rounding = DefaultRounding)
         {
             mpfr_t z = new();
 

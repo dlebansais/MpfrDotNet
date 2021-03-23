@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MpfrDotNet": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

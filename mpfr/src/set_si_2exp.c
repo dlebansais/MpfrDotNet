@@ -25,7 +25,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_set_si_2exp (mpfr_ptr x, long i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
+mpfr_set_si_2exp (mpfr_ptr x, mpfr_si i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
 {
   if (i == 0)
     {
@@ -41,8 +41,8 @@ mpfr_set_si_2exp (mpfr_ptr x, long i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
       mp_limb_t ai, *xp;
       int inex = 0;
 
-      ai = SAFE_ABS (unsigned long, i);
-      MPFR_ASSERTN (SAFE_ABS (unsigned long, i) == ai);
+      ai = SAFE_ABS (mpfr_ui, i);
+      MPFR_ASSERTN (SAFE_ABS (mpfr_ui, i) == ai);
 
       /* Position of the highest limb */
       xn = (MPFR_PREC (x) - 1) / GMP_NUMB_BITS;

@@ -25,7 +25,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 MPFR_HOT_FUNCTION_ATTR int
-mpfr_set_ui_2exp (mpfr_ptr x, unsigned long i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
+mpfr_set_ui_2exp (mpfr_ptr x, mpfr_ui i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
 {
   MPFR_SET_POS (x);
 

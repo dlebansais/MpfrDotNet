@@ -25,7 +25,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 #undef mpfr_mul_ui
 MPFR_HOT_FUNCTION_ATTR int
-mpfr_mul_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u, mpfr_rnd_t rnd_mode)
+mpfr_mul_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   int inexact;
 
@@ -125,7 +125,7 @@ mpfr_mul_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u, mpfr_rnd_t rnd_mode
     mpfr_t uu;
     MPFR_SAVE_EXPO_DECL (expo);
 
-    mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
+    mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
     /* Warning: u might be outside the current exponent range! */
     MPFR_SAVE_EXPO_MARK (expo);
     mpfr_set_ui (uu, u, MPFR_RNDZ);

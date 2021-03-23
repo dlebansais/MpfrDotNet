@@ -64,6 +64,11 @@ typedef unsigned int    mpfr_uint;
 typedef long            mpfr_long;
 typedef unsigned long   mpfr_ulong;
 typedef size_t          mpfr_size_t;
+typedef unsigned long long int	mpfr_ui;
+typedef long long int		    mpfr_si;
+#define MPFR_UI_MAX ULLONG_MAX
+#define MPFR_SI_MAX LLONG_MAX
+#define MPFR_SI_MIN LLONG_MIN
 
 /* Global (possibly TLS) flags. Might also be used in an mpfr_t in the
    future (there would be room as mpfr_sign_t just needs 1 byte).
@@ -470,10 +475,10 @@ __MPFR_DECLSPEC int mpfr_set_f (mpfr_ptr, mpf_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_cmp_f (mpfr_srcptr, mpf_srcptr);
 __MPFR_DECLSPEC int mpfr_get_f (mpf_ptr, mpfr_srcptr, mpfr_rnd_t);
 #endif
-__MPFR_DECLSPEC int mpfr_set_si (mpfr_ptr, long, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_set_ui (mpfr_ptr, unsigned long, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_set_si_2exp (mpfr_ptr, long, mpfr_exp_t, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_set_ui_2exp (mpfr_ptr, unsigned long, mpfr_exp_t,
+__MPFR_DECLSPEC int mpfr_set_si (mpfr_ptr, mpfr_si, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_set_ui (mpfr_ptr, mpfr_ui, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_set_si_2exp (mpfr_ptr, mpfr_si, mpfr_exp_t, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_set_ui_2exp (mpfr_ptr, mpfr_ui, mpfr_exp_t,
                                       mpfr_rnd_t);
 #ifndef MPFR_USE_MINI_GMP
   /* mini-gmp does not provide mpq_t, we disable the following functions */
@@ -509,8 +514,8 @@ __MPFR_DECLSPEC double mpfr_get_d1 (mpfr_srcptr);
 __MPFR_DECLSPEC double mpfr_get_d_2exp (long*, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC long double mpfr_get_ld_2exp (long*, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_frexp (mpfr_exp_t*, mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
-__MPFR_DECLSPEC long mpfr_get_si (mpfr_srcptr, mpfr_rnd_t);
-__MPFR_DECLSPEC unsigned long mpfr_get_ui (mpfr_srcptr, mpfr_rnd_t);
+__MPFR_DECLSPEC mpfr_si mpfr_get_si (mpfr_srcptr, mpfr_rnd_t);
+__MPFR_DECLSPEC mpfr_ui mpfr_get_ui (mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC size_t mpfr_get_str_ndigits (int, mpfr_prec_t);
 __MPFR_DECLSPEC char * mpfr_get_str (char*, mpfr_exp_t*, int, size_t,
                                      mpfr_srcptr, mpfr_rnd_t);
@@ -540,17 +545,17 @@ __MPFR_DECLSPEC int mpfr_snprintf (char*, size_t, const char*, ...);
 #endif
 
 __MPFR_DECLSPEC int mpfr_pow (mpfr_ptr, mpfr_srcptr, mpfr_srcptr, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_pow_si (mpfr_ptr, mpfr_srcptr, long, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_pow_ui (mpfr_ptr, mpfr_srcptr, unsigned long,
+__MPFR_DECLSPEC int mpfr_pow_si (mpfr_ptr, mpfr_srcptr, mpfr_si, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_pow_ui (mpfr_ptr, mpfr_srcptr, mpfr_ui,
                                  mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_ui_pow_ui (mpfr_ptr, unsigned long, unsigned long,
+__MPFR_DECLSPEC int mpfr_ui_pow_ui (mpfr_ptr, mpfr_ui, mpfr_ui,
                                     mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_ui_pow (mpfr_ptr, unsigned long, mpfr_srcptr,
+__MPFR_DECLSPEC int mpfr_ui_pow (mpfr_ptr, mpfr_ui, mpfr_srcptr,
                                  mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_pow_z (mpfr_ptr, mpfr_srcptr, mpz_srcptr, mpfr_rnd_t);
 
 __MPFR_DECLSPEC int mpfr_sqrt (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_sqrt_ui (mpfr_ptr, unsigned long, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_sqrt_ui (mpfr_ptr, mpfr_ui, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_rec_sqrt (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 
 __MPFR_DECLSPEC int mpfr_add (mpfr_ptr, mpfr_srcptr, mpfr_srcptr, mpfr_rnd_t);
@@ -558,25 +563,25 @@ __MPFR_DECLSPEC int mpfr_sub (mpfr_ptr, mpfr_srcptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_mul (mpfr_ptr, mpfr_srcptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_div (mpfr_ptr, mpfr_srcptr, mpfr_srcptr, mpfr_rnd_t);
 
-__MPFR_DECLSPEC int mpfr_add_ui (mpfr_ptr, mpfr_srcptr, unsigned long,
+__MPFR_DECLSPEC int mpfr_add_ui (mpfr_ptr, mpfr_srcptr, mpfr_ui,
                                  mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_sub_ui (mpfr_ptr, mpfr_srcptr, unsigned long,
+__MPFR_DECLSPEC int mpfr_sub_ui (mpfr_ptr, mpfr_srcptr, mpfr_ui,
                                  mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_ui_sub (mpfr_ptr, unsigned long, mpfr_srcptr,
+__MPFR_DECLSPEC int mpfr_ui_sub (mpfr_ptr, mpfr_ui, mpfr_srcptr,
                                  mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_mul_ui (mpfr_ptr, mpfr_srcptr, unsigned long,
+__MPFR_DECLSPEC int mpfr_mul_ui (mpfr_ptr, mpfr_srcptr, mpfr_ui,
                                  mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_div_ui (mpfr_ptr, mpfr_srcptr, unsigned long,
+__MPFR_DECLSPEC int mpfr_div_ui (mpfr_ptr, mpfr_srcptr, mpfr_ui,
                                  mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_ui_div (mpfr_ptr, unsigned long, mpfr_srcptr,
+__MPFR_DECLSPEC int mpfr_ui_div (mpfr_ptr, mpfr_ui, mpfr_srcptr,
                                  mpfr_rnd_t);
 
-__MPFR_DECLSPEC int mpfr_add_si (mpfr_ptr, mpfr_srcptr, long, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_sub_si (mpfr_ptr, mpfr_srcptr, long, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_si_sub (mpfr_ptr, long, mpfr_srcptr, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_mul_si (mpfr_ptr, mpfr_srcptr, long, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_div_si (mpfr_ptr, mpfr_srcptr, long, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_si_div (mpfr_ptr, long, mpfr_srcptr, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_add_si (mpfr_ptr, mpfr_srcptr, mpfr_si, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_sub_si (mpfr_ptr, mpfr_srcptr, mpfr_si, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_si_sub (mpfr_ptr, mpfr_si, mpfr_srcptr, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_mul_si (mpfr_ptr, mpfr_srcptr, mpfr_si, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_div_si (mpfr_ptr, mpfr_srcptr, mpfr_si, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_si_div (mpfr_ptr, mpfr_si, mpfr_srcptr, mpfr_rnd_t);
 
 __MPFR_DECLSPEC int mpfr_add_d (mpfr_ptr, mpfr_srcptr, double, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_sub_d (mpfr_ptr, mpfr_srcptr, double, mpfr_rnd_t);
@@ -612,10 +617,10 @@ __MPFR_DECLSPEC int mpfr_cmp3 (mpfr_srcptr, mpfr_srcptr, int);
 __MPFR_DECLSPEC int mpfr_cmp_d (mpfr_srcptr, double);
 __MPFR_DECLSPEC int mpfr_cmp_ld (mpfr_srcptr, long double);
 __MPFR_DECLSPEC int mpfr_cmpabs (mpfr_srcptr, mpfr_srcptr);
-__MPFR_DECLSPEC int mpfr_cmp_ui (mpfr_srcptr, unsigned long);
-__MPFR_DECLSPEC int mpfr_cmp_si (mpfr_srcptr, long);
-__MPFR_DECLSPEC int mpfr_cmp_ui_2exp (mpfr_srcptr, unsigned long, mpfr_exp_t);
-__MPFR_DECLSPEC int mpfr_cmp_si_2exp (mpfr_srcptr, long, mpfr_exp_t);
+__MPFR_DECLSPEC int mpfr_cmp_ui (mpfr_srcptr, mpfr_ui);
+__MPFR_DECLSPEC int mpfr_cmp_si (mpfr_srcptr, mpfr_si);
+__MPFR_DECLSPEC int mpfr_cmp_ui_2exp (mpfr_srcptr, mpfr_ui, mpfr_exp_t);
+__MPFR_DECLSPEC int mpfr_cmp_si_2exp (mpfr_srcptr, mpfr_si, mpfr_exp_t);
 __MPFR_DECLSPEC void mpfr_reldiff (mpfr_ptr, mpfr_srcptr, mpfr_srcptr,
                                    mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_eq (mpfr_srcptr, mpfr_srcptr, unsigned long);
@@ -713,9 +718,9 @@ __MPFR_DECLSPEC int mpfr_cbrt (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 #ifndef _MPFR_NO_DEPRECATED_ROOT /* for the test of this function */
 MPFR_DEPRECATED
 #endif
-__MPFR_DECLSPEC int mpfr_root (mpfr_ptr, mpfr_srcptr, unsigned long,
+__MPFR_DECLSPEC int mpfr_root (mpfr_ptr, mpfr_srcptr, mpfr_ui,
                                mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_rootn_ui (mpfr_ptr, mpfr_srcptr, unsigned long,
+__MPFR_DECLSPEC int mpfr_rootn_ui (mpfr_ptr, mpfr_srcptr, mpfr_ui,
                                    mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_gamma (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_gamma_inc (mpfr_ptr, mpfr_srcptr, mpfr_srcptr,
@@ -725,8 +730,8 @@ __MPFR_DECLSPEC int mpfr_lngamma (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_lgamma (mpfr_ptr, int *, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_digamma (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_zeta (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_zeta_ui (mpfr_ptr, unsigned long, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_fac_ui (mpfr_ptr, unsigned long, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_zeta_ui (mpfr_ptr, mpfr_ui, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_fac_ui (mpfr_ptr, mpfr_ui, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_j0 (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_j1 (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_jn (mpfr_ptr, long, mpfr_srcptr, mpfr_rnd_t);
