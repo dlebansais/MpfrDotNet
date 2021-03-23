@@ -1,7 +1,7 @@
 ﻿namespace MpfrDotNet
 {
     using System;
-    using static NativeMethods;
+    using static Interop.Mpfr.NativeMethods;
 
     public partial class mpfr_t : IDisposable
     {

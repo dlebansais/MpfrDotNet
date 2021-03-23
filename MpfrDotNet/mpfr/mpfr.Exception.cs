@@ -1,5 +1,7 @@
 ﻿namespace MpfrDotNet
 {
+    using Interop.Mpfr;
+
     public static partial class mpfr
     {
         public static int get_emin()

@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Text;
+    using Interop.Mpir;
 
     public static class mpz
     {

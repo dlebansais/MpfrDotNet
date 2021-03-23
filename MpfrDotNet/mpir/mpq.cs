@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text;
+    using Interop.Mpir;
 
     public static class mpq
     {

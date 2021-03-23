@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet
 {
     using System.Text;
+    using Interop.Mpfr;
     using MpirDotNet;
 
     public static partial class mpfr

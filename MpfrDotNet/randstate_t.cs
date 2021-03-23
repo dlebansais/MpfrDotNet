@@ -1,7 +1,7 @@
 ﻿namespace MpirDotNet
 {
     using System;
-    using static NativeMethods;
+    using static Interop.Mpir.NativeMethods;
 
     public class randstate_t : IDisposable
     {

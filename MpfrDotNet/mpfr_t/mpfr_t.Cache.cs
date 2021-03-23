@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading;
-    using static NativeMethods;
+    using static Interop.Mpfr.NativeMethods;
 
     public partial class mpfr_t : IDisposable
     {

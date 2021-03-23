@@ -1,4 +1,4 @@
-﻿namespace MpfrDotNet
+﻿namespace Interop.Mpfr
 {
     public enum mpfr_rnd_t
     {

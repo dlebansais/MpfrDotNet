@@ -2,8 +2,9 @@
 {
     using System;
     using System.Text;
+    using Interop.Mpfr;
     using MpirDotNet;
-    using static NativeMethods;
+    using static Interop.Mpfr.NativeMethods;
 
     public partial class mpfr_t : IDisposable
     {

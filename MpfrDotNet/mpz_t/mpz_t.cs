@@ -3,7 +3,7 @@
     using System;
     using System.Numerics;
     using System.Text;
-    using static NativeMethods;
+    using static Interop.Mpir.NativeMethods;
 
     public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, IComparable, IComparable<mpz_t>
     {

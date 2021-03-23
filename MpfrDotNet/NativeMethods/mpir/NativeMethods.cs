@@ -1,11 +1,18 @@
-﻿namespace MpirDotNet
+﻿namespace Interop.Mpir
 {
     using System;
     using System.IO;
     using System.Reflection;
+    using System.Runtime.InteropServices;
 
     internal static partial class NativeMethods
     {
+        [DllImport("kernel32")]
+        private static extern IntPtr LoadLibrary(string libraryName);
+
+        [DllImport("kernel32", CharSet = CharSet.Ansi)]
+        private static extern IntPtr GetProcAddress(IntPtr hwnd, string procedureName);
+
         private static IntPtr GetMpirPointer(string name)
         {
             if (hMpirLib == IntPtr.Zero)

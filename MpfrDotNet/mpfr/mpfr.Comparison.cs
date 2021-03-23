@@ -1,6 +1,8 @@
 ﻿namespace MpfrDotNet
 {
+    using Interop.Mpfr;
     using MpirDotNet;
+    using NativeMethods = Interop.Mpfr.NativeMethods;
 
     public static partial class mpfr
     {

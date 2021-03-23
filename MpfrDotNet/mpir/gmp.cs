@@ -1,5 +1,7 @@
 ﻿namespace MpirDotNet
 {
+    using Interop.Mpir;
+
     public static class gmp
     {
         #region Initialization

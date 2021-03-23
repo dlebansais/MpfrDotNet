@@ -2,6 +2,7 @@
 {
     using System;
     using System.Runtime.InteropServices;
+    using Interop.Mpfr;
 
     public static partial class mpfr
     {

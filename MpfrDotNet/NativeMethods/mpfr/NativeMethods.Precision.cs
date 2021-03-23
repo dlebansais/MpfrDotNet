@@ -1,4 +1,4 @@
-﻿namespace MpfrDotNet
+﻿namespace Interop.Mpfr
 {
     using System.Runtime.InteropServices;
 

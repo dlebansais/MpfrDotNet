@@ -2,7 +2,7 @@
 {
     using System;
     using System.Text;
-    using static NativeMethods;
+    using static Interop.Mpir.NativeMethods;
 
     public class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConvertible, IComparable, IComparable<mpq_t>
     {

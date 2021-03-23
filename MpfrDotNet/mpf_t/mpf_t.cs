@@ -2,7 +2,7 @@
 {
     using System;
     using System.Text;
-    using static NativeMethods;
+    using static Interop.Mpir.NativeMethods;
 
     public class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConvertible, IComparable, IComparable<mpf_t>
     {

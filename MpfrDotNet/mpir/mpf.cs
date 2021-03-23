@@ -1,6 +1,7 @@
 ﻿namespace MpirDotNet
 {
     using System.Text;
+    using Interop.Mpir;
 
     public static class mpf
     {

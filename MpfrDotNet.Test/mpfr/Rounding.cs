@@ -1,5 +1,6 @@
 ﻿namespace Test
 {
+    using Interop.Mpfr;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using MpfrDotNet;
 
@@ -17,7 +18,7 @@
             AsString = a.ToString();
             Assert.AreEqual("2.225098325034502799228928E+25", AsString);
 
-            using mpfr_t b = a.RoundToInteger(MpfrDotNet.mpfr_rnd_t.MPFR_RNDZ);
+            using mpfr_t b = a.RoundToInteger(mpfr_rnd_t.MPFR_RNDZ);
             AsString = b.ToString();
             Assert.AreEqual("2.225098325034502799228928E+25", AsString);
 
@@ -47,7 +48,7 @@
         {
             Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
-            string AsString = mpfr.print_rnd_mode(MpfrDotNet.mpfr_rnd_t.MPFR_RNDZ);
+            string AsString = mpfr.print_rnd_mode(mpfr_rnd_t.MPFR_RNDZ);
             Assert.AreEqual("MPFR_RNDZ", AsString);
         }
     }

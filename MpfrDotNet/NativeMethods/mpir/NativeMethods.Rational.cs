@@ -1,4 +1,4 @@
-﻿namespace MpirDotNet
+﻿namespace Interop.Mpir
 {
     using System;
     using System.Runtime.InteropServices;
