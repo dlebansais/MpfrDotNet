@@ -15,17 +15,7 @@
 
         private static IntPtr GetMpirPointer(string name)
         {
-            if (hMpirLib == IntPtr.Zero)
-            {
-                Assembly Current = Assembly.GetExecutingAssembly();
-                string Location = Current.Location;
-                string DirectoryName = Path.GetDirectoryName(Location)!;
-                string LibraryLocation = Path.Combine(DirectoryName, "mpir.dll");
-                hMpirLib = LoadLibrary(LibraryLocation);
-
-                if (hMpirLib == IntPtr.Zero)
-                    throw new ArgumentException($"File {LibraryLocation} not found or not loaded");
-            }
+            LoadLibrary("mpir.dll", ref hMpirLib);
 
             string FunctionName = $"__g{name}";
             IntPtr Result = GetProcAddress(hMpirLib, FunctionName);
@@ -34,6 +24,25 @@
                 throw new ArgumentException($"Method {FunctionName} not found", nameof(name));
 
             return Result;
+        }
+
+        private static bool LoadLibrary(string libraryName, ref IntPtr hLib)
+        {
+            if (hLib == IntPtr.Zero)
+            {
+                Assembly Current = Assembly.GetExecutingAssembly();
+                string Location = Current.Location;
+                string DirectoryName = Path.GetDirectoryName(Location)!;
+                string LibraryLocation = Path.Combine(DirectoryName, libraryName);
+
+                hLib = LoadLibrary(LibraryLocation);
+                if (hLib == IntPtr.Zero)
+                    throw new ArgumentException($"File {LibraryLocation} not found or not loaded");
+
+                return true;
+            }
+
+            return false;
         }
 
         private static IntPtr hMpirLib = IntPtr.Zero;
