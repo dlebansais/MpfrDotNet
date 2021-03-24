@@ -65,12 +65,12 @@
 
         public static explicit operator int(mpfr_t value)
         {
-            return mpfr_get_sj(ref value.Value, value.Rounding);
+            return mpfr_get_sj(ref value.Value, (__mpfr_rnd_t)value.Rounding);
         }
 
         public static explicit operator uint(mpfr_t value)
         {
-            return mpfr_get_uj(ref value.Value, value.Rounding);
+            return mpfr_get_uj(ref value.Value, (__mpfr_rnd_t)value.Rounding);
         }
 
         public static explicit operator short(mpfr_t value)
@@ -85,29 +85,29 @@
 
         public static explicit operator long(mpfr_t value)
         {
-            return mpfr_get_si(ref value.Value, value.Rounding);
+            return mpfr_get_si(ref value.Value, (__mpfr_rnd_t)value.Rounding);
         }
 
         public static explicit operator ulong(mpfr_t value)
         {
-            return mpfr_get_ui(ref value.Value, value.Rounding);
+            return mpfr_get_ui(ref value.Value, (__mpfr_rnd_t)value.Rounding);
         }
 
         public static explicit operator float(mpfr_t value)
         {
-            return mpfr_get_flt(ref value.Value, value.Rounding);
+            return mpfr_get_flt(ref value.Value, (__mpfr_rnd_t)value.Rounding);
         }
 
         public static explicit operator double(mpfr_t value)
         {
-            return mpfr_get_d(ref value.Value, value.Rounding);
+            return mpfr_get_d(ref value.Value, (__mpfr_rnd_t)value.Rounding);
         }
 
         public static explicit operator BigInteger(mpfr_t value)
         {
             using mpz_t Temporary = new mpz_t();
 
-            mpfr_get_z(ref Temporary.Value, ref value.Value, value.Rounding);
+            mpfr_get_z(ref Temporary.Value, ref value.Value, (__mpfr_rnd_t)value.Rounding);
 
             return (BigInteger)Temporary;
         }

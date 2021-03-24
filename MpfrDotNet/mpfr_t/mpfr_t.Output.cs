@@ -22,7 +22,7 @@
             StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
 
             int Exponent;
-            mpfr_get_str(Data, out Exponent, resultbase, SizeInDigits, ref Value, rounding);
+            mpfr_get_str(Data, out Exponent, resultbase, SizeInDigits, ref Value, (__mpfr_rnd_t)rounding);
 
             string Result = Data.ToString();
 

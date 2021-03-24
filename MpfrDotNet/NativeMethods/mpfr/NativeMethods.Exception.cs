@@ -1,8 +1,6 @@
 ﻿namespace Interop.Mpfr
 {
-    using System;
     using System.Runtime.InteropServices;
-    using static Interop.Mpir.NativeMethods;
 
     internal static partial class NativeMethods
     {
@@ -39,11 +37,11 @@
         public static __mpfr_get_emax_max mpfr_get_emax_max { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_emax_max>(GetMpfrPointer(nameof(mpfr_get_emax_max)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpfr_check_range(ref __mpfr_t x, int t, mpfr_rnd_t rnd);
+        public delegate int __mpfr_check_range(ref __mpfr_t x, int t, __mpfr_rnd_t rnd);
         public static __mpfr_check_range mpfr_check_range { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_check_range>(GetMpfrPointer(nameof(mpfr_check_range)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int __mpfr_subnormalize(ref __mpfr_t x, int t, mpfr_rnd_t rnd);
+        public delegate int __mpfr_subnormalize(ref __mpfr_t x, int t, __mpfr_rnd_t rnd);
         public static __mpfr_subnormalize mpfr_subnormalize { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_subnormalize>(GetMpfrPointer(nameof(mpfr_subnormalize)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

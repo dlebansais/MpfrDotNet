@@ -58,7 +58,7 @@
 
         public override int GetHashCode()
         {
-            double d = mpfr_get_d(ref Value, DefaultRounding);
+            double d = mpfr_get_d(ref Value, (__mpfr_rnd_t)DefaultRounding);
             return d.GetHashCode();
         }
     }

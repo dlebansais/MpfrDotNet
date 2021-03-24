@@ -10,7 +10,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_rint(ref z.Value, ref Value, rounding);
+            mpfr_rint(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
 
             return z;
         }

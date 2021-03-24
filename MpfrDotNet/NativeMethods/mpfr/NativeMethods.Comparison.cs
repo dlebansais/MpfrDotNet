@@ -106,7 +106,7 @@
         public static __mpfr_eq mpfr_eq { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_eq>(GetMpfrPointer(nameof(mpfr_eq)));
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void __mpfr_reldiff(ref __mpfr_t rop, ref __mpfr_t op1, ref __mpfr_t op2, mpfr_rnd_t rnd);
+        public delegate void __mpfr_reldiff(ref __mpfr_t rop, ref __mpfr_t op1, ref __mpfr_t op2, __mpfr_rnd_t rnd);
         public static __mpfr_reldiff mpfr_reldiff { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_reldiff>(GetMpfrPointer(nameof(mpfr_reldiff)));
     }
 }

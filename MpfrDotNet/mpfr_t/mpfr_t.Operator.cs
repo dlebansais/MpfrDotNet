@@ -11,7 +11,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_add(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -20,7 +20,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_ui(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_add_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -29,7 +29,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_ui(ref z.Value, ref y.Value, x, y.Rounding);
+            mpfr_add_ui(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -38,7 +38,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_si(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_add_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -47,7 +47,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_si(ref z.Value, ref y.Value, x, y.Rounding);
+            mpfr_add_si(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -56,7 +56,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_d(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_add_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -65,7 +65,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_d(ref z.Value, ref y.Value, x, y.Rounding);
+            mpfr_add_d(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -74,7 +74,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_z(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_add_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -83,7 +83,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_z(ref z.Value, ref y.Value, ref x.Value, y.Rounding);
+            mpfr_add_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -92,7 +92,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_q(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_add_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -101,7 +101,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_add_q(ref z.Value, ref y.Value, ref x.Value, y.Rounding);
+            mpfr_add_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -112,7 +112,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sub(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_sub(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -121,7 +121,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sub_ui(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_sub_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -130,7 +130,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_ui_sub(ref z.Value, x, ref y.Value, y.Rounding);
+            mpfr_ui_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -139,7 +139,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sub_si(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_sub_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -148,7 +148,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_si_sub(ref z.Value, x, ref y.Value, y.Rounding);
+            mpfr_si_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -157,7 +157,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sub_d(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_sub_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -166,7 +166,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_d_sub(ref z.Value, x, ref y.Value, y.Rounding);
+            mpfr_d_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -175,7 +175,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sub_z(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_sub_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -184,7 +184,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_z_sub(ref z.Value, ref x.Value, ref y.Value, y.Rounding);
+            mpfr_z_sub(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -193,7 +193,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sub_q(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_sub_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -202,8 +202,8 @@
         {
             mpfr_t z = new();
 
-            mpfr_sub_q(ref z.Value, ref y.Value, ref x.Value, y.Rounding);
-            mpfr_neg(ref z.Value, ref z.Value, y.Rounding);
+            mpfr_sub_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+            mpfr_neg(ref z.Value, ref z.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -214,7 +214,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_mul(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -223,7 +223,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_ui(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_mul_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -232,7 +232,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_ui(ref z.Value, ref y.Value, x, y.Rounding);
+            mpfr_mul_ui(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -241,7 +241,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_si(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_mul_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -250,7 +250,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_si(ref z.Value, ref y.Value, x, y.Rounding);
+            mpfr_mul_si(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -259,7 +259,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_d(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_mul_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -268,7 +268,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_d(ref z.Value, ref y.Value, x, y.Rounding);
+            mpfr_mul_d(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -277,7 +277,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_z(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_mul_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -286,7 +286,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_z(ref z.Value, ref y.Value, ref x.Value, y.Rounding);
+            mpfr_mul_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -295,7 +295,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_q(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_mul_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -304,7 +304,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_mul_q(ref z.Value, ref y.Value, ref x.Value, y.Rounding);
+            mpfr_mul_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -315,7 +315,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_div(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_div(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -324,7 +324,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_div_ui(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_div_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -333,7 +333,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_ui_div(ref z.Value, x, ref y.Value, y.Rounding);
+            mpfr_ui_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -342,7 +342,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_div_si(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_div_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -351,7 +351,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_si_div(ref z.Value, x, ref y.Value, y.Rounding);
+            mpfr_si_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -360,7 +360,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_div_d(ref z.Value, ref x.Value, y, x.Rounding);
+            mpfr_div_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -369,7 +369,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_d_div(ref z.Value, x, ref y.Value, y.Rounding);
+            mpfr_d_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -378,7 +378,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_div_z(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_div_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -387,8 +387,8 @@
         {
             mpfr_t z = new();
 
-            mpfr_div_z(ref z.Value, ref y.Value, ref x.Value, y.Rounding);
-            mpfr_ui_div(ref z.Value, 1, ref z.Value, y.Rounding);
+            mpfr_div_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+            mpfr_ui_div(ref z.Value, 1, ref z.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -397,7 +397,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_div_q(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_div_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -406,8 +406,8 @@
         {
             mpfr_t z = new();
 
-            mpfr_div_q(ref z.Value, ref y.Value, ref x.Value, y.Rounding);
-            mpfr_ui_div(ref z.Value, 1, ref z.Value, y.Rounding);
+            mpfr_div_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+            mpfr_ui_div(ref z.Value, 1, ref z.Value, (__mpfr_rnd_t)y.Rounding);
 
             return z;
         }
@@ -418,7 +418,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_neg(ref z.Value, ref x.Value, x.Rounding);
+            mpfr_neg(ref z.Value, ref x.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }

@@ -1,4 +1,4 @@
-﻿namespace Interop.Mpfr
+﻿namespace MpfrDotNet
 {
     /// <summary>
     /// Rounding mode for operations on numbers.

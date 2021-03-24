@@ -12,7 +12,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_log(ref z.Value, ref Value, Rounding);
+            mpfr_log(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -21,7 +21,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_log_ui(ref z.Value, op, rounding);
+            mpfr_log_ui(ref z.Value, op, (__mpfr_rnd_t)rounding);
 
             return z;
         }
@@ -30,7 +30,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_log2(ref z.Value, ref Value, rounding);
+            mpfr_log2(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
 
             return z;
         }
@@ -39,7 +39,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_log10(ref z.Value, ref Value, rounding);
+            mpfr_log10(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
 
             return z;
         }
@@ -48,7 +48,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_log1p(ref z.Value, ref Value, rounding);
+            mpfr_log1p(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
 
             return z;
         }
@@ -59,7 +59,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_exp(ref z.Value, ref Value, Rounding);
+            mpfr_exp(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -68,7 +68,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_exp2(ref z.Value, ref Value, Rounding);
+            mpfr_exp2(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -77,7 +77,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_exp10(ref z.Value, ref Value, Rounding);
+            mpfr_exp10(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -86,7 +86,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_expm1(ref z.Value, ref Value, Rounding);
+            mpfr_expm1(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -97,7 +97,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_pow(ref z.Value, ref Value, ref op.Value, Rounding);
+            mpfr_pow(ref z.Value, ref Value, ref op.Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -106,7 +106,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_pow_ui(ref z.Value, ref Value, op, Rounding);
+            mpfr_pow_ui(ref z.Value, ref Value, op, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -115,7 +115,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_pow_si(ref z.Value, ref Value, op, Rounding);
+            mpfr_pow_si(ref z.Value, ref Value, op, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -124,7 +124,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_pow_z(ref z.Value, ref Value, ref op.Value, Rounding);
+            mpfr_pow_z(ref z.Value, ref Value, ref op.Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -133,7 +133,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_ui_pow_ui(ref z.Value, op1, op2, rounding);
+            mpfr_ui_pow_ui(ref z.Value, op1, op2, (__mpfr_rnd_t)rounding);
 
             return z;
         }
@@ -142,7 +142,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_ui_pow(ref z.Value, op1, ref op2.Value, op2.Rounding);
+            mpfr_ui_pow(ref z.Value, op1, ref op2.Value, (__mpfr_rnd_t)op2.Rounding);
 
             return z;
         }
@@ -153,7 +153,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_cos(ref z.Value, ref Value, Rounding);
+            mpfr_cos(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -162,7 +162,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sin(ref z.Value, ref Value, Rounding);
+            mpfr_sin(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -171,7 +171,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_tan(ref z.Value, ref Value, Rounding);
+            mpfr_tan(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -181,14 +181,14 @@
             sin = new();
             cos = new();
 
-            mpfr_sin_cos(ref sin.Value, ref cos.Value, ref op.Value, op.Rounding);
+            mpfr_sin_cos(ref sin.Value, ref cos.Value, ref op.Value, (__mpfr_rnd_t)op.Rounding);
         }
 
         public mpfr_t Sec()
         {
             mpfr_t z = new();
 
-            mpfr_sec(ref z.Value, ref Value, Rounding);
+            mpfr_sec(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -197,7 +197,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_csc(ref z.Value, ref Value, Rounding);
+            mpfr_csc(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -206,7 +206,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_cot(ref z.Value, ref Value, Rounding);
+            mpfr_cot(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -215,7 +215,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_acos(ref z.Value, ref Value, Rounding);
+            mpfr_acos(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -224,7 +224,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_asin(ref z.Value, ref Value, Rounding);
+            mpfr_asin(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -233,7 +233,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_atan(ref z.Value, ref Value, Rounding);
+            mpfr_atan(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -242,7 +242,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_atan2(ref z.Value, ref x.Value, ref y.Value, x.Rounding);
+            mpfr_atan2(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
 
             return z;
         }
@@ -251,7 +251,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_cosh(ref z.Value, ref Value, Rounding);
+            mpfr_cosh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -260,7 +260,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sinh(ref z.Value, ref Value, Rounding);
+            mpfr_sinh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -269,7 +269,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_tanh(ref z.Value, ref Value, Rounding);
+            mpfr_tanh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -279,14 +279,14 @@
             sin = new();
             cos = new();
 
-            mpfr_sinh_cosh(ref sin.Value, ref cos.Value, ref op.Value, op.Rounding);
+            mpfr_sinh_cosh(ref sin.Value, ref cos.Value, ref op.Value, (__mpfr_rnd_t)op.Rounding);
         }
 
         public mpfr_t Sech()
         {
             mpfr_t z = new();
 
-            mpfr_sech(ref z.Value, ref Value, Rounding);
+            mpfr_sech(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -295,7 +295,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_csch(ref z.Value, ref Value, Rounding);
+            mpfr_csch(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -304,7 +304,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_coth(ref z.Value, ref Value, Rounding);
+            mpfr_coth(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -313,7 +313,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_acosh(ref z.Value, ref Value, Rounding);
+            mpfr_acosh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -322,7 +322,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_asinh(ref z.Value, ref Value, Rounding);
+            mpfr_asinh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -331,7 +331,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_atanh(ref z.Value, ref Value, Rounding);
+            mpfr_atanh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -347,7 +347,7 @@
             else
                 mpfr_init2(ref Result.Value, precision);
 
-            mpfr_const_log2(ref Result.Value, DefaultRounding);
+            mpfr_const_log2(ref Result.Value, (__mpfr_rnd_t)DefaultRounding);
 
             return Result;
         }
@@ -361,7 +361,7 @@
             else
                 mpfr_init2(ref Result.Value, precision);
 
-            mpfr_const_pi(ref Result.Value, DefaultRounding);
+            mpfr_const_pi(ref Result.Value, (__mpfr_rnd_t)DefaultRounding);
 
             return Result;
         }
@@ -375,7 +375,7 @@
             else
                 mpfr_init2(ref Result.Value, precision);
 
-            mpfr_const_euler(ref Result.Value, DefaultRounding);
+            mpfr_const_euler(ref Result.Value, (__mpfr_rnd_t)DefaultRounding);
 
             return Result;
         }
@@ -389,7 +389,7 @@
             else
                 mpfr_init2(ref Result.Value, precision);
 
-            mpfr_const_catalan(ref Result.Value, DefaultRounding);
+            mpfr_const_catalan(ref Result.Value, (__mpfr_rnd_t)DefaultRounding);
 
             return Result;
         }

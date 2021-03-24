@@ -10,7 +10,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_sqrt(ref z.Value, ref Value, Rounding);
+            mpfr_sqrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -19,7 +19,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_cbrt(ref z.Value, ref Value, Rounding);
+            mpfr_cbrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -28,7 +28,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_rootn_ui(ref z.Value, ref Value, n, Rounding);
+            mpfr_rootn_ui(ref z.Value, ref Value, n, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -37,7 +37,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_abs(ref z.Value, ref Value, Rounding);
+            mpfr_abs(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
             return z;
         }
@@ -46,7 +46,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_hypot(ref z.Value, ref x.Value, ref y.Value, rounding);
+            mpfr_hypot(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
 
             return z;
         }

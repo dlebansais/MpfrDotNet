@@ -10,7 +10,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_min(ref z.Value, ref x.Value, ref y.Value, rounding);
+            mpfr_min(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
 
             return z;
         }
@@ -19,7 +19,7 @@
         {
             mpfr_t z = new();
 
-            mpfr_max(ref z.Value, ref x.Value, ref y.Value, rounding);
+            mpfr_max(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
 
             return z;
         }
