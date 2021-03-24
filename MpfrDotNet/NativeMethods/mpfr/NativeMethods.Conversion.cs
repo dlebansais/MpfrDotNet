@@ -1,5 +1,6 @@
 ﻿namespace Interop.Mpfr
 {
+    using System;
     using System.Runtime.InteropServices;
     using System.Text;
     using static Interop.Mpir.NativeMethods;
@@ -85,5 +86,13 @@
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int __mpfr_fits_sshort_p(ref __mpfr_t op, mpfr_rnd_t rnd);
         public static __mpfr_fits_sshort_p mpfr_fits_sshort_p { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_fits_sshort_p>(GetMpfrPointer(nameof(mpfr_fits_sshort_p)));
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public delegate int __mpfr_sprintf(StringBuilder buf, string format, ref __mpfr_t op, IntPtr end);
+        public static __mpfr_sprintf mpfr_sprintf { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_sprintf>(GetMpfrPointer(nameof(mpfr_sprintf)));
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public delegate int __mpfr_snprintf(IntPtr buf, ulong n, string format, ref __mpfr_t op, IntPtr end);
+        public static __mpfr_snprintf mpfr_snprintf { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_snprintf>(GetMpfrPointer(nameof(mpfr_snprintf)));
     }
 }

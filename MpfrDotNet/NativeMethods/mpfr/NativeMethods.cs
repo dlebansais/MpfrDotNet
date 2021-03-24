@@ -15,19 +15,10 @@
 
         private static IntPtr GetMpfrPointer(string name)
         {
-            if (hMpfrLib == IntPtr.Zero)
-            {
-                Assembly Current = Assembly.GetExecutingAssembly();
-                string Location = Current.Location;
-                string DirectoryName = Path.GetDirectoryName(Location)!;
-                string LibraryLocation = Path.Combine(DirectoryName, "mpfr.dll");
-                hMpfrLib = LoadLibrary(LibraryLocation);
+            LoadLibrary("mpir.dll", ref hMpirLib);
 
-                if (hMpfrLib == IntPtr.Zero)
-                    throw new ArgumentException($"File {LibraryLocation} not found or not loaded");
-
+            if (LoadLibrary("mpfr.dll", ref hMpfrLib))
                 InitializePrecision();
-            }
 
             string FunctionName = $"{name}";
             IntPtr Result = GetProcAddress(hMpfrLib, FunctionName);
@@ -38,6 +29,26 @@
             return Result;
         }
 
+        private static bool LoadLibrary(string libraryName, ref IntPtr hLib)
+        {
+            if (hLib == IntPtr.Zero)
+            {
+                Assembly Current = Assembly.GetExecutingAssembly();
+                string Location = Current.Location;
+                string DirectoryName = Path.GetDirectoryName(Location)!;
+                string LibraryLocation = Path.Combine(DirectoryName, libraryName);
+
+                hLib = LoadLibrary(LibraryLocation);
+                if (hLib == IntPtr.Zero)
+                    throw new ArgumentException($"File {LibraryLocation} not found or not loaded");
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static IntPtr hMpirLib = IntPtr.Zero;
         private static IntPtr hMpfrLib = IntPtr.Zero;
     }
 }

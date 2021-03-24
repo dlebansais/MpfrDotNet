@@ -1,5 +1,8 @@
 ﻿namespace Interop.Mpfr
 {
+    /// <summary>
+    /// Rounding mode for operations on numbers.
+    /// </summary>
     public enum mpfr_rnd_t
     {
         /// <summary>

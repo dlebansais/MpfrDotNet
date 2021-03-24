@@ -1,13 +1,12 @@
 ﻿namespace MpfrDotNet
 {
     using System;
-    using Interop.Mpfr;
     using static Interop.Mpfr.NativeMethods;
 
     public partial class mpfr_t : IDisposable
     {
-        public ulong PrecisionMin { get { return NativeMethods.PrecisionMin; } }
-        public ulong PrecisionMax { get { return NativeMethods.PrecisionMax; } }
+        public ulong MinPrecision { get { return NativeMinPrecision; } }
+        public ulong MaxPrecision { get { return NativeMaxPrecision; } }
 
         public ulong Precision
         {
@@ -23,7 +22,7 @@
 
         public static ulong DefaultPrecisionInit
         {
-            get { return NativeMethods.PrecisionDefault; }
+            get { return NativeDefaultPrecision; }
         }
     }
 }

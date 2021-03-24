@@ -45,9 +45,9 @@
             return NativeMethods.mpfr_get_default_prec();
         }
 
-        public static ulong PrecisionMin { get { return NativeMethods.PrecisionMin; } }
-        public static ulong PrecisionMax { get { return NativeMethods.PrecisionMax; } }
-        public static ulong PrecisionDefault { get { return NativeMethods.PrecisionDefault; } }
+        public static ulong PrecisionMin { get { return NativeMethods.NativeMinPrecision; } }
+        public static ulong PrecisionMax { get { return NativeMethods.NativeMaxPrecision; } }
+        public static ulong PrecisionDefault { get { return NativeMethods.NativeDefaultPrecision; } }
 
         public static void set_prec(mpfr_t x, ulong prec)
         {
