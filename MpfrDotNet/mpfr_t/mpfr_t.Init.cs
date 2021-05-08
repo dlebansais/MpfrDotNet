@@ -113,6 +113,8 @@
 
         public mpfr_rnd_t Rounding { get; set; } = DefaultRounding;
 
+#pragma warning disable SA1401 // Fields should be private
         internal __mpfr_t Value;
+#pragma warning restore SA1401 // Fields should be private
     }
 }

@@ -16,11 +16,16 @@
     <RepositoryUrl>https://github.com/dlebansais/MpfrDotNet</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup>
     <NoWarn>SA0001</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />

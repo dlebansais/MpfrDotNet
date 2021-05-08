@@ -24,7 +24,6 @@
         #endregion
 
         #region Init
-        // Initializes a new mpz_t to 0.
         public mpz_t()
         {
             mpz_init(ref Value);
@@ -105,11 +104,12 @@
             mpz_init_set(ref Value, ref value);
         }
 
+#pragma warning disable SA1401 // Fields should be private
         internal __mpz_t Value;
+#pragma warning restore SA1401 // Fields should be private
         #endregion
 
         #region Conversions
-        // Export to the value to a byte array.
         public byte[] ToByteArray()
         {
             ulong SizeInBits = (ulong)mpz_sizeinbase(ref Value, 2);
@@ -1396,6 +1396,7 @@
         #endregion
 
         #region Implementation of IDisposable
+
         /// <summary>
         /// Called when an object should release its resources.
         /// </summary>

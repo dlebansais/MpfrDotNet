@@ -45,10 +45,13 @@
             }
         }
 
+#pragma warning disable SA1401 // Fields should be private
         internal __gmp_randstate_t Value;
+#pragma warning restore SA1401 // Fields should be private
         #endregion
 
         #region Implementation of IDisposable
+
         /// <summary>
         /// Called when an object should release its resources.
         /// </summary>

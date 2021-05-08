@@ -12,6 +12,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpir_dll_x64", "mpir\mpir_d
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MpfrDotNet", "MpfrDotNet\MpfrDotNet.csproj", "{19C2C372-5143-4103-84E9-E187A82E2016}"
 	ProjectSection(ProjectDependencies) = postProject
+		{83D7DC5D-DEFA-434E-8CFD-2956F75CD9E2} = {83D7DC5D-DEFA-434E-8CFD-2956F75CD9E2}
 		{8A1EB575-B721-4891-B5BD-17CC45D0103C} = {8A1EB575-B721-4891-B5BD-17CC45D0103C}
 		{693E7C92-7C84-4EE3-A017-18506AE4A317} = {693E7C92-7C84-4EE3-A017-18506AE4A317}
 	EndProjectSection
@@ -22,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreBuild", "PreBuild\PreBuild.csproj", "{83D7DC5D-DEFA-434E-8CFD-2956F75CD9E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +48,10 @@ Global
 		{2F453109-EFBA-4542-ABA8-311D96EB7DBE}.Debug|x64.Build.0 = Debug|x64
 		{2F453109-EFBA-4542-ABA8-311D96EB7DBE}.Release|x64.ActiveCfg = Release|x64
 		{2F453109-EFBA-4542-ABA8-311D96EB7DBE}.Release|x64.Build.0 = Release|x64
+		{83D7DC5D-DEFA-434E-8CFD-2956F75CD9E2}.Debug|x64.ActiveCfg = Debug|x64
+		{83D7DC5D-DEFA-434E-8CFD-2956F75CD9E2}.Debug|x64.Build.0 = Debug|x64
+		{83D7DC5D-DEFA-434E-8CFD-2956F75CD9E2}.Release|x64.ActiveCfg = Release|x64
+		{83D7DC5D-DEFA-434E-8CFD-2956F75CD9E2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -82,7 +82,9 @@
                 mpq_canonicalize(ref Value);
         }
 
+#pragma warning disable SA1401 // Fields should be private
         internal __mpq_t Value;
+#pragma warning restore SA1401 // Fields should be private
         #endregion
 
         #region Conversions
@@ -313,6 +315,7 @@
         #endregion
 
         #region Implementation of IDisposable
+
         /// <summary>
         /// Called when an object should release its resources.
         /// </summary>
