@@ -41,6 +41,9 @@
                 hLib = LoadLibrary(LibraryLocation);
 
                 if (hLib == IntPtr.Zero)
+                    hLib = LoadLibrary(Path.Combine(DirectoryName, @"runtimes\win-x64\native", libraryName));
+
+                if (hLib == IntPtr.Zero)
                     LoadLibrary(libraryName);
 
                 if (hLib == IntPtr.Zero)
