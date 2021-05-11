@@ -36,6 +36,10 @@
                 string LibraryLocation = Path.Combine(DirectoryName, libraryName);
 
                 hLib = LoadLibrary(LibraryLocation);
+
+                if (hLib == IntPtr.Zero)
+                    LoadLibrary(libraryName);
+
                 if (hLib == IntPtr.Zero)
                     throw new ArgumentException($"File {LibraryLocation} not found or not loaded");
 
