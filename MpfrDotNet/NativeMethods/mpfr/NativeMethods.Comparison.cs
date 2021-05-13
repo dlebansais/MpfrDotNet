@@ -3,6 +3,8 @@
     using System.Runtime.InteropServices;
     using static Interop.Mpir.NativeMethods;
 
+#pragma warning disable SA1601 // Partial elements should be documented
+#pragma warning disable SA1600 // Elements should be documented
     internal static partial class NativeMethods
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -109,4 +111,6 @@
         public delegate void __mpfr_reldiff(ref __mpfr_t rop, ref __mpfr_t op1, ref __mpfr_t op2, __mpfr_rnd_t rnd);
         public static __mpfr_reldiff mpfr_reldiff { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_reldiff>(GetMpfrPointer(nameof(mpfr_reldiff)));
     }
+#pragma warning restore SA1601 // Partial elements should be documented
+#pragma warning restore SA1600 // Elements should be documented
 }

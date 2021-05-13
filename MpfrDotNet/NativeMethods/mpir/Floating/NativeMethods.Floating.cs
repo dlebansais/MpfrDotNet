@@ -4,6 +4,8 @@
     using System.Runtime.InteropServices;
     using System.Text;
 
+#pragma warning disable SA1601 // Partial elements should be documented
+#pragma warning disable SA1600 // Elements should be documented
     internal static partial class NativeMethods
     {
         #region Initialization Functions
@@ -277,4 +279,6 @@
         public static __mpf_rrandomb mpf_rrandomb { get; } = Marshal.GetDelegateForFunctionPointer<__mpf_rrandomb>(GetMpirPointer(nameof(mpf_rrandomb)));
         #endregion
     }
+#pragma warning restore SA1601 // Partial elements should be documented
+#pragma warning restore SA1600 // Elements should be documented
 }

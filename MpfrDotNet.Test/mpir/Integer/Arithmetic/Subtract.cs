@@ -4,7 +4,7 @@ namespace TestInteger.Arithmetic
     using MpirDotNet;
 
     [TestClass]
-    public class Substract
+    public class Subtract
     {
         [TestMethod]
         public void GenericSub()

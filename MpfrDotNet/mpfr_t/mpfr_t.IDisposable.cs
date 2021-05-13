@@ -3,6 +3,9 @@
     using System;
     using static Interop.Mpfr.NativeMethods;
 
+    /// <summary>
+    /// Represents an arbitrary precision floating-point number.
+    /// </summary>
     public partial class mpfr_t : IDisposable
     {
         /// <summary>
@@ -30,7 +33,7 @@
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="Settings"/> class.
+        /// Finalizes an instance of the <see cref="mpfr_t"/> class.
         /// </summary>
         ~mpfr_t()
         {

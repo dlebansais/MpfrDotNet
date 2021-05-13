@@ -6,13 +6,26 @@
     using MpirDotNet;
     using static Interop.Mpfr.NativeMethods;
 
+    /// <summary>
+    /// Represents an arbitrary precision floating-point number.
+    /// </summary>
     public partial class mpfr_t : IDisposable
     {
+        /// <summary>
+        /// Returns a string that represents the number value.
+        /// </summary>
+        /// <returns>The number value.</returns>
         public override string ToString()
         {
             return ToString(mpz_t.DefaultBase, DefaultRounding);
         }
 
+        /// <summary>
+        /// Returns a string that represents the number value.
+        /// </summary>
+        /// <param name="resultbase">The digit base.</param>
+        /// <param name="rounding">The rounding mode.</param>
+        /// <returns>The number value.</returns>
         public string ToString(int resultbase, mpfr_rnd_t rounding)
         {
             if (!IsCacheInitialized)

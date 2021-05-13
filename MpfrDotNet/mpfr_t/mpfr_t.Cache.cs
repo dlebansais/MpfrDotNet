@@ -4,6 +4,9 @@
     using System.Threading;
     using static Interop.Mpfr.NativeMethods;
 
+    /// <summary>
+    /// Represents an arbitrary precision floating-point number.
+    /// </summary>
     public partial class mpfr_t : IDisposable
     {
         private void InitCacheManagement()
@@ -26,11 +29,17 @@
 
         private static ThreadLocal<ulong> ObjectCount = new ThreadLocal<ulong>();
 
+        /// <summary>
+        /// Returns the number of living items in cache.
+        /// </summary>
         public static ulong LiveObjectCount()
         {
             return ObjectCount.Value;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the cache is initialized.
+        /// </summary>
         public bool IsCacheInitialized { get; private set; }
     }
 }

@@ -4,10 +4,10 @@ namespace TestInteger.Arithmetic
     using MpirDotNet;
 
     [TestClass]
-    public class SubstractProduct
+    public class SubtractProduct
     {
         [TestMethod]
-        public void BasicSubstractProduct()
+        public void BasicSubtractProduct()
         {
             string AsString;
 

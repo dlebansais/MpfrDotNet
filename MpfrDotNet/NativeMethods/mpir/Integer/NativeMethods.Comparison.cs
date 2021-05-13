@@ -2,6 +2,8 @@
 {
     using System.Runtime.InteropServices;
 
+#pragma warning disable SA1601 // Partial elements should be documented
+#pragma warning disable SA1600 // Elements should be documented
     internal static partial class NativeMethods
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -32,4 +34,6 @@
         public delegate int __mpz_cmpabs_ui(ref __mpz_t op1, mpir_ui op2);
         public static __mpz_cmpabs_ui mpz_cmpabs_ui { get; } = Marshal.GetDelegateForFunctionPointer<__mpz_cmpabs_ui>(GetMpirPointer(nameof(mpz_cmpabs_ui)));
     }
+#pragma warning restore SA1601 // Partial elements should be documented
+#pragma warning restore SA1600 // Elements should be documented
 }
