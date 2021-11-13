@@ -30,3 +30,5 @@ for /f "tokens=1,2 delims=@" %%a in (..\gmp-h.in) do (
 call out_copy_rename tmp.h ..\ mpir.h
 call out_copy_rename tmp.h ..\ gmp.h
 del tmp.h
+
+echo *** gen_mpir_h.bat DONE ***

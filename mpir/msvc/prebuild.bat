@@ -26,6 +26,8 @@ type ..\longlong_post.h >>tmp.h
 call out_copy_rename tmp.h ..\ longlong.h
 del tmp.h
 
+echo *** prebuild.bat DONE ***
+
 exit /b 0
 
 :seterr

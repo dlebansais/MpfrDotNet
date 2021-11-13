@@ -108,7 +108,8 @@ postbuild "$(TargetPath)" 22
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
-      <Command>cd ..\..\
+      <Command>echo "Release|x64"
+cd ..\..\
 prebuild gc x64 22
       </Command>
     </PreBuildEvent>
@@ -126,7 +127,8 @@ postbuild "$(TargetPath)" 22
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
-      <Command>cd ..\..\
+      <Command>echo "Debug|x64"
+cd ..\..\
 prebuild gc x64 22
       </Command>
     </PreBuildEvent>

@@ -21,6 +21,8 @@ type cfg.h >>tmp.h
 call out_copy_rename tmp.h ..\ config.h
 del tmp.h
 
+echo *** gen_config_h.bat DONE ***
+
 exit /b 0
 
 :seterr
