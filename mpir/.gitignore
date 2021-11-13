@@ -1,12 +1,4 @@
 #################
-## Project files
-#################
-
-/build.vc/output_params.bat
-/build.vc*/test-config.props
-
-
-#################
 ## Eclipse
 #################
 
