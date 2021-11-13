@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -62,7 +62,7 @@
     </Link>
     <PreBuildEvent>
       <Command>set msbdir="$(MSBuildBinPath)"
-cd ./msvc/vs19
+cd ./msvc/vs22
 msbuild gc DLL x64 $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -83,7 +83,7 @@ msbuild gc DLL x64 $(Configuration)</Command>
     </Link>
     <PreBuildEvent>
       <Command>set msbdir="$(MSBuildBinPath)"
-cd ./msvc/vs19
+cd ./msvc/vs22
 msbuild gc DLL x64 $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
