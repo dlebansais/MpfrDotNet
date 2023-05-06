@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dll_mpfr", "mpfr\build.vs22\dll_mpfr\dll_mpfr.vcxproj", "{8A1EB575-B721-4891-B5BD-17CC45D0103C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpfr_dll_x64", "mpfr\build.vs22\mpfr_dll\mpfr_dll_x64.vcxproj", "{8A1EB575-B721-4891-B5BD-17CC45D0103C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{693E7C92-7C84-4EE3-A017-18506AE4A317} = {693E7C92-7C84-4EE3-A017-18506AE4A317}
 	EndProjectSection
@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MpfrDotNet", "MpfrDotNet\Mp
 		{693E7C92-7C84-4EE3-A017-18506AE4A317} = {693E7C92-7C84-4EE3-A017-18506AE4A317}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MpfrDotNet.Test", "MpfrDotNet.Test\MpfrDotNet.Test.csproj", "{2F453109-EFBA-4542-ABA8-311D96EB7DBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MpfrDotNet.Test", "Test\MpfrDotNet.Test\MpfrDotNet.Test.csproj", "{2F453109-EFBA-4542-ABA8-311D96EB7DBE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6FA23F3B-3B3C-4877-A7ED-56F37EBFAE0E}"
 	ProjectSection(SolutionItems) = preProject

@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MpfrDotNet\MpfrDotNet.csproj" />
+    <ProjectReference Include="..\..\MpfrDotNet\MpfrDotNet.csproj" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
