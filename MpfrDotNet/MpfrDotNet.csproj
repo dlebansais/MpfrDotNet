@@ -5,15 +5,15 @@
     <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>David Le Bansais</Authors>
     <Company />
     <Product />
     <Description>Binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET</Description>
     <Copyright>Copyright © 2021 David Le Bansais</Copyright>
-    <AssemblyVersion>1.0.9.10</AssemblyVersion>
-    <FileVersion>1.0.9.10</FileVersion>
+    <AssemblyVersion>1.0.10.11</AssemblyVersion>
+    <FileVersion>1.0.10.11</FileVersion>
     <RepositoryUrl>https://github.com/dlebansais/MpfrDotNet</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
