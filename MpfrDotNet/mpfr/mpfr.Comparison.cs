@@ -239,9 +239,9 @@ public static partial class mpfr
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static int total_order(mpfr_t x, mpfr_t y)
+    public static int total_order_p(mpfr_t x, mpfr_t y)
     {
-        return mpfr_total_order(ref x.Value, ref y.Value);
+        return mpfr_total_order_p(ref x.Value, ref y.Value);
     }
 
     /// <summary>

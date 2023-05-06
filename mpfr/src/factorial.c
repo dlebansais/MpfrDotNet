@@ -1,6 +1,6 @@
-/* mpfr_fac_ui -- factorial of a nonnegative integer
+/* mpfr_fac_ui -- factorial of a non-negative integer
 
-Copyright 2001, 2004-2019 Free Software Foundation, Inc.
+Copyright 2001, 2004-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -31,10 +31,10 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 /* FIXME: efficient problems with large arguments; see comments in gamma.c. */
 
 int
-mpfr_fac_ui (mpfr_ptr y, mpfr_ui x, mpfr_rnd_t rnd_mode)
+mpfr_fac_ui (mpfr_ptr y, unsigned long int x, mpfr_rnd_t rnd_mode)
 {
   mpfr_t t;       /* Variable of Intermediary Calculation*/
-  mpfr_ui i;
+  unsigned long i;
   int round, inexact;
 
   mpfr_prec_t Ny;   /* Precision of output variable */

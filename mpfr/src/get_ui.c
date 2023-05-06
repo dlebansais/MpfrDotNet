@@ -1,6 +1,6 @@
 /* mpfr_get_ui -- convert a floating-point number to an unsigned long.
 
-Copyright 2003-2004, 2006-2019 Free Software Foundation, Inc.
+Copyright 2003-2004, 2006-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -22,11 +22,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 #include "mpfr-impl.h"
 
-mpfr_ui
+unsigned long
 mpfr_get_ui (mpfr_srcptr f, mpfr_rnd_t rnd)
 {
   mpfr_prec_t prec;
-  mpfr_ui s;
+  unsigned long s;
   mpfr_t x;
   mp_size_t n;
   mpfr_exp_t exp;
@@ -36,13 +36,13 @@ mpfr_get_ui (mpfr_srcptr f, mpfr_rnd_t rnd)
     {
       MPFR_SET_ERANGEFLAG ();
       return MPFR_IS_NAN (f) || MPFR_IS_NEG (f) ?
-        (mpfr_ui) 0 : MPFR_UI_MAX;
+        (unsigned long) 0 : ULONG_MAX;
     }
 
   if (MPFR_IS_ZERO (f))
-    return (mpfr_ui) 0;
+    return (unsigned long) 0;
 
-  for (s = MPFR_UI_MAX, prec = 0; s != 0; s /= 2, prec ++)
+  for (s = ULONG_MAX, prec = 0; s != 0; s /= 2, prec ++)
     { }
 
   MPFR_SAVE_EXPO_MARK (expo);
@@ -67,7 +67,7 @@ mpfr_get_ui (mpfr_srcptr f, mpfr_rnd_t rnd)
       while (exp > GMP_NUMB_BITS)
         {
           MPFR_ASSERTD (n > 0);
-          s += (mpfr_ui) MPFR_MANT(x)[n - 1] << (exp - GMP_NUMB_BITS);
+          s += (unsigned long) MPFR_MANT(x)[n - 1] << (exp - GMP_NUMB_BITS);
           n--;
           exp -= GMP_NUMB_BITS;
         }

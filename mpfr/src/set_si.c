@@ -1,6 +1,6 @@
 /* mpfr_set_si -- set a MPFR number from a machine signed integer
 
-Copyright 1999-2019 Free Software Foundation, Inc.
+Copyright 1999-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -24,7 +24,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 #undef mpfr_set_si
 int
-mpfr_set_si (mpfr_ptr x, mpfr_si i, mpfr_rnd_t rnd_mode)
+mpfr_set_si (mpfr_ptr x, long i, mpfr_rnd_t rnd_mode)
 {
   return mpfr_set_si_2exp (x, i, 0, rnd_mode);
 }

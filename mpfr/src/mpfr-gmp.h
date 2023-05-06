@@ -1,6 +1,6 @@
 /* Uniform Interface to GMP.
 
-Copyright 2004-2019 Free Software Foundation, Inc.
+Copyright 2004-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -61,7 +61,7 @@ extern "C" {
 #endif
 
 #if GMP_NAIL_BITS != 0
-# error "MPFR doesn't support nonzero values of GMP_NAIL_BITS"
+# error "MPFR doesn't support non-zero values of GMP_NAIL_BITS"
 #endif
 
 #if (GMP_NUMB_BITS<8) || (GMP_NUMB_BITS & (GMP_NUMB_BITS - 1))
@@ -97,27 +97,6 @@ extern "C" {
 #define mpfr_free_func       (*__gmp_free_func)
 
 #else  /* without gmp build (gmp-impl.h replacement) */
-
-/* The following tries to get a good version of alloca.
-   See gmp-impl.h for implementation details and original version */
-/* FIXME: the autoconf manual gives a different piece of code under the
-   documentation of the AC_FUNC_ALLOCA macro. Should we switch to it? */
-#ifndef alloca
-# if defined ( __GNUC__ )
-#  define alloca __builtin_alloca
-# elif defined (__DECC)
-#  define alloca(x) __ALLOCA(x)
-# elif defined (_MSC_VER)
-#  include <malloc.h>
-#  define alloca _alloca
-# elif defined (HAVE_ALLOCA_H)
-#  include <alloca.h>
-# elif defined (_AIX) || defined (_IBMR2)
-#  pragma alloca
-# else
-void *alloca (size_t);
-# endif
-#endif
 
 /* Define some macros */
 
@@ -269,28 +248,6 @@ __MPFR_DECLSPEC extern const struct bases mpfr_bases[257];
 #define MIN(l,o) ((l) < (o) ? (l) : (o))
 #define MAX(h,i) ((h) > (i) ? (h) : (i))
 
-/* Size of an array, safe version but not a constant expression:
-   Since an array can silently be converted to a pointer, we check
-   that this macro is applied on an array, not a pointer. */
-#undef numberof
-#if 0
-/* The following should work with GCC as documented in its manual,
-   but fails: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=38377#c10
-   Thus disabled for now. */
-# define numberof(x)                                                    \
-  ( __extension__ ({                                                    \
-      int is_array = (void *) &(x) == (void *) &(x)[0];                 \
-      MPFR_STAT_STATIC_ASSERT (__builtin_constant_p (is_array) ?        \
-                               is_array : 1);                           \
-      MPFR_ASSERTN (is_array);                                          \
-      numberof_const (x);                                               \
-    }) )
-#else
-# define numberof(x)                                    \
-  (MPFR_ASSERTN ((void *) &(x) == (void *) &(x)[0]),    \
-   numberof_const (x))
-#endif
-
 __MPFR_DECLSPEC void * mpfr_allocate_func (size_t);
 __MPFR_DECLSPEC void * mpfr_reallocate_func (void *, size_t, size_t);
 __MPFR_DECLSPEC void   mpfr_free_func (void *, size_t);
@@ -314,7 +271,8 @@ __MPFR_DECLSPEC mp_limb_t __gmpn_rsblsh1_n (mp_limb_t*, mp_limb_t*, mp_limb_t*, 
 #endif
 #endif
 
-/* Temp memory allocate */
+/* Definitions related to temporary memory allocation */
+
 struct tmp_marker
 {
   void *ptr;
@@ -326,16 +284,74 @@ __MPFR_DECLSPEC void *mpfr_tmp_allocate (struct tmp_marker **,
                                          size_t);
 __MPFR_DECLSPEC void mpfr_tmp_free (struct tmp_marker *);
 
-/* Can be overridden at configure time. Useful for checking buffer overflow. */
+/* Default MPFR_ALLOCA_MAX value. It can be overridden at configure time;
+   with some tools, by giving a low value such as 0, this is useful for
+   checking buffer overflow, which may not be possible with alloca.
+   If HAVE_ALLOCA is not defined, then alloca() is not available, so that
+   MPFR_ALLOCA_MAX needs to be 0 (see the definition of TMP_ALLOC below);
+   if the user has explicitly given a non-zero value, this will probably
+   yield an error at link time or at run time. */
 #ifndef MPFR_ALLOCA_MAX
-# define MPFR_ALLOCA_MAX 16384
+# ifdef HAVE_ALLOCA
+#  define MPFR_ALLOCA_MAX 16384
+# else
+#  define MPFR_ALLOCA_MAX 0
+# endif
 #endif
 
 /* Do not define TMP_SALLOC (see the test in mpfr-impl.h)! */
-#define TMP_ALLOC(n) (MPFR_LIKELY ((n) <= MPFR_ALLOCA_MAX) ?       \
-                      alloca (n) : mpfr_tmp_allocate (&tmp_marker, (n)))
+
+#if MPFR_ALLOCA_MAX != 0
+
+/* The following tries to get a good version of alloca.
+   See gmp-impl.h for implementation details and original version */
+/* FIXME: the autoconf manual gives a different piece of code under the
+   documentation of the AC_FUNC_ALLOCA macro. Should we switch to it?
+   But note that the HAVE_ALLOCA test in it seems wrong.
+   https://lists.gnu.org/archive/html/bug-autoconf/2019-01/msg00009.html */
+#ifndef alloca
+# if defined ( __GNUC__ )
+#  define alloca __builtin_alloca
+# elif defined (__DECC)
+#  define alloca(x) __ALLOCA(x)
+# elif defined (_MSC_VER)
+#  include <malloc.h>
+#  define alloca _alloca
+# elif defined (HAVE_ALLOCA_H)
+#  include <alloca.h>
+# elif defined (_AIX) || defined (_IBMR2)
+#  pragma alloca
+# else
+void *alloca (size_t);
+# endif
+#endif
+
+#ifdef MPFR_USE_LOGGING
+#define MPFR_INCR_ALLOCA(N)                                     \
+  __extension__ ({                                              \
+      __gmpfr_log_alloca_size += (N);                           \
+      LOG_PRINT (MPFR_LOG_ALLOCA_F,                             \
+                 "%s: alloca size = %zu in the function\n",     \
+                 __func__, __gmpfr_log_alloca_size); })
+#else
+#define MPFR_INCR_ALLOCA(N) ((void) 0)
+#endif
+
+#define TMP_ALLOC(n) (MPFR_ASSERTD ((n) > 0),                      \
+                      MPFR_LIKELY ((n) <= MPFR_ALLOCA_MAX) ?       \
+                      (MPFR_INCR_ALLOCA (n), alloca (n)) :         \
+                      mpfr_tmp_allocate (&tmp_marker, (n)))
+
+#else  /* MPFR_ALLOCA_MAX == 0, alloca() not needed */
+
+#define TMP_ALLOC(n) (mpfr_tmp_allocate (&tmp_marker, (n)))
+
+#endif
+
 #define TMP_DECL(m) struct tmp_marker *tmp_marker
+
 #define TMP_MARK(m) (tmp_marker = 0)
+
 /* Note about TMP_FREE: For small precisions, tmp_marker is null as
    the allocation is done on the stack (see TMP_ALLOC above). */
 #define TMP_FREE(m) \
@@ -693,7 +709,7 @@ typedef const mp_limb_t *mpfr_limb_srcptr;
    having 16-bit int's, but such implementations are not required to
    support bit-fields of size > 16 anyway; if ever an implementation with
    16-bit int's is found, the appropriate minimal changes could still be
-   done in the future.
+   done in the future. See WG14/N2921 (5.16).
 */
 
 #ifndef _MPFR_IEEE_FLOATS

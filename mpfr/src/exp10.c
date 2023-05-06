@@ -1,6 +1,6 @@
 /* mpfr_exp10 -- power of 10 function 10^y
 
-Copyright 2003-2004, 2006-2019 Free Software Foundation, Inc.
+Copyright 2003-2004, 2006-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -21,6 +21,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA. */
 
 #include "mpfr-impl.h"
+
+/* Note: This implementation via mpfr_ui_pow allows one to test
+   mpfr_ui_pow with texp10 tests. If the implementation changes,
+   a comparison with mpfr_ui_pow results will need to be done in
+   the tests. */
 
 int
 mpfr_exp10 (mpfr_ptr y, mpfr_srcptr x, mpfr_rnd_t rnd_mode)

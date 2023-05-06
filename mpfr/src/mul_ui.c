@@ -1,6 +1,6 @@
 /* mpfr_mul_ui -- multiply a floating-point number by a machine integer
 
-Copyright 1999-2019 Free Software Foundation, Inc.
+Copyright 1999-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -25,9 +25,14 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 #undef mpfr_mul_ui
 MPFR_HOT_FUNCTION_ATTR int
-mpfr_mul_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
+mpfr_mul_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u, mpfr_rnd_t rnd_mode)
 {
   int inexact;
+
+  MPFR_LOG_FUNC
+    (("x[%Pd]=%.*Rg u=%lu rnd=%d",
+      mpfr_get_prec(x), mpfr_log_prec, x, u, rnd_mode),
+     ("y[%Pd]=%.*Rg", mpfr_get_prec (y), mpfr_log_prec, y));
 
   if (MPFR_UNLIKELY (MPFR_IS_SINGULAR (x)))
     {
@@ -125,12 +130,13 @@ mpfr_mul_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
     mpfr_t uu;
     MPFR_SAVE_EXPO_DECL (expo);
 
-    mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
+    mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
     /* Warning: u might be outside the current exponent range! */
     MPFR_SAVE_EXPO_MARK (expo);
     mpfr_set_ui (uu, u, MPFR_RNDZ);
     inexact = mpfr_mul (y, x, uu, rnd_mode);
     mpfr_clear (uu);
+    MPFR_SAVE_EXPO_UPDATE_FLAGS (expo, __gmpfr_flags);
     MPFR_SAVE_EXPO_FREE (expo);
     return mpfr_check_range (y, inexact, rnd_mode);
   }

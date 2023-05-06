@@ -1,6 +1,6 @@
 /* mpfr_agm -- arithmetic-geometric mean of two floating-point numbers
 
-Copyright 1999-2019 Free Software Foundation, Inc.
+Copyright 1999-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -39,10 +39,10 @@ mpfr_agm (mpfr_ptr r, mpfr_srcptr op2, mpfr_srcptr op1, mpfr_rnd_t rnd_mode)
   MPFR_SAVE_EXPO_DECL (expo);
 
   MPFR_LOG_FUNC
-    (("op2[%Pu]=%.*Rg op1[%Pu]=%.*Rg rnd=%d",
+    (("op2[%Pd]=%.*Rg op1[%Pd]=%.*Rg rnd=%d",
       mpfr_get_prec (op2), mpfr_log_prec, op2,
       mpfr_get_prec (op1), mpfr_log_prec, op1, rnd_mode),
-     ("r[%Pu]=%.*Rg inexact=%d",
+     ("r[%Pd]=%.*Rg inexact=%d",
       mpfr_get_prec (r), mpfr_log_prec, r, inexact));
 
   /* Deal with special values */
@@ -136,7 +136,7 @@ mpfr_agm (mpfr_ptr r, mpfr_srcptr op2, mpfr_srcptr op1, mpfr_rnd_t rnd_mode)
                   /* mpfr_add with !=prec is still good */);
       if (MPFR_UNLIKELY (MPFR_OVERFLOW (flags) || MPFR_UNDERFLOW (flags)))
         {
-          mpfr_exp_t e1 , e2;
+          mpfr_exp_t e1, e2;
 
           MPFR_ASSERTN (scaleop == 0);
           e1 = MPFR_GET_EXP (op1);
@@ -228,7 +228,7 @@ mpfr_agm (mpfr_ptr r, mpfr_srcptr op2, mpfr_srcptr op1, mpfr_rnd_t rnd_mode)
           mpfr_add (vf, u, v, MPFR_RNDN);  /* No overflow? */
           mpfr_div_2ui (vf, vf, 1, MPFR_RNDN);
           /* See proof in algorithms.tex */
-          if (4*eq > p)
+          if (eq > p / 4)
             {
               mpfr_t w;
               MPFR_BLOCK_DECL (flags3);

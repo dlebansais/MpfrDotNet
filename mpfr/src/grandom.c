@@ -3,7 +3,7 @@
    distribution and round it to the precision of rop1, rop2 according
    to the given rounding mode.
 
-Copyright 2011-2019 Free Software Foundation, Inc.
+Copyright 2011-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -165,6 +165,14 @@ mpfr_grandom (mpfr_ptr rop1, mpfr_ptr rop2, gmp_randstate_t rstate,
             break;
         }
       /* Extend by 32 bits */
+      /* Note: We do not use a standard Ziv loop (with the MPFR_ZIV_* macros
+         and a standard increase of the precision with MPFR_ZIV_NEXT). Just
+         adding 32 to the working precision is OK here, because with random
+         functions, we probably cannot construct hard-to-round cases needing
+         a huge precision (contrary to what is done with bad_cases() in the
+         testsuite for the usual math functions).
+         Note also that the increment cannot be changed without breaking
+         the ABI, since the result must not change. */
       mpz_mul_2exp (xp, xp, 32);
       mpz_mul_2exp (yp, yp, 32);
       mpz_urandomb (x, rstate, 32);

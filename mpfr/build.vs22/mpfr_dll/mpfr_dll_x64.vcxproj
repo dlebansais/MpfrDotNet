@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\src\abort_prec_max.c" />
     <ClCompile Include="..\..\src\acos.c" />
     <ClCompile Include="..\..\src\acosh.c" />
+    <ClCompile Include="..\..\src\acosu.c" />
     <ClCompile Include="..\..\src\add.c" />
     <ClCompile Include="..\..\src\add1.c" />
     <ClCompile Include="..\..\src\add1sp.c" />
@@ -127,9 +128,12 @@
     <ClCompile Include="..\..\src\ai.c" />
     <ClCompile Include="..\..\src\asin.c" />
     <ClCompile Include="..\..\src\asinh.c" />
+    <ClCompile Include="..\..\src\asinu.c" />
     <ClCompile Include="..\..\src\atan.c" />
     <ClCompile Include="..\..\src\atan2.c" />
+    <ClCompile Include="..\..\src\atan2u.c" />
     <ClCompile Include="..\..\src\atanh.c" />
+    <ClCompile Include="..\..\src\atanu.c" />
     <ClCompile Include="..\..\src\bernoulli.c" />
     <ClCompile Include="..\..\src\beta.c" />
     <ClCompile Include="..\..\src\buildopt.c" />
@@ -140,12 +144,14 @@
     <ClCompile Include="..\..\src\clears.c" />
     <ClCompile Include="..\..\src\cmp.c" />
     <ClCompile Include="..\..\src\cmp2.c" />
-    <ClCompile Include="..\..\src\cmp_abs.c" />
+    <ClCompile Include="..\..\src\cmpabs.c" />
+    <ClCompile Include="..\..\src\cmpabs_ui.c" />
     <ClCompile Include="..\..\src\cmp_d.c" />
     <ClCompile Include="..\..\src\cmp_ld.c" />
     <ClCompile Include="..\..\src\cmp_si.c" />
     <ClCompile Include="..\..\src\cmp_ui.c" />
     <ClCompile Include="..\..\src\comparisons.c" />
+    <ClCompile Include="..\..\src\compound.c" />
     <ClCompile Include="..\..\src\const_catalan.c" />
     <ClCompile Include="..\..\src\const_euler.c" />
     <ClCompile Include="..\..\src\const_log2.c" />
@@ -154,6 +160,7 @@
     <ClCompile Include="..\..\src\copysign.c" />
     <ClCompile Include="..\..\src\cos.c" />
     <ClCompile Include="..\..\src\cosh.c" />
+    <ClCompile Include="..\..\src\cosu.c" />
     <ClCompile Include="..\..\src\cot.c" />
     <ClCompile Include="..\..\src\coth.c" />
     <ClCompile Include="..\..\src\csc.c" />
@@ -178,7 +185,9 @@
     <ClCompile Include="..\..\src\exceptions.c" />
     <ClCompile Include="..\..\src\exp.c" />
     <ClCompile Include="..\..\src\exp10.c" />
+    <ClCompile Include="..\..\src\exp10m1.c" />
     <ClCompile Include="..\..\src\exp2.c" />
+    <ClCompile Include="..\..\src\exp2m1.c" />
     <ClCompile Include="..\..\src\exp3.c" />
     <ClCompile Include="..\..\src\exp_2.c" />
     <ClCompile Include="..\..\src\expm1.c" />
@@ -194,6 +203,7 @@
     <ClCompile Include="..\..\src\fits_ushort.c" />
     <ClCompile Include="..\..\src\fma.c" />
     <ClCompile Include="..\..\src\fmma.c" />
+    <ClCompile Include="..\..\src\fmod_ui.c" />
     <ClCompile Include="..\..\src\fms.c" />
     <ClCompile Include="..\..\src\fpif.c" />
     <ClCompile Include="..\..\src\frac.c" />
@@ -217,7 +227,7 @@
     <ClCompile Include="..\..\src\get_ui.c" />
     <ClCompile Include="..\..\src\get_uj.c" />
     <ClCompile Include="..\..\src\get_z.c" />
-    <ClCompile Include="..\..\src\get_z_exp.c" />
+    <ClCompile Include="..\..\src\get_z_2exp.c" />
     <ClCompile Include="..\..\src\gmp_op.c" />
     <ClCompile Include="..\..\src\grandom.c" />
     <ClCompile Include="..\..\src\hypot.c" />
@@ -243,8 +253,10 @@
     <ClCompile Include="..\..\src\lngamma.c" />
     <ClCompile Include="..\..\src\log.c" />
     <ClCompile Include="..\..\src\log10.c" />
+    <ClCompile Include="..\..\src\log10p1.c" />
     <ClCompile Include="..\..\src\log1p.c" />
     <ClCompile Include="..\..\src\log2.c" />
+    <ClCompile Include="..\..\src\log2p1.c" />
     <ClCompile Include="..\..\src\logging.c" />
     <ClCompile Include="..\..\src\log_ui.c" />
     <ClCompile Include="..\..\src\min_prec.c" />
@@ -270,9 +282,12 @@
     <ClCompile Include="..\..\src\pool.c" />
     <ClCompile Include="..\..\src\pow.c" />
     <ClCompile Include="..\..\src\pow_si.c" />
+    <ClCompile Include="..\..\src\pow_sj.c" />
     <ClCompile Include="..\..\src\pow_ui.c" />
+    <ClCompile Include="..\..\src\pow_uj.c" />
     <ClCompile Include="..\..\src\pow_z.c" />
     <ClCompile Include="..\..\src\powerof2.c" />
+    <ClCompile Include="..\..\src\powr.c" />
     <ClCompile Include="..\..\src\print_raw.c" />
     <ClCompile Include="..\..\src\print_rnd_mode.c" />
     <ClCompile Include="..\..\src\printf.c" />
@@ -319,10 +334,10 @@
     <ClCompile Include="..\..\src\set_uj.c" />
     <ClCompile Include="..\..\src\set_z.c" />
     <ClCompile Include="..\..\src\set_zero.c" />
+    <ClCompile Include="..\..\src\set_z_2exp.c" />
     <ClCompile Include="..\..\src\setmax.c" />
     <ClCompile Include="..\..\src\setmin.c" />
     <ClCompile Include="..\..\src\setsign.c" />
-    <ClCompile Include="..\..\src\set_z_exp.c" />
     <ClCompile Include="..\..\src\sgn.c" />
     <ClCompile Include="..\..\src\si_op.c" />
     <ClCompile Include="..\..\src\signbit.c" />
@@ -330,6 +345,7 @@
     <ClCompile Include="..\..\src\sin_cos.c" />
     <ClCompile Include="..\..\src\sinh.c" />
     <ClCompile Include="..\..\src\sinh_cosh.c" />
+    <ClCompile Include="..\..\src\sinu.c" />
     <ClCompile Include="..\..\src\sqr.c" />
     <ClCompile Include="..\..\src\sqrt.c" />
     <ClCompile Include="..\..\src\sqrt_ui.c" />
@@ -345,6 +361,7 @@
     <ClCompile Include="..\..\src\swap.c" />
     <ClCompile Include="..\..\src\tan.c" />
     <ClCompile Include="..\..\src\tanh.c" />
+    <ClCompile Include="..\..\src\tanu.c" />
     <ClCompile Include="..\..\src\total_order.c" />
     <ClCompile Include="..\..\src\ubf.c" />
     <ClCompile Include="..\..\src\uceil_exp2.c" />

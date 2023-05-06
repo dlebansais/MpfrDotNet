@@ -1,6 +1,6 @@
 /* mpfr_set -- copy of a floating-point number
 
-Copyright 1999, 2001-2019 Free Software Foundation, Inc.
+Copyright 1999, 2001-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -69,6 +69,13 @@ mpfr_set4 (mpfr_ptr a, mpfr_srcptr b, mpfr_rnd_t rnd_mode, int signb)
 int
 mpfr_set (mpfr_ptr a, mpfr_srcptr b, mpfr_rnd_t rnd_mode)
 {
+  /* Contrary to other mpfr_set4 based functions (mpfr_abs, mpfr_neg, etc.),
+     do not detect the case a == b as it is assumed that this case is
+     uncommon (this is the reverse of what is assumed for the other
+     functions). However, it may occur, e.g. for mpfr_fma(z,x,y,z,rnd_mode)
+     when x and y happen to be both 0. Note also that it is possible to
+     have a != b while they share their significand, e.g. with mpfr_fms
+     due to the use of an alias via MPFR_TMP_INIT_NEG. */
   return mpfr_set4 (a, b, rnd_mode, MPFR_SIGN (b));
 }
 
@@ -77,7 +84,16 @@ mpfr_set (mpfr_ptr a, mpfr_srcptr b, mpfr_rnd_t rnd_mode)
 int
 mpfr_abs (mpfr_ptr a, mpfr_srcptr b, mpfr_rnd_t rnd_mode)
 {
-  return mpfr_set4 (a, b, rnd_mode, MPFR_SIGN_POS);
+  if (MPFR_UNLIKELY (a != b))
+    return mpfr_set4 (a, b, rnd_mode, MPFR_SIGN_POS);
+  else
+    {
+      MPFR_SET_POS (a);
+      if (MPFR_UNLIKELY (MPFR_IS_NAN (b)))
+        MPFR_RET_NAN;
+      else
+        MPFR_RET (0);
+    }
 }
 
 /* Round (u, inex) into s with rounding mode rnd_mode, where inex is

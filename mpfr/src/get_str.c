@@ -1,6 +1,6 @@
 /* mpfr_get_str -- output a floating-point number to a string
 
-Copyright 1999-2019 Free Software Foundation, Inc.
+Copyright 1999-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -21,7 +21,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA. */
 
 #define MPFR_NEED_LONGLONG_H
-#include "mpfr-intmax.h"
+#define MPFR_NEED_INTMAX_H
 #include "mpfr-impl.h"
 
 static int mpfr_get_str_aux (char *const, mpfr_exp_t *const, mp_limb_t *const,
@@ -92,6 +92,11 @@ mpfr_get_str_aux (char *const str, mpfr_exp_t *const exp, mp_limb_t *const r,
   size_t i;
   int exact = (e < 0);
   MPFR_TMP_DECL(marker);
+
+  MPFR_LOG_FUNC
+    (("n=%Pd f=%" MPFR_EXP_FSPEC "d e=%ld b=%d m=%zu rnd=%d",
+      (mpfr_prec_t) n, (mpfr_eexp_t) f, e, b, m, rnd),
+     ("exp=%" MPFR_EXP_FSPEC "d", (mpfr_eexp_t) exp));
 
   /* if f > 0, then the maximal error 2^(e+f) is larger than 2 so we can't
      determine the integer Y */
@@ -2484,7 +2489,10 @@ mpfr_ceil_mul (mpfr_exp_t e, int beta, int i)
 size_t
 mpfr_get_str_ndigits (int b, mpfr_prec_t p)
 {
-  MPFR_ASSERTD(2 <= b && b <= 62);
+  size_t ret;
+  MPFR_SAVE_EXPO_DECL (expo);
+
+  MPFR_ASSERTN (2 <= b && b <= 62);
 
   /* deal first with power of two bases, since even for those, mpfr_ceil_mul
      might return a value too large by 1 */
@@ -2497,52 +2505,67 @@ mpfr_get_str_ndigits (int b, mpfr_prec_t p)
       return 1 + (p + k - 2) / k;
     }
 
+  MPFR_SAVE_EXPO_MARK (expo);
+
   /* the value returned by mpfr_ceil_mul is guaranteed to be
      1 + ceil(p*log(2)/log(b)) for p < 186564318007 (it returns one more
      for p=186564318007 and b=7 or 49) */
   MPFR_STAT_STATIC_ASSERT (MPFR_PREC_BITS >= 64 || MPFR_PREC_BITS <= 32);
+  if (
 #if MPFR_PREC_BITS >= 64
-  /* 64-bit numbers are supported by the C implementation, so that we can
-     use the large constant below. If MPFR_PREC_BITS <= 32, the condition
-     is always satisfied, so that we do not need any test. */
-  if (MPFR_LIKELY (p < 186564318007))
+    /* 64-bit numbers are supported by the C implementation, so that we can
+       use the large constant below. */
+    MPFR_LIKELY (p < 186564318007)
+#else
+    /* Since MPFR_PREC_BITS <= 32, the above condition is always satisfied,
+       so that we do not need any test on p. */
+    1
 #endif
-    return 1 + mpfr_ceil_mul (IS_POW2(b) ? p - 1 : p, b, 1);
+      )
+    ret = mpfr_ceil_mul (IS_POW2(b) ? p - 1 : p, b, 1);
+  else
+    {
+      /* p is large and b is not a power of two. The code below works
+         for any value of p and b, as long as b is not a power of two.
+         Indeed, in such a case, p*log(2)/log(b) cannot be exactly an
+         integer, and thus Ziv's loop will terminate. */
+      mpfr_prec_t w = 77; /* mpfr_ceil_mul used a 77-bit upper approximation
+                             to log(2)/log(b) */
 
-  /* Now p is large and b is not a power of two. The code below works for any
-     value of p and b, as long as b is not a power of two. Indeed, in such a
-     case, p*log(2)/log(b) cannot be exactly an integer, and thus Ziv's loop
-     will terminate. */
-  {
-    mpfr_prec_t w = 77; /* mpfr_ceil_mul used a 77-bit upper approximation of
-                           log(2)/log(b) */
-    mpfr_t d, u;
-    size_t ret = 0;
-    while (ret == 0)
-      {
-        w = 2 * w;
-        mpfr_init2 (d, w); /* lower approximation */
-        mpfr_init2 (u, w); /* upper approximation */
-        mpfr_set_ui (d, b, MPFR_RNDU);
-        mpfr_set_ui (u, b, MPFR_RNDD);
-        mpfr_log2 (d, d, MPFR_RNDU);
-        mpfr_log2 (u, u, MPFR_RNDD);
-        /* The code below requires that the precision fit in an unsigned long,
-           which we currently guarantee (see _MPFR_PREC_FORMAT). */
-        MPFR_STAT_STATIC_ASSERT (MPFR_PREC_MAX <= ULONG_MAX);
-        /* u <= log(b)/log(2) <= d (***) */
-        mpfr_ui_div (d, p, d, MPFR_RNDD);
-        mpfr_ui_div (u, p, u, MPFR_RNDU);
-        /* d <= p*log(2)/log(b) <= u */
-        mpfr_ceil (d, d);
-        mpfr_ceil (u, u);
-        if (mpfr_cmp (d, u) == 0)
-          ret = mpfr_get_ui (d, MPFR_RNDU);
-        mpfr_clear (d);
-        mpfr_clear (u);
-      }
-    return 1 + ret;
-  }
+      ret = 0;
+      while (ret == 0)
+        {
+          mpfr_t d, u;
+
+          w = 2 * w;
+          mpfr_init2 (d, w); /* lower approximation */
+          mpfr_init2 (u, w); /* upper approximation */
+          mpfr_set_ui (d, b, MPFR_RNDU);
+          mpfr_set_ui (u, b, MPFR_RNDD);
+          mpfr_log2 (d, d, MPFR_RNDU);
+          mpfr_log2 (u, u, MPFR_RNDD);
+          /* The code below requires that the precision p fit in
+             an unsigned long, which we currently guarantee (see
+             _MPFR_PREC_FORMAT). */
+          MPFR_STAT_STATIC_ASSERT (MPFR_PREC_MAX <= ULONG_MAX);
+          /* u <= log(b)/log(2) <= d (***) */
+          mpfr_ui_div (d, p, d, MPFR_RNDD);
+          mpfr_ui_div (u, p, u, MPFR_RNDU);
+          /* d <= p*log(2)/log(b) <= u */
+          mpfr_ceil (d, d);
+          mpfr_ceil (u, u);
+          if (mpfr_equal_p (d, u))
+            {
+              ret = mpfr_get_ui (d, MPFR_RNDU);
+              MPFR_ASSERTD (ret != 0);
+            }
+          mpfr_clear (d);
+          mpfr_clear (u);
+        }
+    }
+
+  MPFR_SAVE_EXPO_FREE (expo);
+  return 1 + ret;
 }
 
 /* prints the mantissa of x in the string s, and writes the corresponding
@@ -2587,7 +2610,7 @@ mpfr_get_str (char *s, mpfr_exp_t *e, int b, size_t m, mpfr_srcptr x,
   /* otherwise err is such that |x*b^(m-g)-a*2^exp_a| < 2^(err+exp_a) */
 
   MPFR_LOG_FUNC
-    (("b=%d m=%zu x[%Pu]=%.*Rg rnd=%d",
+    (("b=%d m=%zu x[%Pd]=%.*Rg rnd=%d",
       b, m, mpfr_get_prec (x), mpfr_log_prec, x, rnd),
      ("flags=%lx", (unsigned long) __gmpfr_flags));
 
@@ -2797,7 +2820,7 @@ mpfr_get_str (char *s, mpfr_exp_t *e, int b, size_t m, mpfr_srcptr x,
           /* normalize a and truncate */
           if ((result[n + nx1 - 1] & MPFR_LIMB_HIGHBIT) == 0)
             {
-              mpn_lshift (a, result + nx1, n , 1);
+              mpn_lshift (a, result + nx1, n, 1);
               a[0] |= result[nx1 - 1] >> (GMP_NUMB_BITS - 1);
               exp_a --;
             }

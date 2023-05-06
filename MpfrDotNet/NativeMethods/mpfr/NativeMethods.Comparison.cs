@@ -100,8 +100,8 @@ internal static partial class NativeMethods
     public static __mpfr_unordered_p mpfr_unordered_p { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_unordered_p>(GetMpfrPointer(nameof(mpfr_unordered_p)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_total_order(ref __mpfr_t x, ref __mpfr_t y);
-    public static __mpfr_total_order mpfr_total_order { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_total_order>(GetMpfrPointer(nameof(mpfr_total_order)));
+    public delegate int __mpfr_total_order_p(ref __mpfr_t x, ref __mpfr_t y);
+    public static __mpfr_total_order_p mpfr_total_order_p { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_total_order_p>(GetMpfrPointer(nameof(mpfr_total_order_p)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_eq(ref __mpfr_t op1, ref __mpfr_t op2, ulong op3);

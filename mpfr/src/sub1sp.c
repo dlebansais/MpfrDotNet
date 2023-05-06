@@ -1,7 +1,7 @@
 /* mpfr_sub1sp -- internal function to perform a "real" subtraction
    All the op must have the same precision
 
-Copyright 2003-2019 Free Software Foundation, Inc.
+Copyright 2003-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -23,6 +23,16 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 #define MPFR_NEED_LONGLONG_H
 #include "mpfr-impl.h"
+
+/* Note: The 3 "INITIALIZED(sh)" occurrences below are necessary
+   to avoid a maybe-uninitialized warning or error, e.g. when
+   configuring MPFR with
+     ./configure --enable-assert CFLAGS="-O2 -Werror=maybe-uninitialized"
+   (a --enable-assert or --enable-assert=full is needed to reproduce
+   the issue). This occurs with GCC 4.9.4, 5.5.0, 6.5.0, 8.4.0, 9.5.0,
+   10.4.0, 11.3.0 and 12.2.0 under Linux (Debian/unstable).
+   Bug report: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108467
+*/
 
 /* define MPFR_FULLSUB to use alternate code in mpfr_sub1sp2 and mpfr_sub1sp2n
    (see comments in mpfr_sub1sp2) */
@@ -244,7 +254,7 @@ mpfr_sub1sp1 (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode,
               /* Warning: if d = GMP_NUMB_BITS and c0 = 1000...000, then
                  b0 - c0 = |0111...111|1000...000|, which after the shift
                  becomes |111...111|000...000| thus if p = GMP_NUMB_BITS-1
-                 we have rb = 1 but sb = 0. However in this case the round
+                 we have rb = 1 but sb = 0. However, in this case the round
                  even rule will round up, which is what we get with sb = 1:
                  the final result will be correct, while sb is incorrect. */
             }
@@ -255,7 +265,7 @@ mpfr_sub1sp1 (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode,
   /* now perform rounding */
 
   /* Warning: MPFR considers underflow *after* rounding with an unbounded
-     exponent range. However since b and c have same precision p, they are
+     exponent range. However, since b and c have same precision p, they are
      multiples of 2^(emin-p), likewise for b-c. Thus if bx < emin, the
      subtraction (with an unbounded exponent range) is exact, so that bx is
      also the exponent after rounding with an unbounded exponent range. */
@@ -445,7 +455,7 @@ mpfr_sub1sp1n (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode)
   /* now perform rounding */
 
   /* Warning: MPFR considers underflow *after* rounding with an unbounded
-     exponent range. However since b and c have same precision p, they are
+     exponent range. However, since b and c have same precision p, they are
      multiples of 2^(emin-p), likewise for b-c. Thus if bx < emin, the
      subtraction (with an unbounded exponent range) is exact, so that bx is
      also the exponent after rounding with an unbounded exponent range. */
@@ -589,7 +599,7 @@ mpfr_sub1sp2 (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode,
           /* TODO: Change the code to generate a full subtraction with borrow,
              avoiding the test on sb and the corresponding correction. Note
              that Clang has builtins:
-               http://clang.llvm.org/docs/LanguageExtensions.html#multiprecision-arithmetic-builtins
+               https://clang.llvm.org/docs/LanguageExtensions.html#multiprecision-arithmetic-builtins
              but the generated code may not be good:
                https://llvm.org/bugs/show_bug.cgi?id=20748
              With the current source code, Clang generates on x86_64:
@@ -711,7 +721,7 @@ mpfr_sub1sp2 (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode,
   /* now perform rounding */
 
   /* Warning: MPFR considers underflow *after* rounding with an unbounded
-     exponent range. However since b and c have same precision p, they are
+     exponent range. However, since b and c have same precision p, they are
      multiples of 2^(emin-p), likewise for b-c. Thus if bx < emin, the
      subtraction (with an unbounded exponent range) is exact, so that bx is
      also the exponent after rounding with an unbounded exponent range. */
@@ -992,7 +1002,7 @@ mpfr_sub1sp2n (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode)
   /* now perform rounding */
 
   /* Warning: MPFR considers underflow *after* rounding with an unbounded
-     exponent range. However since b and c have same precision p, they are
+     exponent range. However, since b and c have same precision p, they are
      multiples of 2^(emin-p), likewise for b-c. Thus if bx < emin, the
      subtraction (with an unbounded exponent range) is exact, so that bx is
      also the exponent after rounding with an unbounded exponent range. */
@@ -1318,7 +1328,7 @@ mpfr_sub1sp3 (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode,
   /* now perform rounding */
 
   /* Warning: MPFR considers underflow *after* rounding with an unbounded
-     exponent range. However since b and c have same precision p, they are
+     exponent range. However, since b and c have same precision p, they are
      multiples of 2^(emin-p), likewise for b-c. Thus if bx < emin, the
      subtraction (with an unbounded exponent range) is exact, so that bx is
      also the exponent after rounding with an unbounded exponent range. */
@@ -1441,8 +1451,13 @@ mpfr_sub1sp (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode)
     gcc claims that they might be used uninitialized. We fill them with invalid
     values, which should produce a failure if so. See README.dev file. */
   int pow2;
-
   MPFR_TMP_DECL(marker);
+
+  MPFR_LOG_FUNC
+    (("b[%Pd]=%.*Rg c[%Pd]=%.*Rg rnd=%d",
+      mpfr_get_prec (b), mpfr_log_prec, b,
+      mpfr_get_prec (c), mpfr_log_prec, c, rnd_mode),
+     ("a[%Pd]=%.*Rg", mpfr_get_prec (a), mpfr_log_prec, a));
 
   MPFR_ASSERTD(MPFR_PREC(a) == MPFR_PREC(b) && MPFR_PREC(b) == MPFR_PREC(c));
   MPFR_ASSERTD(MPFR_IS_PURE_FP(b));
@@ -1648,7 +1663,7 @@ mpfr_sub1sp (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode)
                   return 0;
                 }
               /* c0 is non-zero, thus we have to subtract 1/2*ulp(a),
-                 however we know (see analysis above) that this cannot
+                 however, we know (see analysis above) that this cannot
                  make the exponent decrease */
               MPFR_ASSERTD( !(ap[0] & ~mask) );    /* Check last bits */
               /* No normalize is needed */

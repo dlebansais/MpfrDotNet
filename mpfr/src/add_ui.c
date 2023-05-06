@@ -1,6 +1,6 @@
 /* mpfr_add_ui -- add a floating-point number with a machine integer
 
-Copyright 2000-2004, 2006-2019 Free Software Foundation, Inc.
+Copyright 2000-2004, 2006-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -24,14 +24,14 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 MPFR_HOT_FUNCTION_ATTR int
-mpfr_add_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
+mpfr_add_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u, mpfr_rnd_t rnd_mode)
 {
   MPFR_LOG_FUNC
-    (("x[%Pu]=%.*Rg u=%lu rnd=%d",
+    (("x[%Pd]=%.*Rg u=%lu rnd=%d",
       mpfr_get_prec(x), mpfr_log_prec, x, u, rnd_mode),
-     ("y[%Pu]=%.*Rg", mpfr_get_prec (y), mpfr_log_prec, y));
+     ("y[%Pd]=%.*Rg", mpfr_get_prec (y), mpfr_log_prec, y));
 
-  /* (mpfr_ui) 0 is assumed to be a real 0 (unsigned) */
+  /* (unsigned long) 0 is assumed to be a real 0 (unsigned) */
   if (MPFR_UNLIKELY (u == 0))
     return mpfr_set (y, x, rnd_mode);
 
@@ -81,7 +81,7 @@ mpfr_add_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
     {
       mpfr_t uu;
 
-      mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
+      mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
       mpfr_set_ui (uu, u, MPFR_RNDZ);
       inex = mpfr_add (y, x, uu, rnd_mode);
       mpfr_clear (uu);

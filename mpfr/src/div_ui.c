@@ -1,6 +1,6 @@
 /* mpfr_div_ui -- divide a floating-point number by a machine integer
 
-Copyright 1999-2019 Free Software Foundation, Inc.
+Copyright 1999-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -30,7 +30,7 @@ int __gmpfr_cov_div_ui_sb[10][2] = { 0 };
 /* returns 0 if result exact, non-zero otherwise */
 #undef mpfr_div_ui
 MPFR_HOT_FUNCTION_ATTR int
-mpfr_div_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u,
+mpfr_div_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u,
              mpfr_rnd_t rnd_mode)
 {
   int inexact;
@@ -46,9 +46,9 @@ mpfr_div_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u,
   MPFR_TMP_DECL(marker);
 
   MPFR_LOG_FUNC
-    (("x[%Pu]=%.*Rg u=%lu rnd=%d",
+    (("x[%Pd]=%.*Rg u=%lu rnd=%d",
       mpfr_get_prec(x), mpfr_log_prec, x, u, rnd_mode),
-     ("y[%Pu]=%.*Rg inexact=%d",
+     ("y[%Pd]=%.*Rg inexact=%d",
       mpfr_get_prec(y), mpfr_log_prec, y, inexact));
 
   if (MPFR_UNLIKELY (MPFR_IS_SINGULAR (x)))
@@ -304,7 +304,7 @@ mpfr_div_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u,
   MPFR_SAVE_EXPO_DECL (expo);
 
   MPFR_SAVE_EXPO_MARK (expo);
-  mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
+  mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
   mpfr_set_ui (uu, u, MPFR_RNDZ);
   inexact = mpfr_div (y, x, uu, rnd_mode);
   mpfr_clear (uu);

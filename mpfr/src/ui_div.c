@@ -1,6 +1,6 @@
 /* mpfr_ui_div -- divide a machine integer by a floating-point number
 
-Copyright 2000-2019 Free Software Foundation, Inc.
+Copyright 2000-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -25,12 +25,12 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_ui_div (mpfr_ptr y, mpfr_ui u, mpfr_srcptr x, mpfr_rnd_t rnd_mode)
+mpfr_ui_div (mpfr_ptr y, unsigned long int u, mpfr_srcptr x, mpfr_rnd_t rnd_mode)
 {
   MPFR_LOG_FUNC
-    (("u=%lu x[%Pu]=%.*Rg rnd=%d",
+    (("u=%lu x[%Pd]=%.*Rg rnd=%d",
       u, mpfr_get_prec(x), mpfr_log_prec, x, rnd_mode),
-     ("y[%Pu]=%.*Rg", mpfr_get_prec(y), mpfr_log_prec, y));
+     ("y[%Pd]=%.*Rg", mpfr_get_prec(y), mpfr_log_prec, y));
 
   if (MPFR_UNLIKELY(MPFR_IS_SINGULAR(x)))
     {
@@ -91,7 +91,7 @@ mpfr_ui_div (mpfr_ptr y, mpfr_ui u, mpfr_srcptr x, mpfr_rnd_t rnd_mode)
       {
       mpfr_t uu;
 
-      mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
+      mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
       mpfr_set_ui (uu, u, MPFR_RNDZ);
       inex = mpfr_div (y, uu, x, rnd_mode);
       mpfr_clear (uu);

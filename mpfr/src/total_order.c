@@ -1,6 +1,6 @@
-/* mpfr_total_order -- total order of two floating-point numbers
+/* mpfr_total_order_p -- total order of two floating-point numbers
 
-Copyright 2018-2019 Free Software Foundation, Inc.
+Copyright 2018-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -24,7 +24,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 /* follows IEEE 754-2008, Section 5.10 */
 int
-mpfr_total_order (mpfr_srcptr x, mpfr_srcptr y)
+mpfr_total_order_p (mpfr_srcptr x, mpfr_srcptr y)
 {
   if (MPFR_SIGN (x) != MPFR_SIGN (y))
     return MPFR_IS_POS (y);

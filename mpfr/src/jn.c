@@ -1,7 +1,7 @@
 /* mpfr_j0, mpfr_j1, mpfr_jn -- Bessel functions of 1st kind, integer order.
-   http://www.opengroup.org/onlinepubs/009695399/functions/j0.html
+   https://pubs.opengroup.org/onlinepubs/9699919799/functions/j0.html
 
-Copyright 2007-2019 Free Software Foundation, Inc.
+Copyright 2007-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -95,8 +95,8 @@ mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
   MPFR_ZIV_DECL (loop);
 
   MPFR_LOG_FUNC
-    (("n=%d x[%Pu]=%.*Rg rnd=%d", n, mpfr_get_prec (z), mpfr_log_prec, z, r),
-     ("res[%Pu]=%.*Rg inexact=%d",
+    (("n=%d x[%Pd]=%.*Rg rnd=%d", n, mpfr_get_prec (z), mpfr_log_prec, z, r),
+     ("res[%Pd]=%.*Rg inexact=%d",
       mpfr_get_prec (res), mpfr_log_prec, res, inex));
 
   absn = SAFE_ABS (unsigned long, n);
@@ -179,7 +179,7 @@ mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
      but to get some margin we use it for |z| > p/2 */
   pbound = MPFR_PREC (res) / 2 + 3;
   MPFR_ASSERTN (pbound <= ULONG_MAX);
-  MPFR_ALIAS (absz, z, 1, MPFR_EXP (z));
+  MPFR_TMP_INIT_ABS (absz, z);
   if (mpfr_cmp_ui (absz, pbound) > 0)
     {
       inex = mpfr_jn_asympt (res, n, z, r);

@@ -1,6 +1,6 @@
 /* mpfr_mpn_exp -- auxiliary function for mpfr_get_str and mpfr_set_str
 
-Copyright 1999-2019 Free Software Foundation, Inc.
+Copyright 1999-2023 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -85,6 +85,10 @@ mpfr_mpn_exp (mp_limb_t *a, mpfr_exp_t *exp_r, int b, mpfr_exp_t e, size_t n)
   int err_s_a2 = 0;
   int err_s_ab = 0;              /* number of error when shift A^2, AB */
   MPFR_TMP_DECL(marker);
+
+  MPFR_LOG_FUNC
+    (("b=%d e=%" MPFR_EXP_FSPEC "d n=%zu", b, (mpfr_eexp_t) e, n),
+     ("exp_r=%" MPFR_EXP_FSPEC "d", (mpfr_eexp_t) exp_r));
 
   MPFR_ASSERTN (n > 0 && n <= ((size_t) -1) / GMP_NUMB_BITS);
   MPFR_ASSERTN (e > 0);
