@@ -1,23 +1,22 @@
-﻿namespace MpirDotNet
+﻿namespace MpirDotNet;
+
+/// <summary>
+/// Rounding modes.
+/// </summary>
+public enum Rounding
 {
     /// <summary>
-    /// Rounding modes.
+    /// Toward zero.
     /// </summary>
-    public enum Rounding
-    {
-        /// <summary>
-        /// Toward zero.
-        /// </summary>
-        TowardZero,
+    TowardZero,
 
-        /// <summary>
-        /// Toward Positive Infinity.
-        /// </summary>
-        TowardPositiveInfinity,
+    /// <summary>
+    /// Toward Positive Infinity.
+    /// </summary>
+    TowardPositiveInfinity,
 
-        /// <summary>
-        /// Toward Negative Infinity.
-        /// </summary>
-        TowardNegativeInfinity,
-    }
+    /// <summary>
+    /// Toward Negative Infinity.
+    /// </summary>
+    TowardNegativeInfinity,
 }

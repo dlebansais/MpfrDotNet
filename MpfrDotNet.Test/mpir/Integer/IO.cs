@@ -1,138 +1,137 @@
-namespace TestInteger
+namespace TestInteger;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MpirDotNet;
+using System.IO;
+using System.Text;
+
+[TestClass]
+public class IO
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using MpirDotNet;
-    using System.IO;
-    using System.Text;
-
-    [TestClass]
-    public class IO
+    [TestMethod]
+    public void Out()
     {
-        [TestMethod]
-        public void Out()
+        string AsString;
+
+        using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
+        AsString = a.ToString();
+        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+
+        using (MemoryStream Stream = new MemoryStream())
         {
-            string AsString;
-
-            using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
-            AsString = a.ToString();
-            Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
-
-            using (MemoryStream Stream = new MemoryStream())
+            using (StreamWriter Writer = new StreamWriter(Stream, default, -1, leaveOpen: true))
             {
-                using (StreamWriter Writer = new StreamWriter(Stream, default, -1, leaveOpen: true))
-                {
-                    int Length = (int)mpz.out_str(Writer, 10, a);
+                int Length = (int)mpz.out_str(Writer, 10, a);
 
-                    Assert.AreEqual(Length, AsString.Length);
-                }
+                Assert.AreEqual(Length, AsString.Length);
+            }
 
-                Stream.Seek(0, SeekOrigin.Begin);
+            Stream.Seek(0, SeekOrigin.Begin);
 
-                using (StreamReader Reader = new StreamReader(Stream))
-                {
-                    string Content = Reader.ReadToEnd();
+            using (StreamReader Reader = new StreamReader(Stream))
+            {
+                string Content = Reader.ReadToEnd();
 
-                    Assert.AreEqual(Content, AsString);
-                }
+                Assert.AreEqual(Content, AsString);
             }
         }
+    }
 
-        [TestMethod]
-        public void In()
+    [TestMethod]
+    public void In()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
+        AsString = a.ToString();
+        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+
+        using (MemoryStream Stream = new MemoryStream())
         {
-            string AsString;
-
-            using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
-            AsString = a.ToString();
-            Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
-
-            using (MemoryStream Stream = new MemoryStream())
+            using (StreamWriter Writer = new StreamWriter(Stream, default, -1, leaveOpen: true))
             {
-                using (StreamWriter Writer = new StreamWriter(Stream, default, -1, leaveOpen: true))
-                {
-                    Writer.Write(AsString);
-                }
+                Writer.Write(AsString);
+            }
 
-                Stream.Seek(0, SeekOrigin.Begin);
+            Stream.Seek(0, SeekOrigin.Begin);
 
-                using (StreamReader Reader = new StreamReader(Stream))
-                {
-                    using mpz_t b = new mpz_t();
-                    int Length = (int)mpz.inp_str(b, Reader, 10);
+            using (StreamReader Reader = new StreamReader(Stream))
+            {
+                using mpz_t b = new mpz_t();
+                int Length = (int)mpz.inp_str(b, Reader, 10);
 
-                    Assert.AreEqual(Length, AsString.Length);
+                Assert.AreEqual(Length, AsString.Length);
 
-                    AsString = b.ToString();
-                    Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
-                }
+                AsString = b.ToString();
+                Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
             }
         }
+    }
 
-        [TestMethod]
-        public void OutRaw()
+    [TestMethod]
+    public void OutRaw()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
+        AsString = a.ToString();
+        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+
+        using (MemoryStream Stream = new MemoryStream())
         {
-            string AsString;
+            int Length;
 
-            using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
-            AsString = a.ToString();
-            Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
-
-            using (MemoryStream Stream = new MemoryStream())
+            using (BinaryWriter Writer = new BinaryWriter(Stream, Encoding.Default, leaveOpen: true))
             {
-                int Length;
+                Length = (int)mpz.out_raw(Writer, a);
+            }
 
-                using (BinaryWriter Writer = new BinaryWriter(Stream, Encoding.Default, leaveOpen: true))
-                {
-                    Length = (int)mpz.out_raw(Writer, a);
-                }
+            Stream.Seek(0, SeekOrigin.Begin);
 
-                Stream.Seek(0, SeekOrigin.Begin);
+            using (BinaryReader Reader = new BinaryReader(Stream))
+            {
+                byte[] Content = Reader.ReadBytes((int)Stream.Length);
 
-                using (BinaryReader Reader = new BinaryReader(Stream))
-                {
-                    byte[] Content = Reader.ReadBytes((int)Stream.Length);
+                Assert.AreEqual(Content.Length, Length);
 
-                    Assert.AreEqual(Content.Length, Length);
+                using mpz_t b = new mpz_t(Content);
 
-                    using mpz_t b = new mpz_t(Content);
-
-                    AsString = b.ToString();
-                    Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
-                }
+                AsString = b.ToString();
+                Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
             }
         }
+    }
 
-        [TestMethod]
-        public void InRaw()
+    [TestMethod]
+    public void InRaw()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
+        AsString = a.ToString();
+        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+
+        using (MemoryStream Stream = new MemoryStream())
         {
-            string AsString;
+            byte[] Content;
 
-            using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
-            AsString = a.ToString();
-            Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
-
-            using (MemoryStream Stream = new MemoryStream())
+            using (BinaryWriter Writer = new BinaryWriter(Stream, Encoding.Default, leaveOpen: true))
             {
-                byte[] Content;
+                Content = a.ToByteArray();
+                Writer.Write(Content);
+            }
 
-                using (BinaryWriter Writer = new BinaryWriter(Stream, Encoding.Default, leaveOpen: true))
-                {
-                    Content = a.ToByteArray();
-                    Writer.Write(Content);
-                }
+            Stream.Seek(0, SeekOrigin.Begin);
 
-                Stream.Seek(0, SeekOrigin.Begin);
+            using (BinaryReader Reader = new BinaryReader(Stream))
+            {
+                using mpz_t b = new mpz_t();
+                int Length = (int)mpz.inp_raw(b, Reader);
 
-                using (BinaryReader Reader = new BinaryReader(Stream))
-                {
-                    using mpz_t b = new mpz_t();
-                    int Length = (int)mpz.inp_raw(b, Reader);
+                Assert.AreEqual(Length, Content.Length);
 
-                    Assert.AreEqual(Length, Content.Length);
-
-                    AsString = b.ToString();
-                    Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
-                }
+                AsString = b.ToString();
+                Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
             }
         }
     }

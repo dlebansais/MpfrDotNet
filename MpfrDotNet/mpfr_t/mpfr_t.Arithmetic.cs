@@ -1,75 +1,74 @@
-﻿namespace MpfrDotNet
+﻿namespace MpfrDotNet;
+
+using System;
+using static Interop.Mpfr.NativeMethods;
+
+/// <summary>
+/// Represents an arbitrary precision floating-point number.
+/// </summary>
+public partial class mpfr_t : IDisposable
 {
-    using System;
-    using static Interop.Mpfr.NativeMethods;
+    /// <summary>
+    /// Gets the square root.
+    /// </summary>
+    public mpfr_t Sqrt()
+    {
+        mpfr_t z = new();
+
+        mpfr_sqrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+
+        return z;
+    }
 
     /// <summary>
-    /// Represents an arbitrary precision floating-point number.
+    /// Gets the cubic root.
     /// </summary>
-    public partial class mpfr_t : IDisposable
+    public mpfr_t Cbrt()
     {
-        /// <summary>
-        /// Gets the square root.
-        /// </summary>
-        public mpfr_t Sqrt()
-        {
-            mpfr_t z = new();
+        mpfr_t z = new();
 
-            mpfr_sqrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        mpfr_cbrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
-            return z;
-        }
+        return z;
+    }
 
-        /// <summary>
-        /// Gets the cubic root.
-        /// </summary>
-        public mpfr_t Cbrt()
-        {
-            mpfr_t z = new();
+    /// <summary>
+    /// Gets the nth root.
+    /// </summary>
+    /// <param name="n">The nth.</param>
+    public mpfr_t NthRoot(ulong n)
+    {
+        mpfr_t z = new();
 
-            mpfr_cbrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        mpfr_rootn_ui(ref z.Value, ref Value, n, (__mpfr_rnd_t)Rounding);
 
-            return z;
-        }
+        return z;
+    }
 
-        /// <summary>
-        /// Gets the nth root.
-        /// </summary>
-        /// <param name="n">The nth.</param>
-        public mpfr_t NthRoot(ulong n)
-        {
-            mpfr_t z = new();
+    /// <summary>
+    /// Gets the absolute value.
+    /// </summary>
+    public mpfr_t Abs()
+    {
+        mpfr_t z = new();
 
-            mpfr_rootn_ui(ref z.Value, ref Value, n, (__mpfr_rnd_t)Rounding);
+        mpfr_abs(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
-            return z;
-        }
+        return z;
+    }
 
-        /// <summary>
-        /// Gets the absolute value.
-        /// </summary>
-        public mpfr_t Abs()
-        {
-            mpfr_t z = new();
+    /// <summary>
+    /// Gets the euclidean norm of two numbers.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    public static mpfr_t EuclideanNorm(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
+    {
+        mpfr_t z = new();
 
-            mpfr_abs(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        mpfr_hypot(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
 
-            return z;
-        }
-
-        /// <summary>
-        /// Gets the euclidean norm of two numbers.
-        /// </summary>
-        /// <param name="x">The first operand.</param>
-        /// <param name="y">The second operand.</param>
-        /// <param name="rounding">The rounding mode.</param>
-        public static mpfr_t EuclideanNorm(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
-        {
-            mpfr_t z = new();
-
-            mpfr_hypot(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
-
-            return z;
-        }
+        return z;
     }
 }

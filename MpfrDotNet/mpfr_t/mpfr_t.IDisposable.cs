@@ -1,57 +1,56 @@
-﻿namespace MpfrDotNet
+﻿namespace MpfrDotNet;
+
+using System;
+using static Interop.Mpfr.NativeMethods;
+
+/// <summary>
+/// Represents an arbitrary precision floating-point number.
+/// </summary>
+public partial class mpfr_t : IDisposable
 {
-    using System;
-    using static Interop.Mpfr.NativeMethods;
+    /// <summary>
+    /// Called when an object should release its resources.
+    /// </summary>
+    /// <param name="isDisposing">Indicates if resources must be disposed now.</param>
+    protected virtual void Dispose(bool isDisposing)
+    {
+        if (!IsDisposed)
+        {
+            IsDisposed = true;
+
+            if (isDisposing)
+                DisposeNow();
+        }
+    }
 
     /// <summary>
-    /// Represents an arbitrary precision floating-point number.
+    /// Called when an object should release its resources.
     /// </summary>
-    public partial class mpfr_t : IDisposable
+    public void Dispose()
     {
-        /// <summary>
-        /// Called when an object should release its resources.
-        /// </summary>
-        /// <param name="isDisposing">Indicates if resources must be disposed now.</param>
-        protected virtual void Dispose(bool isDisposing)
-        {
-            if (!IsDisposed)
-            {
-                IsDisposed = true;
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-                if (isDisposing)
-                    DisposeNow();
-            }
-        }
+    /// <summary>
+    /// Finalizes an instance of the <see cref="mpfr_t"/> class.
+    /// </summary>
+    ~mpfr_t()
+    {
+        Dispose(false);
+    }
 
-        /// <summary>
-        /// Called when an object should release its resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+    /// <summary>
+    /// True after <see cref="Dispose(bool)"/> has been invoked.
+    /// </summary>
+    private bool IsDisposed;
 
-        /// <summary>
-        /// Finalizes an instance of the <see cref="mpfr_t"/> class.
-        /// </summary>
-        ~mpfr_t()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>
-        /// True after <see cref="Dispose(bool)"/> has been invoked.
-        /// </summary>
-        private bool IsDisposed;
-
-        /// <summary>
-        /// Disposes of every reference that must be cleaned up.
-        /// </summary>
-        private void DisposeNow()
-        {
-            mpfr_clear(ref Value);
-            DisposeCache();
-        }
+    /// <summary>
+    /// Disposes of every reference that must be cleaned up.
+    /// </summary>
+    private void DisposeNow()
+    {
+        mpfr_clear(ref Value);
+        DisposeCache();
     }
 }

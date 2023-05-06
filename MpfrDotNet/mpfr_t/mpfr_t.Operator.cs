@@ -1,1436 +1,1435 @@
-﻿namespace MpfrDotNet
+﻿namespace MpfrDotNet;
+
+using System;
+using MpirDotNet;
+using static Interop.Mpfr.NativeMethods;
+
+/// <summary>
+/// Represents an arbitrary precision floating-point number.
+/// </summary>
+public partial class mpfr_t : IDisposable
 {
-    using System;
-    using MpirDotNet;
-    using static Interop.Mpfr.NativeMethods;
+    #region Add
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(mpfr_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
 
     /// <summary>
-    /// Represents an arbitrary precision floating-point number.
+    /// Adds two values.
     /// </summary>
-    public partial class mpfr_t : IDisposable
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(mpfr_t x, ulong y)
     {
-        #region Add
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(mpfr_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
+        mpfr_t z = new();
 
-            mpfr_add(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+        mpfr_add_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
 
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(mpfr_t x, ulong y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(ulong x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_ui(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(mpfr_t x, long y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(long x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_si(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(mpfr_t x, double y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(double x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_d(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(mpfr_t x, mpz_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(mpz_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(mpfr_t x, mpq_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Adds two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator +(mpq_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_add_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-        #endregion
-
-        #region Sub
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(mpfr_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_sub(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(mpfr_t x, ulong y)
-        {
-            mpfr_t z = new();
-
-            mpfr_sub_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(ulong x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_ui_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(mpfr_t x, long y)
-        {
-            mpfr_t z = new();
-
-            mpfr_sub_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(long x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_si_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(mpfr_t x, double y)
-        {
-            mpfr_t z = new();
-
-            mpfr_sub_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(double x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_d_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(mpfr_t x, mpz_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_sub_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(mpz_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_z_sub(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(mpfr_t x, mpq_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_sub_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Subtracts two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator -(mpq_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_sub_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
-            mpfr_neg(ref z.Value, ref z.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-        #endregion
-
-        #region Mul
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(mpfr_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(mpfr_t x, ulong y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(ulong x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_ui(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(mpfr_t x, long y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(long x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_si(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(mpfr_t x, double y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(double x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_d(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(mpfr_t x, mpz_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(mpz_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(mpfr_t x, mpq_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Multiplies two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator *(mpq_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_mul_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-        #endregion
-
-        #region Div
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(mpfr_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_div(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(mpfr_t x, ulong y)
-        {
-            mpfr_t z = new();
-
-            mpfr_div_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(ulong x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_ui_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(mpfr_t x, long y)
-        {
-            mpfr_t z = new();
-
-            mpfr_div_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(long x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_si_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(mpfr_t x, double y)
-        {
-            mpfr_t z = new();
-
-            mpfr_div_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(double x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_d_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(mpfr_t x, mpz_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_div_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(mpz_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_div_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
-            mpfr_ui_div(ref z.Value, 1, ref z.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(mpfr_t x, mpq_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_div_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-
-        /// <summary>
-        /// Divides two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static mpfr_t operator /(mpq_t x, mpfr_t y)
-        {
-            mpfr_t z = new();
-
-            mpfr_div_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
-            mpfr_ui_div(ref z.Value, 1, ref z.Value, (__mpfr_rnd_t)y.Rounding);
-
-            return z;
-        }
-        #endregion
-
-        #region Misc
-        /// <summary>
-        /// Negates a value.
-        /// </summary>
-        /// <param name="x">The value.</param>
-        public static mpfr_t operator -(mpfr_t x)
-        {
-            mpfr_t z = new();
-
-            mpfr_neg(ref z.Value, ref x.Value, (__mpfr_rnd_t)x.Rounding);
-
-            return z;
-        }
-        #endregion
-
-        #region Comparison
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpfr_t x, mpfr_t y)
-        {
-            return mpfr_greater_p(ref x.Value, ref y.Value) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpfr_t x, ulong y)
-        {
-            return x.CompareTo(y) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(ulong x, mpfr_t y)
-        {
-            return y.CompareTo(x) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpfr_t x, long y)
-        {
-            return x.CompareTo(y) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(long x, mpfr_t y)
-        {
-            return y.CompareTo(x) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpfr_t x, double y)
-        {
-            return x.CompareTo(y) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(double x, mpfr_t y)
-        {
-            return y.CompareTo(x) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpfr_t x, mpz_t y)
-        {
-            return x.CompareTo(y) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpz_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpfr_t x, mpq_t y)
-        {
-            return x.CompareTo(y) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpq_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpfr_t x, mpf_t y)
-        {
-            return x.CompareTo(y) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >(mpf_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpfr_t x, mpfr_t y)
-        {
-            return mpfr_greaterequal_p(ref x.Value, ref y.Value) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpfr_t x, ulong y)
-        {
-            return x.CompareTo(y) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(ulong x, mpfr_t y)
-        {
-            return y.CompareTo(x) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpfr_t x, long y)
-        {
-            return x.CompareTo(y) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(long x, mpfr_t y)
-        {
-            return y.CompareTo(x) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpfr_t x, double y)
-        {
-            return x.CompareTo(y) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(double x, mpfr_t y)
-        {
-            return y.CompareTo(x) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpfr_t x, mpz_t y)
-        {
-            return x.CompareTo(y) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpz_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpfr_t x, mpq_t y)
-        {
-            return x.CompareTo(y) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpq_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpfr_t x, mpf_t y)
-        {
-            return x.CompareTo(y) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator >=(mpf_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpfr_t x, mpfr_t y)
-        {
-            return mpfr_less_p(ref x.Value, ref y.Value) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpfr_t x, ulong y)
-        {
-            return x.CompareTo(y) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(ulong x, mpfr_t y)
-        {
-            return y.CompareTo(x) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpfr_t x, long y)
-        {
-            return x.CompareTo(y) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(long x, mpfr_t y)
-        {
-            return y.CompareTo(x) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpfr_t x, double y)
-        {
-            return x.CompareTo(y) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(double x, mpfr_t y)
-        {
-            return y.CompareTo(x) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpfr_t x, mpz_t y)
-        {
-            return x.CompareTo(y) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpz_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpfr_t x, mpq_t y)
-        {
-            return x.CompareTo(y) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpq_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpfr_t x, mpf_t y)
-        {
-            return x.CompareTo(y) < 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <(mpf_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) > 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpfr_t x, mpfr_t y)
-        {
-            return mpfr_lessequal_p(ref x.Value, ref y.Value) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpfr_t x, ulong y)
-        {
-            return x.CompareTo(y) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(ulong x, mpfr_t y)
-        {
-            return y.CompareTo(x) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpfr_t x, long y)
-        {
-            return x.CompareTo(y) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(long x, mpfr_t y)
-        {
-            return y.CompareTo(x) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpfr_t x, double y)
-        {
-            return x.CompareTo(y) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(double x, mpfr_t y)
-        {
-            return y.CompareTo(x) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpfr_t x, mpz_t y)
-        {
-            return x.CompareTo(y) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpz_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpfr_t x, mpq_t y)
-        {
-            return x.CompareTo(y) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpq_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpfr_t x, mpf_t y)
-        {
-            return x.CompareTo(y) <= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator <=(mpf_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) >= 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpfr_t x, mpfr_t y)
-        {
-            return mpfr_equal_p(ref x.Value, ref y.Value) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpfr_t x, ulong y)
-        {
-            return x.CompareTo(y) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(ulong x, mpfr_t y)
-        {
-            return y.CompareTo(x) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpfr_t x, long y)
-        {
-            return x.CompareTo(y) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(long x, mpfr_t y)
-        {
-            return y.CompareTo(x) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpfr_t x, double y)
-        {
-            return x.CompareTo(y) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(double x, mpfr_t y)
-        {
-            return y.CompareTo(x) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpfr_t x, mpz_t y)
-        {
-            return x.CompareTo(y) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpz_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpfr_t x, mpq_t y)
-        {
-            return x.CompareTo(y) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpq_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpfr_t x, mpf_t y)
-        {
-            return x.CompareTo(y) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator ==(mpf_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpfr_t x, mpfr_t y)
-        {
-            return mpfr_equal_p(ref x.Value, ref y.Value) == 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpfr_t x, ulong y)
-        {
-            return x.CompareTo(y) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(ulong x, mpfr_t y)
-        {
-            return y.CompareTo(x) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpfr_t x, long y)
-        {
-            return x.CompareTo(y) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(long x, mpfr_t y)
-        {
-            return y.CompareTo(x) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpfr_t x, double y)
-        {
-            return x.CompareTo(y) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(double x, mpfr_t y)
-        {
-            return y.CompareTo(x) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpfr_t x, mpz_t y)
-        {
-            return x.CompareTo(y) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpz_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpfr_t x, mpq_t y)
-        {
-            return x.CompareTo(y) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpq_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpfr_t x, mpf_t y)
-        {
-            return x.CompareTo(y) != 0;
-        }
-
-        /// <summary>
-        /// Compares two values.
-        /// </summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        public static bool operator !=(mpf_t x, mpfr_t y)
-        {
-            return y.CompareTo(x) != 0;
-        }
-        #endregion
+        return z;
     }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(ulong x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_ui(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(mpfr_t x, long y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(long x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_si(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(mpfr_t x, double y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(double x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_d(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(mpfr_t x, mpz_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(mpz_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(mpfr_t x, mpq_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Adds two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator +(mpq_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_add_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+    #endregion
+
+    #region Sub
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(mpfr_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_sub(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(mpfr_t x, ulong y)
+    {
+        mpfr_t z = new();
+
+        mpfr_sub_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(ulong x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_ui_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(mpfr_t x, long y)
+    {
+        mpfr_t z = new();
+
+        mpfr_sub_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(long x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_si_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(mpfr_t x, double y)
+    {
+        mpfr_t z = new();
+
+        mpfr_sub_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(double x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_d_sub(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(mpfr_t x, mpz_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_sub_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(mpz_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_z_sub(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(mpfr_t x, mpq_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_sub_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Subtracts two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator -(mpq_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_sub_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+        mpfr_neg(ref z.Value, ref z.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+    #endregion
+
+    #region Mul
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(mpfr_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(mpfr_t x, ulong y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(ulong x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_ui(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(mpfr_t x, long y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(long x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_si(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(mpfr_t x, double y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(double x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_d(ref z.Value, ref y.Value, x, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(mpfr_t x, mpz_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(mpz_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(mpfr_t x, mpq_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Multiplies two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator *(mpq_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_mul_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+    #endregion
+
+    #region Div
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(mpfr_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_div(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(mpfr_t x, ulong y)
+    {
+        mpfr_t z = new();
+
+        mpfr_div_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(ulong x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_ui_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(mpfr_t x, long y)
+    {
+        mpfr_t z = new();
+
+        mpfr_div_si(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(long x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_si_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(mpfr_t x, double y)
+    {
+        mpfr_t z = new();
+
+        mpfr_div_d(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(double x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_d_div(ref z.Value, x, ref y.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(mpfr_t x, mpz_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_div_z(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(mpz_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_div_z(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+        mpfr_ui_div(ref z.Value, 1, ref z.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(mpfr_t x, mpq_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_div_q(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Divides two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static mpfr_t operator /(mpq_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        mpfr_div_q(ref z.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)y.Rounding);
+        mpfr_ui_div(ref z.Value, 1, ref z.Value, (__mpfr_rnd_t)y.Rounding);
+
+        return z;
+    }
+    #endregion
+
+    #region Misc
+    /// <summary>
+    /// Negates a value.
+    /// </summary>
+    /// <param name="x">The value.</param>
+    public static mpfr_t operator -(mpfr_t x)
+    {
+        mpfr_t z = new();
+
+        mpfr_neg(ref z.Value, ref x.Value, (__mpfr_rnd_t)x.Rounding);
+
+        return z;
+    }
+    #endregion
+
+    #region Comparison
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpfr_t x, mpfr_t y)
+    {
+        return mpfr_greater_p(ref x.Value, ref y.Value) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpfr_t x, ulong y)
+    {
+        return x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(ulong x, mpfr_t y)
+    {
+        return y.CompareTo(x) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpfr_t x, long y)
+    {
+        return x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(long x, mpfr_t y)
+    {
+        return y.CompareTo(x) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpfr_t x, double y)
+    {
+        return x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(double x, mpfr_t y)
+    {
+        return y.CompareTo(x) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpfr_t x, mpz_t y)
+    {
+        return x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpz_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpfr_t x, mpq_t y)
+    {
+        return x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpq_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpfr_t x, mpf_t y)
+    {
+        return x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >(mpf_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpfr_t x, mpfr_t y)
+    {
+        return mpfr_greaterequal_p(ref x.Value, ref y.Value) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpfr_t x, ulong y)
+    {
+        return x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(ulong x, mpfr_t y)
+    {
+        return y.CompareTo(x) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpfr_t x, long y)
+    {
+        return x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(long x, mpfr_t y)
+    {
+        return y.CompareTo(x) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpfr_t x, double y)
+    {
+        return x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(double x, mpfr_t y)
+    {
+        return y.CompareTo(x) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpfr_t x, mpz_t y)
+    {
+        return x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpz_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpfr_t x, mpq_t y)
+    {
+        return x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpq_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpfr_t x, mpf_t y)
+    {
+        return x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator >=(mpf_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpfr_t x, mpfr_t y)
+    {
+        return mpfr_less_p(ref x.Value, ref y.Value) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpfr_t x, ulong y)
+    {
+        return x.CompareTo(y) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(ulong x, mpfr_t y)
+    {
+        return y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpfr_t x, long y)
+    {
+        return x.CompareTo(y) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(long x, mpfr_t y)
+    {
+        return y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpfr_t x, double y)
+    {
+        return x.CompareTo(y) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(double x, mpfr_t y)
+    {
+        return y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpfr_t x, mpz_t y)
+    {
+        return x.CompareTo(y) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpz_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpfr_t x, mpq_t y)
+    {
+        return x.CompareTo(y) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpq_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpfr_t x, mpf_t y)
+    {
+        return x.CompareTo(y) < 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <(mpf_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpfr_t x, mpfr_t y)
+    {
+        return mpfr_lessequal_p(ref x.Value, ref y.Value) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpfr_t x, ulong y)
+    {
+        return x.CompareTo(y) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(ulong x, mpfr_t y)
+    {
+        return y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpfr_t x, long y)
+    {
+        return x.CompareTo(y) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(long x, mpfr_t y)
+    {
+        return y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpfr_t x, double y)
+    {
+        return x.CompareTo(y) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(double x, mpfr_t y)
+    {
+        return y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpfr_t x, mpz_t y)
+    {
+        return x.CompareTo(y) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpz_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpfr_t x, mpq_t y)
+    {
+        return x.CompareTo(y) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpq_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpfr_t x, mpf_t y)
+    {
+        return x.CompareTo(y) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator <=(mpf_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpfr_t x, mpfr_t y)
+    {
+        return mpfr_equal_p(ref x.Value, ref y.Value) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpfr_t x, ulong y)
+    {
+        return x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(ulong x, mpfr_t y)
+    {
+        return y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpfr_t x, long y)
+    {
+        return x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(long x, mpfr_t y)
+    {
+        return y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpfr_t x, double y)
+    {
+        return x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(double x, mpfr_t y)
+    {
+        return y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpfr_t x, mpz_t y)
+    {
+        return x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpz_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpfr_t x, mpq_t y)
+    {
+        return x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpq_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpfr_t x, mpf_t y)
+    {
+        return x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator ==(mpf_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpfr_t x, mpfr_t y)
+    {
+        return mpfr_equal_p(ref x.Value, ref y.Value) == 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpfr_t x, ulong y)
+    {
+        return x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(ulong x, mpfr_t y)
+    {
+        return y.CompareTo(x) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpfr_t x, long y)
+    {
+        return x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(long x, mpfr_t y)
+    {
+        return y.CompareTo(x) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpfr_t x, double y)
+    {
+        return x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(double x, mpfr_t y)
+    {
+        return y.CompareTo(x) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpfr_t x, mpz_t y)
+    {
+        return x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpz_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpfr_t x, mpq_t y)
+    {
+        return x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpq_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpfr_t x, mpf_t y)
+    {
+        return x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two values.
+    /// </summary>
+    /// <param name="x">The first value.</param>
+    /// <param name="y">The second value.</param>
+    public static bool operator !=(mpf_t x, mpfr_t y)
+    {
+        return y.CompareTo(x) != 0;
+    }
+    #endregion
 }

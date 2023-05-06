@@ -1,121 +1,120 @@
-namespace TestInteger.Arithmetic.Divide
+namespace TestInteger.Arithmetic.Divide;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MpirDotNet;
+
+[TestClass]
+public class RightShift
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using MpirDotNet;
-
-    [TestClass]
-    public class RightShift
+    [TestMethod]
+    public void ShiftTowardZero()
     {
-        [TestMethod]
-        public void ShiftTowardZero()
-        {
-            string AsString;
+        string AsString;
 
-            using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
-            AsString = a.ToString();
-            Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
+        AsString = a.ToString();
+        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 40;
+        uint b = 40;
 
-            using mpz_t c = a.RightShift(b);
+        using mpz_t c = a.RightShift(b);
 
-            AsString = c.ToString();
-            Assert.AreEqual("212869812934598352597162832338422076050595113390235", AsString);
+        AsString = c.ToString();
+        Assert.AreEqual("212869812934598352597162832338422076050595113390235", AsString);
 
-            using mpz_t d = a.RightShift(b, Rounding.TowardZero);
+        using mpz_t d = a.RightShift(b, Rounding.TowardZero);
 
-            AsString = d.ToString();
-            Assert.AreEqual("212869812934598352597162832338422076050595113390235", AsString);
-        }
+        AsString = d.ToString();
+        Assert.AreEqual("212869812934598352597162832338422076050595113390235", AsString);
+    }
 
-        [TestMethod]
-        public void ShiftTowardPositiveInfinity()
-        {
-            string AsString;
+    [TestMethod]
+    public void ShiftTowardPositiveInfinity()
+    {
+        string AsString;
 
-            using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
-            AsString = a.ToString();
-            Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
+        using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
+        AsString = a.ToString();
+        Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 40;
+        uint b = 40;
 
-            using mpz_t c = a.RightShift(b, Rounding.TowardPositiveInfinity);
+        using mpz_t c = a.RightShift(b, Rounding.TowardPositiveInfinity);
 
-            AsString = c.ToString();
-            Assert.AreEqual("-212869812934598352597162832338422076050595113390235", AsString);
-        }
+        AsString = c.ToString();
+        Assert.AreEqual("-212869812934598352597162832338422076050595113390235", AsString);
+    }
 
-        [TestMethod]
-        public void ShiftTowardNegativeInfinity()
-        {
-            string AsString;
+    [TestMethod]
+    public void ShiftTowardNegativeInfinity()
+    {
+        string AsString;
 
-            using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
-            AsString = a.ToString();
-            Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
+        using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
+        AsString = a.ToString();
+        Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 40;
+        uint b = 40;
 
-            using mpz_t c = a.RightShift(b, Rounding.TowardNegativeInfinity);
+        using mpz_t c = a.RightShift(b, Rounding.TowardNegativeInfinity);
 
-            AsString = c.ToString();
-            Assert.AreEqual("-212869812934598352597162832338422076050595113390236", AsString);
-        }
+        AsString = c.ToString();
+        Assert.AreEqual("-212869812934598352597162832338422076050595113390236", AsString);
+    }
 
-        [TestMethod]
-        public void ShiftRemainderTowardZero()
-        {
-            string AsString;
+    [TestMethod]
+    public void ShiftRemainderTowardZero()
+    {
+        string AsString;
 
-            using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
-            AsString = a.ToString();
-            Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
+        AsString = a.ToString();
+        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 40;
+        uint b = 40;
 
-            using mpz_t c = a.RightShiftRemainder(b);
+        using mpz_t c = a.RightShiftRemainder(b);
 
-            AsString = c.ToString();
-            Assert.AreEqual("727230266985", AsString);
+        AsString = c.ToString();
+        Assert.AreEqual("727230266985", AsString);
 
-            using mpz_t d = a.RightShiftRemainder(b, Rounding.TowardZero);
+        using mpz_t d = a.RightShiftRemainder(b, Rounding.TowardZero);
 
-            AsString = d.ToString();
-            Assert.AreEqual("727230266985", AsString);
-        }
+        AsString = d.ToString();
+        Assert.AreEqual("727230266985", AsString);
+    }
 
-        [TestMethod]
-        public void ShiftRemainderTowardPositiveInfinity()
-        {
-            string AsString;
+    [TestMethod]
+    public void ShiftRemainderTowardPositiveInfinity()
+    {
+        string AsString;
 
-            using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
-            AsString = a.ToString();
-            Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
+        using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
+        AsString = a.ToString();
+        Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 40;
+        uint b = 40;
 
-            using mpz_t c = a.RightShiftRemainder(b, Rounding.TowardPositiveInfinity);
+        using mpz_t c = a.RightShiftRemainder(b, Rounding.TowardPositiveInfinity);
 
-            AsString = c.ToString();
-            Assert.AreEqual("-727230266985", AsString);
-        }
+        AsString = c.ToString();
+        Assert.AreEqual("-727230266985", AsString);
+    }
 
-        [TestMethod]
-        public void ShiftRemainderTowardNegativeInfinity()
-        {
-            string AsString;
+    [TestMethod]
+    public void ShiftRemainderTowardNegativeInfinity()
+    {
+        string AsString;
 
-            using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
-            AsString = a.ToString();
-            Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
+        using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
+        AsString = a.ToString();
+        Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
 
-            uint b = 40;
+        uint b = 40;
 
-            using mpz_t c = a.RightShiftRemainder(b, Rounding.TowardNegativeInfinity);
+        using mpz_t c = a.RightShiftRemainder(b, Rounding.TowardNegativeInfinity);
 
-            AsString = c.ToString();
-            Assert.AreEqual("372281360791", AsString);
-        }
+        AsString = c.ToString();
+        Assert.AreEqual("372281360791", AsString);
     }
 }

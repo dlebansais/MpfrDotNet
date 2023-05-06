@@ -1,23 +1,22 @@
-﻿namespace MpirDotNet
+﻿namespace MpirDotNet;
+
+/// <summary>
+/// Randomness algorithms.
+/// </summary>
+public enum RngAlgorithm
 {
     /// <summary>
-    /// Randomness algorithms.
+    /// The default algorithm.
     /// </summary>
-    public enum RngAlgorithm
-    {
-        /// <summary>
-        /// The default algorithm.
-        /// </summary>
-        Default,
+    Default,
 
-        /// <summary>
-        /// Mersenne Twister.
-        /// </summary>
-        MersenneTwister,
+    /// <summary>
+    /// Mersenne Twister.
+    /// </summary>
+    MersenneTwister,
 
-        /// <summary>
-        /// Linear Congruential.
-        /// </summary>
-        LinearCongruential,
-    }
+    /// <summary>
+    /// Linear Congruential.
+    /// </summary>
+    LinearCongruential,
 }
