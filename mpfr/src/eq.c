@@ -26,7 +26,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 /* return non-zero if the first n_bits bits of u, v are equal,
    0 otherwise */
 int
-mpfr_eq (mpfr_srcptr u, mpfr_srcptr v, mpfr_ui n_bits)
+mpfr_eq (mpfr_srcptr u, mpfr_srcptr v, unsigned long n_bits)
 {
   mpfr_limb_srcptr up, vp;
   mp_size_t usize, vsize, size, i;
@@ -78,11 +78,11 @@ mpfr_eq (mpfr_srcptr u, mpfr_srcptr v, mpfr_ui n_bits)
 
   if (usize > vsize)
     {
-      if ((mpfr_ui) vsize * GMP_NUMB_BITS < n_bits)
+      if ((unsigned long) vsize * GMP_NUMB_BITS < n_bits)
         {
           /* check if low min(PREC(u), n_bits) - (vsize * GMP_NUMB_BITS)
              bits from u are non-zero */
-          mpfr_ui remains = n_bits - (vsize * GMP_NUMB_BITS);
+          unsigned long remains = n_bits - (vsize * GMP_NUMB_BITS);
           k = usize - vsize - 1;
           while (k >= 0 && remains >= GMP_NUMB_BITS && !up[k])
             {
@@ -111,9 +111,9 @@ mpfr_eq (mpfr_srcptr u, mpfr_srcptr v, mpfr_ui n_bits)
      Otherwise, if n_bits > size * GMP_NUMB_BITS, reduce n_bits to
      size * GMP_NUMB_BITS, since the extra low bits of one of the
      operands have already been check above. */
-  if ((mpfr_ui) size > 1 + (n_bits - 1) / GMP_NUMB_BITS)
+  if ((unsigned long) size > 1 + (n_bits - 1) / GMP_NUMB_BITS)
     size = 1 + (n_bits - 1) / GMP_NUMB_BITS;
-  else if (n_bits > (mpfr_ui) size * GMP_NUMB_BITS)
+  else if (n_bits > (unsigned long) size * GMP_NUMB_BITS)
     n_bits = size * GMP_NUMB_BITS;
 
   up += usize - size;
