@@ -25,7 +25,8 @@ call ..\Certification\set_tokens.bat
 
 if exist ".\Test\%TESTPROJECTNAME%\publish" rd /S /Q ".\Test\%TESTPROJECTNAME%\publish"
 
-rem dotnet publish ./Test/%TESTPROJECTNAME% -c Debug -f %FRAMEWORK% /p:Platform=x64 -o ./Test/%TESTPROJECTNAME%/publish/x64/Debug
+rem dotnet build ./%PROJECTNAME% -c Debug -f %FRAMEWORK% /p:Platform=x64
+dotnet build --force ./Test/%TESTPROJECTNAME% -c Debug -f %FRAMEWORK% /p:Platform=x64
 rem dotnet publish ./Test/%TESTPROJECTNAME% -c Release -f %FRAMEWORK% /p:Platform=x64 -o ./Test/%TESTPROJECTNAME%/publish/x64/Release
 
 rem if not exist ".\Test\%TESTPROJECTNAME%\publish\x64\Debug\%TESTPROJECTNAME%.dll" goto error_not_built
@@ -38,7 +39,7 @@ rem copy ".\%PROJECTNAME%\bin\x64\Release\%FRAMEWORK%\%PROJECTNAME%.pdb" ".\Test
 if exist .\Test\%TESTPROJECTNAME%\*.log del .\Test\%TESTPROJECTNAME%\*.log
 if exist .\Test\%TESTPROJECTNAME%\obj\x64\Debug\%RESULTFILENAME% del .\Test\%TESTPROJECTNAME%\obj\x64\Debug\%RESULTFILENAME%
 rem if exist .\Test\%TESTPROJECTNAME%\obj\x64\Release\%RESULTFILENAME% del .\Test\%TESTPROJECTNAME%\obj\x64\Release\%RESULTFILENAME%
-".\packages\%OPENCOVER%\tools\OpenCover.Console.exe" -register:user -target:".\packages\%NUINT_CONSOLE%\tools\nunit3-console.exe" -targetargs:".\Test\%TESTPROJECTNAME%\bin\x64\Debug\%FRAMEWORK%\%TESTPROJECTNAME%.dll --trace=Debug --labels=Before" -filter:"+[%PROJECTNAME%*]* -[%TESTPROJECTNAME%*]*" -output:".\Test\%TESTPROJECTNAME%\obj\x64\Debug\%RESULTFILENAME%"
+".\packages\%OPENCOVER%\tools\OpenCover.Console.exe" -register:user -target:".\packages\%NUINT_CONSOLE%\tools\nunit3-console.exe" -targetargs:".\Test\%TESTPROJECTNAME%\bin\x64\Debug\%FRAMEWORK%\%TESTPROJECTNAME%.dll --trace=Debug --labels=Before" -filter:"+[%PROJECTNAME%*]* +[mpfr*]* +[mpir*]* -[%TESTPROJECTNAME%*]*" -output:".\Test\%TESTPROJECTNAME%\obj\x64\Debug\%RESULTFILENAME%"
 rem ".\packages\%OPENCOVER%\tools\OpenCover.Console.exe" -register:user -target:".\packages\%NUINT_CONSOLE%\tools\nunit3-console.exe" -targetargs:".\Test\%TESTPROJECTNAME%\bin\x64\Release\%FRAMEWORK%\%TESTPROJECTNAME%.dll --trace=Debug --labels=Before" -filter:"+[%PROJECTNAME%*]* -[%TESTPROJECTNAME%*]*" -output:".\Test\%TESTPROJECTNAME%\obj\x64\Release\%RESULTFILENAME%"
 if exist .\Test\%TESTPROJECTNAME%\obj\x64\Debug\%RESULTFILENAME% .\packages\%CODECOV%\tools\codecov -f ".\Test\%TESTPROJECTNAME%\obj\x64\Debug\%RESULTFILENAME%" -t %MPFRDOTNET_CODECOV_TOKEN%
 rem if exist .\Test\%TESTPROJECTNAME%\obj\x64\Release\%RESULTFILENAME% .\packages\%CODECOV%\tools\codecov -f ".\Test\%TESTPROJECTNAME%\obj\x64\Release\%RESULTFILENAME%" -t %MPFRDOTNET_CODECOV_TOKEN%
