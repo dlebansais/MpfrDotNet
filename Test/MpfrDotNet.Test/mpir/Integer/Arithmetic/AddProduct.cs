@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class AddProduct
 {
-    [TestMethod]
+    [Test]
     public void BasicAddProduct()
     {
         string AsString;
@@ -28,7 +28,7 @@ public class AddProduct
         Assert.AreEqual("-9112666988874677841199955832262586145147830205230375090322356322089362221491205901", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddProductUint()
     {
         string AsString;

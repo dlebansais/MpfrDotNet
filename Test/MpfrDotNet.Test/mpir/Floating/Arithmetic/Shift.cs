@@ -1,12 +1,12 @@
 namespace TestFloating;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Shift
 {
-    [TestMethod]
+    [Test]
     public void LeftShift()
     {
         string AsString;
@@ -23,7 +23,7 @@ public class Shift
         Assert.AreEqual("2.50523799687202560686E+40", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void RightShift()
     {
         string AsString;

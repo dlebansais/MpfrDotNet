@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Negate
 {
-    [TestMethod]
+    [Test]
     public void BasicNegate()
     {
         string AsString;
@@ -22,7 +22,7 @@ public class Negate
         Assert.AreEqual("-222987435987982730594288574029879874539", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void NegateOperator()
     {
         string AsString;

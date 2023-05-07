@@ -1,12 +1,12 @@
 namespace TestRational;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Shift
 {
-    [TestMethod]
+    [Test]
     public void ShiftLeft()
     {
         string AsString;
@@ -24,7 +24,7 @@ public class Shift
         Assert.AreEqual("222509832503450298345029835740293845720/115756986668303657898962467957", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void ShiftRight()
     {
         string AsString;

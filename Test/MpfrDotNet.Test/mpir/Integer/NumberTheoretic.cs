@@ -1,13 +1,13 @@
 namespace TestInteger;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
 using System.Text;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class NumberTheoretic
 {
-    [TestMethod]
+    [Test]
     public void ProbablePrime()
     {
         string AsString;
@@ -28,7 +28,7 @@ public class NumberTheoretic
         Assert.IsFalse(IsProbablePrime);
     }
 
-    [TestMethod]
+    [Test]
     public void LikelyPrime()
     {
         string AsString;
@@ -49,7 +49,7 @@ public class NumberTheoretic
         Assert.IsFalse(IsLikelyPrime);
     }
 
-    [TestMethod]
+    [Test]
     public void NextPrimeCandidate()
     {
         string AsString;
@@ -67,7 +67,7 @@ public class NumberTheoretic
         Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Gcd()
     {
         string AsString;
@@ -91,7 +91,7 @@ public class NumberTheoretic
         Assert.AreEqual("29927402397991286489627837734179186385188296382227", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintGcd()
     {
         string AsString;
@@ -114,7 +114,7 @@ public class NumberTheoretic
         Assert.AreEqual(80U, Gcd);
     }
 
-    [TestMethod]
+    [Test]
     public void GcdExt()
     {
         string AsString;
@@ -150,7 +150,7 @@ public class NumberTheoretic
         Assert.AreEqual("29927402397991286489627837734179186385188296382227", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Lcm()
     {
         string AsString;
@@ -170,7 +170,7 @@ public class NumberTheoretic
         Assert.AreEqual("47853916434388067096914912536952519029916085915180973", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintLcm()
     {
         string AsString;
@@ -188,7 +188,7 @@ public class NumberTheoretic
         Assert.AreEqual("92206326788211153674543368059006073252765141153641387", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Invert()
     {
         string AsString;
@@ -212,7 +212,7 @@ public class NumberTheoretic
         Assert.AreEqual("1", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Jacobi()
     {
         string AsString;
@@ -230,7 +230,7 @@ public class NumberTheoretic
         Assert.AreEqual(JacobiSymbol, -1);
     }
 
-    [TestMethod]
+    [Test]
     public void KroneckerInt()
     {
         string AsString;
@@ -246,7 +246,7 @@ public class NumberTheoretic
         Assert.AreEqual(JacobiSymbol, 0);
     }
 
-    [TestMethod]
+    [Test]
     public void IntKronecker()
     {
         string AsString;
@@ -262,7 +262,7 @@ public class NumberTheoretic
         Assert.AreEqual(JacobiSymbol, 0);
     }
 
-    [TestMethod]
+    [Test]
     public void KroneckerUInt()
     {
         string AsString;
@@ -278,7 +278,7 @@ public class NumberTheoretic
         Assert.AreEqual(JacobiSymbol, -1);
     }
 
-    [TestMethod]
+    [Test]
     public void UIntKronecker()
     {
         string AsString;
@@ -294,7 +294,7 @@ public class NumberTheoretic
         Assert.AreEqual(JacobiSymbol, -1);
     }
 
-    [TestMethod]
+    [Test]
     public void Remove()
     {
         string AsString;
@@ -317,7 +317,7 @@ public class NumberTheoretic
         Assert.AreEqual(Count, 2UL);
     }
 
-    [TestMethod]
+    [Test]
     public void Factorial()
     {
         string AsString;
@@ -345,7 +345,7 @@ public class NumberTheoretic
         Assert.AreEqual("6000", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Primorial()
     {
         string AsString;
@@ -359,7 +359,7 @@ public class NumberTheoretic
         Assert.AreEqual("6469693230", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Binomial()
     {
         string AsString;
@@ -385,7 +385,7 @@ public class NumberTheoretic
         Assert.AreEqual("85320", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Fibonacci()
     {
         string AsString;
@@ -408,7 +408,7 @@ public class NumberTheoretic
         Assert.AreEqual("14472334024676221", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void LucasNumber()
     {
         string AsString;

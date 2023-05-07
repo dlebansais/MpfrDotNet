@@ -1,12 +1,12 @@
 namespace TestFloating;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Misc
 {
-    [TestMethod]
+    [Test]
     public void Create()
     {
         string AsString;
@@ -91,7 +91,7 @@ public class Misc
         Assert.AreEqual(UintCast, 2147483647U);
     }
 
-    [TestMethod]
+    [Test]
     public void Precision()
     {
         ulong DefaultPrecision;
@@ -122,7 +122,7 @@ public class Misc
         mpf_t.DefaultPrecision = 64;
     }
 
-    [TestMethod]
+    [Test]
     public void Rounding()
     {
         string AsString;

@@ -1,12 +1,12 @@
 namespace TestFloating;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Div
 {
-    [TestMethod]
+    [Test]
     public void BasicDiv()
     {
         string AsString;
@@ -26,7 +26,7 @@ public class Div
         Assert.AreEqual("9.97858159665290867233E+9", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void DivOperator()
     {
         string AsString;
@@ -45,7 +45,7 @@ public class Div
         Assert.AreEqual("9.97858159665290867233E+9", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void DivUint()
     {
         string AsString;
@@ -62,7 +62,7 @@ public class Div
         Assert.AreEqual("2.25046070208247417587E+17", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintDiv()
     {
         string AsString;
@@ -79,7 +79,7 @@ public class Div
         Assert.AreEqual("4.44353460193570762729E-18", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void DivIntPositive()
     {
         string AsString;
@@ -96,7 +96,7 @@ public class Div
         Assert.AreEqual("2.25046070208247417587E+17", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void DivIntNegative()
     {
         string AsString;

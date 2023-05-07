@@ -1,12 +1,12 @@
 namespace TestFloating;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Mul
 {
-    [TestMethod]
+    [Test]
     public void BasicMul()
     {
         string AsString;
@@ -26,7 +26,7 @@ public class Mul
         Assert.AreEqual("4.96168970320598825788E+40", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulOperator()
     {
         string AsString;
@@ -45,7 +45,7 @@ public class Mul
         Assert.AreEqual("4.96168970320598825788E+40", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulUint()
     {
         string AsString;
@@ -62,7 +62,7 @@ public class Mul
         Assert.AreEqual("2.20002177842512963966E+33", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulIntPositive()
     {
         string AsString;
@@ -79,7 +79,7 @@ public class Mul
         Assert.AreEqual("2.20002177842512963966E+33", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulIntNegative()
     {
         string AsString;

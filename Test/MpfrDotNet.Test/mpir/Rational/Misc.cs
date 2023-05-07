@@ -1,12 +1,12 @@
 namespace TestRational;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Misc
 {
-    [TestMethod]
+    [Test]
     public void Create()
     {
         string AsString;

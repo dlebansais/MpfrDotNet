@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class ShiftRight
 {
-    [TestMethod]
+    [Test]
     public void BasicShiftRight()
     {
         string AsString;
@@ -24,7 +24,7 @@ public class ShiftRight
         Assert.AreEqual("202805891593000279130400098", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void ShiftRightOperator()
     {
         string AsString;

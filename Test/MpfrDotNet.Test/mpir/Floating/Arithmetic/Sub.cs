@@ -1,12 +1,12 @@
 namespace TestFloating;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Sub
 {
-    [TestMethod]
+    [Test]
     public void BasicSub()
     {
         string AsString;
@@ -26,7 +26,7 @@ public class Sub
         Assert.AreEqual("2.22509832481151554746E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubOperator()
     {
         string AsString;
@@ -45,7 +45,7 @@ public class Sub
         Assert.AreEqual("2.22509832481151554746E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubUint()
     {
         string AsString;
@@ -62,7 +62,7 @@ public class Sub
         Assert.AreEqual("2.22509832503450297356E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintSub()
     {
         string AsString;
@@ -79,7 +79,7 @@ public class Sub
         Assert.AreEqual("-2.22509832503450297356E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubIntPositive()
     {
         string AsString;
@@ -96,7 +96,7 @@ public class Sub
         Assert.AreEqual("2.22509832503450297356E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubIntNegative()
     {
         string AsString;

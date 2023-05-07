@@ -1,14 +1,14 @@
 ﻿namespace Test;
 
 using Interop.Mpfr;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Pow
 {
-    [TestMethod]
+    [Test]
     public void Sqrt()
     {
         string AsString;
@@ -29,7 +29,7 @@ public class Pow
         Assert.AreEqual("2.225098325034502799228928E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Cbrt()
     {
         string AsString;
@@ -51,7 +51,7 @@ public class Pow
         Assert.AreEqual("2.2250983250345032287256576E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void NthRoot()
     {
         string AsString;
@@ -102,7 +102,7 @@ public class Pow
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void SqrtULong()
     {
         string AsString;
@@ -133,7 +133,7 @@ public class Pow
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void BasicPow()
     {
         string AsString;
@@ -154,7 +154,7 @@ public class Pow
         Assert.AreEqual("8.8604270763516055878742474068479142491907987806803106E+565202", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void PowULong()
     {
         string AsString;
@@ -192,7 +192,7 @@ public class Pow
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void PowLong()
     {
         string AsString;
@@ -245,7 +245,7 @@ public class Pow
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void PowZ()
     {
         string AsString;
@@ -266,7 +266,7 @@ public class Pow
         Assert.AreEqual("1.5581651739453832511769734040031532442192330006796866E+565195", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void ULongPowULong()
     {
         string AsString;
@@ -296,7 +296,7 @@ public class Pow
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void ULongPow()
     {
         string AsString;
@@ -329,7 +329,7 @@ public class Pow
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void ZetaULong()
     {
         string AsString;

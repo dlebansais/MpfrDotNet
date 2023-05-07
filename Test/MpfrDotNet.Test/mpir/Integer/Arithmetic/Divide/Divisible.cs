@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic.Divide;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Divisible
 {
-    [TestMethod]
+    [Test]
     public void BasicDivisible()
     {
         string AsString;
@@ -33,7 +33,7 @@ public class Divisible
         Assert.IsFalse(IsDivisible);
     }
 
-    [TestMethod]
+    [Test]
     public void UIntDivisible()
     {
         string AsString;
@@ -58,7 +58,7 @@ public class Divisible
         Assert.IsFalse(IsDivisible);
     }
 
-    [TestMethod]
+    [Test]
     public void PowerOfTwo()
     {
         string AsString;

@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic.Divide;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class RightShift
 {
-    [TestMethod]
+    [Test]
     public void ShiftTowardZero()
     {
         string AsString;
@@ -28,7 +28,7 @@ public class RightShift
         Assert.AreEqual("212869812934598352597162832338422076050595113390235", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void ShiftTowardPositiveInfinity()
     {
         string AsString;
@@ -45,7 +45,7 @@ public class RightShift
         Assert.AreEqual("-212869812934598352597162832338422076050595113390235", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void ShiftTowardNegativeInfinity()
     {
         string AsString;
@@ -62,7 +62,7 @@ public class RightShift
         Assert.AreEqual("-212869812934598352597162832338422076050595113390236", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void ShiftRemainderTowardZero()
     {
         string AsString;
@@ -84,7 +84,7 @@ public class RightShift
         Assert.AreEqual("727230266985", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void ShiftRemainderTowardPositiveInfinity()
     {
         string AsString;
@@ -101,7 +101,7 @@ public class RightShift
         Assert.AreEqual("-727230266985", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void ShiftRemainderTowardNegativeInfinity()
     {
         string AsString;

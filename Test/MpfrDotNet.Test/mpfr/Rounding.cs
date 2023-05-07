@@ -1,13 +1,13 @@
 ﻿namespace Test;
 
 using Interop.Mpfr;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Rounding
 {
-    [TestMethod]
+    [Test]
     public void BasicRounding()
     {
         string AsString;
@@ -43,7 +43,7 @@ public class Rounding
         Assert.AreEqual("2.225098325034502799228928E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Print()
     {
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);

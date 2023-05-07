@@ -1,13 +1,13 @@
 ﻿namespace Test;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Mul
 {
-    [TestMethod]
+    [Test]
     public void BasicMul()
     {
         string AsString;
@@ -33,7 +33,7 @@ public class Mul
         Assert.AreEqual("4.9616897032059879565970564633632694075392E+40", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulULong()
     {
         string AsString;
@@ -72,7 +72,7 @@ public class Mul
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void MulLong()
     {
         string AsString;
@@ -111,7 +111,7 @@ public class Mul
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void MulDouble()
     {
         string AsString;
@@ -135,7 +135,7 @@ public class Mul
         Assert.AreEqual("4.9616897032059879565970564633632694075392E+40", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulInteger()
     {
         string AsString;
@@ -161,7 +161,7 @@ public class Mul
         Assert.AreEqual("1.94031353925676656800475953694860722044928E+41", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulRational()
     {
         string AsString;

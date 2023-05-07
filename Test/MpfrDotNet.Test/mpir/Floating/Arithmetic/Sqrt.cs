@@ -1,12 +1,12 @@
 namespace TestFloating;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Sqrt
 {
-    [TestMethod]
+    [Test]
     public void BasicSqrt()
     {
         string AsString;

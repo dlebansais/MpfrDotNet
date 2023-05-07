@@ -1,12 +1,12 @@
 ﻿namespace Test;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class LogExp
 {
-    [TestMethod]
+    [Test]
     public void BasicLog()
     {
         string AsString;
@@ -27,7 +27,7 @@ public class LogExp
         Assert.AreEqual("2.225098325034504946712576E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Log2()
     {
         string AsString;
@@ -48,7 +48,7 @@ public class LogExp
         Assert.AreEqual("2.2250983250345053762093056E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Log10()
     {
         string AsString;
@@ -69,7 +69,7 @@ public class LogExp
         Assert.AreEqual("2.2250983250345109596667904E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void LogULong()
     {
         string AsString;
@@ -97,7 +97,7 @@ public class LogExp
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void Log1p()
     {
         string AsString;

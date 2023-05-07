@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Root
 {
-    [TestMethod]
+    [Test]
     public void RootExact()
     {
         string AsString;
@@ -30,7 +30,7 @@ public class Root
         Assert.IsTrue(IsRootExact);
     }
 
-    [TestMethod]
+    [Test]
     public void BasicRoot()
     {
         string AsString;
@@ -45,7 +45,7 @@ public class Root
         Assert.AreEqual("9785412309485720938412983404349", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void RootRemainder()
     {
         string AsString;
@@ -63,7 +63,7 @@ public class Root
         Assert.AreEqual("10", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Sqrt()
     {
         string AsString;
@@ -78,7 +78,7 @@ public class Root
         Assert.AreEqual("9785412309485720938412983404349", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SqrtRemainder()
     {
         string AsString;
@@ -96,7 +96,7 @@ public class Root
         Assert.AreEqual("146917345376335488255919", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void PerfectPower()
     {
         string AsString;
@@ -110,7 +110,7 @@ public class Root
         Assert.IsTrue(IsPerfectPower);
     }
 
-    [TestMethod]
+    [Test]
     public void PerfectSquare()
     {
         string AsString;

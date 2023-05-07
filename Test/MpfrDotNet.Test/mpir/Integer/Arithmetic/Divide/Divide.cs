@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic.Divide;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Divide
 {
-    [TestMethod]
+    [Test]
     public void GenericDivide()
     {
         string AsString;
@@ -25,7 +25,7 @@ public class Divide
         Assert.AreEqual("593169091750307653294", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void DivOperator1()
     {
         string AsString;
@@ -44,7 +44,7 @@ public class Divide
         Assert.AreEqual("593169091750307653294", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void IntDivOperator1()
     {
         string AsString;
@@ -61,7 +61,7 @@ public class Divide
         Assert.AreEqual("78017611508030951364291500994581676448574366152403101994478115", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void IntDivOperator2()
     {
         string AsString;
@@ -78,7 +78,7 @@ public class Divide
         Assert.AreEqual("-78017611508030951364291500994581676448574366152403101994478115", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UIntDivOperator()
     {
         string AsString;
@@ -95,7 +95,7 @@ public class Divide
         Assert.AreEqual("78017611508030951364291500994581676448574366152403101994478115", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void TowardZero()
     {
         string AsString;
@@ -128,7 +128,7 @@ public class Divide
         Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void TowardPositiveInfinity()
     {
         string AsString;
@@ -154,7 +154,7 @@ public class Divide
         Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void TowardNegativeInfinity()
     {
         string AsString;
@@ -181,7 +181,7 @@ public class Divide
     }
 
 
-    [TestMethod]
+    [Test]
     public void UintTowardZero()
     {
         string AsString;
@@ -212,7 +212,7 @@ public class Divide
         Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintTowardPositiveInfinity()
     {
         string AsString;
@@ -236,7 +236,7 @@ public class Divide
         Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintTowardNegativeInfinity()
     {
         string AsString;

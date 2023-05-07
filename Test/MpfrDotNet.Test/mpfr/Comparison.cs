@@ -1,13 +1,13 @@
 namespace Test;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Comparison
 {
-    [TestMethod]
+    [Test]
     public void GreaterThan()
     {
         string AsString;
@@ -95,7 +95,7 @@ public class Comparison
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void GreaterEqual()
     {
         string AsString;
@@ -166,7 +166,7 @@ public class Comparison
         Assert.IsFalse(IsGreaterThan);
     }
 
-    [TestMethod]
+    [Test]
     public void LesserThan()
     {
         string AsString;
@@ -237,7 +237,7 @@ public class Comparison
         Assert.IsTrue(IsLesserThan);
     }
 
-    [TestMethod]
+    [Test]
     public void LesserEqual()
     {
         string AsString;
@@ -308,7 +308,7 @@ public class Comparison
         Assert.IsTrue(IsLesserThan);
     }
 
-    [TestMethod]
+    [Test]
     public void Equal()
     {
         string AsString;
@@ -379,7 +379,7 @@ public class Comparison
         Assert.IsFalse(IsEqualTo);
     }
 
-    [TestMethod]
+    [Test]
     public void Different()
     {
         string AsString;
@@ -450,7 +450,7 @@ public class Comparison
         Assert.IsTrue(IsEqualTo);
     }
 
-    [TestMethod]
+    [Test]
     public void Special()
     {
         using mpfr_t a = new();

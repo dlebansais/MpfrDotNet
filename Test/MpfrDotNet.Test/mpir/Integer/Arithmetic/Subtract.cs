@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Subtract
 {
-    [TestMethod]
+    [Test]
     public void GenericSub()
     {
         string AsString;
@@ -25,7 +25,7 @@ public class Subtract
         Assert.AreEqual("222509832503450298345029835740293845720", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubOperator()
     {
         string AsString;
@@ -43,7 +43,7 @@ public class Subtract
         Assert.AreEqual("222509832503450298345029835740293845720", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubUint()
     {
         string AsString;
@@ -58,7 +58,7 @@ public class Subtract
         Assert.AreEqual("222509832503450298345029835740293845719", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubIntOperator1()
     {
         string AsString;
@@ -74,7 +74,7 @@ public class Subtract
         Assert.AreEqual("-222509832503450298345029835740293845719", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubIntOperator2()
     {
         string AsString;
@@ -90,7 +90,7 @@ public class Subtract
         Assert.AreEqual("222509832503450298345029835740293845718", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubIntOperator3()
     {
         string AsString;
@@ -106,7 +106,7 @@ public class Subtract
         Assert.AreEqual("-222509832503450298345029835740293845721", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubIntOperator4()
     {
         string AsString;
@@ -122,7 +122,7 @@ public class Subtract
         Assert.AreEqual("222509832503450298345029835740293845722", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubUIntOperator1()
     {
         string AsString;
@@ -138,7 +138,7 @@ public class Subtract
         Assert.AreEqual("-222509832503450298345029835740293845719", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubUIntOperator2()
     {
         string AsString;
@@ -154,7 +154,7 @@ public class Subtract
         Assert.AreEqual("222509832503450298345029835740293845718", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void DecrementOperator()
     {
         string AsString;

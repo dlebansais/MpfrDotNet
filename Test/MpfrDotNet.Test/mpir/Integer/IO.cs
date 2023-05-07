@@ -1,14 +1,14 @@
 namespace TestInteger;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
 using System.IO;
 using System.Text;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class IO
 {
-    [TestMethod]
+    [Test]
     public void Out()
     {
         string AsString;
@@ -19,7 +19,7 @@ public class IO
 
         using (MemoryStream Stream = new MemoryStream())
         {
-            using (StreamWriter Writer = new StreamWriter(Stream, default, -1, leaveOpen: true))
+            using (StreamWriter Writer = new StreamWriter(Stream, Encoding.Default, 0x1000, leaveOpen: true))
             {
                 int Length = (int)mpz.out_str(Writer, 10, a);
 
@@ -37,7 +37,7 @@ public class IO
         }
     }
 
-    [TestMethod]
+    [Test]
     public void In()
     {
         string AsString;
@@ -48,7 +48,7 @@ public class IO
 
         using (MemoryStream Stream = new MemoryStream())
         {
-            using (StreamWriter Writer = new StreamWriter(Stream, default, -1, leaveOpen: true))
+            using (StreamWriter Writer = new StreamWriter(Stream, Encoding.Default, 0x1000, leaveOpen: true))
             {
                 Writer.Write(AsString);
             }
@@ -68,7 +68,7 @@ public class IO
         }
     }
 
-    [TestMethod]
+    [Test]
     public void OutRaw()
     {
         string AsString;
@@ -102,7 +102,7 @@ public class IO
         }
     }
 
-    [TestMethod]
+    [Test]
     public void InRaw()
     {
         string AsString;

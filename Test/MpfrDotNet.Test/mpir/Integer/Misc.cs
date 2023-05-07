@@ -1,13 +1,13 @@
 namespace TestInteger;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
 using System.Text;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Misc
 {
-    [TestMethod]
+    [Test]
     public void Init2()
     {
         using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
@@ -18,7 +18,7 @@ public class Misc
         Assert.AreEqual("0", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Realloc2()
     {
         string AsString;
@@ -36,7 +36,7 @@ public class Misc
         Assert.AreEqual("0", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Set()
     {
         string AsString;
@@ -101,7 +101,7 @@ public class Misc
         Assert.AreEqual("222509832503450298345029835740293845720", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void InitSet()
     {
         string AsString;
@@ -147,7 +147,7 @@ public class Misc
         Assert.AreEqual("255", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Get()
     {
         using mpz_t a = new mpz_t();

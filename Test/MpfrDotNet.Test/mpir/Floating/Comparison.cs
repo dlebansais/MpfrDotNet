@@ -1,12 +1,12 @@
 namespace TestFloating;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Comparison
 {
-    [TestMethod]
+    [Test]
     public void GreaterThan()
     {
         string AsString;
@@ -47,7 +47,7 @@ public class Comparison
         Assert.IsTrue(IsGreaterThan);
     }
 
-    [TestMethod]
+    [Test]
     public void LesserThan()
     {
         string AsString;
@@ -88,7 +88,7 @@ public class Comparison
         Assert.IsTrue(IsLesserThan);
     }
 
-    [TestMethod]
+    [Test]
     public void IsEqual()
     {
         string AsString;

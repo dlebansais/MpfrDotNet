@@ -1,13 +1,13 @@
 ﻿namespace Test;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Sub
 {
-    [TestMethod]
+    [Test]
     public void BasicSub()
     {
         string AsString;
@@ -33,7 +33,7 @@ public class Sub
         Assert.AreEqual("-2.2250983248115153986650112E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubULong()
     {
         string AsString;
@@ -72,7 +72,7 @@ public class Sub
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void SubLong()
     {
         string AsString;
@@ -111,7 +111,7 @@ public class Sub
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void SubDouble()
     {
         string AsString;
@@ -135,7 +135,7 @@ public class Sub
         Assert.AreEqual("-2.2250983248115153986650112E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubInteger()
     {
         string AsString;
@@ -161,7 +161,7 @@ public class Sub
         Assert.AreEqual("-2.2250983241624904351612928E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void SubRational()
     {
         string AsString;

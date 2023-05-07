@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic.Divide;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Quotient
 {
-    [TestMethod]
+    [Test]
     public void TowardZero()
     {
         string AsString;
@@ -30,7 +30,7 @@ public class Quotient
         Assert.AreEqual("593169091750307653294", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void TowardPositiveInfinity()
     {
         string AsString;
@@ -49,7 +49,7 @@ public class Quotient
         Assert.AreEqual("593169091750307653295", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void TowardNegativeInfinity()
     {
         string AsString;
@@ -68,7 +68,7 @@ public class Quotient
         Assert.AreEqual("-593169091750307653295", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintTowardZero()
     {
         string AsString;
@@ -90,7 +90,7 @@ public class Quotient
         Assert.AreEqual("13123231540459369447315643565110458612039422397376467955336", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintTowardPositiveInfinity()
     {
         string AsString;
@@ -107,7 +107,7 @@ public class Quotient
         Assert.AreEqual("-13123231540459369447315643565110458612039422397376467955336", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintTowardNegativeInfinity()
     {
         string AsString;

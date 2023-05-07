@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Add
 {
-    [TestMethod]
+    [Test]
     public void GenericAdd()
     {
         string AsString;
@@ -25,7 +25,7 @@ public class Add
         Assert.AreEqual("445497268491433028939318409770173720259", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddOperator()
     {
         string AsString;
@@ -43,7 +43,7 @@ public class Add
         Assert.AreEqual("445497268491433028939318409770173720259", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddUint()
     {
         string AsString;
@@ -58,7 +58,7 @@ public class Add
         Assert.AreEqual("222509832503450298345029835740293845721", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddIntOperator1()
     {
         string AsString;
@@ -74,7 +74,7 @@ public class Add
         Assert.AreEqual("222509832503450298345029835740293845721", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddIntOperator2()
     {
         string AsString;
@@ -90,7 +90,7 @@ public class Add
         Assert.AreEqual("222509832503450298345029835740293845722", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddIntOperator3()
     {
         string AsString;
@@ -106,7 +106,7 @@ public class Add
         Assert.AreEqual("222509832503450298345029835740293845719", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddIntOperator4()
     {
         string AsString;
@@ -122,7 +122,7 @@ public class Add
         Assert.AreEqual("222509832503450298345029835740293845718", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddUIntOperator1()
     {
         string AsString;
@@ -138,7 +138,7 @@ public class Add
         Assert.AreEqual("222509832503450298345029835740293845721", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddUIntOperator2()
     {
         string AsString;
@@ -154,7 +154,7 @@ public class Add
         Assert.AreEqual("222509832503450298345029835740293845722", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void IncrementOperator()
     {
         string AsString;

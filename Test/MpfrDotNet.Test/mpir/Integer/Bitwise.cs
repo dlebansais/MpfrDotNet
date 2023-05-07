@@ -1,13 +1,13 @@
 namespace TestInteger;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
 using System.Text;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Bitwise
 {
-    [TestMethod]
+    [Test]
     public void And()
     {
         string AsString;
@@ -25,7 +25,7 @@ public class Bitwise
         Assert.AreEqual("100000000000000000123456789ABCDEF0123456789ABCDEF", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Or()
     {
         string AsString;
@@ -43,7 +43,7 @@ public class Bitwise
         Assert.AreEqual("10123456789ABCDEF0123456789ABCDEFFFFFFFFFFFFFFFFF", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Xor()
     {
         string AsString;
@@ -61,7 +61,7 @@ public class Bitwise
         Assert.AreEqual("123456789ABCDEF0000000000000000FEDCBA9876543210", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Not()
     {
         string AsString;
@@ -79,7 +79,7 @@ public class Bitwise
         Assert.AreEqual("-10123456789ABCDEF0123456789ABCDEF0123456789ABCDF0", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void PopCount()
     {
         string AsString;
@@ -93,7 +93,7 @@ public class Bitwise
         Assert.AreEqual(Count, 97UL);
     }
 
-    [TestMethod]
+    [Test]
     public void HammingDistance()
     {
         string AsString;
@@ -111,7 +111,7 @@ public class Bitwise
         Assert.AreEqual(Count, 8UL);
     }
 
-    [TestMethod]
+    [Test]
     public void Scan0()
     {
         string AsString;
@@ -146,7 +146,7 @@ public class Bitwise
         Assert.AreEqual(Scan, 125UL);
     }
 
-    [TestMethod]
+    [Test]
     public void SetBit()
     {
         string AsString;
@@ -180,7 +180,7 @@ public class Bitwise
         Assert.AreEqual("8A0000000000000000000800000000001", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void GetBit()
     {
         string AsString;

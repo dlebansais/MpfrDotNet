@@ -1,14 +1,14 @@
 ﻿namespace Test;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
 using MpirDotNet;
+using NUnit.Framework;
 using System.Numerics;
 
-[TestClass]
+[TestFixture]
 public class Conversion
 {
-    [TestMethod]
+    [Test]
     public void BasicConversion()
     {
         string AsString;

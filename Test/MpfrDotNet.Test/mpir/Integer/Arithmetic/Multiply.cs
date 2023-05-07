@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Multiply
 {
-    [TestMethod]
+    [Test]
     public void GenericMul()
     {
         string AsString;
@@ -25,7 +25,7 @@ public class Multiply
         Assert.AreEqual("709193758343766370701419953880162061353595657143399816050772069730465", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulOperator()
     {
         string AsString;
@@ -43,7 +43,7 @@ public class Multiply
         Assert.AreEqual("709193758343766370701419953880162061353595657143399816050772069730465", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulIntOperator1()
     {
         string AsString;
@@ -59,7 +59,7 @@ public class Multiply
         Assert.AreEqual("667529497510350895035089507220881537160", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulIntOperator2()
     {
         string AsString;
@@ -75,7 +75,7 @@ public class Multiply
         Assert.AreEqual("445019665006900596690059671480587691440", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulIntOperator3()
     {
         string AsString;
@@ -91,7 +91,7 @@ public class Multiply
         Assert.AreEqual("-222509832503450298345029835740293845720", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulIntOperator4()
     {
         string AsString;
@@ -107,7 +107,7 @@ public class Multiply
         Assert.AreEqual("-445019665006900596690059671480587691440", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulUIntOperator1()
     {
         string AsString;
@@ -123,7 +123,7 @@ public class Multiply
         Assert.AreEqual("667529497510350895035089507220881537160", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MulUIntOperator2()
     {
         string AsString;

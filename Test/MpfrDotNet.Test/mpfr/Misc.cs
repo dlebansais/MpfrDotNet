@@ -1,12 +1,12 @@
 ﻿namespace Test;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Misc
 {
-    [TestMethod]
+    [Test]
     public void MiscNext()
     {
         string AsString;
@@ -34,7 +34,7 @@ public class Misc
         Assert.AreEqual("@NaN@", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void MinMax()
     {
         string AsString;
@@ -58,7 +58,7 @@ public class Misc
         Assert.AreEqual("2.225098325034502799228928E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Version()
     {
         string AsString;

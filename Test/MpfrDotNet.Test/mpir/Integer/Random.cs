@@ -1,14 +1,14 @@
 namespace TestInteger;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
 using System.IO;
 using System.Text;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Random
 {
-    [TestMethod]
+    [Test]
     public void UniformExp()
     {
         using randstate_t state = new();
@@ -26,7 +26,7 @@ public class Random
         Assert.AreNotEqual(AsString0, AsString1);
     }
 
-    [TestMethod]
+    [Test]
     public void UniformMax()
     {
         bool IsPositive;
@@ -64,7 +64,7 @@ public class Random
         Assert.AreNotEqual(AsString0, AsString1);
     }
 
-    [TestMethod]
+    [Test]
     public void NonUniformExp()
     {
         using randstate_t state = new();
@@ -82,7 +82,7 @@ public class Random
         Assert.AreNotEqual(AsString0, AsString1);
     }
 
-    [TestMethod]
+    [Test]
     public void Create()
     {
         using randstate_t state0 = randstate_t.Create(RngAlgorithm.MersenneTwister);
@@ -93,7 +93,7 @@ public class Random
         using randstate_t state3 = new randstate_t(state2);
     }
 
-    [TestMethod]
+    [Test]
     public void Seed()
     {
         using randstate_t state = new();
@@ -103,7 +103,7 @@ public class Random
         gmp.randseed_ui(state, 10);
     }
 
-    [TestMethod]
+    [Test]
     public void Misc()
     {
         ulong Result;

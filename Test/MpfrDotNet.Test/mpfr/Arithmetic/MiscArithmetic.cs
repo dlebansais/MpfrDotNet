@@ -1,14 +1,14 @@
 ﻿namespace Test;
 
 using Interop.Mpfr;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class MiscArithmetic
 {
-    [TestMethod]
+    [Test]
     public void Abs()
     {
         string AsString;
@@ -29,7 +29,7 @@ public class MiscArithmetic
         Assert.AreEqual("-2.225098325034502799228928E+25", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void EuclieanNorm()
     {
         string AsString;
@@ -50,7 +50,7 @@ public class MiscArithmetic
         Assert.AreEqual("8.933066242693924E+15", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void Factorial()
     {
         string AsString;

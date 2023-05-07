@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Abs
 {
-    [TestMethod]
+    [Test]
     public void BasicAbs()
     {
         string AsString;
@@ -32,7 +32,7 @@ public class Abs
         Assert.AreEqual("445497268491433028939318409770173720259", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AbsOperator()
     {
         string AsString;

@@ -1,13 +1,13 @@
 ﻿namespace Test;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Create
 {
-    [TestMethod]
+    [Test]
     public void CreateDefaultPrecision()
     {
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
@@ -21,7 +21,7 @@ public class Create
         Assert.AreEqual(a.Precision, DefaultPrecision);
     }
 
-    [TestMethod]
+    [Test]
     public void CreateCustomPrecision()
     {
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
@@ -82,7 +82,7 @@ public class Create
         Assert.AreEqual(f.Precision, CustomPrecision);
     }
 
-    [TestMethod]
+    [Test]
     public void CreateFrom()
     {
         string AsString;

@@ -1,14 +1,14 @@
 namespace TestInteger;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
 using System.IO;
 using System.Text;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Fit
 {
-    [TestMethod]
+    [Test]
     public void FitULong()
     {
         string AsString;
@@ -27,7 +27,7 @@ public class Fit
         Assert.IsFalse(IsFitting);
     }
 
-    [TestMethod]
+    [Test]
     public void FitLong()
     {
         string AsString;
@@ -56,7 +56,7 @@ public class Fit
         Assert.IsFalse(IsFitting);
     }
 
-    [TestMethod]
+    [Test]
     public void FitUInt()
     {
         string AsString;
@@ -75,7 +75,7 @@ public class Fit
         Assert.IsFalse(IsFitting);
     }
 
-    [TestMethod]
+    [Test]
     public void FitInt()
     {
         string AsString;
@@ -104,7 +104,7 @@ public class Fit
         Assert.IsFalse(IsFitting);
     }
 
-    [TestMethod]
+    [Test]
     public void FitUShort()
     {
         string AsString;
@@ -123,7 +123,7 @@ public class Fit
         Assert.IsFalse(IsFitting);
     }
 
-    [TestMethod]
+    [Test]
     public void FitShort()
     {
         string AsString;
@@ -152,7 +152,7 @@ public class Fit
         Assert.IsFalse(IsFitting);
     }
 
-    [TestMethod]
+    [Test]
     public void OddEvent()
     {
         string AsString;

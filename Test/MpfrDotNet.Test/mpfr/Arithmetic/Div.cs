@@ -1,13 +1,13 @@
 ﻿namespace Test;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpfrDotNet;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Div
 {
-    [TestMethod]
+    [Test]
     public void BasicDiv()
     {
         string AsString;
@@ -33,7 +33,7 @@ public class Div
         Assert.AreEqual("1.0021464376614685245922416240006258374151126844253668E-10", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void DivULong()
     {
         string AsString;
@@ -72,7 +72,7 @@ public class Div
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void DivLong()
     {
         string AsString;
@@ -111,7 +111,7 @@ public class Div
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void DivDouble()
     {
         string AsString;
@@ -135,7 +135,7 @@ public class Div
         Assert.AreEqual("1.0021464376614685245922416240006258374151126844253668E-10", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void DivInteger()
     {
         string AsString;
@@ -176,7 +176,7 @@ public class Div
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
-    [TestMethod]
+    [Test]
     public void DivRational()
     {
         string AsString;

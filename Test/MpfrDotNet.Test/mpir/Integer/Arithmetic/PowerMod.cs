@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class PowerMod
 {
-    [TestMethod]
+    [Test]
     public void BasicPowerMod()
     {
         string AsString;
@@ -30,7 +30,7 @@ public class PowerMod
         Assert.AreEqual("5346078446724436806099093819990997994355321605000165187447171753448", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void PowerModUint()
     {
         string AsString;

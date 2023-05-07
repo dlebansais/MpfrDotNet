@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic.Divide;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Congruent
 {
-    [TestMethod]
+    [Test]
     public void BasicCongruent()
     {
         string AsString;
@@ -37,7 +37,7 @@ public class Congruent
         Assert.IsFalse(IsCongruent);
     }
 
-    [TestMethod]
+    [Test]
     public void UIntCongruent()
     {
         string AsString;
@@ -63,7 +63,7 @@ public class Congruent
         Assert.IsFalse(IsCongruent);
     }
 
-    [TestMethod]
+    [Test]
     public void PowerOfTwo()
     {
         string AsString;

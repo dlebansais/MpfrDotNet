@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic.Divide;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class DivExact
 {
-    [TestMethod]
+    [Test]
     public void BasicDivExact()
     {
         string AsString;
@@ -29,7 +29,7 @@ public class DivExact
         Assert.AreEqual("234052834524092854092874502983745029345723098457209305981001312", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UIntDivExact()
     {
         string AsString;

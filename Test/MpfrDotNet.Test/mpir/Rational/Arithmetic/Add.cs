@@ -1,12 +1,12 @@
 namespace TestRational;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Add
 {
-    [TestMethod]
+    [Test]
     public void AddCanonic()
     {
         string AsString;
@@ -42,7 +42,7 @@ public class Add
         Assert.AreEqual("68397633165470058274884361378645822467587248043012077070501", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddCanonicOperator()
     {
         string AsString;
@@ -77,7 +77,7 @@ public class Add
         Assert.AreEqual("68397633165470058274884361378645822467587248043012077070501", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void AddNonCanonicOperator()
     {
         string AsString;

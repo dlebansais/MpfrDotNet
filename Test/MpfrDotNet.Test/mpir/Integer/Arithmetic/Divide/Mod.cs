@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic.Divide;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Mod
 {
-    [TestMethod]
+    [Test]
     public void BasicMod()
     {
         string AsString;
@@ -25,7 +25,7 @@ public class Mod
         Assert.AreEqual("114368714235760586972822754176083531704767", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void IntMod()
     {
         string AsString;
@@ -42,7 +42,7 @@ public class Mod
         Assert.AreEqual("1573091", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UIntMod()
     {
         string AsString;

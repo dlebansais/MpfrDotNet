@@ -1,12 +1,12 @@
 namespace TestInteger.Arithmetic.Divide;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MpirDotNet;
+using NUnit.Framework;
 
-[TestClass]
+[TestFixture]
 public class Remainder
 {
-    [TestMethod]
+    [Test]
     public void TowardZero()
     {
         string AsString;
@@ -30,7 +30,7 @@ public class Remainder
         Assert.AreEqual("114368714235760586972822754176083531704767", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void TowardPositiveInfinity()
     {
         string AsString;
@@ -49,7 +49,7 @@ public class Remainder
         Assert.AreEqual("-280211579611742400636461191697511341704820", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void TowardNegativeInfinity()
     {
         string AsString;
@@ -68,7 +68,7 @@ public class Remainder
         Assert.AreEqual("-280211579611742400636461191697511341704820", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintTowardZero()
     {
         string AsString;
@@ -90,7 +90,7 @@ public class Remainder
         Assert.AreEqual("16785", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintTowardPositiveInfinity()
     {
         string AsString;
@@ -107,7 +107,7 @@ public class Remainder
         Assert.AreEqual("-16785", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void UintTowardNegativeInfinity()
     {
         string AsString;
@@ -124,7 +124,7 @@ public class Remainder
         Assert.AreEqual("1050", AsString);
     }
 
-    [TestMethod]
+    [Test]
     public void FastUintTowardZero()
     {
         string AsString;
@@ -144,7 +144,7 @@ public class Remainder
         Assert.AreEqual(16785U, d);
     }
 
-    [TestMethod]
+    [Test]
     public void FastUintTowardPositiveInfinity()
     {
         string AsString;
@@ -160,7 +160,7 @@ public class Remainder
         Assert.AreEqual(16785U, c);
     }
 
-    [TestMethod]
+    [Test]
     public void FastUintTowardNegativeInfinity()
     {
         string AsString;
