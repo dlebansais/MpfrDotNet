@@ -655,7 +655,7 @@ __MPFR_DECLSPEC int mpfr_cmpabs (mpfr_srcptr, mpfr_srcptr);
 __MPFR_DECLSPEC int mpfr_cmpabs_ui (mpfr_srcptr, mpfr_ui);
 __MPFR_DECLSPEC void mpfr_reldiff (mpfr_ptr, mpfr_srcptr, mpfr_srcptr,
                                    mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_eq (mpfr_srcptr, mpfr_srcptr, mpfr_ui);
+__MPFR_DECLSPEC int mpfr_eq (mpfr_srcptr, mpfr_srcptr, unsigned long);
 __MPFR_DECLSPEC int mpfr_sgn (mpfr_srcptr);
 
 __MPFR_DECLSPEC int mpfr_mul_2exp (mpfr_ptr, mpfr_srcptr, mpfr_ui,
@@ -785,10 +785,10 @@ __MPFR_DECLSPEC int mpfr_zeta_ui (mpfr_ptr, mpfr_ui, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_fac_ui (mpfr_ptr, mpfr_ui, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_j0 (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_j1 (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_jn (mpfr_ptr, mpfr_si, mpfr_srcptr, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_jn (mpfr_ptr, long, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_y0 (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 __MPFR_DECLSPEC int mpfr_y1 (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
-__MPFR_DECLSPEC int mpfr_yn (mpfr_ptr, mpfr_si, mpfr_srcptr, mpfr_rnd_t);
+__MPFR_DECLSPEC int mpfr_yn (mpfr_ptr, long, mpfr_srcptr, mpfr_rnd_t);
 
 __MPFR_DECLSPEC int mpfr_ai (mpfr_ptr, mpfr_srcptr, mpfr_rnd_t);
 
