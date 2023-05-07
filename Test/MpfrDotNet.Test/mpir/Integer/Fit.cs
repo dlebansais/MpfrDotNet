@@ -16,7 +16,7 @@ public class Fit
 
         using mpz_t a = new mpz_t("FFFFFFFF", 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.AreEqual("FFFFFFFF", AsString);
+        Assert.That(AsString, Is.EqualTo("FFFFFFFF"));
 
         IsFitting = mpz.fits_ulong_p(a);
         Assert.IsTrue(IsFitting);
@@ -35,7 +35,7 @@ public class Fit
 
         using mpz_t a = new mpz_t("7FFFFFFF", 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.AreEqual("7FFFFFFF", AsString);
+        Assert.That(AsString, Is.EqualTo("7FFFFFFF"));
 
         IsFitting = mpz.fits_slong_p(a);
         Assert.IsTrue(IsFitting);
@@ -64,7 +64,7 @@ public class Fit
 
         using mpz_t a = new mpz_t("FFFFFFFF", 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.AreEqual("FFFFFFFF", AsString);
+        Assert.That(AsString, Is.EqualTo("FFFFFFFF"));
 
         IsFitting = mpz.fits_uint_p(a);
         Assert.IsTrue(IsFitting);
@@ -83,7 +83,7 @@ public class Fit
 
         using mpz_t a = new mpz_t("7FFFFFFF", 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.AreEqual("7FFFFFFF", AsString);
+        Assert.That(AsString, Is.EqualTo("7FFFFFFF"));
 
         IsFitting = mpz.fits_sint_p(a);
         Assert.IsTrue(IsFitting);
@@ -112,7 +112,7 @@ public class Fit
 
         using mpz_t a = new mpz_t("FFFF", 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.AreEqual("FFFF", AsString);
+        Assert.That(AsString, Is.EqualTo("FFFF"));
 
         IsFitting = mpz.fits_ushort_p(a);
         Assert.IsTrue(IsFitting);
@@ -131,7 +131,7 @@ public class Fit
 
         using mpz_t a = new mpz_t("7FFF", 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.AreEqual("7FFF", AsString);
+        Assert.That(AsString, Is.EqualTo("7FFF"));
 
         IsFitting = mpz.fits_sshort_p(a);
         Assert.IsTrue(IsFitting);
@@ -161,7 +161,7 @@ public class Fit
 
         using mpz_t a = new mpz_t("222509832503450298345029835740293845720", 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.AreEqual("222509832503450298345029835740293845720", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
         IsEven = mpz.even_p(a);
         IsOdd = mpz.odd_p(a);

@@ -14,7 +14,7 @@ public class Root
 
         using mpz_t a = new mpz_t("9785412309485720938412983404349");
         AsString = a.ToString();
-        Assert.AreEqual("9785412309485720938412983404349", AsString);
+        Assert.That(AsString, Is.EqualTo("9785412309485720938412983404349"));
 
         IsRootExact = a.IsRootExact(3);
 
@@ -23,7 +23,7 @@ public class Root
         mpz_t b = a * a * a;
 
         AsString = b.ToString();
-        Assert.AreEqual("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549", AsString);
+        Assert.That(AsString, Is.EqualTo("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549"));
 
         IsRootExact = b.IsRootExact(3);
 
@@ -37,12 +37,12 @@ public class Root
 
         using mpz_t a = new mpz_t("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549");
         AsString = a.ToString();
-        Assert.AreEqual("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549", AsString);
+        Assert.That(AsString, Is.EqualTo("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549"));
 
         mpz_t b = a.NthRoot(3);
 
         AsString = b.ToString();
-        Assert.AreEqual("9785412309485720938412983404349", AsString);
+        Assert.That(AsString, Is.EqualTo("9785412309485720938412983404349"));
     }
 
     [Test]
@@ -52,15 +52,15 @@ public class Root
 
         using mpz_t a = new mpz_t("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320559");
         AsString = a.ToString();
-        Assert.AreEqual("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320559", AsString);
+        Assert.That(AsString, Is.EqualTo("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320559"));
 
         mpz_t.NthRoot(a, 3, out mpz_t root, out mpz_t remainder);
 
         AsString = root.ToString();
-        Assert.AreEqual("9785412309485720938412983404349", AsString);
+        Assert.That(AsString, Is.EqualTo("9785412309485720938412983404349"));
 
         AsString = remainder.ToString();
-        Assert.AreEqual("10", AsString);
+        Assert.That(AsString, Is.EqualTo("10"));
     }
 
     [Test]
@@ -70,12 +70,12 @@ public class Root
 
         using mpz_t a = new mpz_t("95754294066634670780206802290671646680930214410991689632113801");
         AsString = a.ToString();
-        Assert.AreEqual("95754294066634670780206802290671646680930214410991689632113801", AsString);
+        Assert.That(AsString, Is.EqualTo("95754294066634670780206802290671646680930214410991689632113801"));
 
         mpz_t b = a.Sqrt();
 
         AsString = b.ToString();
-        Assert.AreEqual("9785412309485720938412983404349", AsString);
+        Assert.That(AsString, Is.EqualTo("9785412309485720938412983404349"));
     }
 
     [Test]
@@ -85,15 +85,15 @@ public class Root
 
         using mpz_t a = new mpz_t("95754294066634670780206802290671646681077131756368025120369720");
         AsString = a.ToString();
-        Assert.AreEqual("95754294066634670780206802290671646681077131756368025120369720", AsString);
+        Assert.That(AsString, Is.EqualTo("95754294066634670780206802290671646681077131756368025120369720"));
 
         mpz_t.SqrtRemainder(a, out mpz_t root, out mpz_t remainder);
 
         AsString = root.ToString();
-        Assert.AreEqual("9785412309485720938412983404349", AsString);
+        Assert.That(AsString, Is.EqualTo("9785412309485720938412983404349"));
 
         AsString = remainder.ToString();
-        Assert.AreEqual("146917345376335488255919", AsString);
+        Assert.That(AsString, Is.EqualTo("146917345376335488255919"));
     }
 
     [Test]
@@ -103,7 +103,7 @@ public class Root
 
         using mpz_t a = new mpz_t("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549");
         AsString = a.ToString();
-        Assert.AreEqual("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549", AsString);
+        Assert.That(AsString, Is.EqualTo("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549"));
 
         bool IsPerfectPower = a.IsPerfectPower();
 
@@ -117,7 +117,7 @@ public class Root
 
         using mpz_t a = new mpz_t("95754294066634670780206802290671646680930214410991689632113801");
         AsString = a.ToString();
-        Assert.AreEqual("95754294066634670780206802290671646680930214410991689632113801", AsString);
+        Assert.That(AsString, Is.EqualTo("95754294066634670780206802290671646680930214410991689632113801"));
 
         bool IsPerfectSquare = a.IsPerfectSquare();
 

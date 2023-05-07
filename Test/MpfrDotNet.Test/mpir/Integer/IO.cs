@@ -15,7 +15,7 @@ public class IO
 
         using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
-        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+        Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
 
         using (MemoryStream Stream = new MemoryStream())
         {
@@ -23,7 +23,7 @@ public class IO
             {
                 int Length = (int)mpz.out_str(Writer, 10, a);
 
-                Assert.AreEqual(Length, AsString.Length);
+                Assert.That(AsString.Length, Is.EqualTo(Length));
             }
 
             Stream.Seek(0, SeekOrigin.Begin);
@@ -32,7 +32,7 @@ public class IO
             {
                 string Content = Reader.ReadToEnd();
 
-                Assert.AreEqual(Content, AsString);
+                Assert.That(AsString, Is.EqualTo(Content));
             }
         }
     }
@@ -44,7 +44,7 @@ public class IO
 
         using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
-        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+        Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
 
         using (MemoryStream Stream = new MemoryStream())
         {
@@ -60,10 +60,10 @@ public class IO
                 using mpz_t b = new mpz_t();
                 int Length = (int)mpz.inp_str(b, Reader, 10);
 
-                Assert.AreEqual(Length, AsString.Length);
+                Assert.That(AsString.Length, Is.EqualTo(Length));
 
                 AsString = b.ToString();
-                Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+                Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
             }
         }
     }
@@ -75,7 +75,7 @@ public class IO
 
         using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
-        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+        Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
 
         using (MemoryStream Stream = new MemoryStream())
         {
@@ -92,12 +92,12 @@ public class IO
             {
                 byte[] Content = Reader.ReadBytes((int)Stream.Length);
 
-                Assert.AreEqual(Content.Length, Length);
+                Assert.That(Content.Length, Is.EqualTo(Length));
 
                 using mpz_t b = new mpz_t(Content);
 
                 AsString = b.ToString();
-                Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+                Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
             }
         }
     }
@@ -109,7 +109,7 @@ public class IO
 
         using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
-        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+        Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
 
         using (MemoryStream Stream = new MemoryStream())
         {
@@ -128,10 +128,10 @@ public class IO
                 using mpz_t b = new mpz_t();
                 int Length = (int)mpz.inp_raw(b, Reader);
 
-                Assert.AreEqual(Length, Content.Length);
+                Assert.That(Content.Length, Is.EqualTo(Length));
 
                 AsString = b.ToString();
-                Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+                Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
             }
         }
     }

@@ -23,7 +23,7 @@ public class Random
         mpz.urandomb(a, state, n);
 
         string AsString1 = a.ToString();
-        Assert.AreNotEqual(AsString0, AsString1);
+        Assert.That(AsString0, Is.Not.EqualTo(AsString1));
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class Random
         Assert.IsTrue(IsLesserThan);
 
         string AsString1 = a.ToString();
-        Assert.AreNotEqual(AsString0, AsString1);
+        Assert.That(AsString0, Is.Not.EqualTo(AsString1));
 
         ulong c = 100;
         ulong RandomNumber = gmp.urandomm_ui(state, c);
@@ -61,7 +61,7 @@ public class Random
 
         Assert.IsTrue(IsLesserThan);
 
-        Assert.AreNotEqual(AsString0, AsString1);
+        Assert.That(AsString0, Is.Not.EqualTo(AsString1));
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class Random
         mpz.rrandomb(a, state, n);
 
         string AsString1 = a.ToString();
-        Assert.AreNotEqual(AsString0, AsString1);
+        Assert.That(AsString0, Is.Not.EqualTo(AsString1));
     }
 
     [Test]

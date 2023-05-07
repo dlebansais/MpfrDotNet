@@ -13,17 +13,17 @@ public class Add
 
         using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.22509832503450298345E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
         using mpf_t b = new mpf_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.AreEqual("2.22987435987982730594E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22987435987982730594E+15"));
 
         using mpf_t c = new();
         mpf.add(c, a, b);
 
         AsString = c.ToString();
-        Assert.AreEqual("2.22509832525749041944E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832525749041944E+25"));
     }
 
     [Test]
@@ -33,16 +33,16 @@ public class Add
 
         using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.22509832503450298345E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
         using mpf_t b = new mpf_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.AreEqual("2.22987435987982730594E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22987435987982730594E+15"));
 
         using mpf_t c = a + b;
 
         AsString = c.ToString();
-        Assert.AreEqual("2.22509832525749041944E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832525749041944E+25"));
     }
 
     [Test]
@@ -52,14 +52,14 @@ public class Add
 
         using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.22509832503450298345E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
         uint b = 98873014;
 
         using mpf_t c = a + b;
 
         AsString = c.ToString();
-        Assert.AreEqual("2.22509832503450299334E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450299334E+25"));
     }
 
     [Test]
@@ -69,14 +69,14 @@ public class Add
 
         using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.22509832503450298345E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
         int b = 98873014;
 
         using mpf_t c = a + b;
 
         AsString = c.ToString();
-        Assert.AreEqual("2.22509832503450299334E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450299334E+25"));
     }
 
     [Test]
@@ -86,13 +86,13 @@ public class Add
 
         using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.22509832503450298345E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
         int b = -98873014;
 
         using mpf_t c = a + b;
 
         AsString = c.ToString();
-        Assert.AreEqual("2.22509832503450297356E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450297356E+25"));
     }
 }

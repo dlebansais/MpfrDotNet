@@ -13,14 +13,14 @@ public class Shift
 
         using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.22509832503450298345E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
         int b = 50;
 
         using mpf_t c = a << b;
 
         AsString = c.ToString();
-        Assert.AreEqual("2.50523799687202560686E+40", AsString);
+        Assert.That(AsString, Is.EqualTo("2.50523799687202560686E+40"));
     }
 
     [Test]
@@ -30,13 +30,13 @@ public class Shift
 
         using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.22509832503450298345E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
         int b = 50;
 
         using mpf_t c = a >> b;
 
         AsString = c.ToString();
-        Assert.AreEqual("1.97628431400654046208E+10", AsString);
+        Assert.That(AsString, Is.EqualTo("1.97628431400654046208E+10"));
     }
 }

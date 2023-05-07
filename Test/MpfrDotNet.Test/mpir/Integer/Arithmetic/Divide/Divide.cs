@@ -13,16 +13,16 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         using mpz_t b = new mpz_t("394580293847502987609283945873594873409587");
         AsString = b.ToString();
-        Assert.AreEqual("394580293847502987609283945873594873409587", AsString);
+        Assert.That(AsString, Is.EqualTo("394580293847502987609283945873594873409587"));
 
         using mpz_t c = new();
         mpz.tdiv_q(c, a, b);
         AsString = c.ToString();
-        Assert.AreEqual("593169091750307653294", AsString);
+        Assert.That(AsString, Is.EqualTo("593169091750307653294"));
     }
 
     [Test]
@@ -32,16 +32,16 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         using mpz_t b = new mpz_t("394580293847502987609283945873594873409587");
         AsString = b.ToString();
-        Assert.AreEqual("394580293847502987609283945873594873409587", AsString);
+        Assert.That(AsString, Is.EqualTo("394580293847502987609283945873594873409587"));
 
         using mpz_t c = a / b;
 
         AsString = c.ToString();
-        Assert.AreEqual("593169091750307653294", AsString);
+        Assert.That(AsString, Is.EqualTo("593169091750307653294"));
     }
 
     [Test]
@@ -51,14 +51,14 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         int Three = 3;
 
         using mpz_t c = a / Three;
 
         AsString = c.ToString();
-        Assert.AreEqual("78017611508030951364291500994581676448574366152403101994478115", AsString);
+        Assert.That(AsString, Is.EqualTo("78017611508030951364291500994581676448574366152403101994478115"));
     }
 
     [Test]
@@ -68,14 +68,14 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         int MinusThree = -3;
 
         using mpz_t c = a / MinusThree;
 
         AsString = c.ToString();
-        Assert.AreEqual("-78017611508030951364291500994581676448574366152403101994478115", AsString);
+        Assert.That(AsString, Is.EqualTo("-78017611508030951364291500994581676448574366152403101994478115"));
     }
 
     [Test]
@@ -85,14 +85,14 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         uint Three = 3;
 
         using mpz_t c = a / Three;
 
         AsString = c.ToString();
-        Assert.AreEqual("78017611508030951364291500994581676448574366152403101994478115", AsString);
+        Assert.That(AsString, Is.EqualTo("78017611508030951364291500994581676448574366152403101994478115"));
     }
 
     [Test]
@@ -102,30 +102,30 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         using mpz_t b = new mpz_t("394580293847502987609283945873594873409587");
         AsString = b.ToString();
-        Assert.AreEqual("394580293847502987609283945873594873409587", AsString);
+        Assert.That(AsString, Is.EqualTo("394580293847502987609283945873594873409587"));
 
         mpz_t.Divide(a, b, out mpz_t q, out mpz_t r);
 
         AsString = q.ToString();
-        Assert.AreEqual("593169091750307653294", AsString);
+        Assert.That(AsString, Is.EqualTo("593169091750307653294"));
         AsString = r.ToString();
-        Assert.AreEqual("114368714235760586972822754176083531704767", AsString);
+        Assert.That(AsString, Is.EqualTo("114368714235760586972822754176083531704767"));
 
         mpz_t.Divide(a, b, out q, out r, Rounding.TowardZero);
 
         AsString = q.ToString();
-        Assert.AreEqual("593169091750307653294", AsString);
+        Assert.That(AsString, Is.EqualTo("593169091750307653294"));
         AsString = r.ToString();
-        Assert.AreEqual("114368714235760586972822754176083531704767", AsString);
+        Assert.That(AsString, Is.EqualTo("114368714235760586972822754176083531704767"));
 
         using mpz_t n = r + (q * b);
 
         AsString = n.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
     }
 
     [Test]
@@ -135,23 +135,23 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         using mpz_t b = new mpz_t("394580293847502987609283945873594873409587");
         AsString = b.ToString();
-        Assert.AreEqual("394580293847502987609283945873594873409587", AsString);
+        Assert.That(AsString, Is.EqualTo("394580293847502987609283945873594873409587"));
 
         mpz_t.Divide(a, b, out mpz_t q, out mpz_t r, Rounding.TowardPositiveInfinity);
 
         AsString = q.ToString();
-        Assert.AreEqual("593169091750307653295", AsString);
+        Assert.That(AsString, Is.EqualTo("593169091750307653295"));
         AsString = r.ToString();
-        Assert.AreEqual("-280211579611742400636461191697511341704820", AsString);
+        Assert.That(AsString, Is.EqualTo("-280211579611742400636461191697511341704820"));
 
         using mpz_t n = r + (q * b);
 
         AsString = n.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
     }
 
     [Test]
@@ -161,23 +161,23 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         using mpz_t b = new mpz_t("-394580293847502987609283945873594873409587");
         AsString = b.ToString();
-        Assert.AreEqual("-394580293847502987609283945873594873409587", AsString);
+        Assert.That(AsString, Is.EqualTo("-394580293847502987609283945873594873409587"));
 
         mpz_t.Divide(a, b, out mpz_t q, out mpz_t r, Rounding.TowardNegativeInfinity);
 
         AsString = q.ToString();
-        Assert.AreEqual("-593169091750307653295", AsString);
+        Assert.That(AsString, Is.EqualTo("-593169091750307653295"));
         AsString = r.ToString();
-        Assert.AreEqual("-280211579611742400636461191697511341704820", AsString);
+        Assert.That(AsString, Is.EqualTo("-280211579611742400636461191697511341704820"));
 
         using mpz_t n = r + (q * b);
 
         AsString = n.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
     }
 
 
@@ -188,28 +188,28 @@ public class Divide
 
         using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
 
         uint b = 17835;
 
         mpz_t.Divide(a, b, out mpz_t q, out mpz_t r);
 
         AsString = q.ToString();
-        Assert.AreEqual("13123231540459369447315643565110458612039422397376467955336", AsString);
+        Assert.That(AsString, Is.EqualTo("13123231540459369447315643565110458612039422397376467955336"));
         AsString = r.ToString();
-        Assert.AreEqual("16785", AsString);
+        Assert.That(AsString, Is.EqualTo("16785"));
 
         mpz_t.Divide(a, b, out q, out r, Rounding.TowardZero);
 
         AsString = q.ToString();
-        Assert.AreEqual("13123231540459369447315643565110458612039422397376467955336", AsString);
+        Assert.That(AsString, Is.EqualTo("13123231540459369447315643565110458612039422397376467955336"));
         AsString = r.ToString();
-        Assert.AreEqual("16785", AsString);
+        Assert.That(AsString, Is.EqualTo("16785"));
 
         using mpz_t n = r + (q * b);
 
         AsString = n.ToString();
-        Assert.AreEqual("234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305983434345"));
     }
 
     [Test]
@@ -219,21 +219,21 @@ public class Divide
 
         using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("-234052834524092854092874502983745029345723098457209305983434345"));
 
         uint b = 17835;
 
         mpz_t.Divide(a, b, out mpz_t q, out mpz_t r, Rounding.TowardPositiveInfinity);
 
         AsString = q.ToString();
-        Assert.AreEqual("-13123231540459369447315643565110458612039422397376467955336", AsString);
+        Assert.That(AsString, Is.EqualTo("-13123231540459369447315643565110458612039422397376467955336"));
         AsString = r.ToString();
-        Assert.AreEqual("-16785", AsString);
+        Assert.That(AsString, Is.EqualTo("-16785"));
 
         using mpz_t n = r + (q * b);
 
         AsString = n.ToString();
-        Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("-234052834524092854092874502983745029345723098457209305983434345"));
     }
 
     [Test]
@@ -243,20 +243,20 @@ public class Divide
 
         using mpz_t a = new mpz_t("-234052834524092854092874502983745029345723098457209305983434345");
         AsString = a.ToString();
-        Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("-234052834524092854092874502983745029345723098457209305983434345"));
 
         uint b = 17835;
 
         mpz_t.Divide(a, b, out mpz_t q, out mpz_t r, Rounding.TowardNegativeInfinity);
 
         AsString = q.ToString();
-        Assert.AreEqual("-13123231540459369447315643565110458612039422397376467955337", AsString);
+        Assert.That(AsString, Is.EqualTo("-13123231540459369447315643565110458612039422397376467955337"));
         AsString = r.ToString();
-        Assert.AreEqual("1050", AsString);
+        Assert.That(AsString, Is.EqualTo("1050"));
 
         using mpz_t n = r + (q * b);
 
         AsString = n.ToString();
-        Assert.AreEqual("-234052834524092854092874502983745029345723098457209305983434345", AsString);
+        Assert.That(AsString, Is.EqualTo("-234052834524092854092874502983745029345723098457209305983434345"));
     }
 }

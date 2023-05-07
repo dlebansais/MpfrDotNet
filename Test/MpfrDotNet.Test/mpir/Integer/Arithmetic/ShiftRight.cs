@@ -13,7 +13,7 @@ public class ShiftRight
 
         using mpz_t a = new mpz_t("222987435987982730594288574029879874539");
         AsString = a.ToString();
-        Assert.AreEqual("222987435987982730594288574029879874539", AsString);
+        Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539"));
 
         uint ShiftAmount = 40;
 
@@ -21,7 +21,7 @@ public class ShiftRight
         mpz.tdiv_q_2exp(b, a, ShiftAmount);
 
         AsString = b.ToString();
-        Assert.AreEqual("202805891593000279130400098", AsString);
+        Assert.That(AsString, Is.EqualTo("202805891593000279130400098"));
     }
 
     [Test]
@@ -31,13 +31,13 @@ public class ShiftRight
 
         using mpz_t a = new mpz_t("222987435987982730594288574029879874539");
         AsString = a.ToString();
-        Assert.AreEqual("222987435987982730594288574029879874539", AsString);
+        Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539"));
 
         int Count = 40;
 
         using mpz_t b = a >> Count;
 
         AsString = b.ToString();
-        Assert.AreEqual("202805891593000279130400098", AsString);
+        Assert.That(AsString, Is.EqualTo("202805891593000279130400098"));
     }
 }

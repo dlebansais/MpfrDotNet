@@ -13,13 +13,13 @@ public class Negate
 
         using mpz_t a = new mpz_t("222987435987982730594288574029879874539");
         AsString = a.ToString();
-        Assert.AreEqual("222987435987982730594288574029879874539", AsString);
+        Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539"));
 
         using mpz_t b = new();
         mpz.neg(b, a);
 
         AsString = b.ToString();
-        Assert.AreEqual("-222987435987982730594288574029879874539", AsString);
+        Assert.That(AsString, Is.EqualTo("-222987435987982730594288574029879874539"));
     }
 
     [Test]
@@ -29,11 +29,11 @@ public class Negate
 
         using mpz_t a = new mpz_t("222987435987982730594288574029879874539");
         AsString = a.ToString();
-        Assert.AreEqual("222987435987982730594288574029879874539", AsString);
+        Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539"));
 
         using mpz_t b = -a;
 
         AsString = b.ToString();
-        Assert.AreEqual("-222987435987982730594288574029879874539", AsString);
+        Assert.That(AsString, Is.EqualTo("-222987435987982730594288574029879874539"));
     }
 }

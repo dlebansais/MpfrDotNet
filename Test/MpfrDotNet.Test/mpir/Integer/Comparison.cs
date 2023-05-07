@@ -15,11 +15,11 @@ public class Comparison
 
         using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
-        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290461", AsString);
+        Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
 
         using mpz_t b = new mpz_t("622288097498926496141095869268883999563096063592498055290460");
         AsString = b.ToString();
-        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290460", AsString);
+        Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290460"));
 
         IsGreaterThan = a > b;
         Assert.IsTrue(IsGreaterThan);
@@ -48,11 +48,11 @@ public class Comparison
 
         using mpz_t a = new mpz_t("-622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
-        Assert.AreEqual("-622288097498926496141095869268883999563096063592498055290461", AsString);
+        Assert.That(AsString, Is.EqualTo("-622288097498926496141095869268883999563096063592498055290461"));
 
         using mpz_t b = new mpz_t("622288097498926496141095869268883999563096063592498055290460");
         AsString = b.ToString();
-        Assert.AreEqual("622288097498926496141095869268883999563096063592498055290460", AsString);
+        Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290460"));
 
         IsGreaterThan = mpz.cmpabs(a, b) > 0;
         Assert.IsTrue(IsGreaterThan);
@@ -76,7 +76,7 @@ public class Comparison
 
         using mpz_t a = new mpz_t("-622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
-        Assert.AreEqual("-622288097498926496141095869268883999563096063592498055290461", AsString);
+        Assert.That(AsString, Is.EqualTo("-622288097498926496141095869268883999563096063592498055290461"));
 
         IsNegative = mpz.sgn(a) < 0;
         Assert.IsTrue(IsNegative);

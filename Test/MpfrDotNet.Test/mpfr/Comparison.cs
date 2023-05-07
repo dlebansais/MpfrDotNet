@@ -20,11 +20,11 @@ public class Comparison
 
         using mpfr_t a = new mpfr_t("8720124937520142.5");
         AsString = a.ToString();
-        Assert.AreEqual("8.7201249375201425E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("8.7201249375201425E+15"));
 
         using mpfr_t b = new mpfr_t("22298.125");
         AsString = b.ToString();
-        Assert.AreEqual("2.2298125E+4", AsString);
+        Assert.That(AsString, Is.EqualTo("2.2298125E+4"));
 
         IsGreaterThan = a > b;
         Assert.IsTrue(IsGreaterThan);
@@ -64,7 +64,7 @@ public class Comparison
 
         using mpz_t c = new mpz_t("1720124937520142");
         AsString = c.ToString();
-        Assert.AreEqual("1720124937520142", AsString);
+        Assert.That(AsString, Is.EqualTo("1720124937520142"));
 
         IsGreaterThan = a > c;
         Assert.IsTrue(IsGreaterThan);
@@ -74,7 +74,7 @@ public class Comparison
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
-        Assert.AreEqual("222509832503450298345029835740293845720/115756986668303657898962467957", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsGreaterThan = a > d;
         Assert.IsTrue(IsGreaterThan);
@@ -84,7 +84,7 @@ public class Comparison
 
         using mpf_t e = new mpf_t("8720124937520142.1");
         AsString = e.ToString();
-        Assert.AreEqual("8.7201249375201421E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("8.7201249375201421E+15"));
 
         IsGreaterThan = a > e;
         Assert.IsTrue(IsGreaterThan);
@@ -105,11 +105,11 @@ public class Comparison
 
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.225098325034502799228928E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.AreEqual("2.22987435987982725E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
 
         IsGreaterThan = a >= b;
         Assert.IsTrue(IsGreaterThan);
@@ -137,7 +137,7 @@ public class Comparison
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
-        Assert.AreEqual("222509832503450298345029", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsGreaterThan = a >= c;
         Assert.IsTrue(IsGreaterThan);
@@ -147,7 +147,7 @@ public class Comparison
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
-        Assert.AreEqual("222509832503450298345029835740293845720/115756986668303657898962467957", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsGreaterThan = a >= d;
         Assert.IsTrue(IsGreaterThan);
@@ -157,7 +157,7 @@ public class Comparison
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
-        Assert.AreEqual("2.22583250345029834503E+23", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsGreaterThan = a >= e;
         Assert.IsTrue(IsGreaterThan);
@@ -176,11 +176,11 @@ public class Comparison
 
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.225098325034502799228928E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.AreEqual("2.22987435987982725E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
 
         IsLesserThan = a < b;
         Assert.IsFalse(IsLesserThan);
@@ -208,7 +208,7 @@ public class Comparison
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
-        Assert.AreEqual("222509832503450298345029", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsLesserThan = a < c;
         Assert.IsFalse(IsLesserThan);
@@ -218,7 +218,7 @@ public class Comparison
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
-        Assert.AreEqual("222509832503450298345029835740293845720/115756986668303657898962467957", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsLesserThan = a < d;
         Assert.IsFalse(IsLesserThan);
@@ -228,7 +228,7 @@ public class Comparison
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
-        Assert.AreEqual("2.22583250345029834503E+23", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsLesserThan = a < e;
         Assert.IsFalse(IsLesserThan);
@@ -247,11 +247,11 @@ public class Comparison
 
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.225098325034502799228928E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.AreEqual("2.22987435987982725E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
 
         IsLesserThan = a <= b;
         Assert.IsFalse(IsLesserThan);
@@ -279,7 +279,7 @@ public class Comparison
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
-        Assert.AreEqual("222509832503450298345029", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsLesserThan = a <= c;
         Assert.IsFalse(IsLesserThan);
@@ -289,7 +289,7 @@ public class Comparison
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
-        Assert.AreEqual("222509832503450298345029835740293845720/115756986668303657898962467957", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsLesserThan = a <= d;
         Assert.IsFalse(IsLesserThan);
@@ -299,7 +299,7 @@ public class Comparison
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
-        Assert.AreEqual("2.22583250345029834503E+23", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsLesserThan = a <= e;
         Assert.IsFalse(IsLesserThan);
@@ -318,11 +318,11 @@ public class Comparison
 
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.225098325034502799228928E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.AreEqual("2.22987435987982725E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
 
         IsEqualTo = a == b;
         Assert.IsFalse(IsEqualTo);
@@ -350,7 +350,7 @@ public class Comparison
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
-        Assert.AreEqual("222509832503450298345029", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsEqualTo = a == c;
         Assert.IsFalse(IsEqualTo);
@@ -360,7 +360,7 @@ public class Comparison
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
-        Assert.AreEqual("222509832503450298345029835740293845720/115756986668303657898962467957", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsEqualTo = a == d;
         Assert.IsFalse(IsEqualTo);
@@ -370,7 +370,7 @@ public class Comparison
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
-        Assert.AreEqual("2.22583250345029834503E+23", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsEqualTo = a == e;
         Assert.IsFalse(IsEqualTo);
@@ -389,11 +389,11 @@ public class Comparison
 
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.AreEqual("2.225098325034502799228928E+25", AsString);
+        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.AreEqual("2.22987435987982725E+15", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
 
         IsEqualTo = a != b;
         Assert.IsTrue(IsEqualTo);
@@ -421,7 +421,7 @@ public class Comparison
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
-        Assert.AreEqual("222509832503450298345029", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsEqualTo = a != c;
         Assert.IsTrue(IsEqualTo);
@@ -431,7 +431,7 @@ public class Comparison
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
-        Assert.AreEqual("222509832503450298345029835740293845720/115756986668303657898962467957", AsString);
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsEqualTo = a != d;
         Assert.IsTrue(IsEqualTo);
@@ -441,7 +441,7 @@ public class Comparison
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
-        Assert.AreEqual("2.22583250345029834503E+23", AsString);
+        Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsEqualTo = a != e;
         Assert.IsTrue(IsEqualTo);
