@@ -165,4 +165,180 @@ public class Create
         AsString = l.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
     }
+
+    [Test]
+    public void CreateFromULongWithShift()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        using mpfr_t a = new mpfr_t(10UL, 0);
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        using mpfr_t b = new mpfr_t(1099511627775UL, 0);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.099511627775E+12"));
+
+        using mpfr_t c = new mpfr_t(10UL, 5);
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("3.2E+2"));
+
+        using mpfr_t d = new mpfr_t(1099511627775UL, 5);
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("3.51843720888E+13"));
+
+        using mpfr_t e = new mpfr_t(10UL, 40);
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("1.099511627776E+13"));
+
+        using mpfr_t f = new mpfr_t(1099511627775UL, -80);
+        AsString = f.ToString();
+        Assert.That(AsString, Is.EqualTo("9.0949470177210105730248603482512859130793003714643419E-13"));
+    }
+
+    [Test]
+    public void CreateFromLongWithShift()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        using mpfr_t a = new mpfr_t(10L, 0);
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        using mpfr_t b = new mpfr_t(1099511627775L, 0);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.099511627775E+12"));
+
+        using mpfr_t c = new mpfr_t(10L, 5);
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("3.2E+2"));
+
+        using mpfr_t d = new mpfr_t(1099511627775L, 5);
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("3.51843720888E+13"));
+
+        using mpfr_t e = new mpfr_t(10L, 40);
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("1.099511627776E+13"));
+
+        using mpfr_t f = new mpfr_t(1099511627775L, -80);
+        AsString = f.ToString();
+        Assert.That(AsString, Is.EqualTo("9.0949470177210105730248603482512859130793003714643419E-13"));
+
+        using mpfr_t g = new mpfr_t(-10L, 0);
+        AsString = g.ToString();
+        Assert.That(AsString, Is.EqualTo("-1E+1"));
+
+        using mpfr_t h = new mpfr_t(-1099511627775L, 0);
+        AsString = h.ToString();
+        Assert.That(AsString, Is.EqualTo("-1.099511627775E+12"));
+
+        using mpfr_t i = new mpfr_t(-10L, 5);
+        AsString = i.ToString();
+        Assert.That(AsString, Is.EqualTo("-3.2E+2"));
+
+        using mpfr_t j = new mpfr_t(-1099511627775L, 5);
+        AsString = j.ToString();
+        Assert.That(AsString, Is.EqualTo("-3.51843720888E+13"));
+
+        using mpfr_t k = new mpfr_t(-10L, 40);
+        AsString = k.ToString();
+        Assert.That(AsString, Is.EqualTo("-1.099511627776E+13"));
+
+        using mpfr_t l = new mpfr_t(-1099511627775L, -80);
+        AsString = l.ToString();
+        Assert.That(AsString, Is.EqualTo("-9.0949470177210105730248603482512859130793003714643419E-13"));
+    }
+
+    [Test]
+    public void CreateFromUIntWithShift()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        using mpfr_t a = new mpfr_t(10U, 0);
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        using mpfr_t b = new mpfr_t(1095116775U, 0);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.095116775E+9"));
+
+        using mpfr_t c = new mpfr_t(10U, 5);
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("3.2E+2"));
+
+        using mpfr_t d = new mpfr_t(1095116775U, 5);
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("3.50437368E+10"));
+
+        using mpfr_t e = new mpfr_t(10U, 40);
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("1.099511627776E+13"));
+
+        using mpfr_t f = new mpfr_t(1095116775U, -80);
+        AsString = f.ToString();
+        Assert.That(AsString, Is.EqualTo("9.0585936476159618379092562656662579456678940914571285E-16"));
+    }
+
+    [Test]
+    public void CreateFromIntWithShift()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        using mpfr_t a = new mpfr_t(10, 0);
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        using mpfr_t b = new mpfr_t(1095116775, 0);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.095116775E+9"));
+
+        using mpfr_t c = new mpfr_t(10, 5);
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("3.2E+2"));
+
+        using mpfr_t d = new mpfr_t(1095116775, 5);
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("3.50437368E+10"));
+
+        using mpfr_t e = new mpfr_t(10, 40);
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("1.099511627776E+13"));
+
+        using mpfr_t f = new mpfr_t(1095116775, -80);
+        AsString = f.ToString();
+        Assert.That(AsString, Is.EqualTo("9.0585936476159618379092562656662579456678940914571285E-16"));
+
+        using mpfr_t g = new mpfr_t(-10, 0);
+        AsString = g.ToString();
+        Assert.That(AsString, Is.EqualTo("-1E+1"));
+
+        using mpfr_t h = new mpfr_t(-1095116775, 0);
+        AsString = h.ToString();
+        Assert.That(AsString, Is.EqualTo("-1.095116775E+9"));
+
+        using mpfr_t i = new mpfr_t(-10, 5);
+        AsString = i.ToString();
+        Assert.That(AsString, Is.EqualTo("-3.2E+2"));
+
+        using mpfr_t j = new mpfr_t(-1095116775, 5);
+        AsString = j.ToString();
+        Assert.That(AsString, Is.EqualTo("-3.50437368E+10"));
+
+        using mpfr_t k = new mpfr_t(-10, 40);
+        AsString = k.ToString();
+        Assert.That(AsString, Is.EqualTo("-1.099511627776E+13"));
+
+        using mpfr_t l = new mpfr_t(-1095116775, -80);
+        AsString = l.ToString();
+        Assert.That(AsString, Is.EqualTo("-9.0585936476159618379092562656662579456678940914571285E-16"));
+    }
 }

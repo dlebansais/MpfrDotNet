@@ -1,7 +1,6 @@
 ﻿namespace MpfrDotNet;
 
 using System;
-using Interop.Mpfr;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
@@ -186,6 +185,54 @@ public partial class mpfr_t : IDisposable
         int Success = mpfr_set_str(ref Value, str, strbase, (__mpfr_rnd_t)rounding);
         if (Success != 0)
             throw new ArgumentException();
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpfr_t"/> class.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="e">The shift.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    public mpfr_t(ulong op, long e, mpfr_rnd_t rounding = DefaultRounding)
+        : this()
+    {
+        mpfr_set_ui_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpfr_t"/> class.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="e">The shift.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    public mpfr_t(long op, long e, mpfr_rnd_t rounding = DefaultRounding)
+        : this()
+    {
+        mpfr_set_si_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpfr_t"/> class.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="e">The shift.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    public mpfr_t(uint op, long e, mpfr_rnd_t rounding = DefaultRounding)
+        : this()
+    {
+        mpfr_set_uj_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpfr_t"/> class.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="e">The shift.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    public mpfr_t(int op, long e, mpfr_rnd_t rounding = DefaultRounding)
+        : this()
+    {
+        mpfr_set_sj_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
     }
 
     /// <summary>

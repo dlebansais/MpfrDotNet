@@ -1,7 +1,12 @@
+# MpfrDotNet
+A binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET.
+
+[![Build status](https://ci.appveyor.com/api/projects/status/4w46tqucudnkb1u3?svg=true)](https://ci.appveyor.com/project/dlebansais/MpfrDotNet) [![codecov](https://codecov.io/gh/dlebansais/MpfrDotNet/branch/master/graph/badge.svg?token=HMNSZ9X5U2)](https://codecov.io/gh/dlebansais/MpfrDotNet)
+
 # Instructions
-+ Install Visual Studio 2019.
++ Install Visual Studio 2022.
 + Clone this repository locally.
-+ Open `MpfrDotNet.sln` with Visual Studio 2019.
++ Open `MpfrDotNet.sln` with Visual Studio 2022.
 + Select the `Debug` or `Release` build in the toolbar.
 + Rebuild the solution (F5 or from the *Build* / *Rebuild Solution* menu).
 
@@ -9,7 +14,7 @@ Resulting files are in the `MpfrDotNet\bin\x64` subdirectory:
 
 + mpfr.dll, for multiple precision floating-point support.
 + mpir.dll, for multiple precision integer and rational support.
-+ MpfrDotNet assembly.
++ The MpfrDotNet assembly.
 
 # Package
 
