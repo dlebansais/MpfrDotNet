@@ -20,9 +20,10 @@ along with the GNU MPFR Library; see the file COPYING.LESSER.  If not, see
 https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA. */
 
-#define FUNCTION   mpfr_fits_slong_p
-#define MAXIMUM    LONG_MAX
-#define MINIMUM    LONG_MIN
-#define TYPE       long
+#define FUNCTION      mpfr_fits_slong_p
+#define MAXIMUM       MPFR_SI_MAX
+#define MINIMUM       MPFR_SI_MIN
+#define TYPE          mpfr_si
+#define UNSIGNED_TYPE mpfr_ui
 
 #include "fits_s.h"

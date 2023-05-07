@@ -25,11 +25,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #define MPFR_NEED_LONGLONG_H
 #include "mpfr-impl.h"
 
-#define ULSIZE (sizeof (unsigned long) * CHAR_BIT)
+#define ULSIZE (sizeof (mpfr_ui) * CHAR_BIT)
 
 /* z <- s*u*2^e, with e between -3 and -1 */
 static int
-mpfr_atan2u_aux1 (mpfr_ptr z, unsigned long u, int e, int s,
+mpfr_atan2u_aux1 (mpfr_ptr z, mpfr_ui u, int e, int s,
                   mpfr_rnd_t rnd_mode)
 {
   if (s > 0)
@@ -47,7 +47,7 @@ mpfr_atan2u_aux1 (mpfr_ptr z, unsigned long u, int e, int s,
 
 /* z <- s*3*u*2^e, with e between -3 and -1 */
 static int
-mpfr_atan2u_aux2 (mpfr_ptr z, unsigned long u, int e, int s,
+mpfr_atan2u_aux2 (mpfr_ptr z, mpfr_ui u, int e, int s,
                   mpfr_rnd_t rnd_mode)
 {
   int inex;
@@ -70,7 +70,7 @@ mpfr_atan2u_aux2 (mpfr_ptr z, unsigned long u, int e, int s,
 
 /* return round(sign(s)*(u/2-eps),rnd_mode), where eps < 1/2*ulp(u/2) */
 static int
-mpfr_atan2u_aux3 (mpfr_ptr z, unsigned long u, int s, mpfr_rnd_t rnd_mode)
+mpfr_atan2u_aux3 (mpfr_ptr z, mpfr_ui u, int s, mpfr_rnd_t rnd_mode)
 {
   mpfr_t t;
   mpfr_prec_t prec;
@@ -93,7 +93,7 @@ mpfr_atan2u_aux3 (mpfr_ptr z, unsigned long u, int s, mpfr_rnd_t rnd_mode)
 /* return round(sign(y)*(u/4-sign(x)*eps),rnd_mode),
    where eps < 1/2*ulp(u/4) */
 static int
-mpfr_atan2u_aux4 (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x, unsigned long u,
+mpfr_atan2u_aux4 (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x, mpfr_ui u,
                   mpfr_rnd_t rnd_mode)
 {
   mpfr_t t;
@@ -118,7 +118,7 @@ mpfr_atan2u_aux4 (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x, unsigned long u,
 /* deal with underflow case, i.e., when y/x rounds to zero */
 static int
 mpfr_atan2u_underflow (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x,
-                       unsigned long u, mpfr_rnd_t rnd_mode)
+                       mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   mpfr_exp_t e = MPFR_GET_EXP(y) - MPFR_GET_EXP(x) + (ULSIZE - 1);
   /* Detect underflow: since |atan(|y/x|)| < |y/x| for |y/x| < 1,
@@ -145,7 +145,7 @@ mpfr_atan2u_underflow (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x,
 /* deal with overflow case, i.e., when y/x rounds to infinity */
 static int
 mpfr_atan2u_overflow (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x,
-                       unsigned long u, mpfr_rnd_t rnd_mode)
+                       mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   /* When t goes to +Inf, pi/2 - 1/t < atan(t) < pi/2,
      thus u/4 - u/(2*pi*t) < atanu(t) < u/4.
@@ -161,7 +161,7 @@ mpfr_atan2u_overflow (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x,
 
 /* put in z the correctly rounded value of atan2y(y,x,u) */
 int
-mpfr_atan2u (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x, unsigned long u,
+mpfr_atan2u (mpfr_ptr z, mpfr_srcptr y, mpfr_srcptr x, mpfr_ui u,
              mpfr_rnd_t rnd_mode)
 {
   mpfr_t tmp;

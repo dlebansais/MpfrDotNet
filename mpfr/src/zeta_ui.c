@@ -24,7 +24,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_zeta_ui (mpfr_ptr z, unsigned long m, mpfr_rnd_t r)
+mpfr_zeta_ui (mpfr_ptr z, mpfr_ui m, mpfr_rnd_t r)
 {
   MPFR_ZIV_DECL (loop);
 
@@ -44,7 +44,7 @@ mpfr_zeta_ui (mpfr_ptr z, unsigned long m, mpfr_rnd_t r)
   else /* m >= 2 */
     {
       mpfr_prec_t p = MPFR_PREC(z);
-      unsigned long n, k, err, kbits;
+      mpfr_ui n, k, err, kbits;
       mpz_t d, t, s, q;
       mpfr_t y;
       int inex;
@@ -115,7 +115,7 @@ mpfr_zeta_ui (mpfr_ptr z, unsigned long m, mpfr_rnd_t r)
       for(;;)
         {
           /* 0.39321985067869744 = log(2)/log(3+sqrt(8)) */
-          n = 1 + (unsigned long) (0.39321985067869744 * (double) p);
+          n = 1 + (mpfr_ui) (0.39321985067869744 * (double) p);
           err = n + 4;
 
           mpfr_set_prec (y, p);
@@ -146,8 +146,8 @@ mpfr_zeta_ui (mpfr_ptr z, unsigned long m, mpfr_rnd_t r)
                 }
               else /* use several mpz_tdiv_q_ui calls */
                 {
-                  unsigned long km = k, mm = m - 1;
-                  while (mm > 0 && km < ULONG_MAX / k)
+                  mpfr_ui km = k, mm = m - 1;
+                  while (mm > 0 && km < MPFR_UI_MAX / k)
                     {
                       km *= k;
                       mm --;
@@ -157,7 +157,7 @@ mpfr_zeta_ui (mpfr_ptr z, unsigned long m, mpfr_rnd_t r)
                     {
                       km = k;
                       mm --;
-                      while (mm > 0 && km < ULONG_MAX / k)
+                      while (mm > 0 && km < MPFR_UI_MAX / k)
                         {
                           km *= k;
                           mm --;

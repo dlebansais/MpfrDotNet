@@ -23,11 +23,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_ui_pow_ui (mpfr_ptr x, unsigned long int k, unsigned long int n,
+mpfr_ui_pow_ui (mpfr_ptr x, mpfr_ui k, mpfr_ui n,
                 mpfr_rnd_t rnd)
 {
   mpfr_exp_t err;
-  unsigned long m;
+  mpfr_ui m;
   mpfr_t res;
   mpfr_prec_t prec;
   int size_n;

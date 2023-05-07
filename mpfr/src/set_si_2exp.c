@@ -25,7 +25,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_set_si_2exp (mpfr_ptr x, long i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
+mpfr_set_si_2exp (mpfr_ptr x, mpfr_si i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
 {
   if (i == 0)
     {
@@ -44,14 +44,14 @@ mpfr_set_si_2exp (mpfr_ptr x, long i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
       /* Early underflow/overflow checking is necessary to avoid
          integer overflow or errors due to special exponent values. */
       if (MPFR_UNLIKELY (e < __gmpfr_emin - (mpfr_exp_t)
-                         (sizeof (unsigned long) * CHAR_BIT + 1)))
+                         (sizeof (mpfr_ui) * CHAR_BIT + 1)))
         return mpfr_underflow (x, rnd_mode == MPFR_RNDN ?
                                MPFR_RNDZ : rnd_mode, i < 0 ? -1 : 1);
       if (MPFR_UNLIKELY (e >= __gmpfr_emax))
         return mpfr_overflow (x, rnd_mode, i < 0 ? -1 : 1);
 
-      ai = SAFE_ABS (unsigned long, i);
-      MPFR_ASSERTN (SAFE_ABS (unsigned long, i) == ai);
+      ai = SAFE_ABS (mpfr_ui, i);
+      MPFR_ASSERTN (SAFE_ABS (mpfr_ui, i) == ai);
 
       /* Position of the highest limb */
       xn = (MPFR_PREC (x) - 1) / GMP_NUMB_BITS;

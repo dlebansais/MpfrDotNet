@@ -23,7 +23,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_div_2ui (mpfr_ptr y, mpfr_srcptr x, unsigned long n, mpfr_rnd_t rnd_mode)
+mpfr_div_2ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui n, mpfr_rnd_t rnd_mode)
 {
   int inexact;
 

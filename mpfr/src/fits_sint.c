@@ -20,9 +20,10 @@ along with the GNU MPFR Library; see the file COPYING.LESSER.  If not, see
 https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA. */
 
-#define FUNCTION   mpfr_fits_sint_p
-#define MAXIMUM    INT_MAX
-#define MINIMUM    INT_MIN
-#define TYPE       int
+#define FUNCTION      mpfr_fits_sint_p
+#define MAXIMUM       INT_MAX
+#define MINIMUM       INT_MIN
+#define TYPE          int
+#define UNSIGNED_TYPE unsigned int
 
 #include "fits_s.h"

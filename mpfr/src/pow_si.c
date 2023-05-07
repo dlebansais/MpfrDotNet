@@ -34,8 +34,8 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #define SET_S mpfr_set_si
 #define SET_S_2EXP mpfr_set_si_2exp
 #define NBITS_UTYPE mpfr_nbits_ulong
-#define TYPE long int
-#define UTYPE unsigned long
+#define TYPE mpfr_si
+#define UTYPE mpfr_ui
 #define FSPEC "l"
 #endif
 

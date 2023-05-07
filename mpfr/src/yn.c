@@ -24,7 +24,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #define MPFR_NEED_LONGLONG_H
 #include "mpfr-impl.h"
 
-static int mpfr_yn_asympt (mpfr_ptr, long, mpfr_srcptr, mpfr_rnd_t);
+static int mpfr_yn_asympt (mpfr_ptr, mpfr_si, mpfr_srcptr, mpfr_rnd_t);
 
 int
 mpfr_y0 (mpfr_ptr res, mpfr_srcptr z, mpfr_rnd_t r)
@@ -43,9 +43,9 @@ mpfr_y1 (mpfr_ptr res, mpfr_srcptr z, mpfr_rnd_t r)
    during the for loop and the final value of |s|.
 */
 static mpfr_exp_t
-mpfr_yn_s1 (mpfr_ptr s, mpfr_srcptr y, unsigned long n)
+mpfr_yn_s1 (mpfr_ptr s, mpfr_srcptr y, mpfr_ui n)
 {
-  unsigned long k;
+    mpfr_ui k;
   mpz_t f;
   mpfr_exp_t e, emax;
 
@@ -82,15 +82,15 @@ mpfr_yn_s1 (mpfr_ptr s, mpfr_srcptr y, unsigned long n)
    Returns e such that the error is bounded by 2^e ulp(s).
 */
 static mpfr_exp_t
-mpfr_yn_s3 (mpfr_ptr s, mpfr_srcptr y, mpfr_srcptr c, unsigned long n)
+mpfr_yn_s3 (mpfr_ptr s, mpfr_srcptr y, mpfr_srcptr c, mpfr_ui n)
 {
-  unsigned long k, zz;
+  mpfr_ui k, zz;
   mpfr_t t, u;
   mpz_t p, q; /* p/q will store h(k)+h(n+k) */
   mpfr_exp_t exps, expU;
 
   zz = mpfr_get_ui (y, MPFR_RNDU); /* y = z^2/4 */
-  MPFR_ASSERTN (zz < ULONG_MAX - 2);
+  MPFR_ASSERTN (zz < MPFR_UI_MAX - 2);
   zz += 2; /* z^2 <= 2^zz */
   mpz_init_set_ui (p, 0);
   mpz_init_set_ui (q, 1);
@@ -147,17 +147,17 @@ mpfr_yn_s3 (mpfr_ptr s, mpfr_srcptr y, mpfr_srcptr c, unsigned long n)
 }
 
 int
-mpfr_yn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
+mpfr_yn (mpfr_ptr res, mpfr_si n, mpfr_srcptr z, mpfr_rnd_t r)
 {
   int inex;
-  unsigned long absn;
+  mpfr_ui absn;
   MPFR_SAVE_EXPO_DECL (expo);
 
   MPFR_LOG_FUNC
     (("n=%ld x[%Pd]=%.*Rg rnd=%d", n, mpfr_get_prec (z), mpfr_log_prec, z, r),
      ("y[%Pd]=%.*Rg inexact=%d", mpfr_get_prec (res), mpfr_log_prec, res, inex));
 
-  absn = SAFE_ABS (unsigned long, n);
+  absn = SAFE_ABS (mpfr_ui, n);
 
   if (MPFR_UNLIKELY (MPFR_IS_SINGULAR (z)))
     {
@@ -182,7 +182,7 @@ mpfr_yn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
               when z goes to zero */
         {
           MPFR_SET_INF(res);
-          if (n >= 0 || ((unsigned long) n & 1) == 0)
+          if (n >= 0 || ((mpfr_ui) n & 1) == 0)
             MPFR_SET_NEG(res);
           else
             MPFR_SET_POS(res);

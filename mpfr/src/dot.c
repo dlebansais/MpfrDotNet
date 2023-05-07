@@ -27,7 +27,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 /* res <- a[0]*b[0] + ... + a[n-1]*b[n-1] */
 int
 mpfr_dot (mpfr_ptr res, const mpfr_ptr *a, const mpfr_ptr *b,
-          unsigned long n, mpfr_rnd_t rnd)
+          mpfr_ui n, mpfr_rnd_t rnd)
 {
   mpfr_t *c;
   size_t i;

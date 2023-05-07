@@ -41,11 +41,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
  */
 
 static int
-mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, unsigned long k,
+mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, mpfr_ui k,
                mpfr_rnd_t rnd_mode);
 
 int
-mpfr_rootn_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
+mpfr_rootn_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui k, mpfr_rnd_t rnd_mode)
 {
   mpz_t m;
   mpfr_exp_t e, r, sh, f;
@@ -209,7 +209,7 @@ mpfr_rootn_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
    an underflow is not possible before the MPFR_GET_EXP.
 */
 static int
-mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
+mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, mpfr_ui k, mpfr_rnd_t rnd_mode)
 {
   int inexact, exact_root = 0;
   mpfr_prec_t w; /* working precision */
@@ -299,7 +299,7 @@ mpfr_root_aux (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
 }
 
 int
-mpfr_rootn_si (mpfr_ptr y, mpfr_srcptr x, long k, mpfr_rnd_t rnd_mode)
+mpfr_rootn_si (mpfr_ptr y, mpfr_srcptr x, mpfr_si k, mpfr_rnd_t rnd_mode)
 {
   int inexact;
   MPFR_ZIV_DECL(loop);
@@ -328,7 +328,7 @@ mpfr_rootn_si (mpfr_ptr y, mpfr_srcptr x, long k, mpfr_rnd_t rnd_mode)
                               (-Inf)^(1/k) = NaN if k even */
         {
           /* Cast k to an unsigned type so that this is well-defined. */
-          if (MPFR_IS_NEG (x) && ((unsigned long) k & 1) == 0)
+          if (MPFR_IS_NEG (x) && ((mpfr_ui) k & 1) == 0)
             {
               MPFR_SET_NAN (y);
               MPFR_RET_NAN;
@@ -343,7 +343,7 @@ mpfr_rootn_si (mpfr_ptr y, mpfr_srcptr x, long k, mpfr_rnd_t rnd_mode)
           MPFR_ASSERTD (MPFR_IS_ZERO (x));
           MPFR_SET_INF (y);
           /* Cast k to an unsigned type so that this is well-defined. */
-          if (MPFR_IS_POS (x) || ((unsigned long) k & 1) == 0)
+          if (MPFR_IS_POS (x) || ((mpfr_ui) k & 1) == 0)
             MPFR_SET_POS (y);
           else
             MPFR_SET_NEG (y);
@@ -354,7 +354,7 @@ mpfr_rootn_si (mpfr_ptr y, mpfr_srcptr x, long k, mpfr_rnd_t rnd_mode)
 
   /* Returns NAN for x < 0 and k even */
   /* Cast k to an unsigned type so that this is well-defined. */
-  if (MPFR_UNLIKELY (MPFR_IS_NEG (x) && ((unsigned long) k & 1) == 0))
+  if (MPFR_UNLIKELY (MPFR_IS_NEG (x) && ((mpfr_ui) k & 1) == 0))
     {
       MPFR_SET_NAN (y);
       MPFR_RET_NAN;
@@ -414,7 +414,7 @@ mpfr_rootn_si (mpfr_ptr y, mpfr_srcptr x, long k, mpfr_rnd_t rnd_mode)
         /* Let's use MPFR_RNDF to avoid the potentially costly detection
            of exact cases in mpfr_rootn_ui (we just lose one bit in the
            final approximation). */
-        mpfr_rootn_ui (t, x, - (unsigned long) k, MPFR_RNDF);
+        mpfr_rootn_ui (t, x, - (mpfr_ui) k, MPFR_RNDF);
         inexact = mpfr_ui_div (t, 1, t, rnd_mode);
 
         /* The final error is bounded by 5 ulp (see algorithms.tex,
@@ -438,7 +438,7 @@ mpfr_rootn_si (mpfr_ptr y, mpfr_srcptr x, long k, mpfr_rnd_t rnd_mode)
 }
 
 int
-mpfr_root (mpfr_ptr y, mpfr_srcptr x, unsigned long k, mpfr_rnd_t rnd_mode)
+mpfr_root (mpfr_ptr y, mpfr_srcptr x, mpfr_ui k, mpfr_rnd_t rnd_mode)
 {
   MPFR_LOG_FUNC
     (("x[%Pd]=%.*Rg k=%lu rnd=%d",

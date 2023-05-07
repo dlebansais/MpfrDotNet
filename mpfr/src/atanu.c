@@ -26,7 +26,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 /* put in y the correctly rounded value of atan(x)*u/(2*pi) */
 int
-mpfr_atanu (mpfr_ptr y, mpfr_srcptr x, unsigned long u, mpfr_rnd_t rnd_mode)
+mpfr_atanu (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   mpfr_t tmp, pi;
   mpfr_prec_t prec;

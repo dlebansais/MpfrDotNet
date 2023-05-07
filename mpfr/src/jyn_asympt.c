@@ -40,7 +40,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
    value otherwise (with no other meaning).
 */
 static int
-FUNCTION (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
+FUNCTION (mpfr_ptr res, mpfr_si n, mpfr_srcptr z, mpfr_rnd_t r)
 {
   mpfr_t s, c, P, Q, t, iz, err_t, err_s, err_u;
   mpfr_prec_t w;

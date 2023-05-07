@@ -26,7 +26,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
    a negative value if abs(b) < c. */
 
 int
-mpfr_cmpabs_ui (mpfr_srcptr b, unsigned long c)
+mpfr_cmpabs_ui (mpfr_srcptr b, mpfr_ui c)
 {
   mpfr_t absb;
 

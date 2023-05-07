@@ -57,9 +57,9 @@ FUNCTION (mpfr_srcptr f, mpfr_rnd_t rnd)
      to give the compiler a better chance to compute prec statically) */
   if (neg)
     {
-      unsigned TYPE s;
+      UNSIGNED_TYPE s;
       /* In C90, the division on negative integers isn't well-defined. */
-      s = SAFE_ABS (unsigned TYPE, MINIMUM);
+      s = SAFE_ABS (UNSIGNED_TYPE, MINIMUM);
       for (prec = 0; s != 0; s /= 2, prec ++);
     }
   else

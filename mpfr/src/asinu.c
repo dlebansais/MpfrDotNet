@@ -26,7 +26,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 /* put in y the correctly rounded value of asin(x)*u/(2*pi) */
 int
-mpfr_asinu (mpfr_ptr y, mpfr_srcptr x, unsigned long u, mpfr_rnd_t rnd_mode)
+mpfr_asinu (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   mpfr_t tmp, pi;
   mpfr_prec_t prec;
@@ -93,7 +93,7 @@ mpfr_asinu (mpfr_ptr y, mpfr_srcptr x, unsigned long u, mpfr_rnd_t rnd_mode)
      a multiple of 3 */
   if (mpfr_cmp_si_2exp (x, MPFR_SIGN(x), -1) == 0 && (u % 3) == 0)
     {
-      long v = u / 3;
+      mpfr_si v = u / 3;
       if (MPFR_IS_NEG (x))
         v = -v;
       return mpfr_set_si_2exp (y, v, -2, rnd_mode);

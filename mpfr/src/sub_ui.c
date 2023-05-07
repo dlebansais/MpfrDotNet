@@ -25,7 +25,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 int
-mpfr_sub_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u, mpfr_rnd_t rnd_mode)
+mpfr_sub_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   MPFR_LOG_FUNC
     (("x[%Pd]=%.*Rg u=%lu rnd=%d",
@@ -81,7 +81,7 @@ mpfr_sub_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u, mpfr_rnd_t rnd_mode
     {
       mpfr_t uu;
 
-      mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
+      mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
       mpfr_set_ui (uu, u, MPFR_RNDZ);
       inex = mpfr_sub (y, x, uu, rnd_mode);
       mpfr_clear (uu);

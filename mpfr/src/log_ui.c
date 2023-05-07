@@ -44,7 +44,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 */
 static void
 S (mpz_t *P, unsigned long *q, mpz_t *B, mpz_t *T, unsigned long n1,
-   unsigned long n2, long p, unsigned long k, int need_P)
+    unsigned long n2, mpfr_si p, unsigned long k, int need_P)
 {
   MPFR_ASSERTD (n1 < n2);
   MPFR_ASSERTD (p == 0 || ((unsigned long) p & 1) != 0);
@@ -93,7 +93,7 @@ mpfr_log_ui (mpfr_ptr x, unsigned long n, mpfr_rnd_t rnd_mode)
   mpfr_t t, q;
   int inexact;
   unsigned long N, lgN, i, kk;
-  long p;
+  mpfr_si p;
   MPFR_GROUP_DECL(group);
   MPFR_TMP_DECL(marker);
   MPFR_ZIV_DECL(loop);

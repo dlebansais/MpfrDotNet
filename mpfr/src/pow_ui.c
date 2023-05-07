@@ -26,7 +26,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #ifndef POW_U
 #define POW_U mpfr_pow_ui
 #define MPZ_SET_U mpz_set_ui
-#define UTYPE unsigned long int
+#define UTYPE mpfr_ui
 #define FSPEC "l"
 #endif
 

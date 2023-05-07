@@ -24,14 +24,14 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 MPFR_HOT_FUNCTION_ATTR int
-mpfr_add_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u, mpfr_rnd_t rnd_mode)
+mpfr_add_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   MPFR_LOG_FUNC
     (("x[%Pd]=%.*Rg u=%lu rnd=%d",
       mpfr_get_prec(x), mpfr_log_prec, x, u, rnd_mode),
      ("y[%Pd]=%.*Rg", mpfr_get_prec (y), mpfr_log_prec, y));
 
-  /* (unsigned long) 0 is assumed to be a real 0 (unsigned) */
+  /* (mpfr_ui) 0 is assumed to be a real 0 (unsigned) */
   if (MPFR_UNLIKELY (u == 0))
     return mpfr_set (y, x, rnd_mode);
 
@@ -81,7 +81,7 @@ mpfr_add_ui (mpfr_ptr y, mpfr_srcptr x, unsigned long int u, mpfr_rnd_t rnd_mode
     {
       mpfr_t uu;
 
-      mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
+      mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
       mpfr_set_ui (uu, u, MPFR_RNDZ);
       inex = mpfr_add (y, x, uu, rnd_mode);
       mpfr_clear (uu);

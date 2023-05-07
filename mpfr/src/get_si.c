@@ -22,11 +22,11 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 #include "mpfr-impl.h"
 
-long
+mpfr_si
 mpfr_get_si (mpfr_srcptr f, mpfr_rnd_t rnd)
 {
   mpfr_prec_t prec;
-  long s;
+  mpfr_si s;
   mpfr_t x;
   MPFR_SAVE_EXPO_DECL (expo);
 
@@ -34,16 +34,16 @@ mpfr_get_si (mpfr_srcptr f, mpfr_rnd_t rnd)
     {
       MPFR_SET_ERANGEFLAG ();
       return MPFR_IS_NAN (f) ? 0 :
-        MPFR_IS_NEG (f) ? LONG_MIN : LONG_MAX;
+        MPFR_IS_NEG (f) ? MPFR_SI_MIN : MPFR_SI_MAX;
     }
 
   if (MPFR_IS_ZERO (f))
-    return (long) 0;
+    return (mpfr_si) 0;
 
   /* Determine the precision of long. |LONG_MIN| may have one more bit
      as an integer, but in this case, this is a power of 2, thus fits
      in a precision-prec floating-point number. */
-  for (s = LONG_MAX, prec = 0; s != 0; s /= 2, prec++)
+  for (s = MPFR_SI_MAX, prec = 0; s != 0; s /= 2, prec++)
     { }
 
   MPFR_SAVE_EXPO_MARK (expo);
@@ -61,7 +61,7 @@ mpfr_get_si (mpfr_srcptr f, mpfr_rnd_t rnd)
     s = 0;
   else
     {
-      unsigned long u = 0;
+      mpfr_ui u = 0;
       mp_size_t n;
       mpfr_exp_t exp;
 
@@ -74,14 +74,14 @@ mpfr_get_si (mpfr_srcptr f, mpfr_rnd_t rnd)
       while (exp > GMP_NUMB_BITS)
         {
           MPFR_ASSERTD (n > 0);
-          u += (unsigned long) MPFR_MANT(x)[n - 1] << (exp - GMP_NUMB_BITS);
+          u += (mpfr_ui) MPFR_MANT(x)[n - 1] << (exp - GMP_NUMB_BITS);
           n--;
           exp -= GMP_NUMB_BITS;
         }
 #endif
       MPFR_ASSERTD (n > 0);
       u += MPFR_MANT(x)[n - 1] >> (GMP_NUMB_BITS - exp);
-      s = MPFR_IS_POS (f) ? u : u <= LONG_MAX ? - (long) u : LONG_MIN;
+      s = MPFR_IS_POS (f) ? u : u <= MPFR_SI_MAX ? - (mpfr_si) u : MPFR_SI_MIN;
     }
 
   mpfr_clear (x);

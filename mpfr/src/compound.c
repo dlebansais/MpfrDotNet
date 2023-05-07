@@ -52,7 +52,7 @@ mpfr_compound_near_one (mpfr_ptr y, int s, mpfr_rnd_t rnd_mode)
 
 /* put in y the correctly rounded value of (1+x)^n */
 int
-mpfr_compound_si (mpfr_ptr y, mpfr_srcptr x, long n, mpfr_rnd_t rnd_mode)
+mpfr_compound_si (mpfr_ptr y, mpfr_srcptr x, mpfr_si n, mpfr_rnd_t rnd_mode)
 {
   int inexact, compared, k, nloop;
   mpfr_t t, u;
@@ -142,7 +142,7 @@ mpfr_compound_si (mpfr_ptr y, mpfr_srcptr x, long n, mpfr_rnd_t rnd_mode)
   mpfr_init2 (t, prec);
   mpfr_init2 (u, prec);
 
-  k = MPFR_INT_CEIL_LOG2(SAFE_ABS (unsigned long, n));  /* thus |n| <= 2^k */
+  k = MPFR_INT_CEIL_LOG2(SAFE_ABS (mpfr_ui, n));  /* thus |n| <= 2^k */
 
   /* we compute u=log2p1(x) with prec+extra bits, since we loose some bits
      in 2^u */

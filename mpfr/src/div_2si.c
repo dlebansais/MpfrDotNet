@@ -23,7 +23,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #include "mpfr-impl.h"
 
 MPFR_HOT_FUNCTION_ATTR int
-mpfr_div_2si (mpfr_ptr y, mpfr_srcptr x, long int n, mpfr_rnd_t rnd_mode)
+mpfr_div_2si (mpfr_ptr y, mpfr_srcptr x, mpfr_si n, mpfr_rnd_t rnd_mode)
 {
   int inexact;
 

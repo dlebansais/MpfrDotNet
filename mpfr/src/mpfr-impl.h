@@ -2524,7 +2524,7 @@ __MPFR_DECLSPEC void mpfr_mpz_clear (mpz_ptr);
 
 __MPFR_DECLSPEC int mpfr_odd_p (mpfr_srcptr);
 
-__MPFR_DECLSPEC int mpfr_nbits_ulong (unsigned long);
+__MPFR_DECLSPEC int mpfr_nbits_ulong (mpfr_ui);
 #ifdef _MPFR_H_HAVE_INTMAX_T
 __MPFR_DECLSPEC int mpfr_nbits_uj (uintmax_t);
 #endif

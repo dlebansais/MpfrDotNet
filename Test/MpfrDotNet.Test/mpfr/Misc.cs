@@ -66,7 +66,7 @@ public class Misc
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
         AsString = mpfr.get_version();
-        Assert.AreEqual("4.1.0-dev", AsString);
+        Assert.AreEqual("4.2.1-dev", AsString);
 
         AsString = mpfr.get_patches();
         Assert.AreEqual("", AsString);

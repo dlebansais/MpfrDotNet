@@ -31,7 +31,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 */
 
 int
-mpfr_cmp_ui_2exp (mpfr_srcptr b, unsigned long int i, mpfr_exp_t f)
+mpfr_cmp_ui_2exp (mpfr_srcptr b, mpfr_ui i, mpfr_exp_t f)
 {
   if (MPFR_UNLIKELY( MPFR_IS_SINGULAR(b) ))
     {
@@ -98,7 +98,7 @@ mpfr_cmp_ui_2exp (mpfr_srcptr b, unsigned long int i, mpfr_exp_t f)
       int ret;
       MPFR_SAVE_EXPO_DECL (expo);
 
-      mpfr_init2 (uu, sizeof (unsigned long) * CHAR_BIT);
+      mpfr_init2 (uu, sizeof (mpfr_ui) * CHAR_BIT);
       /* Warning: i*2^f might be outside the current exponent range! */
       MPFR_SAVE_EXPO_MARK (expo);
       mpfr_set_ui_2exp (uu, i, f, MPFR_RNDZ);
@@ -112,7 +112,7 @@ mpfr_cmp_ui_2exp (mpfr_srcptr b, unsigned long int i, mpfr_exp_t f)
 
 #undef mpfr_cmp_ui
 int
-mpfr_cmp_ui (mpfr_srcptr b, unsigned long int i)
+mpfr_cmp_ui (mpfr_srcptr b, mpfr_ui i)
 {
   return mpfr_cmp_ui_2exp (b, i, 0);
 }

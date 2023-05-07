@@ -21,7 +21,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA. */
 
 #define FUNCTION   mpfr_fits_ulong_p
-#define MAXIMUM    ULONG_MAX
-#define TYPE       unsigned long
+#define MAXIMUM    MPFR_UI_MAX
+#define TYPE       mpfr_ui
 
 #include "fits_u.h"

@@ -32,7 +32,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 
 /* put in y the correctly rounded value of sin(2*pi*x/u) */
 int
-mpfr_sinu (mpfr_ptr y, mpfr_srcptr x, unsigned long u, mpfr_rnd_t rnd_mode)
+mpfr_sinu (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
 {
   mpfr_srcptr xp;
   mpfr_prec_t precy, prec;
@@ -88,7 +88,7 @@ mpfr_sinu (mpfr_ptr y, mpfr_srcptr x, unsigned long u, mpfr_rnd_t rnd_mode)
          the fractional part of x. Note that since |x| >= u in this branch,
          the additional memory amount will not be more than the one of x.
       */
-      mpfr_init2 (xr, sizeof (unsigned long) * CHAR_BIT + (p < 0 ? 0 : p));
+      mpfr_init2 (xr, sizeof (mpfr_ui) * CHAR_BIT + (p < 0 ? 0 : p));
       MPFR_DBGRES (inex = mpfr_fmod_ui (xr, x, u, MPFR_RNDN));  /* exact */
       MPFR_ASSERTD (inex == 0);
       if (MPFR_IS_ZERO (xr))
@@ -197,7 +197,7 @@ mpfr_sinu (mpfr_ptr y, mpfr_srcptr x, unsigned long u, mpfr_rnd_t rnd_mode)
               if (inexact == 0 && mpfr_integer_p (t))
                 {
                   mpz_t z;
-                  unsigned long mod12;
+                  mpfr_ui mod12;
                   mpz_init (z);
                   inexact = mpfr_get_z (z, t, MPFR_RNDZ);
                   MPFR_ASSERTN(inexact == 0);

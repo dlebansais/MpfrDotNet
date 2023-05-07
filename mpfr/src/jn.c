@@ -28,7 +28,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
               j(n,-z) = (-1)^n j(n,z)
 */
 
-static int mpfr_jn_asympt (mpfr_ptr, long, mpfr_srcptr, mpfr_rnd_t);
+static int mpfr_jn_asympt (mpfr_ptr, mpfr_si, mpfr_srcptr, mpfr_rnd_t);
 
 int
 mpfr_j0 (mpfr_ptr res, mpfr_srcptr z, mpfr_rnd_t r)
@@ -44,13 +44,13 @@ mpfr_j1 (mpfr_ptr res, mpfr_srcptr z, mpfr_rnd_t r)
 
 /* Estimate k1 such that z^2/4 = k1 * (k1 + n)
    i.e., k1 = (sqrt(n^2+z^2)-n)/2 = n/2 * (sqrt(1+(z/n)^2) - 1) if n != 0.
-   Return k0 = min(2*k1/log(2), ULONG_MAX).
+   Return k0 = min(2*k1/log(2), MPFR_UI_MAX).
 */
-static unsigned long
-mpfr_jn_k0 (unsigned long n, mpfr_srcptr z)
+static mpfr_ui
+mpfr_jn_k0 (mpfr_ui n, mpfr_srcptr z)
 {
   mpfr_t t, u;
-  unsigned long k0;
+  mpfr_ui k0;
 
   mpfr_init2 (t, 32);
   mpfr_init2 (u, 32);
@@ -73,23 +73,23 @@ mpfr_jn_k0 (unsigned long n, mpfr_srcptr z)
   if (mpfr_fits_ulong_p (t, MPFR_RNDN))
     k0 = mpfr_get_ui (t, MPFR_RNDN);
   else
-    k0 = ULONG_MAX;
+    k0 = MPFR_UI_MAX;
   mpfr_clear (t);
   mpfr_clear (u);
   return k0;
 }
 
 int
-mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
+mpfr_jn (mpfr_ptr res, mpfr_si n, mpfr_srcptr z, mpfr_rnd_t r)
 {
   int inex;
   int exception = 0;
-  unsigned long absn;
+  mpfr_ui absn;
   mpfr_prec_t prec, pbound, err;
   mpfr_uprec_t uprec;
   mpfr_exp_t exps, expT, diffexp;
   mpfr_t y, s, t, absz;
-  unsigned long k, zz, k0;
+  mpfr_ui k, zz, k0;
   MPFR_GROUP_DECL(g);
   MPFR_SAVE_EXPO_DECL (expo);
   MPFR_ZIV_DECL (loop);
@@ -99,7 +99,7 @@ mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
      ("res[%Pd]=%.*Rg inexact=%d",
       mpfr_get_prec (res), mpfr_log_prec, res, inex));
 
-  absn = SAFE_ABS (unsigned long, n);
+  absn = SAFE_ABS (mpfr_ui, n);
 
   if (MPFR_UNLIKELY (MPFR_IS_SINGULAR (z)))
     {
@@ -178,7 +178,7 @@ mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
   /* we can use the asymptotic expansion as soon as |z| > p log(2)/2,
      but to get some margin we use it for |z| > p/2 */
   pbound = MPFR_PREC (res) / 2 + 3;
-  MPFR_ASSERTN (pbound <= ULONG_MAX);
+  MPFR_ASSERTN (pbound <= MPFR_UI_MAX);
   MPFR_TMP_INIT_ABS (absz, z);
   if (mpfr_cmp_ui (absz, pbound) > 0)
     {
@@ -265,11 +265,11 @@ mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
           MPFR_LOG_MSG (("loop on k, k = %lu\n", k));
           mpfr_mul (t, t, y, MPFR_RNDN);
           mpfr_neg (t, t, MPFR_RNDN);
-          /* Mathematically: absn <= LONG_MAX + 1 <= (ULONG_MAX + 1) / 2,
+          /* Mathematically: absn <= MPFR_UI_MAX + 1 <= (MPFR_UI_MAX + 1) / 2,
              and in practice, k is not very large, so that one should have
-             k + absn <= ULONG_MAX. */
-          MPFR_ASSERTN (absn <= ULONG_MAX - k);
-          if (k + absn <= ULONG_MAX / k)
+             k + absn <= MPFR_UI_MAX. */
+          MPFR_ASSERTN (absn <= MPFR_UI_MAX - k);
+          if (k + absn <= MPFR_UI_MAX / k)
             mpfr_div_ui (t, t, k * (k + absn), MPFR_RNDN);
           else
             {
@@ -284,7 +284,7 @@ mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
           exps = MPFR_IS_ZERO (s) ? MPFR_EMIN_MIN : MPFR_GET_EXP (s);
           if (exps > expT)
             expT = exps;
-          /* Above it has been checked that k + absn <= ULONG_MAX. */
+          /* Above it has been checked that k + absn <= MPFR_UI_MAX. */
           if (MPFR_GET_EXP (t) + (mpfr_exp_t) prec <= exps &&
               zz / (2 * k) < k + absn)
             break;
