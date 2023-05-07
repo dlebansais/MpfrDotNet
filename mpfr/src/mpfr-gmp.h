@@ -326,21 +326,9 @@ void *alloca (size_t);
 # endif
 #endif
 
-#ifdef MPFR_USE_LOGGING
-#define MPFR_INCR_ALLOCA(N)                                     \
-  __extension__ ({                                              \
-      __gmpfr_log_alloca_size += (N);                           \
-      LOG_PRINT (MPFR_LOG_ALLOCA_F,                             \
-                 "%s: alloca size = %zu in the function\n",     \
-                 __func__, __gmpfr_log_alloca_size); })
-#else
-#define MPFR_INCR_ALLOCA(N) ((void) 0)
-#endif
-
 #define TMP_ALLOC(n) (MPFR_ASSERTD ((n) > 0),                      \
                       MPFR_LIKELY ((n) <= MPFR_ALLOCA_MAX) ?       \
-                      (MPFR_INCR_ALLOCA (n), alloca (n)) :         \
-                      mpfr_tmp_allocate (&tmp_marker, (n)))
+                      alloca (n) : mpfr_tmp_allocate (&tmp_marker, (n)))
 
 #else  /* MPFR_ALLOCA_MAX == 0, alloca() not needed */
 

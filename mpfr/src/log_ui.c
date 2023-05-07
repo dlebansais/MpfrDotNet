@@ -44,7 +44,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 */
 static void
 S (mpz_t *P, unsigned long *q, mpz_t *B, mpz_t *T, unsigned long n1,
-    unsigned long n2, long p, unsigned long k, int need_P)
+   unsigned long n2, long p, unsigned long k, int need_P)
 {
   MPFR_ASSERTD (n1 < n2);
   MPFR_ASSERTD (p == 0 || ((unsigned long) p & 1) != 0);
@@ -98,11 +98,6 @@ mpfr_log_ui (mpfr_ptr x, unsigned long n, mpfr_rnd_t rnd_mode)
   MPFR_TMP_DECL(marker);
   MPFR_ZIV_DECL(loop);
   MPFR_SAVE_EXPO_DECL (expo);
-
-  MPFR_LOG_FUNC
-    (("n=%lu rnd=%d", n, rnd_mode),
-     ("y[%Pd]=%.*Rg inexact=%d",
-      mpfr_get_prec(x), mpfr_log_prec, x, inexact));
 
   if (n <= 2)
     {

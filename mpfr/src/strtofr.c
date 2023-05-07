@@ -463,10 +463,6 @@ parsed_string_to_mpfr (mpfr_ptr x, struct parsed_string *pstr, mpfr_rnd_t rnd)
   MPFR_ZIV_DECL (loop);
   MPFR_TMP_DECL (marker);
 
-  MPFR_LOG_FUNC
-    (("rnd=%d", rnd),
-     ("", 0));
-
   /* initialize the working precision */
   precx = MPFR_GET_PREC (x);
   prec = precx + MPFR_INT_CEIL_LOG2 (precx);

@@ -24,16 +24,6 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
 #define MPFR_NEED_LONGLONG_H
 #include "mpfr-impl.h"
 
-/* Note: The 3 "INITIALIZED(sh)" occurrences below are necessary
-   to avoid a maybe-uninitialized warning or error, e.g. when
-   configuring MPFR with
-     ./configure --enable-assert CFLAGS="-O2 -Werror=maybe-uninitialized"
-   (a --enable-assert or --enable-assert=full is needed to reproduce
-   the issue). This occurs with GCC 4.9.4, 5.5.0, 6.5.0, 8.4.0, 9.5.0,
-   10.4.0, 11.3.0 and 12.2.0 under Linux (Debian/unstable).
-   Bug report: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108467
-*/
-
 /* define MPFR_FULLSUB to use alternate code in mpfr_sub1sp2 and mpfr_sub1sp2n
    (see comments in mpfr_sub1sp2) */
 /* #define MPFR_FULLSUB */
@@ -1451,13 +1441,8 @@ mpfr_sub1sp (mpfr_ptr a, mpfr_srcptr b, mpfr_srcptr c, mpfr_rnd_t rnd_mode)
     gcc claims that they might be used uninitialized. We fill them with invalid
     values, which should produce a failure if so. See README.dev file. */
   int pow2;
-  MPFR_TMP_DECL(marker);
 
-  MPFR_LOG_FUNC
-    (("b[%Pd]=%.*Rg c[%Pd]=%.*Rg rnd=%d",
-      mpfr_get_prec (b), mpfr_log_prec, b,
-      mpfr_get_prec (c), mpfr_log_prec, c, rnd_mode),
-     ("a[%Pd]=%.*Rg", mpfr_get_prec (a), mpfr_log_prec, a));
+  MPFR_TMP_DECL(marker);
 
   MPFR_ASSERTD(MPFR_PREC(a) == MPFR_PREC(b) && MPFR_PREC(b) == MPFR_PREC(c));
   MPFR_ASSERTD(MPFR_IS_PURE_FP(b));
