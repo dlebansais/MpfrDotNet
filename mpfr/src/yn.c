@@ -45,7 +45,7 @@ mpfr_y1 (mpfr_ptr res, mpfr_srcptr z, mpfr_rnd_t r)
 static mpfr_exp_t
 mpfr_yn_s1 (mpfr_ptr s, mpfr_srcptr y, mpfr_ui n)
 {
-    mpfr_ui k;
+  mpfr_ui k;
   mpz_t f;
   mpfr_exp_t e, emax;
 

@@ -28,7 +28,7 @@ https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
               j(n,-z) = (-1)^n j(n,z)
 */
 
-static int mpfr_jn_asympt (mpfr_ptr, long, mpfr_srcptr, mpfr_rnd_t);
+static int mpfr_jn_asympt (mpfr_ptr, mpfr_si, mpfr_srcptr, mpfr_rnd_t);
 
 int
 mpfr_j0 (mpfr_ptr res, mpfr_srcptr z, mpfr_rnd_t r)
@@ -80,11 +80,11 @@ mpfr_jn_k0 (unsigned long n, mpfr_srcptr z)
 }
 
 int
-mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
+mpfr_jn (mpfr_ptr res, mpfr_si n, mpfr_srcptr z, mpfr_rnd_t r)
 {
   int inex;
   int exception = 0;
-  unsigned long absn;
+  mpfr_ui absn;
   mpfr_prec_t prec, pbound, err;
   mpfr_uprec_t uprec;
   mpfr_exp_t exps, expT, diffexp;
@@ -99,7 +99,7 @@ mpfr_jn (mpfr_ptr res, long n, mpfr_srcptr z, mpfr_rnd_t r)
      ("res[%Pd]=%.*Rg inexact=%d",
       mpfr_get_prec (res), mpfr_log_prec, res, inex));
 
-  absn = SAFE_ABS (unsigned long, n);
+  absn = SAFE_ABS (mpfr_ui, n);
 
   if (MPFR_UNLIKELY (MPFR_IS_SINGULAR (z)))
     {
