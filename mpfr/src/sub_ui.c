@@ -32,7 +32,7 @@ mpfr_sub_ui (mpfr_ptr y, mpfr_srcptr x, mpfr_ui u, mpfr_rnd_t rnd_mode)
       mpfr_get_prec(x), mpfr_log_prec, x, u, rnd_mode),
      ("y[%Pd]=%.*Rg", mpfr_get_prec (y), mpfr_log_prec, y));
 
-  /* (unsigned long) 0 is assumed to be a real 0 (unsigned) */
+  /* (mpfr_ui) 0 is assumed to be a real 0 (unsigned) */
   if (MPFR_UNLIKELY (u == 0))
     return mpfr_set (y, x, rnd_mode);
 
