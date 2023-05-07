@@ -148,7 +148,7 @@ int __gmpfr_cov_sum_tmd[MPFR_RND_MAX][2][2][3][2][2] = { 0 };
  */
 static mpfr_prec_t
 sum_raw (mp_limb_t *wp, mp_size_t ws, mpfr_prec_t wq, const mpfr_ptr *x,
-         mpfr_ui n, mpfr_exp_t minexp, mpfr_exp_t maxexp,
+         unsigned long n, mpfr_exp_t minexp, mpfr_exp_t maxexp,
          mp_limb_t *tp, mp_size_t ts, int logn, mpfr_prec_t prec,
          mpfr_exp_t *ep, mpfr_exp_t *minexpp, mpfr_exp_t *maxexpp)
 {
@@ -172,7 +172,7 @@ sum_raw (mp_limb_t *wp, mp_size_t ws, mpfr_prec_t wq, const mpfr_ptr *x,
   while (1)
     {
       mpfr_exp_t maxexp2 = MPFR_EXP_MIN;
-      mpfr_ui i;
+      unsigned long i;
 
       MPFR_LOG_MSG (("sum_raw loop: "
                      "maxexp=%" MPFR_EXP_FSPEC "d "
@@ -524,8 +524,8 @@ sum_raw (mp_limb_t *wp, mp_size_t ws, mpfr_prec_t wq, const mpfr_ptr *x,
 /* Generic case: all the inputs are finite numbers,
    with at least 3 regular numbers. */
 static int
-sum_aux (mpfr_ptr sum, const mpfr_ptr *x, mpfr_ui n, mpfr_rnd_t rnd,
-         mpfr_exp_t maxexp, mpfr_ui rn)
+sum_aux (mpfr_ptr sum, const mpfr_ptr *x, unsigned long n, mpfr_rnd_t rnd,
+         mpfr_exp_t maxexp, unsigned long rn)
 {
   mp_limb_t *sump;
   mp_limb_t *tp;  /* pointer to a temporary area */
@@ -549,7 +549,7 @@ sum_aux (mpfr_ptr sum, const mpfr_ptr *x, mpfr_ui n, mpfr_rnd_t rnd,
 
   /* In practice, no integer overflow on the exponent. */
   MPFR_STAT_STATIC_ASSERT (MPFR_EXP_MAX - MPFR_EMAX_MAX >=
-                           sizeof (mpfr_ui) * CHAR_BIT);
+                           sizeof (unsigned long) * CHAR_BIT);
 
   /* Set up some variables and the accumulator. */
 
@@ -1264,7 +1264,7 @@ sum_aux (mpfr_ptr sum, const mpfr_ptr *x, mpfr_ui n, mpfr_rnd_t rnd,
 /**********************************************************************/
 
 int
-mpfr_sum (mpfr_ptr sum, const mpfr_ptr *x, mpfr_ui n, mpfr_rnd_t rnd)
+mpfr_sum (mpfr_ptr sum, const mpfr_ptr *x, unsigned long n, mpfr_rnd_t rnd)
 {
   MPFR_LOG_FUNC
     (("n=%lu rnd=%d", n, rnd),
@@ -1286,8 +1286,8 @@ mpfr_sum (mpfr_ptr sum, const mpfr_ptr *x, mpfr_ui n, mpfr_rnd_t rnd)
   else
     {
       mpfr_exp_t maxexp = MPFR_EXP_MIN;  /* max(Empty) */
-      mpfr_ui i;
-      mpfr_ui rn = 0;  /* will be the number of regular inputs */
+      unsigned long i;
+      unsigned long rn = 0;  /* will be the number of regular inputs */
       /* sign of infinities and zeros (0: currently unknown) */
       int sign_inf = 0, sign_zero = 0;
 
@@ -1377,7 +1377,7 @@ mpfr_sum (mpfr_ptr sum, const mpfr_ptr *x, mpfr_ui n, mpfr_rnd_t rnd)
       /* Optimize the case where there are only two regular numbers. */
       if (MPFR_UNLIKELY (rn <= 2))
         {
-          mpfr_ui h = MPFR_UI_MAX;
+          unsigned long h = ULONG_MAX;
 
           for (i = 0; i < n; i++)
             if (! MPFR_IS_SINGULAR (x[i]))
