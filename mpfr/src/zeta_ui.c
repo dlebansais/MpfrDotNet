@@ -190,7 +190,7 @@ mpfr_zeta_ui (mpfr_ptr z, mpfr_ui m, mpfr_rnd_t r)
               mpz_fdiv_q_2exp (t, t, 1);
               /* Warning: the test below assumes that an unsigned long
                  has no padding bits. */
-              if (n < 1UL << ((sizeof(unsigned long) * CHAR_BIT) / 2))
+              if (n < ((mpfr_ui)1) << ((sizeof(mpfr_ui) * CHAR_BIT) / 2))
                 /* (n - k + 1) * (n + k - 1) < n^2 */
                 mpz_divexact_ui (t, t, (n - k + 1) * (n + k - 1));
               else
