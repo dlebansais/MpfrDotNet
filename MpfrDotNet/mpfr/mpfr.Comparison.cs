@@ -250,7 +250,7 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="op3">The third operand.</param>
-    public static bool eq(mpfr_t op1, mpfr_t op2, ulong op3)
+    public static bool eq(mpfr_t op1, mpfr_t op2, uint op3)
     {
         return mpfr_eq(ref op1.Value, ref op2.Value, op3) != 0;
     }

@@ -38,4 +38,14 @@ public partial class mpfr_t : IDisposable
 
         return z;
     }
+
+    /// <summary>
+    /// Swaps two numbers.
+    /// </summary>
+    /// <param name="x">The first number.</param>
+    /// <param name="y">The second number.</param>
+    public static void Swap(mpfr_t x, mpfr_t y)
+    {
+        mpfr_swap(ref x.Value, ref y.Value);
+    }
 }

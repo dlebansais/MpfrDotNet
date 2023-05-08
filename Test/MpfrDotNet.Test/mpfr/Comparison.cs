@@ -29,6 +29,10 @@ public class Comparison
         IsGreaterThan = a > b;
         Assert.IsTrue(IsGreaterThan);
 
+        Assert.That(mpfr_t.Compare(a, a), Is.EqualTo(0));
+        Assert.That(mpfr_t.Compare(a, b), Is.EqualTo(1));
+        Assert.That(mpfr_t.Compare(b, a), Is.EqualTo(-1));
+
         IsGreaterThan = b > a;
         Assert.IsFalse(IsGreaterThan);
 
@@ -448,6 +452,325 @@ public class Comparison
 
         IsEqualTo = e != a;
         Assert.IsTrue(IsEqualTo);
+    }
+
+    [Test]
+    public void Compare()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8720124937520142.5");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201425E+15"));
+
+        using mpfr_t b = new mpfr_t("22298.125");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2298125E+4"));
+
+        Assert.That(mpfr_t.Compare(a, a), Is.EqualTo(0));
+        Assert.That(mpfr_t.Compare(a, b), Is.EqualTo(1));
+        Assert.That(mpfr_t.Compare(b, a), Is.EqualTo(-1));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void CompareAbs()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8720124937520142.5");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201425E+15"));
+
+        using mpfr_t b = new mpfr_t("22298.125");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2298125E+4"));
+
+        using mpfr_t c = new mpfr_t("-8720124937520142.5");
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("-8.7201249375201425E+15"));
+
+        using mpfr_t d = new mpfr_t("-22298.125");
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("-2.2298125E+4"));
+
+        Assert.That(mpfr_t.CompareAbs(a, a), Is.EqualTo(0));
+        Assert.That(mpfr_t.CompareAbs(a, b), Is.EqualTo(1));
+        Assert.That(mpfr_t.CompareAbs(b, a), Is.EqualTo(-1));
+        Assert.That(mpfr_t.CompareAbs(c, b), Is.EqualTo(1));
+        Assert.That(mpfr_t.CompareAbs(b, c), Is.EqualTo(-1));
+        Assert.That(mpfr_t.CompareAbs(a, d), Is.EqualTo(1));
+        Assert.That(mpfr_t.CompareAbs(d, a), Is.EqualTo(-1));
+        Assert.That(mpfr_t.CompareAbs(c, d), Is.EqualTo(1));
+        Assert.That(mpfr_t.CompareAbs(d, c), Is.EqualTo(-1));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void CompareTo()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8720124937520142.5");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201425E+15"));
+
+        using mpfr_t b = new mpfr_t("22298.125");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2298125E+4"));
+
+        Assert.That(a.CompareTo(b), Is.EqualTo(1));
+        Assert.That(b.CompareTo(a), Is.EqualTo(-1));
+
+        ulong ul1 = 8720124937520142UL;
+        ulong ul2 = 8720124937520143UL;
+        ulong ul3 = 136251952148752UL;
+        ulong ul4 = 136251952148753UL;
+
+
+        Assert.That(a.CompareTo(ul1), Is.EqualTo(1));
+        Assert.That(a.CompareTo(ul2), Is.EqualTo(-1));
+        Assert.That(a.CompareTo(ul3, 6), Is.EqualTo(1));
+        Assert.That(a.CompareTo(ul4, 6), Is.EqualTo(-1));
+
+        long l1 = 8720124937520142L;
+        long l2 = 8720124937520143L;
+        long l3 = 136251952148752L;
+        long l4 = 136251952148753L;
+
+        Assert.That(a.CompareTo(l1), Is.EqualTo(1));
+        Assert.That(a.CompareTo(l2), Is.EqualTo(-1));
+        Assert.That(a.CompareTo(l3, 6), Is.EqualTo(1));
+        Assert.That(a.CompareTo(l4, 6), Is.EqualTo(-1));
+
+        double d1 = 8720124937520142.1;
+        double d2 = 8720124937520142.9;
+
+        Assert.That(a.CompareTo(d1), Is.EqualTo(1));
+        Assert.That(a.CompareTo(d2), Is.EqualTo(-1));
+
+        using mpz_t z1 = new mpz_t("8720124937520142");
+        AsString = z1.ToString();
+        Assert.That(AsString, Is.EqualTo("8720124937520142"));
+
+        using mpz_t z2 = new mpz_t("8720124937520143");
+        AsString = z2.ToString();
+        Assert.That(AsString, Is.EqualTo("8720124937520143"));
+
+        Assert.That(a.CompareTo(z1), Is.EqualTo(1));
+        Assert.That(a.CompareTo(z2), Is.EqualTo(-1));
+
+        using mpq_t q1 = new mpq_t("100935446151795644800/11575");
+        AsString = q1.ToString();
+        Assert.That(AsString, Is.EqualTo("100935446151795644800/11575"));
+
+        using mpq_t q2 = new mpq_t("100935446151795654067/11575");
+        AsString = q2.ToString();
+        Assert.That(AsString, Is.EqualTo("100935446151795654067/11575"));
+
+        Assert.That(a.CompareTo(q1), Is.EqualTo(1));
+        Assert.That(a.CompareTo(q2), Is.EqualTo(-1));
+
+        using mpf_t f1 = new mpf_t("8720124937520142.1");
+        AsString = f1.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201421E+15"));
+
+        using mpf_t f2 = new mpf_t("8720124937520142.9");
+        AsString = f2.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201429E+15"));
+
+        Assert.That(a.CompareTo(f1), Is.EqualTo(1));
+        Assert.That(a.CompareTo(f2), Is.EqualTo(-1));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void IsLesserOrGreater()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8720124937520142.5");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201425E+15"));
+
+        using mpfr_t b = new mpfr_t("22298.125");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2298125E+4"));
+
+        Assert.That(mpfr_t.IsLesserOrGreater(a, a), Is.False);
+        Assert.That(mpfr_t.IsLesserOrGreater(a, b), Is.True);
+        Assert.That(mpfr_t.IsLesserOrGreater(b, a), Is.True);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void IsUnordered()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8720124937520142.5");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201425E+15"));
+
+        using mpfr_t b = mpfr_t.NaN();
+
+        Assert.That(mpfr_t.IsUnordered(a, a), Is.False);
+        Assert.That(mpfr_t.IsUnordered(b, b), Is.True);
+        Assert.That(mpfr_t.IsUnordered(a, b), Is.True);
+        Assert.That(mpfr_t.IsUnordered(b, a), Is.True);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void IsTotalOrdered()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8720124937520142.5");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201425E+15"));
+
+        using mpfr_t b = new mpfr_t("8720124937520143.5");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7201249375201435E+15"));
+
+        using mpfr_t c = mpfr_t.NaN(-1);
+        using mpfr_t d = mpfr_t.NaN(+1);
+
+        using mpfr_t e = mpfr_t.Zero(-1);
+        using mpfr_t f = mpfr_t.Zero(+1);
+
+        Assert.That(mpfr_t.IsTotalOrdered(a, a), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(a, b), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(b, a), Is.False);
+
+        Assert.That(mpfr_t.IsTotalOrdered(c, c), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(c, d), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(d, c), Is.False);
+
+        Assert.That(mpfr_t.IsTotalOrdered(e, e), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(e, f), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(f, e), Is.False);
+
+        Assert.That(mpfr_t.IsTotalOrdered(c, a), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(c, b), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(a, d), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(b, d), Is.True);
+
+        Assert.That(mpfr_t.IsTotalOrdered(c, e), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(c, f), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(e, d), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(f, d), Is.True);
+
+        Assert.That(mpfr_t.IsTotalOrdered(e, a), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(f, a), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(e, b), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(f, b), Is.True);
+        Assert.That(mpfr_t.IsTotalOrdered(a, e), Is.False);
+        Assert.That(mpfr_t.IsTotalOrdered(b, e), Is.False);
+        Assert.That(mpfr_t.IsTotalOrdered(a, f), Is.False);
+        Assert.That(mpfr_t.IsTotalOrdered(b, f), Is.False);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void RelativeDifference()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("35060493914120386");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.5060493914120386E+16"));
+
+        using mpfr_t b = new mpfr_t("8765123478530096.5");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7651234785300965E+15"));
+
+        using mpfr_t c = -a;
+        using mpfr_t d = -b;
+
+        using mpfr_t e = mpfr_t.RelativeDifference(a, b);
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("7.5E-1"));
+
+        using mpfr_t f = mpfr_t.RelativeDifference(c, d);
+        AsString = f.ToString();
+        Assert.That(AsString, Is.EqualTo("-7.5E-1"));
+
+        using mpfr_t g = mpfr_t.RelativeDifference(b, a);
+        AsString = g.ToString();
+        Assert.That(AsString, Is.EqualTo("3E+0"));
+
+        using mpfr_t h = mpfr_t.RelativeDifference(d, c);
+        AsString = h.ToString();
+        Assert.That(AsString, Is.EqualTo("-3E+0"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void IsEqualBits()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("16");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1.6E+1"));
+
+        using mpfr_t b = new mpfr_t("17");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.7E+1"));
+
+        Assert.That(mpfr_t.IsEqualBits(a, b, 4U), Is.True);
+        Assert.That(mpfr_t.IsEqualBits(a, b, 5U), Is.False);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
     [Test]

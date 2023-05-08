@@ -104,7 +104,7 @@ internal static partial class NativeMethods
     public static __mpfr_total_order_p mpfr_total_order_p { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_total_order_p>(GetMpfrPointer(nameof(mpfr_total_order_p)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_eq(ref __mpfr_t op1, ref __mpfr_t op2, ulong op3);
+    public delegate int __mpfr_eq(ref __mpfr_t op1, ref __mpfr_t op2, uint op3);
     public static __mpfr_eq mpfr_eq { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_eq>(GetMpfrPointer(nameof(mpfr_eq)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

@@ -89,8 +89,12 @@ public class Create
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
-        using mpfr_t NaN = new mpfr_t();
-        AsString = NaN.ToString();
+        using mpfr_t NaNDefault = new mpfr_t();
+        AsString = NaNDefault.ToString();
+        Assert.That(AsString, Is.EqualTo("@NaN@"));
+
+        using mpfr_t NaNExplicit = mpfr_t.NaN();
+        AsString = NaNExplicit.ToString();
         Assert.That(AsString, Is.EqualTo("@NaN@"));
 
         using mpfr_t PositiveInfinite = mpfr_t.Infinite();
@@ -164,6 +168,10 @@ public class Create
         using mpfr_t l = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = l.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+
+        using mpfr_t m = new mpfr_t(iz, 6);
+        AsString = m.ToString();
+        Assert.That(AsString, Is.EqualTo("4.035199977805909029111435610970132064917679501152788E+59"));
     }
 
     [Test]

@@ -40,6 +40,21 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
+    /// Creates a new instance of the <see cref="mpfr_t"/> class representing NaN.
+    /// </summary>
+    /// <param name="sign">The sign.</param>
+    public static mpfr_t NaN(int sign = +1)
+    {
+        mpfr_t Result = new();
+        mpfr_set_nan(ref Result.Value);
+
+        if (sign < 0)
+            mpfr_neg(ref Result.Value, ref Result.Value, __mpfr_rnd_t.MPFR_RNDF);
+
+        return Result;
+    }
+
+    /// <summary>
     /// Creates a new instance of the <see cref="mpfr_t"/> class representing infinite.
     /// </summary>
     /// <param name="sign">The sign.</param>
@@ -233,6 +248,18 @@ public partial class mpfr_t : IDisposable
         : this()
     {
         mpfr_set_sj_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpfr_t"/> class.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="e">The exponent.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    public mpfr_t(mpz_t op, long e, mpfr_rnd_t rounding = DefaultRounding)
+        : this()
+    {
+        mpfr_set_z_2exp(ref Value, ref op.Value, e, (__mpfr_rnd_t)rounding);
     }
 
     /// <summary>

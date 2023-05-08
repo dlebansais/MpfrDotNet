@@ -59,6 +59,30 @@ public class Misc
     }
 
     [Test]
+    public void Swap()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        using mpfr_t x = new mpfr_t("22250983250345029834502983.5740293845720");
+        AsString = x.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+
+        using mpfr_t y = new mpfr_t("2229874359879827.30594288574029879874539");
+        AsString = y.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+
+        mpfr_t.Swap(x, y);
+
+        AsString = x.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+
+        AsString = y.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+    }
+
+    [Test]
     public void Version()
     {
         string AsString;
