@@ -34,11 +34,11 @@ internal static partial class NativeMethods
     public static __mpfr_get_uj mpfr_get_uj { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_uj>(GetMpfrPointer($"__gmpfr_{nameof(mpfr_get_uj)}"));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate double __mpfr_get_d_2exp(out long exp, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public delegate double __mpfr_get_d_2exp(out int exp, ref __mpfr_t op, __mpfr_rnd_t rnd);
     public static __mpfr_get_d_2exp mpfr_get_d_2exp { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_d_2exp>(GetMpfrPointer(nameof(mpfr_get_d_2exp)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_frexp(out long exp, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_frexp(out int exp, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
     public static __mpfr_frexp mpfr_frexp { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_frexp>(GetMpfrPointer(nameof(mpfr_frexp)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

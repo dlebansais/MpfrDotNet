@@ -63,11 +63,93 @@ public class Conversion
         Assert.That(AsString, Is.EqualTo("1.65E+1"));
         Assert.That((double)i, Is.EqualTo(16.5));
 
-        BigInteger bj = new BigInteger(89);
+        BigInteger bj = new BigInteger(898989898989898989);
         using mpfr_t j = bj;
         AsString = j.ToString();
-        Assert.That(AsString, Is.EqualTo("8.9E+1"));
+        Assert.That(AsString, Is.EqualTo("8.98989898989898989E+17"));
         Assert.That((BigInteger)j, Is.EqualTo(bj));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void WithExponent()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        double d;
+        int e;
+
+        using mpfr_t a = 16.5;
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1.65E+1"));
+
+        mpfr_t.ToDoubleAndExponent(a, out d, out e);
+
+        Assert.That(d, Is.EqualTo(0.515625));
+        Assert.That(e, Is.EqualTo(5));
+
+        using mpz_t z1 = mpfr_t.ToIntegerAndExponent(a, out e);
+        AsString = z1.ToString();
+        Assert.That(AsString, Is.EqualTo("175458095443608895223302531957005484032"));
+        Assert.That(e, Is.EqualTo(-123));
+
+        using mpfr_t b = -16.5;
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("-1.65E+1"));
+
+        mpfr_t.ToDoubleAndExponent(b, out d, out e);
+
+        Assert.That(d, Is.EqualTo(-0.515625));
+        Assert.That(e, Is.EqualTo(5));
+
+        using mpz_t z2 = mpfr_t.ToIntegerAndExponent(b, out e);
+        AsString = z2.ToString();
+        Assert.That(AsString, Is.EqualTo("-175458095443608895223302531957005484032"));
+        Assert.That(e, Is.EqualTo(-123));
+
+        using mpfr_t c = 0.046875;
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("4.6875E-2"));
+
+        mpfr_t.ToDoubleAndExponent(c, out d, out e);
+
+        Assert.That(d, Is.EqualTo(0.75));
+        Assert.That(e, Is.EqualTo(-4));
+
+        using mpz_t z3 = mpfr_t.ToIntegerAndExponent(c, out e);
+        AsString = z3.ToString();
+        Assert.That(AsString, Is.EqualTo("255211775190703847597530955573826158592"));
+        Assert.That(e, Is.EqualTo(-132));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void ToIntegralFractional()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        int e;
+
+        using mpfr_t a = 16.5;
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1.65E+1"));
+
+        using mpfr_t b = mpfr_t.ToIntegralFractional(a, out e);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("5.15625E-1"));
+        Assert.That(e, Is.EqualTo(5));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

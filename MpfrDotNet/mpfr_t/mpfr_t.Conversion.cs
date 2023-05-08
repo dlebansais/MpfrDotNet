@@ -192,6 +192,46 @@ public partial class mpfr_t : IDisposable
 
         mpfr_get_z(ref Temporary.Value, ref value.Value, (__mpfr_rnd_t)value.Rounding);
 
-        return (BigInteger)Temporary;
+        BigInteger Result = (BigInteger)Temporary;
+        return Result;
+    }
+
+    /// <summary>
+    /// Converts to a <see cref="double"/> value and exponent.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="d">The double upon return.</param>
+    /// <param name="e">The exponent upon return.</param>
+    public static void ToDoubleAndExponent(mpfr_t value, out double d, out int e)
+    {
+        d = mpfr_get_d_2exp(out e, ref value.Value, (__mpfr_rnd_t)value.Rounding);
+    }
+
+    /// <summary>
+    /// Convert to integral and fractional parts.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="e">The exponent upon return.</param>
+    public static mpfr_t ToIntegralFractional(mpfr_t value, out int e)
+    {
+        mpfr_t y = new();
+
+        mpfr_frexp(out e, ref y.Value, ref value.Value, (__mpfr_rnd_t)value.Rounding);
+
+        return y;
+    }
+
+    /// <summary>
+    /// Converts to an integer value and exponent.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="e">The exponent upon return.</param>
+    public static mpz_t ToIntegerAndExponent(mpfr_t value, out int e)
+    {
+        mpz_t Result = new();
+
+        e = mpfr_get_z_2exp(ref Result.Value, ref value.Value);
+
+        return Result;
     }
 }

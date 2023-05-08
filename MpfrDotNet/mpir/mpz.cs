@@ -1544,7 +1544,7 @@ public static class mpz
         ulong SizeInBits = (ulong)NativeMethods.mpz_sizeinbase(ref op.Value, 2);
         byte[] Content = new byte[(SizeInBits + 7) / 8];
 
-        NativeMethods.mpz_export(Content, out NativeMethods.size_t countp, 0, (NativeMethods.size_t)sizeof(byte), 0, (NativeMethods.size_t)0UL, ref op.Value);
+        NativeMethods.mpz_export(Content, out NativeMethods.size_t countp, -1, (NativeMethods.size_t)sizeof(byte), -1, (NativeMethods.size_t)0UL, ref op.Value);
 
         writer.Write(Content);
 
@@ -1564,7 +1564,7 @@ public static class mpz
 
         byte[] Content = reader.ReadBytes((int)ContentLength);
 
-        NativeMethods.mpz_import(ref rop.Value, (NativeMethods.size_t)(ulong)Content.Length, 0, (NativeMethods.size_t)sizeof(byte), 0, (NativeMethods.size_t)0UL, Content);
+        NativeMethods.mpz_import(ref rop.Value, (NativeMethods.size_t)(ulong)Content.Length, -1, (NativeMethods.size_t)sizeof(byte), -1, (NativeMethods.size_t)0UL, Content);
 
         return Content.Length;
     }

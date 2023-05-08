@@ -173,7 +173,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     public mpz_t(byte[] bytes)
         : this()
     {
-        mpz_import(ref Value, (size_t)(ulong)bytes.LongLength, 0, (size_t)sizeof(byte), 0, (size_t)0UL, bytes);
+        mpz_import(ref Value, (size_t)(ulong)bytes.LongLength, -1, (size_t)sizeof(byte), -1, (size_t)0UL, bytes);
     }
 
     /// <summary>
@@ -202,7 +202,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
         byte[] Result = new byte[(SizeInBits + 7) / 8];
 
         size_t countp;
-        mpz_export(Result, out countp, 0, (size_t)sizeof(byte), 0, (size_t)0UL, ref Value);
+        mpz_export(Result, out countp, -1, (size_t)sizeof(byte), -1, (size_t)0UL, ref Value);
 
         return Result;
     }
@@ -375,7 +375,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     {
         byte[] Bytes = new byte[8];
 
-        mpz_import(ref value.Value, (size_t)(ulong)Bytes.LongLength, 0, (size_t)sizeof(byte), 0, (size_t)0UL, Bytes);
+        mpz_import(ref value.Value, (size_t)(ulong)Bytes.LongLength, -1, (size_t)sizeof(byte), -1, (size_t)0UL, Bytes);
         long Int64Result = BitConverter.ToInt64(Bytes, 0);
 
         return Int64Result;
@@ -389,7 +389,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     {
         byte[] Bytes = new byte[8];
 
-        mpz_import(ref value.Value, (size_t)(ulong)Bytes.LongLength, 0, (size_t)sizeof(byte), 0, (size_t)0UL, Bytes);
+        mpz_import(ref value.Value, (size_t)(ulong)Bytes.LongLength, -1, (size_t)sizeof(byte), -1, (size_t)0UL, Bytes);
         ulong UInt64Result = BitConverter.ToUInt64(Bytes, 0);
 
         return UInt64Result;
@@ -420,7 +420,9 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     public static explicit operator BigInteger(mpz_t value)
     {
         byte[] Bytes = value.ToByteArray();
-        return new BigInteger(Bytes);
+
+        BigInteger Result = new BigInteger(Bytes);
+        return Result;
     }
     #endregion
 

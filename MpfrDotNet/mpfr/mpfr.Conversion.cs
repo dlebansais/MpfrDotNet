@@ -55,7 +55,7 @@ public static partial class mpfr
     /// <param name="exp">The exponent.</param>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
-    public static double get_d_2exp(out long exp, mpfr_t op, mpfr_rnd_t rnd)
+    public static double get_d_2exp(out int exp, mpfr_t op, mpfr_rnd_t rnd)
     {
         return mpfr_get_d_2exp(out exp, ref op.Value, (__mpfr_rnd_t)rnd);
     }
@@ -67,7 +67,7 @@ public static partial class mpfr
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
-    public static int frexp(out long exp, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
+    public static int frexp(out int exp, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
     {
         return mpfr_frexp(out exp, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
     }
