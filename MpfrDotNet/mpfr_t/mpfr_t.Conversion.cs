@@ -234,4 +234,30 @@ public partial class mpfr_t : IDisposable
 
         return Result;
     }
+
+    /// <summary>
+    /// Converts to a rational.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static mpq_t ToRational(mpfr_t value)
+    {
+        mpq_t Result = new();
+
+        mpfr_get_q(ref Result.Value, ref value.Value);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Converts to a <see cref="mpf_t"/> floating-point value.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static mpf_t ToFloatingPoint(mpfr_t value)
+    {
+        mpf_t Result = new();
+
+        mpfr_get_f(ref Result.Value, ref value.Value, (__mpfr_rnd_t)value.Rounding);
+
+        return Result;
+    }
 }

@@ -140,6 +140,7 @@ public class Create
         using mpfr_t h = new mpfr_t(-200.1);
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("-2.00099999999999994315658113919198513031005859375E+2"));
+        //Assert.That(h.DigitCount, Is.EqualTo(AsString.Length));
 
         using mpz_t iz = new mpz_t("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
         AsString = iz.ToString(16).ToUpper();

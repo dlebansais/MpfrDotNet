@@ -153,4 +153,58 @@ public class Conversion
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
+
+    [Test]
+    public void ToRational()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpq_t a = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
+
+        using mpfr_t b = new mpfr_t(a);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9"));
+
+        using mpq_t c = mpfr_t.ToRational(b);
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("19036696701859040601814679603844175557/9903520314283042199192993792"));
+
+        using mpfr_t d = new mpfr_t(c);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void ToFloatingPoint()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpf_t a = new mpf_t("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1.92221514145873570032E+9"));
+
+        using mpfr_t b = new mpfr_t(a);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9"));
+
+        using mpf_t c = mpfr_t.ToFloatingPoint(b);
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("1.92221514145873570032E+9"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
 }

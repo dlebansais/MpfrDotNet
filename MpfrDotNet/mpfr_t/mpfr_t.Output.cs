@@ -2,7 +2,6 @@
 
 using System;
 using System.Text;
-using Interop.Mpfr;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
@@ -11,6 +10,14 @@ using static Interop.Mpfr.NativeMethods;
 /// </summary>
 public partial class mpfr_t : IDisposable
 {
+    /// <summary>
+    /// Gets the number of digits necessary to store a string with the current precision.
+    /// </summary>
+    public ulong DigitCount
+    {
+        get { return mpfr_get_str_ndigits(mpz_t.DefaultBase, Precision); }
+    }
+
     /// <summary>
     /// Returns a string that represents the number value.
     /// </summary>
