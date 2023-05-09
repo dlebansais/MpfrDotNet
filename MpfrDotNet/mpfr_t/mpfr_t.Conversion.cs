@@ -260,4 +260,52 @@ public partial class mpfr_t : IDisposable
 
         return Result;
     }
+
+    /// <summary>
+    /// Gets a value indicating whether the number can be converted to a <see cref="ulong"/>.
+    /// </summary>
+    public bool FitsUnsignedLong
+    {
+        get { return mpfr_fits_ulong_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="long"/>.
+    /// </summary>
+    public bool FitsSignedLong
+    {
+        get { return mpfr_fits_slong_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="uint"/>.
+    /// </summary>
+    public bool FitsUnsignedInt
+    {
+        get { return mpfr_fits_uint_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="int"/>.
+    /// </summary>
+    public bool FitsSignedInt
+    {
+        get { return mpfr_fits_sint_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="ushort"/>.
+    /// </summary>
+    public bool FitsUnsignedShort
+    {
+        get { return mpfr_fits_ushort_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="short"/>.
+    /// </summary>
+    public bool FitsSignedShort
+    {
+        get { return mpfr_fits_sshort_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+    }
 }

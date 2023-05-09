@@ -7,6 +7,29 @@ using NUnit.Framework;
 public class Misc
 {
     [Test]
+    public void Version()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        AsString = mpfr.get_version();
+        Assert.That(AsString, Is.EqualTo("4.2.1-dev"));
+
+        AsString = mpfr.get_patches();
+        Assert.That(AsString, Is.EqualTo(""));
+
+        Assert.IsTrue(mpfr.buildopt_tls_p());
+        Assert.IsFalse(mpfr.buildopt_float128_p());
+        Assert.IsFalse(mpfr.buildopt_decimal_p());
+        Assert.IsTrue(mpfr.buildopt_gmpinternals_p());
+        Assert.IsFalse(mpfr.buildopt_sharedcache_p());
+
+        AsString = mpfr.buildopt_tune_case();
+        Assert.That(AsString, Is.EqualTo("src/x86_64/corei5/mparam.h"));
+    }
+
+    [Test]
     public void MiscNext()
     {
         string AsString;
@@ -93,25 +116,27 @@ public class Misc
     }
 
     [Test]
-    public void Version()
+    public void ToFormattedString()
     {
         string AsString;
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
-        AsString = mpfr.get_version();
-        Assert.That(AsString, Is.EqualTo("4.2.1-dev"));
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
 
-        AsString = mpfr.get_patches();
-        Assert.That(AsString, Is.EqualTo(""));
+        using mpfr_t x = new mpfr_t("22250983250345029834502983.5740293845720");
+        AsString = x.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        Assert.IsTrue(mpfr.buildopt_tls_p());
-        Assert.IsFalse(mpfr.buildopt_float128_p());
-        Assert.IsFalse(mpfr.buildopt_decimal_p());
-        Assert.IsTrue(mpfr.buildopt_gmpinternals_p());
-        Assert.IsFalse(mpfr.buildopt_sharedcache_p());
+        string Result;
 
-        AsString = mpfr.buildopt_tune_case();
-        Assert.That(AsString, Is.EqualTo("src/x86_64/corei5/mparam.h"));
+        Result = x.ToFormattedString("%Rf");
+        Assert.That(Result, Is.EqualTo("22250983250345029834502983.574029"));
+
+        Result = x.ToFormattedString(10, "%Rf");
+        Assert.That(Result, Is.EqualTo("222509832"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 }

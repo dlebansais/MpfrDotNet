@@ -207,4 +207,182 @@ public class Conversion
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
+
+    [Test]
+    public void Fits()
+    {
+        string AsString;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new("18446744073709551616");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1.8446744073709551616E+19"));
+
+        Assert.That(a.FitsUnsignedLong, Is.False);
+        Assert.That(a.FitsSignedLong, Is.False);
+        Assert.That(a.FitsUnsignedInt, Is.False);
+        Assert.That(a.FitsSignedInt, Is.False);
+        Assert.That(a.FitsUnsignedShort, Is.False);
+        Assert.That(a.FitsSignedShort, Is.False);
+
+        using mpfr_t b = new("18446744073709551615");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1.8446744073709551615E+19"));
+
+        Assert.That(b.FitsUnsignedLong, Is.True);
+        Assert.That(b.FitsSignedLong, Is.False);
+        Assert.That(b.FitsUnsignedInt, Is.False);
+        Assert.That(b.FitsSignedInt, Is.False);
+        Assert.That(b.FitsUnsignedShort, Is.False);
+        Assert.That(b.FitsSignedShort, Is.False);
+
+        using mpfr_t c = new("9223372036854775808");
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("9.223372036854775808E+18"));
+
+        Assert.That(c.FitsUnsignedLong, Is.True);
+        Assert.That(c.FitsSignedLong, Is.False);
+        Assert.That(c.FitsUnsignedInt, Is.False);
+        Assert.That(c.FitsSignedInt, Is.False);
+        Assert.That(c.FitsUnsignedShort, Is.False);
+        Assert.That(c.FitsSignedShort, Is.False);
+
+        using mpfr_t d = new("-9223372036854775808");
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("-9.223372036854775808E+18"));
+
+        Assert.That(d.FitsUnsignedLong, Is.False);
+        Assert.That(d.FitsSignedLong, Is.True);
+        Assert.That(d.FitsUnsignedInt, Is.False);
+        Assert.That(d.FitsSignedInt, Is.False);
+        Assert.That(d.FitsUnsignedShort, Is.False);
+        Assert.That(d.FitsSignedShort, Is.False);
+
+        using mpfr_t e = new("9223372036854775807");
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("9.223372036854775807E+18"));
+
+        Assert.That(e.FitsUnsignedLong, Is.True);
+        Assert.That(e.FitsSignedLong, Is.True);
+        Assert.That(e.FitsUnsignedInt, Is.False);
+        Assert.That(e.FitsSignedInt, Is.False);
+        Assert.That(e.FitsUnsignedShort, Is.False);
+        Assert.That(e.FitsSignedShort, Is.False);
+
+        using mpfr_t f = new("4294967296");
+        AsString = f.ToString();
+        Assert.That(AsString, Is.EqualTo("4.294967296E+9"));
+
+        Assert.That(f.FitsUnsignedLong, Is.True);
+        Assert.That(f.FitsSignedLong, Is.True);
+        Assert.That(f.FitsUnsignedInt, Is.False);
+        Assert.That(f.FitsSignedInt, Is.False);
+        Assert.That(f.FitsUnsignedShort, Is.False);
+        Assert.That(f.FitsSignedShort, Is.False);
+
+        using mpfr_t g = new("4294967295");
+        AsString = g.ToString();
+        Assert.That(AsString, Is.EqualTo("4.294967295E+9"));
+
+        Assert.That(g.FitsUnsignedLong, Is.True);
+        Assert.That(g.FitsSignedLong, Is.True);
+        Assert.That(g.FitsUnsignedInt, Is.True);
+        Assert.That(g.FitsSignedInt, Is.False);
+        Assert.That(g.FitsUnsignedShort, Is.False);
+        Assert.That(g.FitsSignedShort, Is.False);
+
+        using mpfr_t h = new("2147483648");
+        AsString = h.ToString();
+        Assert.That(AsString, Is.EqualTo("2.147483648E+9"));
+
+        Assert.That(h.FitsUnsignedLong, Is.True);
+        Assert.That(h.FitsSignedLong, Is.True);
+        Assert.That(h.FitsUnsignedInt, Is.True);
+        Assert.That(h.FitsSignedInt, Is.False);
+        Assert.That(h.FitsUnsignedShort, Is.False);
+        Assert.That(h.FitsSignedShort, Is.False);
+
+        using mpfr_t i = new("-2147483648");
+        AsString = i.ToString();
+        Assert.That(AsString, Is.EqualTo("-2.147483648E+9"));
+
+        Assert.That(i.FitsUnsignedLong, Is.False);
+        Assert.That(i.FitsSignedLong, Is.True);
+        Assert.That(i.FitsUnsignedInt, Is.False);
+        Assert.That(i.FitsSignedInt, Is.True);
+        Assert.That(i.FitsUnsignedShort, Is.False);
+        Assert.That(i.FitsSignedShort, Is.False);
+
+        using mpfr_t j = new("2147483647");
+        AsString = j.ToString();
+        Assert.That(AsString, Is.EqualTo("2.147483647E+9"));
+
+        Assert.That(j.FitsUnsignedLong, Is.True);
+        Assert.That(j.FitsSignedLong, Is.True);
+        Assert.That(j.FitsUnsignedInt, Is.True);
+        Assert.That(j.FitsSignedInt, Is.True);
+        Assert.That(j.FitsUnsignedShort, Is.False);
+        Assert.That(j.FitsSignedShort, Is.False);
+
+        using mpfr_t k = new("65536");
+        AsString = k.ToString();
+        Assert.That(AsString, Is.EqualTo("6.5536E+4"));
+
+        Assert.That(k.FitsUnsignedLong, Is.True);
+        Assert.That(k.FitsSignedLong, Is.True);
+        Assert.That(k.FitsUnsignedInt, Is.True);
+        Assert.That(k.FitsSignedInt, Is.True);
+        Assert.That(k.FitsUnsignedShort, Is.False);
+        Assert.That(k.FitsSignedShort, Is.False);
+
+        using mpfr_t l = new("65535");
+        AsString = l.ToString();
+        Assert.That(AsString, Is.EqualTo("6.5535E+4"));
+
+        Assert.That(l.FitsUnsignedLong, Is.True);
+        Assert.That(l.FitsSignedLong, Is.True);
+        Assert.That(l.FitsUnsignedInt, Is.True);
+        Assert.That(l.FitsSignedInt, Is.True);
+        Assert.That(l.FitsUnsignedShort, Is.True);
+        Assert.That(l.FitsSignedShort, Is.False);
+
+        using mpfr_t m = new("32768");
+        AsString = m.ToString();
+        Assert.That(AsString, Is.EqualTo("3.2768E+4"));
+
+        Assert.That(m.FitsUnsignedLong, Is.True);
+        Assert.That(m.FitsSignedLong, Is.True);
+        Assert.That(m.FitsUnsignedInt, Is.True);
+        Assert.That(m.FitsSignedInt, Is.True);
+        Assert.That(m.FitsUnsignedShort, Is.True);
+        Assert.That(m.FitsSignedShort, Is.False);
+
+        using mpfr_t n = new("-32768");
+        AsString = n.ToString();
+        Assert.That(AsString, Is.EqualTo("-3.2768E+4"));
+
+        Assert.That(n.FitsUnsignedLong, Is.False);
+        Assert.That(n.FitsSignedLong, Is.True);
+        Assert.That(n.FitsUnsignedInt, Is.False);
+        Assert.That(n.FitsSignedInt, Is.True);
+        Assert.That(n.FitsUnsignedShort, Is.False);
+        Assert.That(n.FitsSignedShort, Is.True);
+
+        using mpfr_t o = new("32767");
+        AsString = o.ToString();
+        Assert.That(AsString, Is.EqualTo("3.2767E+4"));
+
+        Assert.That(o.FitsUnsignedLong, Is.True);
+        Assert.That(o.FitsSignedLong, Is.True);
+        Assert.That(o.FitsUnsignedInt, Is.True);
+        Assert.That(o.FitsSignedInt, Is.True);
+        Assert.That(o.FitsUnsignedShort, Is.True);
+        Assert.That(o.FitsSignedShort, Is.True);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
 }

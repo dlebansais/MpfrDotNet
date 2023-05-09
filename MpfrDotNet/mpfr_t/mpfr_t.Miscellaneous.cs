@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Text;
 using Interop.Mpfr;
 using static Interop.Mpfr.NativeMethods;
 
@@ -47,5 +48,40 @@ public partial class mpfr_t : IDisposable
     public static void Swap(mpfr_t x, mpfr_t y)
     {
         mpfr_swap(ref x.Value, ref y.Value);
+    }
+
+    /// <summary>
+    /// Returns a string that represents the number value.
+    /// </summary>
+    /// <param name="format">The formatting string.</param>
+    /// <returns>The formatted number.</returns>
+    public string ToFormattedString(string format)
+    {
+        ulong SizeInDigits = DigitCount;
+        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
+
+        mpfr_sprintf(Data, format, ref Value, IntPtr.Zero);
+
+        string Result = Data.ToString();
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Returns a string that represents the number value.
+    /// </summary>
+    /// <param name="maxLength">The maximum number of characters to return.</param>
+    /// <param name="format">The formatting string.</param>
+    /// <returns>The formatted number.</returns>
+    public string ToFormattedString(ulong maxLength, string format)
+    {
+        ulong SizeInDigits = DigitCount;
+        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
+
+        mpfr_snprintf(Data, maxLength, format, ref Value, IntPtr.Zero);
+
+        string Result = Data.ToString();
+
+        return Result;
     }
 }

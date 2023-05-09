@@ -94,7 +94,7 @@ internal static partial class NativeMethods
     public static __mpfr_sprintf mpfr_sprintf { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_sprintf>(GetMpfrPointer(nameof(mpfr_sprintf)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public delegate int __mpfr_snprintf(IntPtr buf, ulong n, string format, ref __mpfr_t op, IntPtr end);
+    public delegate int __mpfr_snprintf(StringBuilder buf, ulong n, string format, ref __mpfr_t op, IntPtr end);
     public static __mpfr_snprintf mpfr_snprintf { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_snprintf>(GetMpfrPointer(nameof(mpfr_snprintf)));
 }
 #pragma warning restore SA1601 // Partial elements should be documented
