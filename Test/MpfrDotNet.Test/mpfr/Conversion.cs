@@ -170,7 +170,7 @@ public class Conversion
 
         using mpfr_t b = new mpfr_t(a);
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9"));
+        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349265E+9"));
 
         using mpq_t c = mpfr_t.ToRational(b);
         AsString = c.ToString();
@@ -178,7 +178,7 @@ public class Conversion
 
         using mpfr_t d = new mpfr_t(c);
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9"));
+        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349265E+9"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -199,7 +199,7 @@ public class Conversion
 
         using mpfr_t b = new mpfr_t(a);
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9"));
+        Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349265E+9"));
 
         using mpf_t c = mpfr_t.ToFloatingPoint(b);
         AsString = c.ToString();

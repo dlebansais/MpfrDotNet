@@ -41,21 +41,26 @@ public class Misc
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         using mpfr_t c = mpfr_t.Min(a, b);
         AsString = c.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         using mpfr_t d = mpfr_t.Max(a, b);
         AsString = d.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
     [Test]
@@ -65,21 +70,26 @@ public class Misc
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
         using mpfr_t x = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = x.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
         using mpfr_t y = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = y.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         mpfr_t.Swap(x, y);
 
         AsString = x.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         AsString = y.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
     [Test]

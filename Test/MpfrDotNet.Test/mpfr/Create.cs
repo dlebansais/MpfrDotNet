@@ -135,12 +135,12 @@ public class Create
 
         using mpfr_t g = new mpfr_t(200.1F);
         AsString = g.ToString();
-        Assert.That(AsString, Is.EqualTo("2.00100006103515625E+2"));
+        Assert.That(AsString, Is.EqualTo("2.0010000610351562E+2"));
 
         using mpfr_t h = new mpfr_t(-200.1);
         AsString = h.ToString();
-        Assert.That(AsString, Is.EqualTo("-2.00099999999999994315658113919198513031005859375E+2"));
-        //Assert.That(h.DigitCount, Is.EqualTo(AsString.Length));
+        Assert.That(AsString, Is.EqualTo("-2.0009999999999999E+2"));
+        Assert.That(h.DigitCount, Is.EqualTo(AsString.Length - 5));
 
         using mpz_t iz = new mpz_t("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
         AsString = iz.ToString(16).ToUpper();
@@ -148,7 +148,7 @@ public class Create
 
         using mpfr_t i = new mpfr_t(iz);
         AsString = i.ToString();
-        Assert.That(AsString, Is.EqualTo("6.3049999653217328579866181421408313514338742205512312E+57"));
+        Assert.That(AsString, Is.EqualTo("6.3049999653217329E+57"));
 
         using mpq_t jq = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = jq.ToString();
@@ -156,7 +156,7 @@ public class Create
 
         using mpfr_t j = new mpfr_t(jq);
         AsString = j.ToString();
-        Assert.That(AsString, Is.EqualTo("1.9222151414587357044219970703125E+9"));
+        Assert.That(AsString, Is.EqualTo("1.9222151414587357E+9"));
 
         using mpf_t kf = new mpf_t("22250983250345029834502983.5740293845720");
         AsString = kf.ToString();
@@ -164,15 +164,15 @@ public class Create
 
         using mpfr_t k = new mpfr_t(kf);
         AsString = k.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.2250983250345028E+25"));
 
         using mpfr_t l = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = l.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.2250983250345028E+25"));
 
         using mpfr_t m = new mpfr_t(iz, 6);
         AsString = m.ToString();
-        Assert.That(AsString, Is.EqualTo("4.035199977805909029111435610970132064917679501152788E+59"));
+        Assert.That(AsString, Is.EqualTo("4.035199977805909E+59"));
     }
 
     [Test]
@@ -204,7 +204,7 @@ public class Create
 
         using mpfr_t f = new mpfr_t(1099511627775UL, -80);
         AsString = f.ToString();
-        Assert.That(AsString, Is.EqualTo("9.0949470177210105730248603482512859130793003714643419E-13"));
+        Assert.That(AsString, Is.EqualTo("9.0949470177210106E-13"));
     }
 
     [Test]
@@ -236,7 +236,7 @@ public class Create
 
         using mpfr_t f = new mpfr_t(1099511627775L, -80);
         AsString = f.ToString();
-        Assert.That(AsString, Is.EqualTo("9.0949470177210105730248603482512859130793003714643419E-13"));
+        Assert.That(AsString, Is.EqualTo("9.0949470177210106E-13"));
 
         using mpfr_t g = new mpfr_t(-10L, 0);
         AsString = g.ToString();
@@ -260,7 +260,7 @@ public class Create
 
         using mpfr_t l = new mpfr_t(-1099511627775L, -80);
         AsString = l.ToString();
-        Assert.That(AsString, Is.EqualTo("-9.0949470177210105730248603482512859130793003714643419E-13"));
+        Assert.That(AsString, Is.EqualTo("-9.0949470177210106E-13"));
     }
 
     [Test]
@@ -292,7 +292,7 @@ public class Create
 
         using mpfr_t f = new mpfr_t(1095116775U, -80);
         AsString = f.ToString();
-        Assert.That(AsString, Is.EqualTo("9.0585936476159618379092562656662579456678940914571285E-16"));
+        Assert.That(AsString, Is.EqualTo("9.0585936476159618E-16"));
     }
 
     [Test]
@@ -324,7 +324,7 @@ public class Create
 
         using mpfr_t f = new mpfr_t(1095116775, -80);
         AsString = f.ToString();
-        Assert.That(AsString, Is.EqualTo("9.0585936476159618379092562656662579456678940914571285E-16"));
+        Assert.That(AsString, Is.EqualTo("9.0585936476159618E-16"));
 
         using mpfr_t g = new mpfr_t(-10, 0);
         AsString = g.ToString();
@@ -348,6 +348,6 @@ public class Create
 
         using mpfr_t l = new mpfr_t(-1095116775, -80);
         AsString = l.ToString();
-        Assert.That(AsString, Is.EqualTo("-9.0585936476159618379092562656662579456678940914571285E-16"));
+        Assert.That(AsString, Is.EqualTo("-9.0585936476159618E-16"));
     }
 }

@@ -38,7 +38,7 @@ public partial class mpfr_t : IDisposable
         if (!IsCacheInitialized)
             return string.Empty;
 
-        ulong SizeInDigits = Precision;
+        ulong SizeInDigits = DigitCount;
         StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
 
         int Exponent;

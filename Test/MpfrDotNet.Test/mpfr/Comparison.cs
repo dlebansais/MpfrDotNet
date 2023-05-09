@@ -107,13 +107,16 @@ public class Comparison
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsGreaterThan = a >= b;
         Assert.IsTrue(IsGreaterThan);
@@ -168,6 +171,8 @@ public class Comparison
 
         IsGreaterThan = e >= a;
         Assert.IsFalse(IsGreaterThan);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
     [Test]
@@ -178,13 +183,16 @@ public class Comparison
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsLesserThan = a < b;
         Assert.IsFalse(IsLesserThan);
@@ -239,6 +247,8 @@ public class Comparison
 
         IsLesserThan = e < a;
         Assert.IsTrue(IsLesserThan);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
     [Test]
@@ -249,13 +259,16 @@ public class Comparison
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsLesserThan = a <= b;
         Assert.IsFalse(IsLesserThan);
@@ -310,6 +323,8 @@ public class Comparison
 
         IsLesserThan = e <= a;
         Assert.IsTrue(IsLesserThan);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
     [Test]
@@ -320,13 +335,16 @@ public class Comparison
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsEqualTo = a == b;
         Assert.IsFalse(IsEqualTo);
@@ -381,6 +399,8 @@ public class Comparison
 
         IsEqualTo = e == a;
         Assert.IsFalse(IsEqualTo);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
     [Test]
@@ -391,13 +411,16 @@ public class Comparison
 
         Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
 
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
         using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502799228928E+25"));
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
         using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
-        Assert.That(AsString, Is.EqualTo("2.22987435987982725E+15"));
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsEqualTo = a != b;
         Assert.IsTrue(IsEqualTo);
@@ -452,6 +475,8 @@ public class Comparison
 
         IsEqualTo = e != a;
         Assert.IsTrue(IsEqualTo);
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
     [Test]
