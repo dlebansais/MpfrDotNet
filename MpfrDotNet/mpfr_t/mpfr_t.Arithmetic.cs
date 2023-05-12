@@ -15,7 +15,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_sqrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        LastTernaryResult = mpfr_sqrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
         return z;
     }
@@ -27,7 +27,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_cbrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        LastTernaryResult = mpfr_cbrt(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
         return z;
     }
@@ -40,7 +40,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_rootn_ui(ref z.Value, ref Value, n, (__mpfr_rnd_t)Rounding);
+        LastTernaryResult = mpfr_rootn_ui(ref z.Value, ref Value, n, (__mpfr_rnd_t)Rounding);
 
         return z;
     }
@@ -52,7 +52,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_abs(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        LastTernaryResult = mpfr_abs(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
 
         return z;
     }
