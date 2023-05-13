@@ -427,4 +427,73 @@ public class Create
         a.SetPrecisionRaw(mpfr_t.DefaultPrecision);
         Assert.That(a.Precision, Is.EqualTo(mpfr_t.DefaultPrecision));
     }
+
+    [Test]
+    public void Exponent()
+    {
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        string AsString;
+
+        using mpfr_t a = new mpfr_t(200.1F);
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.00100006103515625E+2"));
+
+        int Exponent = a.Exponent;
+        Assert.That(Exponent, Is.EqualTo(8));
+
+        a.Exponent = 3;
+        Assert.That(a.Exponent, Is.EqualTo(3));
+
+        a.Exponent = 8;
+        Assert.That(a.Exponent, Is.EqualTo(8));
+
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.00100006103515625E+2"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Sign()
+    {
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        string AsString;
+        int SignBit;
+
+        using mpfr_t a = new mpfr_t(-1);
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("-1E+0"));
+
+        SignBit = a.SignBit;
+        Assert.That(SignBit, Is.EqualTo(1));
+
+        using mpfr_t b = new mpfr_t(2);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2E+0"));
+
+        SignBit = b.SignBit;
+        Assert.That(SignBit, Is.EqualTo(0));
+
+        a.SetWithSignBit(b, 0);
+
+        SignBit = a.SignBit;
+        Assert.That(SignBit, Is.EqualTo(0));
+
+        b.CopyWithSignBit(a, b);
+
+        SignBit = b.SignBit;
+        Assert.That(SignBit, Is.EqualTo(0));
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2E+0"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
 }
