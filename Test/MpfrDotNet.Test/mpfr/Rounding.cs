@@ -45,6 +45,26 @@ public class Rounding
         AsString = g.ToString();
         Assert.That(AsString, Is.EqualTo("2.2250983250345029834502983E+25"));
 
+        using mpfr_t h = a.Ceil(mpfr_rnd_t.MPFR_RNDD);
+        AsString = h.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2250983250345029834502984E+25"));
+
+        using mpfr_t i = a.Floor(mpfr_rnd_t.MPFR_RNDD);
+        AsString = i.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2250983250345029834502983E+25"));
+
+        using mpfr_t j = a.Round(mpfr_rnd_t.MPFR_RNDD);
+        AsString = j.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2250983250345029834502984E+25"));
+
+        using mpfr_t k = a.RoundEven(mpfr_rnd_t.MPFR_RNDD);
+        AsString = k.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2250983250345029834502984E+25"));
+
+        using mpfr_t l = a.Trunc(mpfr_rnd_t.MPFR_RNDD);
+        AsString = l.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2250983250345029834502983E+25"));
+
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 
