@@ -63,6 +63,8 @@ public class Conversion
         Assert.That(AsString, Is.EqualTo("1.65E+1"));
         Assert.That((double)i, Is.EqualTo(16.5));
 
+        Assert.That(i.IsInteger, Is.False);
+
         BigInteger bj = new BigInteger(898989898989898989);
         using mpfr_t j = bj;
         AsString = j.ToString();

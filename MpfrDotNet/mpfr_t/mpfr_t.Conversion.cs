@@ -308,4 +308,12 @@ public partial class mpfr_t : IDisposable
     {
         get { return mpfr_fits_sshort_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
     }
+
+    /// <summary>
+    /// Gets a value indicating whether the number is an integer.
+    /// </summary>
+    public bool IsInteger
+    {
+        get { return mpfr_integer_p(ref Value) != 0; }
+    }
 }

@@ -164,6 +164,18 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="r">The r.</param>
+    /// <param name="x">The x.</param>
+    /// <param name="y">The y.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int fmod_ui(mpfr_t r, mpfr_t x, ulong y, mpfr_rnd_t rnd)
+    {
+        return mpfr_fmod_ui(ref r.Value, ref x.Value, y, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="r">The r.</param>
     /// <param name="q">The q.</param>
     /// <param name="x">The x.</param>
     /// <param name="y">The y.</param>

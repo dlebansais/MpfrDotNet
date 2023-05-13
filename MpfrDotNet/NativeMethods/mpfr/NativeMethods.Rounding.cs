@@ -64,6 +64,10 @@ internal static partial class NativeMethods
     public static __mpfr_fmod mpfr_fmod { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_fmod>(GetMpfrPointer(nameof(mpfr_fmod)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_fmod_ui(ref __mpfr_t r, ref __mpfr_t x, ulong y, __mpfr_rnd_t rnd);
+    public static __mpfr_fmod_ui mpfr_fmod_ui { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_fmod_ui>(GetMpfrPointer(nameof(mpfr_fmod_ui)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_fmodquo(ref __mpfr_t r, out long q, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
     public static __mpfr_fmodquo mpfr_fmodquo { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_fmodquo>(GetMpfrPointer(nameof(mpfr_fmodquo)));
 

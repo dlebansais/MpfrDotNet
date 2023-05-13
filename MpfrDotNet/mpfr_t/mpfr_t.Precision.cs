@@ -28,6 +28,14 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
+    /// Gets the minimum significand precision.
+    /// </summary>
+    public int MinSignificandPrecision
+    {
+        get { return mpfr_min_prec(ref Value); }
+    }
+
+    /// <summary>
     /// Sets the exact precision.
     /// </summary>
     /// <param name="value">The precision.</param>
