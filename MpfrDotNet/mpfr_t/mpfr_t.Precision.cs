@@ -28,6 +28,15 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
+    /// Sets the exact precision.
+    /// </summary>
+    /// <param name="value">The precision.</param>
+    public void SetPrecisionRaw(ulong value)
+    {
+        mpfr_set_prec_raw(ref Value, value);
+    }
+
+    /// <summary>
     /// Gets or sets the default precision.
     /// </summary>
     public static ulong DefaultPrecision

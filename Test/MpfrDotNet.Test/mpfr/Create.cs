@@ -410,4 +410,21 @@ public class Create
         foreach (mpfr_t Item in TestArray)
             Item.Dispose();
     }
+
+    [Test]
+    public void Precision()
+    {
+        ulong CustomPrecision = mpfr_t.DefaultPrecision + 64;
+        string AsString;
+
+        using mpfr_t a = new mpfr_t(200.1F);
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.0010000610351562E+2"));
+
+        a.Precision = CustomPrecision;
+        Assert.That(a.Precision, Is.EqualTo(CustomPrecision));
+
+        a.SetPrecisionRaw(mpfr_t.DefaultPrecision);
+        Assert.That(a.Precision, Is.EqualTo(mpfr_t.DefaultPrecision));
+    }
 }

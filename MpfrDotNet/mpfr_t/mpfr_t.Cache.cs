@@ -24,7 +24,12 @@ public partial class mpfr_t : IDisposable
         ObjectCount.Value--;
 
         if (ObjectCount.Value == 0)
+        {
             mpfr_free_cache();
+            mpfr_free_cache2(0);
+            mpfr_free_pool();
+            mpfr_mp_memory_cleanup();
+        }
     }
 
     private static ThreadLocal<ulong> ObjectCount = new ThreadLocal<ulong>();
