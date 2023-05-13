@@ -5,6 +5,7 @@
     <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Version>1.0.10</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>David Le Bansais</Authors>

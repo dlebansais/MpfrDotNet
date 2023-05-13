@@ -91,7 +91,7 @@ public class Exception
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
         using mpfr_t b = a.Log10();
-        SubnormalizeResult = b.CheckRange();
+        SubnormalizeResult = b.Subnormalize();
 
         Assert.That(SubnormalizeResult, Is.EqualTo(0));
 
@@ -161,7 +161,12 @@ public class Exception
         Assert.That(mpfr_t.Inexact, Is.EqualTo(true));
         Assert.That(mpfr_t.ERange, Is.EqualTo(true));
 
-        mpfr_t.ClearAllFlags();
+        mpfr_t.Underflow = false;
+        mpfr_t.Overflow = false;
+        mpfr_t.DivideByZero = false;
+        mpfr_t.NaNFlag = false;
+        mpfr_t.Inexact = false;
+        mpfr_t.ERange = false;
 
         Assert.That(mpfr_t.Underflow, Is.EqualTo(false));
         Assert.That(mpfr_t.Overflow, Is.EqualTo(false));

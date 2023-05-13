@@ -1,5 +1,6 @@
 ﻿namespace Test;
 
+using System;
 using MpfrDotNet;
 using MpirDotNet;
 using NUnit.Framework;
@@ -349,5 +350,64 @@ public class Create
         using mpfr_t l = new mpfr_t(-1095116775, -80);
         AsString = l.ToString();
         Assert.That(AsString, Is.EqualTo("-9.0585936476159618E-16"));
+    }
+
+    [Test]
+    public void CreateArray()
+    {
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+
+        string AsString;
+        int ArrayLength = 10;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        mpfr_t[] TestArray = mpfr_t.CreateArray(ArrayLength);
+
+        Assert.That(TestArray.Length, Is.EqualTo(ArrayLength));
+
+        foreach (mpfr_t Item in TestArray)
+        {
+            Assert.That(Item.Precision, Is.EqualTo(DefaultPrecision));
+            AsString = Item.ToString();
+            Assert.That(AsString, Is.EqualTo("@NaN@"));
+        }
+
+        mpfr_t.ClearArray(TestArray);
+
+        foreach (mpfr_t Item in TestArray)
+            Item.Dispose();
+
+        Assert.Throws<ArgumentException>(() => mpfr_t.CreateArray(0xFFFF));
+
+        mpfr_t[] LargeArray = new mpfr_t[0xFFFF];
+        Assert.Throws<ArgumentException>(() => mpfr_t.ClearArray(LargeArray));
+    }
+
+    [Test]
+    public void CreateArrayCustomPrecision()
+    {
+        ulong CustomPrecision = mpfr_t.DefaultPrecision + 64;
+
+        string AsString;
+        int ArrayLength = 10;
+
+        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+
+        mpfr_t[] TestArray = mpfr_t.CreateArray(ArrayLength, CustomPrecision);
+
+        Assert.That(TestArray.Length, Is.EqualTo(ArrayLength));
+
+        foreach (mpfr_t Item in TestArray)
+        {
+            Assert.That(Item.Precision, Is.EqualTo(CustomPrecision));
+            AsString = Item.ToString();
+            Assert.That(AsString, Is.EqualTo("@NaN@"));
+        }
+
+        mpfr_t.ClearArray(TestArray);
+
+        foreach (mpfr_t Item in TestArray)
+            Item.Dispose();
     }
 }

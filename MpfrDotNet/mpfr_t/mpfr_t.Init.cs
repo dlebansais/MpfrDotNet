@@ -1,6 +1,8 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Runtime.InteropServices;
+using Interop.Mpfr;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
@@ -31,10 +33,117 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
+        ulong EffectivePrecision = (precision == ulong.MaxValue) ? DefaultPrecision : precision;
+        mpfr_init2(ref Result.Value, EffectivePrecision);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Creates an array of new instance of the <see cref="mpfr_t"/> class.
+    /// </summary>
+    /// <param name="length">The array length.</param>
+    /// <param name="precision">The precision.</param>
+    public static mpfr_t[] CreateArray(int length, ulong precision = ulong.MaxValue)
+    {
+        if (length >= MaxArrayLength)
+            throw new ArgumentException(nameof(length));
+
         if (precision == ulong.MaxValue)
-            mpfr_init2(ref Result.Value, DefaultPrecision);
+            return CreateArrayDefaultPrecision(length);
         else
-            mpfr_init2(ref Result.Value, precision);
+            return CreateArrayCustomPrecision(length, precision);
+    }
+
+    private static mpfr_t[] CreateArrayDefaultPrecision(int length)
+    {
+        mpfr_t[] Result = new mpfr_t[length];
+        for (int i = 0; i < Result.Length; i++)
+            Result[i] = new mpfr_t();
+
+        ProcessArray(Result, (IntPtr[] args) =>
+        {
+            int Index = 0;
+            mpfr_inits(args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++],
+                       args[Index++]);
+        });
+
+        return Result;
+    }
+
+    private static mpfr_t[] CreateArrayCustomPrecision(int length, ulong precision)
+    {
+        mpfr_t[] Result = new mpfr_t[length];
+        for (int i = 0; i < Result.Length; i++)
+            Result[i] = new mpfr_t();
+
+        ProcessArray(Result, (IntPtr[] args) =>
+        {
+            int Index = 0;
+            mpfr_inits2(precision,
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++]);
+        });
 
         return Result;
     }
@@ -260,6 +369,59 @@ public partial class mpfr_t : IDisposable
         : this()
     {
         mpfr_set_z_2exp(ref Value, ref op.Value, e, (__mpfr_rnd_t)rounding);
+    }
+
+    /// <summary>
+    /// Clear an array of numbers.
+    /// </summary>
+    /// <param name="array">The array.</param>
+    public static void ClearArray(mpfr_t[] array)
+    {
+        if (array.Length >= MaxArrayLength)
+            throw new ArgumentException(nameof(array.Length));
+
+        ProcessArray(array, (IntPtr[] args) =>
+        {
+            int Index = 0;
+            mpfr_clears(args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++],
+                        args[Index++]);
+        });
+
+        foreach (mpfr_t Item in array)
+        {
+            Item.IsDisposed = true;
+            Item.DisposeCache();
+        }
     }
 
     /// <summary>
