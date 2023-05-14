@@ -1,8 +1,6 @@
 namespace TestInteger;
 
 using MpirDotNet;
-using System.IO;
-using System.Text;
 using NUnit.Framework;
 
 [TestFixture]

@@ -1,5 +1,6 @@
 namespace TestFloating;
 
+using System.Text;
 using MpirDotNet;
 using NUnit.Framework;
 
@@ -142,5 +143,23 @@ public class Misc
         using mpf_t d = a.Trunc();
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("2.983E+3"));
+    }
+
+    [Test]
+    public void GetStr()
+    {
+        string AsString;
+
+        using mpf_t a = new mpf_t("2983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
+
+        int Base = 10;
+        ulong Digits = 20;
+        StringBuilder Builder = new StringBuilder((int)(Digits + 2));
+        mpf.get_str(Builder, out int Expptr, Base, Digits, a);
+        string Str = Builder.ToString();
+
+        Assert.That(Str, Is.EqualTo("2983574029384572"));
     }
 }

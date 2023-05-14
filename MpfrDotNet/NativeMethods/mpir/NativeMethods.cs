@@ -15,7 +15,7 @@ internal static partial class NativeMethods
     [DllImport("kernel32", CharSet = CharSet.Ansi)]
     private static extern IntPtr GetProcAddress(IntPtr hwnd, string procedureName);
 
-    private static IntPtr GetMpirPointer(string name)
+    internal static IntPtr GetMpirPointer(string name)
     {
         LoadLibrary("mpir.dll", ref hMpirLib);
 
@@ -23,12 +23,12 @@ internal static partial class NativeMethods
         IntPtr Result = GetProcAddress(hMpirLib, FunctionName);
 
         if (Result == IntPtr.Zero)
-            throw new ArgumentException($"Method {FunctionName} not found", nameof(name));
+            throw new ArgumentException($"Method '{FunctionName}' not found", nameof(name));
 
         return Result;
     }
 
-    private static bool LoadLibrary(string libraryName, ref IntPtr hLib)
+    internal static bool LoadLibrary(string libraryName, ref IntPtr hLib)
     {
         if (hLib == IntPtr.Zero)
         {
@@ -53,6 +53,9 @@ internal static partial class NativeMethods
 
         return false;
     }
+
+    internal delegate void DymmyDelegate();
+    internal static DymmyDelegate DummyPointer { get => Marshal.GetDelegateForFunctionPointer<DymmyDelegate>(GetMpirPointer(string.Empty)); }
 
     private static IntPtr hMpirLib = IntPtr.Zero;
 }

@@ -665,7 +665,8 @@ public static class mpf
     /// <param name="exp">The exponent.</param>
     public static void rrandomb(mpf_t rop, randstate_t state, ulong max_size, int exp)
     {
-        NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.size_t)max_size, (NativeMethods.mp_exp_t)exp);
+        NativeMethods.mp_exp_t e = (NativeMethods.mp_exp_t)exp;
+        NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.size_t)max_size, e);
     }
     #endregion
 }

@@ -5,7 +5,7 @@ using Interop.Mpfr;
 using NUnit.Framework;
 
 [TestFixture]
-public class Load
+public class LoadMpfr
 {
     [Test]
     public void DummyLibrary()

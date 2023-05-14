@@ -3,6 +3,7 @@ namespace TestInteger;
 using MpirDotNet;
 using System.Text;
 using NUnit.Framework;
+using Interop.Mpir;
 
 [TestFixture]
 public class NumberTheoretic
@@ -350,7 +351,8 @@ public class NumberTheoretic
     {
         string AsString;
 
-        ulong n = 30;
+        NativeMethods.unsignedlongint AsULongInt = (NativeMethods.unsignedlongint)30UL;
+        ulong n = (ulong)AsULongInt;
 
         using mpz_t a = new();
         mpz.primorial_ui(a, n);
