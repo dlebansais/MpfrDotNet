@@ -3,6 +3,7 @@ namespace TestInteger;
 using MpirDotNet;
 using System.Text;
 using NUnit.Framework;
+using System;
 
 [TestFixture]
 public class Misc
@@ -16,6 +17,28 @@ public class Misc
 
         string AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("0"));
+    }
+
+    [Test]
+    public void Array()
+    {
+        string AsString;
+        int ArrayLength = 10;
+
+        mpz_t[] TestArray = mpz_t.CreateArray(ArrayLength);
+
+        Assert.That(TestArray.Length, Is.EqualTo(ArrayLength));
+
+        foreach (mpz_t Item in TestArray)
+        {
+            AsString = Item.ToString();
+            Assert.That(AsString, Is.EqualTo("0"));
+        }
+
+        foreach (mpz_t Item in TestArray)
+            Item.Dispose();
+
+        Assert.Throws<ArgumentException>(() => mpz_t.CreateArray(0xFFFF));
     }
 
     [Test]
@@ -145,6 +168,11 @@ public class Misc
 
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("255"));
+
+        using mpz_t i = new mpz_t(20UL);
+
+        AsString = i.ToString();
+        Assert.That(AsString, Is.EqualTo("20"));
     }
 
     [Test]

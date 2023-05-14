@@ -81,13 +81,24 @@ public class Comparison
     public void Sign()
     {
         string AsString;
-        bool IsNegative;
 
         using mpz_t a = new mpz_t("-622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("-622288097498926496141095869268883999563096063592498055290461"));
 
-        IsNegative = mpz.sgn(a) < 0;
+        bool IsNegative = mpz.sgn(a) < 0;
         Assert.IsTrue(IsNegative);
+
+        using mpz_t b = -a;
+
+        bool IsPositive = mpz.sgn(b) > 0;
+        Assert.IsTrue(IsPositive);
+
+        using mpz_t c = new mpz_t();
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
+
+        bool HasNoSign = mpz.sgn(c) == 0;
+        Assert.IsTrue(HasNoSign);
     }
 }

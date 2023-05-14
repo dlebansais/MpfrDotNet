@@ -40,7 +40,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Creates an array of new instance of the <see cref="mpfr_t"/> class.
+    /// Creates an array of new instances of the <see cref="mpfr_t"/> class.
     /// </summary>
     /// <param name="length">The array length.</param>
     /// <param name="precision">The precision.</param>
