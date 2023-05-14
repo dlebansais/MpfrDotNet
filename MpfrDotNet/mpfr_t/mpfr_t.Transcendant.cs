@@ -471,6 +471,230 @@ public partial class mpfr_t : IDisposable
 
     #region other
     /// <summary>
+    /// Gets the exponential integral.
+    /// </summary>
+    public mpfr_t EInt()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_eint(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the real part of the dilogarithm.
+    /// </summary>
+    public mpfr_t Li2()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_li2(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the result of the Gamma function.
+    /// </summary>
+    public mpfr_t Gamma()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_gamma(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the result of the incomplete Gamma function.
+    /// </summary>
+    /// <param name="operand">The operand.</param>
+    public mpfr_t IncompleteGamma(mpfr_t operand)
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_gamma_inc(ref Result.Value, ref Value, ref operand.Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the logarithm of the result of the Gamma function.
+    /// </summary>
+    public mpfr_t LnGamma()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_lngamma(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the logarithm of the absolute value of the result of the Gamma function.
+    /// </summary>
+    /// <param name="sign">The sign of the result upon return.</param>
+    public mpfr_t LnGammaAbs(out int sign)
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_lgamma(ref Result.Value, out sign, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the result of the Digamma function.
+    /// </summary>
+    public mpfr_t Digamma()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_digamma(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the result of the Beta function.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    public static mpfr_t Beta(mpfr_t x, mpfr_t y)
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_beta(ref Result.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the result of the error function.
+    /// </summary>
+    public mpfr_t Erf()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_erf(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the result of the complementary error function.
+    /// </summary>
+    public mpfr_t Erfc()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_erfc(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the order 0 of the first kind Bessel function.
+    /// </summary>
+    public mpfr_t BesselFirst0()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_j0(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the order 1 of the first kind Bessel function.
+    /// </summary>
+    public mpfr_t BesselFirst1()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_j1(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the order N of the first kind Bessel function.
+    /// </summary>
+    /// <param name="n">The order.</param>
+    public mpfr_t BesselFirst(int n)
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_jn(ref Result.Value, n, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the order 0 of the second kind Bessel function.
+    /// </summary>
+    public mpfr_t BesselSecond0()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_y0(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the order 1 of the second kind Bessel function.
+    /// </summary>
+    public mpfr_t BesselSecond1()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_y1(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the order N of the second kind Bessel function.
+    /// </summary>
+    /// <param name="n">The order.</param>
+    public mpfr_t BesselSecond(int n)
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_yn(ref Result.Value, n, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the arithmetic(geometric mean of <paramref name="x"/> and <paramref name="y"/>.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    public static mpfr_t ArithmeticGeometricMean(mpfr_t x, mpfr_t y)
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_agm(ref Result.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets the result of the Airy function.
+    /// </summary>
+    public mpfr_t Airy()
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr_ai(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
     /// Gets the log2.
     /// </summary>
     /// <param name="precision">The precision.</param>
