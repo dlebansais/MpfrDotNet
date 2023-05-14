@@ -25,7 +25,38 @@ internal static partial class NativeMethods
     public static __mpq_init mpq_init { get; } = Marshal.GetDelegateForFunctionPointer<__mpq_init>(GetMpirPointer(nameof(mpq_init)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void __mpq_inits(IntPtr[] rationals);
+    public delegate void __mpq_inits(IntPtr arg000,
+                                     IntPtr arg001,
+                                     IntPtr arg002,
+                                     IntPtr arg003,
+                                     IntPtr arg004,
+                                     IntPtr arg005,
+                                     IntPtr arg006,
+                                     IntPtr arg007,
+                                     IntPtr arg078,
+                                     IntPtr arg009,
+                                     IntPtr arg00A,
+                                     IntPtr arg00B,
+                                     IntPtr arg00C,
+                                     IntPtr arg00D,
+                                     IntPtr arg00E,
+                                     IntPtr arg00F,
+                                     IntPtr arg010,
+                                     IntPtr arg011,
+                                     IntPtr arg012,
+                                     IntPtr arg013,
+                                     IntPtr arg014,
+                                     IntPtr arg015,
+                                     IntPtr arg016,
+                                     IntPtr arg017,
+                                     IntPtr arg018,
+                                     IntPtr arg019,
+                                     IntPtr arg01A,
+                                     IntPtr arg01B,
+                                     IntPtr arg01C,
+                                     IntPtr arg01D,
+                                     IntPtr arg01E,
+                                     IntPtr arg01F);
     public static __mpq_inits mpq_inits { get; } = Marshal.GetDelegateForFunctionPointer<__mpq_inits>(GetMpirPointer(nameof(mpq_inits)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -33,7 +64,38 @@ internal static partial class NativeMethods
     public static __mpq_clear mpq_clear { get; } = Marshal.GetDelegateForFunctionPointer<__mpq_clear>(GetMpirPointer(nameof(mpq_clear)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void __mpq_clears(IntPtr[] rationals);
+    public delegate void __mpq_clears(IntPtr arg000,
+                                      IntPtr arg001,
+                                      IntPtr arg002,
+                                      IntPtr arg003,
+                                      IntPtr arg004,
+                                      IntPtr arg005,
+                                      IntPtr arg006,
+                                      IntPtr arg007,
+                                      IntPtr arg078,
+                                      IntPtr arg009,
+                                      IntPtr arg00A,
+                                      IntPtr arg00B,
+                                      IntPtr arg00C,
+                                      IntPtr arg00D,
+                                      IntPtr arg00E,
+                                      IntPtr arg00F,
+                                      IntPtr arg010,
+                                      IntPtr arg011,
+                                      IntPtr arg012,
+                                      IntPtr arg013,
+                                      IntPtr arg014,
+                                      IntPtr arg015,
+                                      IntPtr arg016,
+                                      IntPtr arg017,
+                                      IntPtr arg018,
+                                      IntPtr arg019,
+                                      IntPtr arg01A,
+                                      IntPtr arg01B,
+                                      IntPtr arg01C,
+                                      IntPtr arg01D,
+                                      IntPtr arg01E,
+                                      IntPtr arg01F);
     public static __mpq_clears mpq_clears { get; } = Marshal.GetDelegateForFunctionPointer<__mpq_clears>(GetMpirPointer(nameof(mpq_clears)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
