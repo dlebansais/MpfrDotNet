@@ -49,4 +49,23 @@ public class Misc
         AsString = q0.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
     }
+
+    [Test]
+    public void Sign()
+    {
+        using mpq_t a = new mpq_t(2);
+
+        bool IsPositive = a.Sign > 0;
+        Assert.That(IsPositive, Is.True);
+
+        using mpq_t b = new mpq_t(-2);
+
+        bool IsNegative = b.Sign < 0;
+        Assert.That(IsNegative, Is.True);
+
+        using mpq_t c = new mpq_t();
+
+        bool HasNoSign = c.Sign == 0;
+        Assert.That(HasNoSign, Is.True);
+    }
 }

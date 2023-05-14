@@ -205,4 +205,15 @@ public class Misc
         string AsString = str.ToString();
         Assert.That(AsString, Is.EqualTo("-45487"));
     }
+
+    [Test]
+    public void Complement()
+    {
+        using mpz_t a = new mpz_t(2);
+
+        a.ComplementBit(1);
+
+        string AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
+    }
 }
