@@ -885,8 +885,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator <(long x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return Temporary < y;
+        return y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -896,8 +895,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator <(mpz_t x, long y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x < Temporary;
+        return x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -907,8 +905,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator <(ulong x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return Temporary < y;
+        return y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -918,8 +915,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator <(mpz_t x, ulong y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x < Temporary;
+        return x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -1019,8 +1015,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator <=(long x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return Temporary <= y;
+        return y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -1030,8 +1025,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator <=(mpz_t x, long y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x <= Temporary;
+        return x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -1041,8 +1035,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator <=(ulong x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return Temporary <= y;
+        return y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -1052,8 +1045,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator <=(mpz_t x, ulong y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x <= Temporary;
+        return x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -1153,8 +1145,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator >(long x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return Temporary > y;
+        return y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -1164,8 +1155,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator >(mpz_t x, long y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x > Temporary;
+        return x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -1175,8 +1165,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator >(ulong x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return Temporary > y;
+        return y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -1186,8 +1175,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator >(mpz_t x, ulong y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x > Temporary;
+        return x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -1287,8 +1275,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator >=(long x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return Temporary >= y;
+        return y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -1298,8 +1285,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator >=(mpz_t x, long y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x >= Temporary;
+        return x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -1309,8 +1295,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator >=(ulong x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return Temporary >= y;
+        return y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -1320,8 +1305,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator >=(mpz_t x, ulong y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x >= Temporary;
+        return x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -1421,8 +1405,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator ==(long x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return y.CompareTo(Temporary) == 0;
+        return y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1432,8 +1415,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator ==(mpz_t x, long y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x.CompareTo(Temporary) == 0;
+        return x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1443,8 +1425,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator ==(ulong x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return y.CompareTo(Temporary) == 0;
+        return y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1454,8 +1435,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator ==(mpz_t x, ulong y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x.CompareTo(Temporary) == 0;
+        return x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1555,8 +1535,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator !=(long x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return y.CompareTo(Temporary) != 0;
+        return y.CompareTo(x) != 0;
     }
 
     /// <summary>
@@ -1566,8 +1545,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator !=(mpz_t x, long y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x.CompareTo(Temporary) != 0;
+        return x.CompareTo(y) != 0;
     }
 
     /// <summary>
@@ -1577,8 +1555,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator !=(ulong x, mpz_t y)
     {
-        using mpz_t Temporary = new mpz_t(x);
-        return y.CompareTo(Temporary) != 0;
+        return y.CompareTo(x) != 0;
     }
 
     /// <summary>
@@ -1588,8 +1565,7 @@ public class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, I
     /// <param name="y">The second operand.</param>
     public static bool operator !=(mpz_t x, ulong y)
     {
-        using mpz_t Temporary = new mpz_t(y);
-        return x.CompareTo(Temporary) != 0;
+        return x.CompareTo(y) != 0;
     }
 
     /// <summary>

@@ -1,7 +1,6 @@
 namespace TestInteger;
 
 using MpirDotNet;
-using System.Text;
 using NUnit.Framework;
 
 [TestFixture]
@@ -37,6 +36,16 @@ public class Comparison
         uint p = 50U;
 
         IsGreaterThan = a > p;
+        Assert.IsTrue(IsGreaterThan);
+
+        long l = 50L;
+
+        IsGreaterThan = a > l;
+        Assert.IsTrue(IsGreaterThan);
+
+        ulong ul = 50UL;
+
+        IsGreaterThan = a > ul;
         Assert.IsTrue(IsGreaterThan);
     }
 
