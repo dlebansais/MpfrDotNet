@@ -81,6 +81,9 @@ public class Create
 
         f.Precision = CustomPrecision;
         Assert.That(f.Precision, Is.EqualTo(CustomPrecision));
+
+        using mpfr_t g = mpfr_t.Create();
+        Assert.That(g.Precision, Is.EqualTo(DefaultPrecision));
     }
 
     [Test]

@@ -44,7 +44,9 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// True after <see cref="Dispose(bool)"/> has been invoked.
     /// </summary>
-    private bool IsDisposed;
+#pragma warning disable SA1401 // Fields should be private
+    internal bool IsDisposed;
+#pragma warning restore SA1401 // Fields should be private
 
     /// <summary>
     /// Disposes of every reference that must be cleaned up.

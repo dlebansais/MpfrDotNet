@@ -149,6 +149,7 @@ public class Misc
 
         mpfr_t? x = new("22250983250345029834502983.5740293845720");
         x.Dispose();
+        x.IsDisposed = false;
         GC.ReRegisterForFinalize(x);
 
         x = null;

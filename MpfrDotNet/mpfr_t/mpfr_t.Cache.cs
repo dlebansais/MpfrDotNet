@@ -11,20 +11,8 @@ public partial class mpfr_t : IDisposable
 {
     private void InitCacheManagement()
     {
-        if (!ObjectCount.IsValueCreated)
-            ObjectCount.Value = 1;
-        else
-            ObjectCount.Value++;
-
-        if (!ObjectCountTest.IsValueCreated)
-        {
-            ObjectCountTest.Value = string.Empty;
-            ObjectCount.Value = 1;
-        }
-        else
-        {
-            ObjectCountTest.Value = ObjectCount.ToString() ?? string.Empty;
-        }
+        // ObjectCount.IsValueCreated is always set and ObjectCount.Value is initialized to 0
+        ObjectCount.Value++;
 
         IsCacheInitialized = true;
     }
@@ -43,7 +31,6 @@ public partial class mpfr_t : IDisposable
     }
 
     private static ThreadLocal<ulong> ObjectCount = new ThreadLocal<ulong>();
-    private static ThreadLocal<string> ObjectCountTest = new ThreadLocal<string>();
 
     /// <summary>
     /// Returns the number of living items in cache.
