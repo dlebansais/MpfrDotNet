@@ -207,7 +207,7 @@ public partial class mpfr_t : IDisposable
     public override bool Equals(object? obj)
     {
         if (obj is mpfr_t other)
-            return mpfr_equal_p(ref Value, ref other.Value) == 0;
+            return mpfr_equal_p(ref Value, ref other.Value) != 0;
         else
             return false;
     }

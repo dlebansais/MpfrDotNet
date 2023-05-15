@@ -12,7 +12,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -38,7 +38,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -65,7 +65,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 2048;
@@ -116,7 +116,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 2048;
@@ -147,7 +147,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -173,7 +173,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 2048;
@@ -211,7 +211,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 2048;
@@ -264,7 +264,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -290,7 +290,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -320,7 +320,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -353,7 +353,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 0x1000;

@@ -13,7 +13,7 @@ public class Comparison
         string AsString;
         bool IsGreaterThan;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -105,7 +105,7 @@ public class Comparison
         string AsString;
         bool IsGreaterThan;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -181,7 +181,7 @@ public class Comparison
         string AsString;
         bool IsLesserThan;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -257,7 +257,7 @@ public class Comparison
         string AsString;
         bool IsLesserThan;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -333,7 +333,7 @@ public class Comparison
         string AsString;
         bool IsEqualTo;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -404,12 +404,42 @@ public class Comparison
     }
 
     [Test]
+    public void Equals()
+    {
+        string AsString;
+        bool IsEqualTo;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t(1);
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+0"));
+
+        using mpfr_t b = new mpfr_t(2);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2E+0"));
+
+        IsEqualTo = a.Equals(b);
+        Assert.IsFalse(IsEqualTo);
+
+        IsEqualTo = a.Equals(null);
+        Assert.IsFalse(IsEqualTo);
+
+        int HashCode = b.GetHashCode();
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
     public void Different()
     {
         string AsString;
         bool IsEqualTo;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -484,7 +514,7 @@ public class Comparison
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -509,7 +539,7 @@ public class Comparison
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -548,7 +578,7 @@ public class Comparison
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -632,7 +662,7 @@ public class Comparison
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -657,7 +687,7 @@ public class Comparison
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -681,7 +711,7 @@ public class Comparison
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -739,7 +769,7 @@ public class Comparison
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -779,7 +809,7 @@ public class Comparison
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;

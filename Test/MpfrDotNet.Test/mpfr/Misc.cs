@@ -1,5 +1,7 @@
 ﻿namespace Test;
 
+using System;
+using System.Threading;
 using MpfrDotNet;
 using NUnit.Framework;
 
@@ -11,7 +13,7 @@ public class Misc
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         AsString = mpfr.get_version();
         Assert.That(AsString, Is.EqualTo("4.2.1-dev"));
@@ -34,7 +36,7 @@ public class Misc
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using mpfr_t a = new();
         AsString = a.ToString();
@@ -62,7 +64,7 @@ public class Misc
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -91,7 +93,7 @@ public class Misc
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -120,7 +122,7 @@ public class Misc
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -138,5 +140,21 @@ public class Misc
         Assert.That(Result, Is.EqualTo("222509832"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Finalizer()
+    {
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        mpfr_t? x = new("22250983250345029834502983.5740293845720");
+        x.Dispose();
+        GC.ReRegisterForFinalize(x);
+
+        x = null;
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
     }
 }

@@ -10,7 +10,7 @@ public class Random
     [Test]
     public void Uniform()
     {
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using randstate_t state = new randstate_t();
 
@@ -31,7 +31,7 @@ public class Random
     [Test]
     public void Gaussian()
     {
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using randstate_t state = new randstate_t();
 
@@ -51,7 +51,7 @@ public class Random
     [Test]
     public void Exponential()
     {
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using randstate_t state = new randstate_t();
 

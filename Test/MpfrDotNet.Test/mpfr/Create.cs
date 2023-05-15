@@ -11,7 +11,7 @@ public class Create
     [Test]
     public void CreateDefaultPrecision()
     {
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
 
@@ -25,7 +25,7 @@ public class Create
     [Test]
     public void CreateCustomPrecision()
     {
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         ulong CustomPrecision = DefaultPrecision + 64;
@@ -88,7 +88,7 @@ public class Create
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using mpfr_t NaNDefault = new mpfr_t();
         AsString = NaNDefault.ToString();
@@ -181,7 +181,7 @@ public class Create
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using mpfr_t a = new mpfr_t(10UL, 0);
         AsString = a.ToString();
@@ -213,7 +213,7 @@ public class Create
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using mpfr_t a = new mpfr_t(10L, 0);
         AsString = a.ToString();
@@ -269,7 +269,7 @@ public class Create
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using mpfr_t a = new mpfr_t(10U, 0);
         AsString = a.ToString();
@@ -301,7 +301,7 @@ public class Create
     {
         string AsString;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         using mpfr_t a = new mpfr_t(10, 0);
         AsString = a.ToString();
@@ -360,7 +360,7 @@ public class Create
         string AsString;
         int ArrayLength = 10;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         mpfr_t[] TestArray = mpfr_t.CreateArray(ArrayLength);
 
@@ -392,7 +392,7 @@ public class Create
         string AsString;
         int ArrayLength = 10;
 
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         mpfr_t[] TestArray = mpfr_t.CreateArray(ArrayLength, CustomPrecision);
 
@@ -431,7 +431,7 @@ public class Create
     [Test]
     public void Exponent()
     {
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -460,7 +460,7 @@ public class Create
     [Test]
     public void Sign()
     {
-        Assert.IsTrue(mpfr_t.LiveObjectCount() == 0);
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
