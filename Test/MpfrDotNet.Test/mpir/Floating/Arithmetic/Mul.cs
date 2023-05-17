@@ -54,7 +54,7 @@ public class Mul
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
-        uint b = 98873014;
+        uint b = 98873014U;
 
         using mpf_t c = a * b;
 
@@ -94,5 +94,71 @@ public class Mul
 
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("-2.20002177842512963966E+33"));
+    }
+
+    [Test]
+    public void MulUlong()
+    {
+        string AsString;
+
+        using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
+
+        ulong b = 98873014UL;
+
+        using mpf_t c = a * b;
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("2.20002177842512963966E+33"));
+
+        using mpf_t d = b * a;
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("2.20002177842512963966E+33"));
+    }
+
+    [Test]
+    public void MulLongPositive()
+    {
+        string AsString;
+
+        using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
+
+        long b = 98873014L;
+
+        using mpf_t c = a * b;
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("2.20002182292709614035E+33"));
+
+        using mpf_t d = b * a;
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("2.20002182292709614035E+33"));
+    }
+
+    [Test]
+    public void MulLongNegative()
+    {
+        string AsString;
+
+        using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
+
+        long b = -98873014L;
+
+        using mpf_t c = a * b;
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("-2.20002182292709614035E+33"));
+
+        using mpf_t d = b * a;
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("-2.20002182292709614035E+33"));
     }
 }

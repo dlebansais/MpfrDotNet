@@ -1,5 +1,6 @@
 namespace TestFloating;
 
+using System;
 using System.Text;
 using MpirDotNet;
 using NUnit.Framework;
@@ -90,6 +91,60 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("2.147483647E+9"));
         uint UintCast = (uint)q;
         Assert.That(UintCast, Is.EqualTo(2147483647U));
+
+        using mpf_t r = new mpf_t(10UL, DefaultPrecision);
+        AsString = r.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        Assert.Throws<ArgumentException>(() => { using (mpf_t s = new mpf_t("Foo")) { } });
+    }
+
+    [Test]
+    public void Operator()
+    {
+        string AsString;
+
+        using mpf_t a = (mpf_t)10U;
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        int na = (int)a;
+        Assert.That(na, Is.EqualTo(10));
+
+        using mpf_t b = (mpf_t)10;
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        uint nb = (uint)b;
+        Assert.That(nb, Is.EqualTo(10));
+
+        using mpf_t c = (mpf_t)10.0F;
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        float fc = (float)c;
+        Assert.That(fc, Is.EqualTo(10.0F));
+
+        using mpf_t d = (mpf_t)10.0;
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        double dd = (double)d;
+        Assert.That(dd, Is.EqualTo(10.0));
+
+        using mpf_t e = (mpf_t)10UL;
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        ulong ne = (ulong)e;
+        Assert.That(ne, Is.EqualTo(10UL));
+
+        using mpf_t f = (mpf_t)10L;
+        AsString = f.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        long nf = (long)f;
+        Assert.That(ne, Is.EqualTo(10L));
     }
 
     [Test]
@@ -119,6 +174,17 @@ public class Misc
 
         DefaultPrecision = mpf_t.DefaultPrecision;
         Assert.IsTrue(DefaultPrecision >= 0x1FFFFFFFF);
+
+        using mpf_t a = new mpf_t();
+
+        ulong OldPrecision = a.Precision;
+        ulong TestPrecision = 128;
+
+        a.Precision = TestPrecision;
+        Assert.That(a.Precision, Is.EqualTo(TestPrecision));
+
+        a.Precision = OldPrecision;
+        Assert.That(a.Precision, Is.EqualTo(OldPrecision));
 
         mpf_t.DefaultPrecision = 64;
     }
@@ -161,5 +227,21 @@ public class Misc
         string Str = Builder.ToString();
 
         Assert.That(Str, Is.EqualTo("2983574029384572"));
+    }
+
+    [Test]
+    public void Clone()
+    {
+        string AsString;
+
+        using mpf_t a = new mpf_t("2983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
+
+        using mpf_t b = (mpf_t)a.Clone();
+
+        ICloneable Cloneable = a;
+
+        using mpf_t c = (mpf_t)Cloneable.Clone();
     }
 }

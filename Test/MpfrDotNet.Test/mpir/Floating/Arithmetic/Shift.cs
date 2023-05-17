@@ -21,6 +21,11 @@ public class Shift
 
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("2.50523799687202560686E+40"));
+
+        using mpf_t d = a << -1;
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
     }
 
     [Test]
@@ -38,5 +43,10 @@ public class Shift
 
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("1.97628431400654046208E+10"));
+
+        using mpf_t d = a >> -1;
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
     }
 }

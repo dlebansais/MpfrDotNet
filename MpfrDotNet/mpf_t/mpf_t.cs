@@ -29,7 +29,7 @@ public class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConvertible, I
     /// </summary>
     /// <param name="n">The value.</param>
     /// <param name="precision">The precision.</param>
-    public mpf_t(ulong n, ulong precision = ulong.MaxValue)
+    public mpf_t(ulong n, ulong precision)
     {
         if (precision == ulong.MaxValue)
             mpf_init_set_ui(ref Value, (mpir_ui)n);
