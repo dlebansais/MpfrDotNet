@@ -177,6 +177,8 @@ public class Create
         using mpfr_t m = new mpfr_t(iz, 6);
         AsString = m.ToString();
         Assert.That(AsString, Is.EqualTo("4.035199977805909E+59"));
+
+        Assert.Throws<ArgumentException>(() => { using (mpfr_t x = new mpfr_t("foo")) { } });
     }
 
     [Test]

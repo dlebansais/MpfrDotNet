@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Diagnostics;
 using System.Text;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
@@ -35,8 +36,7 @@ public partial class mpfr_t : IDisposable
     /// <returns>The number value.</returns>
     public string ToString(int resultbase, mpfr_rnd_t rounding)
     {
-        if (!IsCacheInitialized)
-            return string.Empty;
+        Debug.Assert(IsCacheInitialized);
 
         ulong SizeInDigits = DigitCount;
         StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
@@ -45,11 +45,12 @@ public partial class mpfr_t : IDisposable
         mpfr_get_str(Data, out Exponent, resultbase, SizeInDigits, ref Value, (__mpfr_rnd_t)rounding);
 
         string Result = Data.ToString();
+        Debug.Assert(Result.Length > 0);
 
         if (Result == "@NaN@" || Result == "@Inf@" || Result == "-@Inf@")
             return Result;
 
-        bool IsNegative = Result.Length > 0 && Result[0] == '-';
+        bool IsNegative = Result[0] == '-';
 
         bool IsZero = true;
         for (int i = IsNegative ? 1 : 0; i < Result.Length; i++)
@@ -63,9 +64,7 @@ public partial class mpfr_t : IDisposable
             return IsNegative ? "-0" : "0";
 
         int FractionalIndex = IsNegative ? 2 : 1;
-
-        if (FractionalIndex > Result.Length)
-            return Result;
+        Debug.Assert(FractionalIndex <= Result.Length);
 
         string IntegerPart = Result.Substring(0, FractionalIndex);
         string FractionalPart = Result.Substring(FractionalIndex);

@@ -1,7 +1,6 @@
 ﻿namespace Test;
 
 using System;
-using System.Threading;
 using MpfrDotNet;
 using NUnit.Framework;
 
@@ -89,6 +88,24 @@ public class Misc
     }
 
     [Test]
+    public void Precision()
+    {
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        Assert.That(mpfr_t.DefaultPrecisionInit, Is.EqualTo(53));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t x = new mpfr_t(0);
+
+        Assert.That(x.MinPrecision, Is.EqualTo(1));
+        Assert.That(x.MaxPrecision, Is.EqualTo(0x7FFFFEFF));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
     public void Swap()
     {
         string AsString;
@@ -98,9 +115,9 @@ public class Misc
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t x = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t x = new mpfr_t("-22250983250345029834502983.5740293845720");
         AsString = x.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+        Assert.That(AsString, Is.EqualTo("-2.225098325034502983450298357402938457199E+25"));
 
         using mpfr_t y = new mpfr_t("2229874359879827.30594288574029879874539");
         AsString = y.ToString();
@@ -112,7 +129,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         AsString = y.ToString();
-        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+        Assert.That(AsString, Is.EqualTo("-2.225098325034502983450298357402938457199E+25"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

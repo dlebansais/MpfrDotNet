@@ -308,7 +308,10 @@ public partial class mpfr_t : IDisposable
     {
         int Success = mpfr_set_str(ref Value, str, strbase, (__mpfr_rnd_t)rounding);
         if (Success != 0)
+        {
+            DisposeCache();
             throw new ArgumentException();
+        }
     }
 
     /// <summary>
