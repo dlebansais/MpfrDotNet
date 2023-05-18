@@ -1,8 +1,6 @@
 ﻿namespace MpirDotNet;
 
 using System;
-using System.Text;
-using static Interop.Mpir.NativeMethods;
 
 /// <summary>
 /// Arbitrary precision rational number.
@@ -14,7 +12,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     public void Canonicalize()
     {
-        mpq_canonicalize(ref Value);
+        mpq.canonicalize(this);
     }
 
     /// <summary>
@@ -22,7 +20,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     public int Sign
     {
-        get { return mpq_sgn(ref Value); }
+        get { return mpq.sgn(this); }
     }
 
     /// <summary>
@@ -39,7 +37,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="numerator">The numerator.</param>
     public void SetNumerator(mpz_t numerator)
     {
-        mpq_set_num(ref Value, ref numerator.Value);
+        mpq.set_num(this, numerator);
     }
 
     /// <summary>
@@ -56,7 +54,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="denominator">The denominator.</param>
     public void SetDenominator(mpz_t denominator)
     {
-        mpq_set_den(ref Value, ref denominator.Value);
+        mpq.set_den(this, denominator);
     }
 
     /// <summary>
@@ -66,6 +64,6 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="y">The second number.</param>
     public static void Swap(mpq_t x, mpq_t y)
     {
-        mpq_swap(ref x.Value, ref y.Value);
+        mpq.swap(x, y);
     }
 }

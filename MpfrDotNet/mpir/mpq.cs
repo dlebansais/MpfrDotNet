@@ -353,5 +353,14 @@ public static class mpq
     {
         NativeMethods.mpq_set_den(ref rational.Value, ref denominator.Value);
     }
+
+    /// <summary>
+    /// See http://mpir.org/mpir-3.0.0.pdf.
+    /// </summary>
+    /// <param name="rational">The value.</param>
+    public static void canonicalize(mpq_t rational)
+    {
+        NativeMethods.mpq_canonicalize(ref rational.Value);
+    }
     #endregion
 }

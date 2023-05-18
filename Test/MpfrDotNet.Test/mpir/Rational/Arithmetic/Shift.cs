@@ -22,6 +22,10 @@ public class Shift
         using mpq_t c = b >> 257;
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
+
+        using mpq_t d = b << -257;
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
     }
 
     [Test]
@@ -40,5 +44,9 @@ public class Shift
         using mpq_t c = b << 257;
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
+
+        using mpq_t d = a >> -257;
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
     }
 }

@@ -14,7 +14,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     public mpq_t()
     {
-        mpq_init(ref Value);
+        mpq.init(this);
     }
 
     /// <summary>
@@ -23,8 +23,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="other">The other instance.</param>
     public mpq_t(mpq_t other)
     {
-        mpq_init(ref Value);
-        mpq_set(ref Value, ref other.Value);
+        mpq.init(this);
+        mpq.set(this, other);
     }
 
     /// <summary>
@@ -33,8 +33,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="source">The source instance.</param>
     public mpq_t(mpf_t source)
     {
-        mpq_init(ref Value);
-        mpq_set_f(ref Value, ref source.Value);
+        mpq.init(this);
+        mpq.set_f(this, source);
     }
 
     /// <summary>
@@ -43,8 +43,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="source">The source instance.</param>
     public mpq_t(mpz_t source)
     {
-        mpq_init(ref Value);
-        mpq_set_z(ref Value, ref source.Value);
+        mpq.init(this);
+        mpq.set_z(this, source);
     }
 
     /// <summary>
@@ -55,11 +55,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
     public mpq_t(ulong numerator, ulong denominator, bool canonicalize = false)
     {
-        mpq_init(ref Value);
-        mpq_set_ui(ref Value, (mpir_ui)numerator, (mpir_ui)denominator);
+        mpq.init(this);
+        mpq.set_ui(this, numerator, denominator);
 
         if (canonicalize)
-            mpq_canonicalize(ref Value);
+            mpq.canonicalize(this);
     }
 
     /// <summary>
@@ -70,11 +70,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
     public mpq_t(long numerator, ulong denominator, bool canonicalize = false)
     {
-        mpq_init(ref Value);
-        mpq_set_si(ref Value, (mpir_si)numerator, (mpir_ui)denominator);
+        mpq.init(this);
+        mpq.set_si(this, numerator, denominator);
 
         if (canonicalize)
-            mpq_canonicalize(ref Value);
+            mpq.canonicalize(this);
     }
 
     /// <summary>
@@ -83,8 +83,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="op">The value.</param>
     public mpq_t(double op)
     {
-        mpq_init(ref Value);
-        mpq_set_d(ref Value, op);
+        mpq.init(this);
+        mpq.set_d(this, op);
     }
 
     /// <summary>
@@ -95,12 +95,12 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
     public mpq_t(mpz_t numerator, mpz_t denominator, bool canonicalize = false)
     {
-        mpq_init(ref Value);
-        mpq_set_num(ref Value, ref numerator.Value);
-        mpq_set_den(ref Value, ref denominator.Value);
+        mpq.init(this);
+        mpq.set_num(this, numerator);
+        mpq.set_den(this, denominator);
 
         if (canonicalize)
-            mpq_canonicalize(ref Value);
+            mpq.canonicalize(this);
     }
 
     /// <summary>
@@ -121,14 +121,14 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
     public mpq_t(string text, int strBase, bool canonicalize = false)
     {
-        mpq_init(ref Value);
+        mpq.init(this);
 
-        int Success = mpq_set_str(ref Value, text, strBase);
-        if (Success != 0)
+        bool Success = mpq.set_str(this, text, strBase);
+        if (!Success)
             throw new ArgumentException();
 
         if (canonicalize)
-            mpq_canonicalize(ref Value);
+            mpq.canonicalize(this);
     }
 
     /// <summary>
