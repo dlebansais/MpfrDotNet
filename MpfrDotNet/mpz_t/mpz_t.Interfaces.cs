@@ -61,7 +61,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     private void DisposeNow()
     {
-        mpz_clear(ref Value);
+        mpz.clear(this);
     }
     #endregion
 
@@ -75,7 +75,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         if (ReferenceEquals(other, null))
             throw new ArgumentNullException(nameof(other));
         else
-            return mpz_cmp(ref Value, ref other.Value) == 0;
+            return mpz.cmp(this, other) == 0;
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     bool IConvertible.ToBoolean(IFormatProvider? provider)
     {
-        return this.ToBoolean(provider);
+        throw new InvalidCastException();
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     byte IConvertible.ToByte(IFormatProvider? provider)
     {
-        return this.ToByte(provider);
+        return ToByte(provider);
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     char IConvertible.ToChar(IFormatProvider? provider)
     {
-        return this.ToChar(provider);
+        throw new InvalidCastException();
     }
 
     /// <summary>
@@ -184,7 +184,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     DateTime IConvertible.ToDateTime(IFormatProvider? provider)
     {
-        return this.ToDateTime(provider);
+        throw new InvalidCastException();
     }
 
     /// <summary>
@@ -202,7 +202,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     decimal IConvertible.ToDecimal(IFormatProvider? provider)
     {
-        return this.ToDecimal(provider);
+        throw new InvalidCastException();
     }
 
     /// <summary>
@@ -220,7 +220,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     double IConvertible.ToDouble(IFormatProvider? provider)
     {
-        return this.ToDouble(provider);
+        return ToDouble(provider);
     }
 
     /// <summary>
@@ -238,7 +238,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     short IConvertible.ToInt16(IFormatProvider? provider)
     {
-        return this.ToInt16(provider);
+        return ToInt16(provider);
     }
 
     /// <summary>
@@ -256,7 +256,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     int IConvertible.ToInt32(IFormatProvider? provider)
     {
-        return this.ToInt32(provider);
+        return ToInt32(provider);
     }
 
     /// <summary>
@@ -274,7 +274,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     long IConvertible.ToInt64(IFormatProvider? provider)
     {
-        return this.ToInt64(provider);
+        return ToInt64(provider);
     }
 
     /// <summary>
@@ -292,7 +292,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     sbyte IConvertible.ToSByte(IFormatProvider? provider)
     {
-        return this.ToSByte(provider);
+        return ToSByte(provider);
     }
 
     /// <summary>
@@ -310,7 +310,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     float IConvertible.ToSingle(IFormatProvider? provider)
     {
-        return this.ToSingle(provider);
+        return ToSingle(provider);
     }
 
     /// <summary>
@@ -319,7 +319,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public string ToString(IFormatProvider? provider)
     {
-        return this.ToString();
+        return ToString();
     }
 
     /// <summary>
@@ -328,7 +328,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     string IConvertible.ToString(IFormatProvider? provider)
     {
-        return this.ToString(provider);
+        return ToString(provider);
     }
 
     /// <summary>
@@ -380,7 +380,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     object IConvertible.ToType(Type targetType, IFormatProvider? provider)
     {
-        return this.ToType(targetType, provider);
+        return ToType(targetType, provider);
     }
 
     /// <summary>
@@ -389,7 +389,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public ushort ToUInt16(IFormatProvider? provider)
     {
-        return this.ToUInt16(provider);
+        return (ushort)this;
     }
 
     /// <summary>
@@ -398,7 +398,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     ushort IConvertible.ToUInt16(IFormatProvider? provider)
     {
-        return (ushort)this;
+        return ToUInt16(provider);
     }
 
     /// <summary>
@@ -416,7 +416,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     uint IConvertible.ToUInt32(IFormatProvider? provider)
     {
-        return this.ToUInt32(provider);
+        return ToUInt32(provider);
     }
 
     /// <summary>
@@ -434,7 +434,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     ulong IConvertible.ToUInt64(IFormatProvider? provider)
     {
-        return this.ToUInt64(provider);
+        return ToUInt64(provider);
     }
     #endregion
 
@@ -457,7 +457,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="obj">An object to compare with this instance.</param>
     int IComparable.CompareTo(object? obj)
     {
-        return this.CompareTo(obj);
+        return CompareTo(obj);
     }
     #endregion
 }

@@ -1537,6 +1537,17 @@ public static class mpz
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="content">The input string.</param>
+    /// <param name="strBase">The digit base.</param>
+    public static bool init_set_str(mpz_t rop, string content, uint strBase)
+    {
+        return NativeMethods.mpz_init_set_str(ref rop.Value, content, strBase) == 0;
+    }
+
+    /// <summary>
+    /// See http://mpir.org/mpir-3.0.0.pdf.
+    /// </summary>
     /// <param name="writer">The output stream.</param>
     /// <param name="op">The operand.</param>
     public static long out_raw(BinaryWriter writer, mpz_t op)

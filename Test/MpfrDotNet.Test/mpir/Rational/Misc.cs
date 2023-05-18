@@ -28,6 +28,14 @@ public class Misc
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("30/10"));
 
+        d.SetNumerator(40);
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("40/10"));
+
+        d.SetDenominator(20);
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("40/20"));
+
         using mpq_t e = new(30UL, 10, true);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("3"));

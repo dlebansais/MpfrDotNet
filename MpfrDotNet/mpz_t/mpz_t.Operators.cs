@@ -19,7 +19,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new();
 
-        mpz_add(ref z.Value, ref x.Value, ref y.Value);
+        mpz.add(z, x, y);
 
         return z;
     }
@@ -34,9 +34,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         mpz_t z = new();
 
         if (y >= 0)
-            mpz_add_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)y);
+            mpz.add_ui(z, x, (ulong)y);
         else
-            mpz_sub_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)-y);
+            mpz.sub_ui(z, x, (ulong)-y);
 
         return z;
     }
@@ -51,9 +51,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         mpz_t z = new();
 
         if (x >= 0)
-            mpz_add_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)x);
+            mpz.add_ui(z, y, (ulong)x);
         else
-            mpz_sub_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)-x);
+            mpz.sub_ui(z, y, (ulong)-x);
 
         return z;
     }
@@ -67,7 +67,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_add_ui(ref z.Value, ref x.Value, (mpir_ui)y);
+        mpz.add_ui(z, x, y);
 
         return z;
     }
@@ -81,7 +81,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_add_ui(ref z.Value, ref y.Value, (mpir_ui)x);
+        mpz.add_ui(z, y, x);
 
         return z;
     }
@@ -94,8 +94,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         using mpz_t z = new mpz_t();
 
-        mpz_add_ui(ref z.Value, ref x.Value, (mpir_ui)1UL);
-        mpz_set(ref x.Value, ref z.Value);
+        mpz.add_ui(z, x, 1UL);
+        mpz.set(x, z);
 
         return x;
     }
@@ -109,7 +109,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_sub(ref z.Value, ref x.Value, ref y.Value);
+        mpz.sub(z, x, y);
 
         return z;
     }
@@ -125,7 +125,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             mpz_t z = new mpz_t();
 
-            mpz_ui_sub(ref z.Value, (mpir_ui)(ulong)x, ref y.Value);
+            mpz.ui_sub(z, (ulong)x, y);
 
             return z;
         }
@@ -133,8 +133,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             mpz_t z = new mpz_t();
 
-            mpz_add_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)-x);
-            mpz_neg(ref z.Value, ref z.Value);
+            mpz.add_ui(z, y, (ulong)-x);
+            mpz.neg(z, z);
 
             return z;
         }
@@ -150,9 +150,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         mpz_t z = new mpz_t();
 
         if (y >= 0)
-            mpz_sub_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)y);
+            mpz.sub_ui(z, x, (ulong)y);
         else
-            mpz_add_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)-y);
+            mpz.add_ui(z, x, (ulong)-y);
 
         return z;
     }
@@ -166,7 +166,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_ui_sub(ref z.Value, (mpir_ui)x, ref y.Value);
+        mpz.ui_sub(z, x, y);
 
         return z;
     }
@@ -180,7 +180,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_sub_ui(ref z.Value, ref x.Value, (mpir_ui)y);
+        mpz.sub_ui(z, x, y);
 
         return z;
     }
@@ -193,8 +193,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         using mpz_t z = new mpz_t();
 
-        mpz_sub_ui(ref z.Value, ref x.Value, (mpir_ui)1UL);
-        mpz_set(ref x.Value, ref z.Value);
+        mpz.sub_ui(z, x, 1UL);
+        mpz.set(x, z);
 
         return x;
     }
@@ -208,7 +208,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_mul(ref z.Value, ref x.Value, ref y.Value);
+        mpz.mul(z, x, y);
 
         return z;
     }
@@ -222,7 +222,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_mul_si(ref z.Value, ref y.Value, (mpir_si)x);
+        mpz.mul_si(z, y, x);
 
         return z;
     }
@@ -236,7 +236,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_mul_si(ref z.Value, ref x.Value, (mpir_si)y);
+        mpz.mul_si(z, x, y);
 
         return z;
     }
@@ -250,7 +250,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_mul_ui(ref z.Value, ref y.Value, (mpir_ui)x);
+        mpz.mul_ui(z, y, x);
 
         return z;
     }
@@ -264,7 +264,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_mul_ui(ref z.Value, ref x.Value, (mpir_ui)y);
+        mpz.mul_ui(z, x, y);
 
         return z;
     }
@@ -279,7 +279,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         mpz_t z = new mpz_t();
 
         if (count >= 0)
-            mpz_mul_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
+            mpz.mul_2exp(z, x, (ulong)count);
 
         return z;
     }
@@ -294,7 +294,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         mpz_t z = new mpz_t();
 
         if (count >= 0)
-            mpz_tdiv_q_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
+            mpz.tdiv_q_2exp(z, x, (ulong)count);
 
         return z;
     }
@@ -307,7 +307,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_neg(ref z.Value, ref x.Value);
+        mpz.neg(z, x);
 
         return z;
     }
@@ -321,7 +321,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t quotient = new mpz_t();
 
-        mpz_tdiv_q(ref quotient.Value, ref x.Value, ref y.Value);
+        mpz.tdiv_q(quotient, x, y);
 
         return quotient;
     }
@@ -337,7 +337,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             mpz_t quotient = new mpz_t();
 
-            mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, (mpir_ui)(ulong)y);
+            mpz.tdiv_q_ui(quotient, x, (ulong)y);
 
             return quotient;
         }
@@ -345,8 +345,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             mpz_t quotient = new mpz_t();
 
-            mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, (mpir_ui)(ulong)-y);
-            mpz_neg(ref quotient.Value, ref quotient.Value);
+            mpz.tdiv_q_ui(quotient, x, (ulong)-y);
+            mpz.neg(quotient, quotient);
 
             return quotient;
         }
@@ -361,7 +361,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t quotient = new mpz_t();
 
-        mpz_tdiv_q_ui(ref quotient.Value, ref x.Value, (mpir_ui)y);
+        mpz.tdiv_q_ui(quotient, x, y);
 
         return quotient;
     }
@@ -375,7 +375,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_mod(ref z.Value, ref x.Value, ref mod.Value);
+        mpz.mod(z, x, mod);
 
         return z;
     }
@@ -392,7 +392,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
 
         mpz_t z = new mpz_t();
 
-        mpz_fdiv_r_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)mod);
+        mpz.fdiv_r_ui(z, x, (ulong)mod);
 
         return z;
     }
@@ -406,7 +406,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_fdiv_r_ui(ref z.Value, ref x.Value, (mpir_ui)mod);
+        mpz.fdiv_r_ui(z, x, mod);
 
         return z;
     }
@@ -1200,7 +1200,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_and(ref z.Value, ref x.Value, ref y.Value);
+        mpz.and(z, x, y);
 
         return z;
     }
@@ -1214,7 +1214,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_ior(ref z.Value, ref x.Value, ref y.Value);
+        mpz.ior(z, x, y);
 
         return z;
     }
@@ -1228,7 +1228,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_xor(ref z.Value, ref x.Value, ref y.Value);
+        mpz.xor(z, x, y);
 
         return z;
     }
@@ -1241,7 +1241,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_com(ref z.Value, ref x.Value);
+        mpz.com(z, x);
 
         return z;
     }

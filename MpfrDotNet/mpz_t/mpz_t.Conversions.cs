@@ -18,8 +18,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         ulong SizeInBits = (ulong)mpz_sizeinbase(ref Value, 2);
         byte[] Result = new byte[(SizeInBits + 7) / 8];
 
-        size_t countp;
-        mpz_export(Result, out countp, -1, (size_t)sizeof(byte), -1, (size_t)0UL, ref Value);
+        mpz.export(Result, out ulong countp, -1, sizeof(byte), -1, 0UL, this);
 
         return Result;
     }
@@ -40,10 +39,10 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <returns>The number value.</returns>
     public string ToString(int resultbase)
     {
-        ulong SizeInDigits = (ulong)mpz_sizeinbase(ref Value, (uint)resultbase);
+        ulong SizeInDigits = mpz.sizeinbase(this, (uint)resultbase);
 
         StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
-        mpz_get_str(Data, resultbase, ref Value);
+        mpz.get_str(Data, resultbase, this);
 
         string Result = Data.ToString();
         return Result;
@@ -154,7 +153,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="value">The value.</param>
     public static explicit operator int(mpz_t value)
     {
-        return (int)(long)mpz_get_si(ref value.Value);
+        return (int)mpz.get_si(value);
     }
 
     /// <summary>
@@ -163,7 +162,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="value">The value.</param>
     public static explicit operator uint(mpz_t value)
     {
-        return (uint)(ulong)mpz_get_ui(ref value.Value);
+        return (uint)mpz.get_ui(value);
     }
 
     /// <summary>
@@ -192,7 +191,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         byte[] Bytes = new byte[8];
 
-        mpz_import(ref value.Value, (size_t)(ulong)Bytes.LongLength, -1, (size_t)sizeof(byte), -1, (size_t)0UL, Bytes);
+        mpz.import(value, (ulong)Bytes.LongLength, -1, sizeof(byte), -1, 0UL, Bytes);
         long Int64Result = BitConverter.ToInt64(Bytes, 0);
 
         return Int64Result;
@@ -206,7 +205,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         byte[] Bytes = new byte[8];
 
-        mpz_import(ref value.Value, (size_t)(ulong)Bytes.LongLength, -1, (size_t)sizeof(byte), -1, (size_t)0UL, Bytes);
+        mpz.import(value, (ulong)Bytes.LongLength, -1, sizeof(byte), -1, 0UL, Bytes);
         ulong UInt64Result = BitConverter.ToUInt64(Bytes, 0);
 
         return UInt64Result;
@@ -227,7 +226,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="value">The value.</param>
     public static explicit operator double(mpz_t value)
     {
-        return mpz_get_d(ref value.Value);
+        return mpz.get_d(value);
     }
 
     /// <summary>

@@ -16,7 +16,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_combit(ref z.Value, (mp_bitcnt_t)n);
+        mpz.combit(z, n);
 
         return z;
     }

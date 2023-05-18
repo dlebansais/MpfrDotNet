@@ -19,7 +19,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         if (ReferenceEquals(other, null))
             throw new ArgumentNullException(nameof(other));
         else
-            return mpz_cmp(ref Value, ref other.Value);
+            return mpz.cmp(this, other);
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public int CompareTo(long other)
     {
-        return mpz_cmp_si(ref Value, (mpir_si)other);
+        return mpz.cmp_si(this, other);
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public int CompareTo(ulong other)
     {
-        return mpz_cmp_ui(ref Value, (mpir_ui)other);
+        return mpz.cmp_ui(this, other);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public int CompareTo(float other)
     {
-        return mpz_cmp_d(ref Value, other);
+        return mpz.cmp_d(this, other);
     }
 
     /// <summary>
@@ -55,6 +55,6 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public int CompareTo(double other)
     {
-        return mpz_cmp_d(ref Value, other);
+        return mpz.cmp_d(this, other);
     }
 }

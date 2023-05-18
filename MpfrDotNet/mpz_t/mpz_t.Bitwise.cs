@@ -16,7 +16,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="index">The bit index.</param>
     public bool GetBit(ulong index)
     {
-        return mpz_tstbit(ref Value, (mp_bitcnt_t)index) != 0;
+        return mpz.tstbit(this, index);
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="index">The bit index.</param>
     public void SetBit(ulong index)
     {
-        mpz_setbit(ref Value, (mp_bitcnt_t)index);
+        mpz.setbit(this, index);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="index">The bit index.</param>
     public void ClearBit(ulong index)
     {
-        mpz_clrbit(ref Value, (mp_bitcnt_t)index);
+        mpz.clrbit(this, index);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="index">The bit index.</param>
     public void ComplementBit(ulong index)
     {
-        mpz_combit(ref Value, (mp_bitcnt_t)index);
+        mpz.combit(this, index);
     }
 
     /// <summary>
@@ -54,8 +54,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     public void ChangeBit(ulong index, bool isSet)
     {
         if (isSet)
-            mpz_setbit(ref Value, (mp_bitcnt_t)index);
+            mpz.setbit(this, index);
         else
-            mpz_clrbit(ref Value, (mp_bitcnt_t)index);
+            mpz.clrbit(this, index);
     }
 }

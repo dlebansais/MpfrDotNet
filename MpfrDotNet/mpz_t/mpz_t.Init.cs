@@ -15,7 +15,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     public mpz_t()
     {
-        mpz_init(ref Value);
+        mpz.init(this);
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public mpz_t(mpz_t other)
     {
-        mpz_init_set(ref Value, ref other.Value);
+        mpz.init_set(this, other);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="op">The operand.</param>
     public mpz_t(uint op)
     {
-        mpz_init_set_ui(ref Value, (mpir_ui)op);
+        mpz.init_set_ui(this, op);
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="op">The operand.</param>
     public mpz_t(int op)
     {
-        mpz_init_set_si(ref Value, (mpir_si)op);
+        mpz.init_set_si(this, op);
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="op">The operand.</param>
     public mpz_t(ulong op)
     {
-        mpz_init_set_ux(ref Value, (uintmax_t)op);
+        mpz.init_set_ux(this, op);
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="op">The operand.</param>
     public mpz_t(long op)
     {
-        mpz_init_set_sx(ref Value, (intmax_t)op);
+        mpz.init_set_sx(this, op);
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="op">The operand.</param>
     public mpz_t(double op)
     {
-        mpz_init_set_d(ref Value, op);
+        mpz.init_set_d(this, op);
     }
 
     /// <summary>
@@ -88,8 +88,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="strBase">The digit base.</param>
     public mpz_t(string text, uint strBase)
     {
-        int Success = mpz_init_set_str(ref Value, text, strBase);
-        if (Success != 0)
+        bool Success = mpz.init_set_str(this, text, strBase);
+        if (!Success)
             throw new ArgumentException();
     }
 
@@ -108,7 +108,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="size">The count of bits.</param>
     public mpz_t(bitcount_t size)
     {
-        mpz_init2(ref Value, (mp_bitcnt_t)size.Count);
+        mpz.init2(this, size.Count);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     public mpz_t(byte[] bytes)
         : this()
     {
-        mpz_import(ref Value, (size_t)(ulong)bytes.LongLength, -1, (size_t)sizeof(byte), -1, (size_t)0UL, bytes);
+        mpz.import(this, (ulong)bytes.LongLength, -1, sizeof(byte), -1, 0UL, bytes);
     }
 
     /// <summary>

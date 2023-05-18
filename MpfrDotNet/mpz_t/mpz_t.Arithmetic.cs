@@ -1,8 +1,6 @@
 ﻿namespace MpirDotNet;
 
 using System;
-using System.Numerics;
-using System.Text;
 using static Interop.Mpir.NativeMethods;
 
 /// <summary>
@@ -17,7 +15,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t z = new mpz_t();
 
-        mpz_abs(ref z.Value, ref Value);
+        mpz.abs(z, this);
 
         return z;
     }
@@ -27,7 +25,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     public int Sign
     {
-        get { return mpz_sgn(ref Value); }
+        get { return mpz.sgn(this); }
     }
 
     /// <summary>
@@ -43,15 +41,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                mpz_tdiv_q(ref quotient.Value, ref Value, ref y.Value);
+                mpz.tdiv_q(quotient, this, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                mpz_cdiv_q(ref quotient.Value, ref Value, ref y.Value);
+                mpz.cdiv_q(quotient, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                mpz_fdiv_q(ref quotient.Value, ref Value, ref y.Value);
+                mpz.fdiv_q(quotient, this, y);
                 break;
         }
 
@@ -71,15 +69,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                mpz_tdiv_r(ref remainder.Value, ref Value, ref y.Value);
+                mpz.tdiv_r(remainder, this, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                mpz_cdiv_r(ref remainder.Value, ref Value, ref y.Value);
+                mpz.cdiv_r(remainder, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                mpz_fdiv_r(ref remainder.Value, ref Value, ref y.Value);
+                mpz.fdiv_r(remainder, this, y);
                 break;
         }
 
@@ -103,15 +101,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                mpz_tdiv_qr(ref quotient.Value, ref remainder.Value, ref x.Value, ref y.Value);
+                mpz.tdiv_qr(quotient, remainder, x, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                mpz_cdiv_qr(ref quotient.Value, ref remainder.Value, ref x.Value, ref y.Value);
+                mpz.cdiv_qr(quotient, remainder, x, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                mpz_fdiv_qr(ref quotient.Value, ref remainder.Value, ref x.Value, ref y.Value);
+                mpz.fdiv_qr(quotient, remainder, x, y);
                 break;
         }
     }
@@ -129,15 +127,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                mpz_tdiv_q_ui(ref quotient.Value, ref Value, (mpir_ui)y);
+                mpz.tdiv_q_ui(quotient, this, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                mpz_cdiv_q_ui(ref quotient.Value, ref Value, (mpir_ui)y);
+                mpz.cdiv_q_ui(quotient, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                mpz_fdiv_q_ui(ref quotient.Value, ref Value, (mpir_ui)y);
+                mpz.fdiv_q_ui(quotient, this, y);
                 break;
         }
 
@@ -157,15 +155,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                mpz_tdiv_r_ui(ref remainder.Value, ref Value, (mpir_ui)y);
+                mpz.tdiv_r_ui(remainder, this, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                mpz_cdiv_r_ui(ref remainder.Value, ref Value, (mpir_ui)y);
+                mpz.cdiv_r_ui(remainder, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                mpz_fdiv_r_ui(ref remainder.Value, ref Value, (mpir_ui)y);
+                mpz.fdiv_r_ui(remainder, this, y);
                 break;
         }
 
@@ -189,15 +187,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                mpz_tdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, (mpir_ui)y);
+                mpz.tdiv_qr_ui(quotient, remainder, x, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                mpz_cdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, (mpir_ui)y);
+                mpz.cdiv_qr_ui(quotient, remainder, x, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                mpz_fdiv_qr_ui(ref quotient.Value, ref remainder.Value, ref x.Value, (mpir_ui)y);
+                mpz.fdiv_qr_ui(quotient, remainder, x, y);
                 break;
         }
     }
@@ -215,15 +213,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                remainder = (ulong)mpz_tdiv_ui(ref Value, (mpir_ui)y);
+                remainder = mpz.tdiv_ui(this, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                remainder = (ulong)mpz_cdiv_ui(ref Value, (mpir_ui)y);
+                remainder = mpz.cdiv_ui(this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                remainder = (ulong)mpz_fdiv_ui(ref Value, (mpir_ui)y);
+                remainder = mpz.fdiv_ui(this, y);
                 break;
         }
 
@@ -243,15 +241,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                mpz_tdiv_q_2exp(ref quotient.Value, ref Value, (mp_bitcnt_t)y);
+                mpz.tdiv_q_2exp(quotient, this, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                mpz_cdiv_q_2exp(ref quotient.Value, ref Value, (mp_bitcnt_t)y);
+                mpz.cdiv_q_2exp(quotient, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                mpz_fdiv_q_2exp(ref quotient.Value, ref Value, (mp_bitcnt_t)y);
+                mpz.fdiv_q_2exp(quotient, this, y);
                 break;
         }
 
@@ -271,15 +269,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             default:
             case Rounding.TowardZero:
-                mpz_tdiv_r_2exp(ref remainder.Value, ref Value, (mp_bitcnt_t)y);
+                mpz.tdiv_r_2exp(remainder, this, y);
                 break;
 
             case Rounding.TowardPositiveInfinity:
-                mpz_cdiv_r_2exp(ref remainder.Value, ref Value, (mp_bitcnt_t)y);
+                mpz.cdiv_r_2exp(remainder, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
-                mpz_fdiv_r_2exp(ref remainder.Value, ref Value, (mp_bitcnt_t)y);
+                mpz.fdiv_r_2exp(remainder, this, y);
                 break;
         }
 
@@ -294,7 +292,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t quotient = new mpz_t();
 
-        mpz_divexact(ref quotient.Value, ref Value, ref y.Value);
+        mpz.divexact(quotient, this, y);
 
         return quotient;
     }
@@ -307,7 +305,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t quotient = new mpz_t();
 
-        mpz_divexact_ui(ref quotient.Value, ref Value, (mpir_ui)y);
+        mpz.divexact_ui(quotient, this, y);
 
         return quotient;
     }
@@ -318,7 +316,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The divider.</param>
     public bool IsDivisible(mpz_t y)
     {
-        return mpz_divisible_p(ref Value, ref y.Value) != 0;
+        return mpz.divisible_p(this, y);
     }
 
     /// <summary>
@@ -327,7 +325,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The divider.</param>
     public bool IsDivisible(ulong y)
     {
-        return mpz_divisible_ui_p(ref Value, (mpir_ui)y) != 0;
+        return mpz.divisible_ui_p(this, y);
     }
 
     /// <summary>
@@ -336,7 +334,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The power.</param>
     public bool IsDivisibleByPowerOfTwo(ulong y)
     {
-        return mpz_divisible_2exp_p(ref Value, (mp_bitcnt_t)y) != 0;
+        return mpz.divisible_2exp_p(this, y);
     }
 
     /// <summary>
@@ -346,7 +344,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="d">The d.</param>
     public bool IsCongruent(mpz_t c, mpz_t d)
     {
-        return mpz_congruent_p(ref Value, ref c.Value, ref d.Value) != 0;
+        return mpz.congruent_p(this, c, d);
     }
 
     /// <summary>
@@ -356,7 +354,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="d">The d.</param>
     public bool IsCongruent(ulong c, ulong d)
     {
-        return mpz_congruent_ui_p(ref Value, (mpir_ui)c, (mpir_ui)d) != 0;
+        return mpz.congruent_ui_p(this, c, d);
     }
 
     /// <summary>
@@ -366,7 +364,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="d">The d.</param>
     public bool IsCongruentPowerOfTwo(mpz_t c, long d)
     {
-        return mpz_congruent_2exp_p(ref Value, ref c.Value, (mp_bitcnt_t)(ulong)d) != 0;
+        return mpz.congruent_2exp_p(this, c, (ulong)d);
     }
 
     /// <summary>
@@ -378,7 +376,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t Result = new mpz_t();
 
-        mpz_powm(ref Result.Value, ref Value, ref exp.Value, ref mod.Value);
+        mpz.powm(Result, this, exp, mod);
 
         return Result;
     }
@@ -392,7 +390,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t Result = new mpz_t();
 
-        mpz_powm_ui(ref Result.Value, ref Value, (mpir_ui)exp, ref mod.Value);
+        mpz.powm_ui(Result, this, exp, mod);
 
         return Result;
     }
@@ -405,7 +403,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t Result = new mpz_t();
 
-        mpz_pow_ui(ref Result.Value, ref Value, (mpir_ui)exp);
+        mpz.pow_ui(Result, this, exp);
 
         return Result;
     }
@@ -418,7 +416,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         using mpz_t Result = new mpz_t();
 
-        return mpz_root(ref Result.Value, ref Value, (mpir_ui)n) != 0;
+        return mpz.root(Result, this, n);
     }
 
     /// <summary>
@@ -429,7 +427,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t Result = new mpz_t();
 
-        mpz_nthroot(ref Result.Value, ref Value, (mpir_ui)n);
+        mpz.nthroot(Result, this, n);
 
         return Result;
     }
@@ -446,7 +444,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         root = new mpz_t();
         remainder = new mpz_t();
 
-        mpz_rootrem(ref root.Value, ref remainder.Value, ref x.Value, (mpir_ui)n);
+        mpz.rootrem(root, remainder, x, n);
     }
 
     /// <summary>
@@ -456,7 +454,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         mpz_t Result = new mpz_t();
 
-        mpz_sqrt(ref Result.Value, ref Value);
+        mpz.sqrt(Result, this);
 
         return Result;
     }
@@ -472,7 +470,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         root = new mpz_t();
         remainder = new mpz_t();
 
-        mpz_sqrtrem(ref root.Value, ref remainder.Value, ref x.Value);
+        mpz.sqrtrem(root, remainder, x);
     }
 
     /// <summary>
@@ -480,7 +478,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     public bool IsPerfectPower()
     {
-        return mpz_perfect_power_p(ref Value) != 0;
+        return mpz.perfect_power_p(this);
     }
 
     /// <summary>
@@ -488,6 +486,6 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     public bool IsPerfectSquare()
     {
-        return mpz_perfect_square_p(ref Value) != 0;
+        return mpz.perfect_square_p(this);
     }
 }
