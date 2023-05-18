@@ -23,9 +23,7 @@ public class PowerMod
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("9786459872639458729387304958673243509870923452745892673402935742456"));
 
-        mpz_t d = new();
-        mpz.powm(d, a, b, c);
-
+        using mpz_t d = a.PowerMod(b, c);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("5346078446724436806099093819990997994355321605000165187447171753448"));
     }
@@ -43,9 +41,7 @@ public class PowerMod
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("9786459872639458729387304958673243509870923452745892673402935742456"));
 
-        mpz_t d = new();
-        mpz.powm_ui(d, a, 3, c);
-
+        using mpz_t d = a.PowerMod(3, c);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("5346078446724436806099093819990997994355321605000165187447171753448"));
     }

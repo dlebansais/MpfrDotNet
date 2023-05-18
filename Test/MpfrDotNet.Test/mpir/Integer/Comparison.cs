@@ -22,37 +22,55 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290460"));
 
         IsGreaterThan = a > b;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         double f = 50.0F;
 
         IsGreaterThan = a > f;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = f > a;
+        Assert.That(IsGreaterThan, Is.False);
 
         double d = 50.0;
 
         IsGreaterThan = a > d;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = d > a;
+        Assert.That(IsGreaterThan, Is.False);
 
         int n = 50;
 
         IsGreaterThan = a > n;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = n > a;
+        Assert.That(IsGreaterThan, Is.False);
 
         uint p = 50U;
 
         IsGreaterThan = a > p;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = p > a;
+        Assert.That(IsGreaterThan, Is.False);
 
         long l = 50L;
 
         IsGreaterThan = a > l;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = l > a;
+        Assert.That(IsGreaterThan, Is.False);
 
         ulong ul = 50UL;
 
         IsGreaterThan = a > ul;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = ul > a;
+        Assert.That(IsGreaterThan, Is.False);
     }
 
     [Test]
@@ -70,37 +88,55 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290460"));
 
         IsGreaterThan = a >= b;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         double f = 50.0F;
 
         IsGreaterThan = a >= f;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = f >= a;
+        Assert.That(IsGreaterThan, Is.False);
 
         double d = 50.0;
 
         IsGreaterThan = a >= d;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = d >= a;
+        Assert.That(IsGreaterThan, Is.False);
 
         int n = 50;
 
         IsGreaterThan = a >= n;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = n >= a;
+        Assert.That(IsGreaterThan, Is.False);
 
         uint p = 50U;
 
         IsGreaterThan = a >= p;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = p >= a;
+        Assert.That(IsGreaterThan, Is.False);
 
         long l = 50L;
 
         IsGreaterThan = a >= l;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = l >= a;
+        Assert.That(IsGreaterThan, Is.False);
 
         ulong ul = 50UL;
 
         IsGreaterThan = a >= ul;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = ul >= a;
+        Assert.That(IsGreaterThan, Is.False);
     }
 
     [Test]
@@ -125,30 +161,48 @@ public class Comparison
         IsLesserThan = a < f;
         Assert.That(IsLesserThan, Is.False);
 
+        IsLesserThan = f < a;
+        Assert.That(IsLesserThan, Is.True);
+
         double d = 50.0;
 
         IsLesserThan = a < d;
         Assert.That(IsLesserThan, Is.False);
+
+        IsLesserThan = d < a;
+        Assert.That(IsLesserThan, Is.True);
 
         int n = 50;
 
         IsLesserThan = a < n;
         Assert.That(IsLesserThan, Is.False);
 
+        IsLesserThan = n < a;
+        Assert.That(IsLesserThan, Is.True);
+
         uint p = 50U;
 
         IsLesserThan = a < p;
         Assert.That(IsLesserThan, Is.False);
+
+        IsLesserThan = p < a;
+        Assert.That(IsLesserThan, Is.True);
 
         long l = 50L;
 
         IsLesserThan = a < l;
         Assert.That(IsLesserThan, Is.False);
 
+        IsLesserThan = l < a;
+        Assert.That(IsLesserThan, Is.True);
+
         ulong ul = 50UL;
 
         IsLesserThan = a < ul;
         Assert.That(IsLesserThan, Is.False);
+
+        IsLesserThan = ul < a;
+        Assert.That(IsLesserThan, Is.True);
     }
 
     [Test]
@@ -173,30 +227,48 @@ public class Comparison
         IsLesserThan = a <= f;
         Assert.That(IsLesserThan, Is.False);
 
+        IsLesserThan = f <= a;
+        Assert.That(IsLesserThan, Is.True);
+
         double d = 50.0;
 
         IsLesserThan = a <= d;
         Assert.That(IsLesserThan, Is.False);
+
+        IsLesserThan = d <= a;
+        Assert.That(IsLesserThan, Is.True);
 
         int n = 50;
 
         IsLesserThan = a <= n;
         Assert.That(IsLesserThan, Is.False);
 
+        IsLesserThan = n <= a;
+        Assert.That(IsLesserThan, Is.True);
+
         uint p = 50U;
 
         IsLesserThan = a <= p;
         Assert.That(IsLesserThan, Is.False);
+
+        IsLesserThan = p <= a;
+        Assert.That(IsLesserThan, Is.True);
 
         long l = 50L;
 
         IsLesserThan = a <= l;
         Assert.That(IsLesserThan, Is.False);
 
+        IsLesserThan = l <= a;
+        Assert.That(IsLesserThan, Is.True);
+
         ulong ul = 50UL;
 
         IsLesserThan = a <= ul;
         Assert.That(IsLesserThan, Is.False);
+
+        IsLesserThan = ul <= a;
+        Assert.That(IsLesserThan, Is.True);
     }
 
     [Test]
@@ -214,17 +286,17 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290460"));
 
         IsGreaterThan = mpz.cmpabs(a, b) > 0;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         double d = 50.0;
 
         IsGreaterThan = mpz.cmpabs_d(a, d) > 0;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         uint p = 50U;
 
         IsGreaterThan = mpz.cmpabs_ui(a, p) > 0;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
     }
 
     [Test]
@@ -266,6 +338,12 @@ public class Comparison
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290460"));
 
+        IsGreaterThan = a.CompareTo(1.0F) > 0;
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = a.CompareTo(1.0) > 0;
+        Assert.That(IsGreaterThan, Is.True);
+
         mpz_t? Instance = b;
 
         IsGreaterThan = a.CompareTo(Instance) > 0;
@@ -273,6 +351,14 @@ public class Comparison
 
         Instance = null;
         Assert.Throws<ArgumentNullException>(() => a.CompareTo(Instance));
+
+        object? Object = b;
+
+        IsGreaterThan = a.CompareTo(Object) > 0;
+        Assert.That(IsGreaterThan, Is.True);
+
+        Object = null;
+        Assert.Throws<ArgumentException>(() => a.CompareTo(Object));
     }
 
     [Test]

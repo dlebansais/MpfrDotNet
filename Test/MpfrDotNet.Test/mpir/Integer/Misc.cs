@@ -33,67 +33,103 @@ public class Misc
         Assert.Throws<ArgumentException>(() => { using (mpz_t x = new mpz_t("Foo")) { }; });
 
         byte nb = 20;
-        using mpz_t b = new mpz_t(nb);
+        using mpz_t b1 = new mpz_t(nb);
 
-        AsString = b.ToString();
+        AsString = b1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
-        Assert.That((byte)b, Is.EqualTo(nb));
+        Assert.That((byte)b1, Is.EqualTo(nb));
+
+        using mpz_t b2 = (mpz_t)nb;
+        AsString = b2.ToString();
+        Assert.That(AsString, Is.EqualTo("20"));
 
         int ni = -20;
-        using mpz_t c = new mpz_t(ni);
+        using mpz_t c1 = new mpz_t(ni);
 
-        AsString = c.ToString();
+        AsString = c1.ToString();
         Assert.That(AsString, Is.EqualTo("-20"));
-        Assert.That((int)c, Is.EqualTo(ni));
+        Assert.That((int)c1, Is.EqualTo(ni));
+
+        using mpz_t c2 = (mpz_t)ni;
+        AsString = c2.ToString();
+        Assert.That(AsString, Is.EqualTo("-20"));
 
         uint nui = 20;
-        using mpz_t d = new mpz_t(nui);
+        using mpz_t d1 = new mpz_t(nui);
 
-        AsString = d.ToString();
+        AsString = d1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
-        Assert.That((uint)d, Is.EqualTo(nui));
+        Assert.That((uint)d1, Is.EqualTo(nui));
+
+        using mpz_t d2 = (mpz_t)nui;
+        AsString = d2.ToString();
+        Assert.That(AsString, Is.EqualTo("20"));
 
         long nl = -20L;
-        using mpz_t e = new mpz_t(nl);
+        using mpz_t e1 = new mpz_t(nl);
 
-        AsString = e.ToString();
+        AsString = e1.ToString();
         Assert.That(AsString, Is.EqualTo("-20"));
-        Assert.That((long)e, Is.EqualTo(nl));
+        Assert.That((long)e1, Is.EqualTo(nl));
+
+        using mpz_t e2 = (mpz_t)nl;
+        AsString = e2.ToString();
+        Assert.That(AsString, Is.EqualTo("-20"));
 
         ulong nul = 20UL;
-        using mpz_t f = new mpz_t(nul);
+        using mpz_t f1 = new mpz_t(nul);
 
-        AsString = f.ToString();
+        AsString = f1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
-        Assert.That((ulong)f, Is.EqualTo(nul));
+        Assert.That((ulong)f1, Is.EqualTo(nul));
+
+        using mpz_t f2 = (mpz_t)nul;
+        AsString = f2.ToString();
+        Assert.That(AsString, Is.EqualTo("20"));
 
         short ns = -20;
-        using mpz_t g = new mpz_t(ns);
+        using mpz_t g1 = new mpz_t(ns);
 
-        AsString = g.ToString();
+        AsString = g1.ToString();
         Assert.That(AsString, Is.EqualTo("-20"));
-        Assert.That((short)g, Is.EqualTo(ns));
+        Assert.That((short)g1, Is.EqualTo(ns));
+
+        using mpz_t g2 = (mpz_t)ns;
+        AsString = g2.ToString();
+        Assert.That(AsString, Is.EqualTo("-20"));
 
         ushort nus = 20;
-        using mpz_t h = new mpz_t(nus);
+        using mpz_t h1 = new mpz_t(nus);
 
-        AsString = h.ToString();
+        AsString = h1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
-        Assert.That((ushort)h, Is.EqualTo(nus));
+        Assert.That((ushort)h1, Is.EqualTo(nus));
+
+        using mpz_t h2 = (mpz_t)nus;
+        AsString = h2.ToString();
+        Assert.That(AsString, Is.EqualTo("20"));
 
         float nf = 20.0F;
-        using mpz_t i = new mpz_t(nf);
+        using mpz_t i1 = new mpz_t(nf);
 
-        AsString = i.ToString();
+        AsString = i1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
-        Assert.That((float)i, Is.EqualTo(nf));
+        Assert.That((float)i1, Is.EqualTo(nf));
+
+        using mpz_t i2 = (mpz_t)nf;
+        AsString = i2.ToString();
+        Assert.That(AsString, Is.EqualTo("20"));
 
         double nd = 20.0;
-        using mpz_t j = new mpz_t(nd);
+        using mpz_t j1 = new mpz_t(nd);
 
-        AsString = j.ToString();
+        AsString = j1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
-        Assert.That((double)j, Is.EqualTo(nd));
+        Assert.That((double)j1, Is.EqualTo(nd));
+
+        using mpz_t j2 = (mpz_t)nd;
+        AsString = j2.ToString();
+        Assert.That(AsString, Is.EqualTo("20"));
 
         BigInteger big = new(20);
         using mpz_t k = new mpz_t(big);
@@ -106,6 +142,14 @@ public class Misc
 
         AsString = l.ToString();
         Assert.That(AsString, Is.EqualTo("0"));
+
+        using mpz_t m = new mpz_t("222509832503450298345029835740293845720");
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = (long)m);
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = (ulong)m);
+
+        using mpz_t n = new mpz_t("-222509832503450298345029835740293845720");
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = (long)n);
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = (ulong)n);
     }
 
     [Test]
@@ -326,6 +370,32 @@ public class Misc
 
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
+    }
+
+    [Test]
+    public void Sign()
+    {
+        string AsString;
+        int Sign;
+
+        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
+
+        Sign = a.Sign;
+        Assert.That(Sign, Is.EqualTo(1));
+
+        using mpz_t b = new mpz_t("-222509832503450298345029835740293845720");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("-222509832503450298345029835740293845720"));
+
+        Sign = b.Sign;
+        Assert.That(Sign, Is.EqualTo(-1));
+
+        using mpz_t c = new mpz_t(0);
+
+        Sign = c.Sign;
+        Assert.That(Sign, Is.EqualTo(0));
     }
 
     [Test]
