@@ -11,12 +11,12 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the minimum precision.
     /// </summary>
-    public ulong MinPrecision { get { return NativeMinPrecision; } }
+    public ulong MinPrecision { get { return mpfr.PrecisionMin; } }
 
     /// <summary>
     /// Gets the maximum precision.
     /// </summary>
-    public ulong MaxPrecision { get { return NativeMaxPrecision; } }
+    public ulong MaxPrecision { get { return mpfr.PrecisionMax; } }
 
     /// <summary>
     /// Gets or sets the precision.
@@ -58,6 +58,6 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static ulong DefaultPrecisionInit
     {
-        get { return NativeDefaultPrecision; }
+        get { return mpfr.PrecisionDefault; }
     }
 }

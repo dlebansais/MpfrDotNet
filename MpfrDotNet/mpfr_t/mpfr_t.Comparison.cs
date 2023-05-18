@@ -173,32 +173,32 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets a value indicating whether the number is NAN.
     /// </summary>
-    public bool IsNan { get { return mpfr_nan_p(ref Value) != 0; } }
+    public bool IsNan { get { return mpfr.nan_p(this); } }
 
     /// <summary>
     /// Gets a value indicating whether the number is infinity.
     /// </summary>
-    public bool IsInf { get { return mpfr_inf_p(ref Value) != 0; } }
+    public bool IsInf { get { return mpfr.inf_p(this); } }
 
     /// <summary>
     /// Gets a value indicating whether the instance is a number.
     /// </summary>
-    public bool IsNumber { get { return mpfr_number_p(ref Value) != 0; } }
+    public bool IsNumber { get { return mpfr.number_p(this); } }
 
     /// <summary>
     /// Gets a value indicating whether the number is zero.
     /// </summary>
-    public bool IsZero { get { return mpfr_zero_p(ref Value) != 0; } }
+    public bool IsZero { get { return mpfr.zero_p(this); } }
 
     /// <summary>
     /// Gets a value indicating whether the number is regular.
     /// </summary>
-    public bool IsRegular { get { return mpfr_regular_p(ref Value) != 0; } }
+    public bool IsRegular { get { return mpfr.regular_p(this); } }
 
     /// <summary>
     /// Gets the sign.
     /// </summary>
-    public int Sign { get { return mpfr_sgn(ref Value); } }
+    public int Sign { get { return mpfr.sgn(this); } }
 
     /// <summary>
     /// Determines whether the specified object is equal to the current object.
@@ -207,7 +207,7 @@ public partial class mpfr_t : IDisposable
     public override bool Equals(object? obj)
     {
         if (obj is mpfr_t other)
-            return mpfr_equal_p(ref Value, ref other.Value) != 0;
+            return mpfr.equal_p(this, other);
         else
             return false;
     }
@@ -217,7 +217,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public override int GetHashCode()
     {
-        double d = mpfr_get_d(ref Value, (__mpfr_rnd_t)DefaultRounding);
+        double d = mpfr.get_d(this, DefaultRounding);
         return d.GetHashCode();
     }
 }

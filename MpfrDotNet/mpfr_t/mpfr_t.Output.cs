@@ -16,7 +16,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public ulong DigitCount
     {
-        get { return mpfr_get_str_ndigits(mpz_t.DefaultBase, Precision); }
+        get { return mpfr.get_str_ndigits(mpz_t.DefaultBase, Precision); }
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public partial class mpfr_t : IDisposable
         StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
 
         int Exponent;
-        mpfr_get_str(Data, out Exponent, resultbase, SizeInDigits, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.get_str(Data, out Exponent, resultbase, SizeInDigits, this, rounding);
 
         string Result = Data.ToString();
         Debug.Assert(Result.Length > 0);
