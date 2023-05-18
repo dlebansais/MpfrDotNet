@@ -35,7 +35,7 @@ public class Div
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("1.002146437661468404543190980751667421245E-10"));
 
-        using mpfr_t e1 = a.Div2(5);
+        using mpfr_t e1 = a.Div2(5UL);
 
         AsString = e1.ToString();
         Assert.That(AsString, Is.EqualTo("6.953432265732821823282182366884182678746E+23"));
@@ -44,7 +44,7 @@ public class Div
         mpfr.div_2exp(e2, a, 5, a.Rounding);
         Assert.That(e2, Is.EqualTo(e1));
 
-        using mpfr_t f = a.Div2(-5);
+        using mpfr_t f = a.Div2(-5L);
 
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("7.120314640110409547040954743689403063036E+26"));

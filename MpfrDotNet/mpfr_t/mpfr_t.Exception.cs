@@ -13,8 +13,8 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static int MinExponent
     {
-        get { return mpfr_get_emin(); }
-        set { mpfr_set_emin(value); }
+        get { return mpfr.get_emin(); }
+        set { mpfr.set_emin(value); }
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static int MinMinExponent
     {
-        get { return mpfr_get_emin_min(); }
+        get { return mpfr.get_emin_min(); }
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static int MaxMinExponent
     {
-        get { return mpfr_get_emin_max(); }
+        get { return mpfr.get_emin_max(); }
     }
 
     /// <summary>
@@ -38,8 +38,8 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static int MaxExponent
     {
-        get { return mpfr_get_emax(); }
-        set { mpfr_set_emax(value); }
+        get { return mpfr.get_emax(); }
+        set { mpfr.set_emax(value); }
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static int MinMaxExponent
     {
-        get { return mpfr_get_emax_min(); }
+        get { return mpfr.get_emax_min(); }
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static int MaxMaxExponent
     {
-        get { return mpfr_get_emax_max(); }
+        get { return mpfr.get_emax_max(); }
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public int CheckRange()
     {
-        return mpfr_check_range(ref Value, LastTernaryResult, (__mpfr_rnd_t)Rounding);
+        return mpfr.check_range(this, LastTernaryResult, Rounding);
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public int Subnormalize()
     {
-        return mpfr_subnormalize(ref Value, LastTernaryResult, (__mpfr_rnd_t)Rounding);
+        return mpfr.subnormalize(this, LastTernaryResult, Rounding);
     }
 
 #pragma warning disable SA1623 // Property summary documentation should match accessors
@@ -81,13 +81,13 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static bool Underflow
     {
-        get { return mpfr_underflow_p() != 0; }
+        get { return mpfr.underflow_p(); }
         set
         {
             if (value)
-                mpfr_set_underflow();
+                mpfr.set_underflow();
             else
-                mpfr_clear_underflow();
+                mpfr.clear_underflow();
         }
     }
 
@@ -96,13 +96,13 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static bool Overflow
     {
-        get { return mpfr_overflow_p() != 0; }
+        get { return mpfr.overflow_p(); }
         set
         {
             if (value)
-                mpfr_set_overflow();
+                mpfr.set_overflow();
             else
-                mpfr_clear_overflow();
+                mpfr.clear_overflow();
         }
     }
 
@@ -111,13 +111,13 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static bool DivideByZero
     {
-        get { return mpfr_divby0_p() != 0; }
+        get { return mpfr.divby0_p(); }
         set
         {
             if (value)
-                mpfr_set_divby0();
+                mpfr.set_divby0();
             else
-                mpfr_clear_divby0();
+                mpfr.clear_divby0();
         }
     }
 
@@ -126,13 +126,13 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static bool NaNFlag
     {
-        get { return mpfr_nanflag_p() != 0; }
+        get { return mpfr.nanflag_p(); }
         set
         {
             if (value)
-                mpfr_set_nanflag();
+                mpfr.set_nanflag();
             else
-                mpfr_clear_nanflag();
+                mpfr.clear_nanflag();
         }
     }
 
@@ -141,13 +141,13 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static bool Inexact
     {
-        get { return mpfr_inexflag_p() != 0; }
+        get { return mpfr.inexflag_p(); }
         set
         {
             if (value)
-                mpfr_set_inexflag();
+                mpfr.set_inexflag();
             else
-                mpfr_clear_inexflag();
+                mpfr.clear_inexflag();
         }
     }
 
@@ -156,13 +156,13 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static bool ERange
     {
-        get { return mpfr_erangeflag_p() != 0; }
+        get { return mpfr.erangeflag_p(); }
         set
         {
             if (value)
-                mpfr_set_erangeflag();
+                mpfr.set_erangeflag();
             else
-                mpfr_clear_erangeflag();
+                mpfr.clear_erangeflag();
         }
     }
 
@@ -173,7 +173,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static void ClearAllFlags()
     {
-        mpfr_clear_flags();
+        mpfr.clear_flags();
     }
 
     /// <summary>
@@ -182,7 +182,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="mask">The flag mask.</param>
     public static void ClearFlags(uint mask)
     {
-        mpfr_flags_clear(mask);
+        mpfr.flags_clear(mask);
     }
 
     /// <summary>
@@ -191,7 +191,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="mask">The flag mask.</param>
     public static void SetFlags(uint mask)
     {
-        mpfr_flags_set(mask);
+        mpfr.flags_set(mask);
     }
 
     /// <summary>
@@ -201,7 +201,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The flags value.</param>
     public static void SetFlags(uint mask, uint value)
     {
-        mpfr_flags_restore(mask, value);
+        mpfr.flags_restore(mask, value);
     }
 
     /// <summary>
@@ -210,7 +210,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="mask">The flag mask.</param>
     public static uint TestFlags(uint mask)
     {
-        return mpfr_flags_test(mask);
+        return mpfr.flags_test(mask);
     }
 
     /// <summary>
@@ -218,7 +218,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static uint GetAllFlags()
     {
-        return mpfr_flags_save();
+        return mpfr.flags_save();
     }
 
     private int LastTernaryResult;

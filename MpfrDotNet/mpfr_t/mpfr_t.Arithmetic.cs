@@ -8,6 +8,18 @@ using System;
 public partial class mpfr_t : IDisposable
 {
     /// <summary>
+    /// Gets the square.
+    /// </summary>
+    public mpfr_t Sqr()
+    {
+        mpfr_t z = new();
+
+        LastTernaryResult = mpfr.sqr(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
     /// Gets the square root.
     /// </summary>
     public mpfr_t Sqrt()

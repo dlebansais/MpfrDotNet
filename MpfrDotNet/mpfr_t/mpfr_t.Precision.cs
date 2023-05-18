@@ -23,8 +23,8 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public ulong Precision
     {
-        get { return mpfr_get_prec(ref Value); }
-        set { mpfr_set_prec(ref Value, value); }
+        get { return mpfr.get_prec(this); }
+        set { mpfr.set_prec(this, value); }
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public int MinSignificandPrecision
     {
-        get { return mpfr_min_prec(ref Value); }
+        get { return mpfr.min_prec(this); }
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The precision.</param>
     public void SetPrecisionRaw(ulong value)
     {
-        mpfr_set_prec_raw(ref Value, value);
+        mpfr.set_prec_raw(this, value);
     }
 
     /// <summary>
@@ -49,8 +49,8 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static ulong DefaultPrecision
     {
-        get { return mpfr_get_default_prec(); }
-        set { mpfr_set_default_prec(value); }
+        get { return mpfr.get_default_prec(); }
+        set { mpfr.set_default_prec(value); }
     }
 
     /// <summary>

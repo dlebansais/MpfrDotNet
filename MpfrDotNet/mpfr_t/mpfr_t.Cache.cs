@@ -23,10 +23,10 @@ public partial class mpfr_t : IDisposable
 
         if (ObjectCount.Value == 0)
         {
-            mpfr_free_cache();
-            mpfr_free_cache2(0);
-            mpfr_free_pool();
-            mpfr_mp_memory_cleanup();
+            mpfr.free_cache();
+            mpfr.free_cache2(0);
+            mpfr.free_pool();
+            mpfr.mp_memory_cleanup();
         }
     }
 

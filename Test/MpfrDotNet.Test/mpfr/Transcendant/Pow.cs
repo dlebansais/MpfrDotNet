@@ -25,7 +25,7 @@ public class Pow
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("4.717094789205007043527205627045288848603E+12"));
 
-        using mpfr_t c = b * b;
+        using mpfr_t c = b.Sqr();
 
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("2.22509832503450298345029835740293845721E+25"));
