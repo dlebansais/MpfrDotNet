@@ -119,7 +119,7 @@ public class Add
     }
 
     [Test]
-    public void AddLong()
+    public void AddLongPositive()
     {
         string AsString;
 
@@ -138,5 +138,27 @@ public class Add
 
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("2.22509832503450299334E+25"));
+    }
+
+    [Test]
+    public void AddLongNegative()
+    {
+        string AsString;
+
+        using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
+
+        long b = -98873014L;
+
+        using mpf_t c = a + b;
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22509832503450297356E+25"));
+
+        using mpf_t d = b + a;
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22509832503450297356E+25"));
     }
 }

@@ -67,6 +67,9 @@ public class Comparison
         IsGreaterThan = a > ul;
         Assert.That(IsGreaterThan, Is.True);
 
+        IsGreaterThan = ul > a ;
+        Assert.That(IsGreaterThan, Is.False);
+
         IsGreaterThan = a.CompareTo(ul) > 0;
         Assert.That(IsGreaterThan, Is.True);
     }
@@ -125,6 +128,14 @@ public class Comparison
 
         IsGreaterThan = g >= a;
         Assert.That(IsGreaterThan, Is.False);
+
+        ulong ul = 10UL;
+
+        IsGreaterThan = a >= ul;
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = ul >= a;
+        Assert.That(IsGreaterThan, Is.False);
     }
 
     [Test]
@@ -166,7 +177,7 @@ public class Comparison
         IsLesserThan = b < e;
         Assert.That(IsLesserThan, Is.False);
 
-        int f = -10;
+        ulong f = 10UL;
 
         IsLesserThan = f < b;
         Assert.That(IsLesserThan, Is.True);
@@ -222,7 +233,7 @@ public class Comparison
         IsLesserThan = b <= e;
         Assert.That(IsLesserThan, Is.False);
 
-        int f = -10;
+        ulong f = 10UL;
 
         IsLesserThan = f <= b;
         Assert.That(IsLesserThan, Is.True);
@@ -321,9 +332,53 @@ public class Comparison
         IsEqualTo = a.Equals(c);
         Assert.That(IsEqualTo, Is.True);
 
+        object? Instance = c;
+
+        IsEqualTo = a.Equals(Instance);
+        Assert.That(IsEqualTo, Is.False);
+
+        Instance = null;
+
+        IsEqualTo = a.Equals(Instance);
+        Assert.That(IsEqualTo, Is.False);
+
         Assert.Throws<ArgumentNullException>(() => a.Equals(null));
         Assert.Throws<ArgumentNullException>(() => a.CompareTo(null));
 
+        IEquatable<mpf_t> Equatable = a;
+
+        IsEqualTo = Equatable.Equals(c);
+        Assert.That(IsEqualTo, Is.True);
+
         int HashCode = a.GetHashCode();
+    }
+
+    [Test]
+    public void CompareTo()
+    {
+        string AsString;
+        bool IsLesserThan;
+
+        using mpf_t a = new mpf_t("-22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("-2.22509832503450298345E+25"));
+
+        using mpf_t b = new mpf_t("2229874359879827.30594288574029879874539");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.22987435987982730594E+15"));
+
+        object? Instance = b;
+
+        IsLesserThan = a.CompareTo(Instance) < 0;
+        Assert.That(IsLesserThan, Is.True);
+
+        IComparable Comparable = a;
+
+        IsLesserThan = Comparable.CompareTo(Instance) < 0;
+        Assert.That(IsLesserThan, Is.True);
+
+        Instance = null;
+        Assert.Throws<ArgumentException>(() => a.CompareTo(Instance));
+        Assert.Throws<ArgumentException>(() => Comparable.CompareTo(Instance));
     }
 }
