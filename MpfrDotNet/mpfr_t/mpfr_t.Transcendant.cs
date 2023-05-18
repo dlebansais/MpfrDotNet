@@ -17,7 +17,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_log(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.log(z, this, Rounding);
 
         return z;
     }
@@ -31,7 +31,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_log_ui(ref z.Value, op, (__mpfr_rnd_t)rounding);
+        z.LastTernaryResult = mpfr.log_ui(z, op, rounding);
 
         return z;
     }
@@ -44,7 +44,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_log2(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        z.LastTernaryResult = mpfr.log2(z, this, rounding);
 
         return z;
     }
@@ -57,7 +57,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_log10(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        z.LastTernaryResult = mpfr.log10(z, this, rounding);
 
         return z;
     }
@@ -70,7 +70,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_log1p(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        z.LastTernaryResult = mpfr.log1p(z, this, rounding);
 
         return z;
     }
@@ -84,7 +84,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_exp(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.exp(z, this, Rounding);
 
         return z;
     }
@@ -96,7 +96,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_exp2(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.exp2(z, this, Rounding);
 
         return z;
     }
@@ -108,7 +108,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_exp10(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.exp10(z, this, Rounding);
 
         return z;
     }
@@ -120,7 +120,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_expm1(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.expm1(z, this, Rounding);
 
         return z;
     }
@@ -135,7 +135,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_pow(ref z.Value, ref Value, ref op.Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.pow(z, this, op, Rounding);
 
         return z;
     }
@@ -148,7 +148,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_pow_ui(ref z.Value, ref Value, op, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.pow_ui(z, this, op, Rounding);
 
         return z;
     }
@@ -161,7 +161,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_pow_si(ref z.Value, ref Value, op, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.pow_si(z, this, op, Rounding);
 
         return z;
     }
@@ -174,7 +174,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_pow_z(ref z.Value, ref Value, ref op.Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.pow_z(z, this, op, Rounding);
 
         return z;
     }
@@ -189,7 +189,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_ui_pow_ui(ref z.Value, op1, op2, (__mpfr_rnd_t)rounding);
+        z.LastTernaryResult = mpfr.ui_pow_ui(z, op1, op2, rounding);
 
         return z;
     }
@@ -203,7 +203,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_ui_pow(ref z.Value, op1, ref op2.Value, (__mpfr_rnd_t)op2.Rounding);
+        z.LastTernaryResult = mpfr.ui_pow(z, op1, op2, op2.Rounding);
 
         return z;
     }
@@ -217,7 +217,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_cos(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.cos(z, this, Rounding);
 
         return z;
     }
@@ -229,7 +229,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_sin(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.sin(z, this, Rounding);
 
         return z;
     }
@@ -241,7 +241,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_tan(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.tan(z, this, Rounding);
 
         return z;
     }
@@ -257,7 +257,7 @@ public partial class mpfr_t : IDisposable
         sin = new();
         cos = new();
 
-        mpfr_sin_cos(ref sin.Value, ref cos.Value, ref op.Value, (__mpfr_rnd_t)op.Rounding);
+        mpfr.sin_cos(sin, cos, op, op.Rounding);
     }
 
     /// <summary>
@@ -267,7 +267,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_sec(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.sec(z, this, Rounding);
 
         return z;
     }
@@ -279,7 +279,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_csc(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.csc(z, this, Rounding);
 
         return z;
     }
@@ -291,7 +291,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_cot(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.cot(z, this, Rounding);
 
         return z;
     }
@@ -303,7 +303,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_acos(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.acos(z, this, Rounding);
 
         return z;
     }
@@ -315,7 +315,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_asin(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.asin(z, this, Rounding);
 
         return z;
     }
@@ -327,7 +327,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_atan(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.atan(z, this, Rounding);
 
         return z;
     }
@@ -341,7 +341,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_atan2(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)x.Rounding);
+        z.LastTernaryResult = mpfr.atan2(z, x, y, x.Rounding);
 
         return z;
     }
@@ -353,7 +353,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_cosh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.cosh(z, this, Rounding);
 
         return z;
     }
@@ -365,7 +365,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_sinh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.sinh(z, this, Rounding);
 
         return z;
     }
@@ -377,7 +377,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_tanh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.tanh(z, this, Rounding);
 
         return z;
     }
@@ -393,7 +393,7 @@ public partial class mpfr_t : IDisposable
         sinh = new();
         cosh = new();
 
-        mpfr_sinh_cosh(ref sinh.Value, ref cosh.Value, ref op.Value, (__mpfr_rnd_t)op.Rounding);
+        mpfr.sinh_cosh(sinh, cosh, op, op.Rounding);
     }
 
     /// <summary>
@@ -403,7 +403,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_sech(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.sech(z, this, Rounding);
 
         return z;
     }
@@ -415,7 +415,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_csch(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.csch(z, this, Rounding);
 
         return z;
     }
@@ -427,7 +427,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_coth(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.coth(z, this, Rounding);
 
         return z;
     }
@@ -439,7 +439,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_acosh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.acosh(z, this, Rounding);
 
         return z;
     }
@@ -451,7 +451,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_asinh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.asinh(z, this, Rounding);
 
         return z;
     }
@@ -463,7 +463,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        z.LastTernaryResult = mpfr_atanh(ref z.Value, ref Value, (__mpfr_rnd_t)Rounding);
+        z.LastTernaryResult = mpfr.atanh(z, this, Rounding);
 
         return z;
     }
@@ -477,7 +477,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_eint(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.eint(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -489,7 +489,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_li2(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.li2(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -501,7 +501,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_gamma(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.gamma(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -514,7 +514,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_gamma_inc(ref Result.Value, ref Value, ref operand.Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.gamma_inc(Result, this, operand, DefaultRounding);
 
         return Result;
     }
@@ -526,7 +526,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_lngamma(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.lngamma(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -539,7 +539,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_lgamma(ref Result.Value, out sign, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.lgamma(Result, out sign, this, DefaultRounding);
 
         return Result;
     }
@@ -551,7 +551,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_digamma(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.digamma(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -565,7 +565,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_beta(ref Result.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.beta(Result, x, y, DefaultRounding);
 
         return Result;
     }
@@ -577,7 +577,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_erf(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.erf(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -589,7 +589,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_erfc(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.erfc(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -601,7 +601,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_j0(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.j0(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -613,7 +613,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_j1(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.j1(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -626,7 +626,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_jn(ref Result.Value, n, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.jn(Result, n, this, DefaultRounding);
 
         return Result;
     }
@@ -638,7 +638,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_y0(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.y0(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -650,7 +650,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_y1(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.y1(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -663,7 +663,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_yn(ref Result.Value, n, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.yn(Result, n, this, DefaultRounding);
 
         return Result;
     }
@@ -677,7 +677,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_agm(ref Result.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.agm(Result, x, y, DefaultRounding);
 
         return Result;
     }
@@ -689,7 +689,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new mpfr_t();
 
-        Result.LastTernaryResult = mpfr_ai(ref Result.Value, ref Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.ai(Result, this, DefaultRounding);
 
         return Result;
     }
@@ -703,11 +703,11 @@ public partial class mpfr_t : IDisposable
         mpfr_t Result = new mpfr_t();
 
         if (precision == ulong.MaxValue)
-            mpfr_init2(ref Result.Value, DefaultPrecision);
+            mpfr.init2(Result, DefaultPrecision);
         else
-            mpfr_init2(ref Result.Value, precision);
+            mpfr.init2(Result, precision);
 
-        Result.LastTernaryResult = mpfr_const_log2(ref Result.Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.const_log2(Result, DefaultRounding);
 
         return Result;
     }
@@ -721,11 +721,11 @@ public partial class mpfr_t : IDisposable
         mpfr_t Result = new mpfr_t();
 
         if (precision == ulong.MaxValue)
-            mpfr_init2(ref Result.Value, DefaultPrecision);
+            mpfr.init2(Result, DefaultPrecision);
         else
-            mpfr_init2(ref Result.Value, precision);
+            mpfr.init2(Result, precision);
 
-        Result.LastTernaryResult = mpfr_const_pi(ref Result.Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.const_pi(Result, DefaultRounding);
 
         return Result;
     }
@@ -739,11 +739,11 @@ public partial class mpfr_t : IDisposable
         mpfr_t Result = new mpfr_t();
 
         if (precision == ulong.MaxValue)
-            mpfr_init2(ref Result.Value, DefaultPrecision);
+            mpfr.init2(Result, DefaultPrecision);
         else
-            mpfr_init2(ref Result.Value, precision);
+            mpfr.init2(Result, precision);
 
-        Result.LastTernaryResult = mpfr_const_euler(ref Result.Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.const_euler(Result, DefaultRounding);
 
         return Result;
     }
@@ -757,11 +757,11 @@ public partial class mpfr_t : IDisposable
         mpfr_t Result = new mpfr_t();
 
         if (precision == ulong.MaxValue)
-            mpfr_init2(ref Result.Value, DefaultPrecision);
+            mpfr.init2(Result, DefaultPrecision);
         else
-            mpfr_init2(ref Result.Value, precision);
+            mpfr.init2(Result, precision);
 
-        Result.LastTernaryResult = mpfr_const_catalan(ref Result.Value, (__mpfr_rnd_t)DefaultRounding);
+        Result.LastTernaryResult = mpfr.const_catalan(Result, DefaultRounding);
 
         return Result;
     }

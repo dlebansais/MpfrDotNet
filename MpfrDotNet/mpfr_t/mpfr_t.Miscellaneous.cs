@@ -21,7 +21,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_min(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
+        mpfr.min(z, x, y, rounding);
 
         return z;
     }
@@ -36,7 +36,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_max(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
+        mpfr.max(z, x, y, rounding);
 
         return z;
     }
@@ -48,7 +48,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second number.</param>
     public static void Swap(mpfr_t x, mpfr_t y)
     {
-        mpfr_swap(ref x.Value, ref y.Value);
+        mpfr.swap(x, y);
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new();
 
-        mpfr_urandomb(ref Result.Value, ref randomState.Value);
+        mpfr.urandomb(Result, randomState);
 
         return Result;
     }
@@ -108,7 +108,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new();
 
-        mpfr_urandom(ref Result.Value, ref randomState.Value, (__mpfr_rnd_t)rounding);
+        mpfr.urandom(Result, randomState, rounding);
 
         return Result;
     }
@@ -122,7 +122,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new();
 
-        mpfr_nrandom(ref Result.Value, ref randomState.Value, (__mpfr_rnd_t)rounding);
+        mpfr.nrandom(Result, randomState, rounding);
 
         return Result;
     }
@@ -139,7 +139,7 @@ public partial class mpfr_t : IDisposable
         rand1 = new mpfr_t();
         rand2 = new mpfr_t();
 
-        mpfr_grandom(ref rand1.Value, ref rand2.Value, ref randomState.Value, (__mpfr_rnd_t)rounding);
+        mpfr.grandom(rand1, rand2, randomState, rounding);
     }
 
     /// <summary>
@@ -151,7 +151,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new();
 
-        mpfr_erandom(ref Result.Value, ref randomState.Value, (__mpfr_rnd_t)rounding);
+        mpfr.erandom(Result, randomState, rounding);
 
         return Result;
     }
@@ -161,8 +161,8 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public int Exponent
     {
-        get { return mpfr_get_exp(ref Value); }
-        set { mpfr_set_exp(ref Value, value); }
+        get { return mpfr.get_exp(this); }
+        set { mpfr.set_exp(this, value); }
     }
 
     /// <summary>
@@ -170,7 +170,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public int SignBit
     {
-        get { return mpfr_signbit(ref Value); }
+        get { return mpfr.signbit(this); }
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public void SetWithSignBit(mpfr_t source, int signBit, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_setsign(ref Value, ref source.Value, signBit, (__mpfr_rnd_t)rounding);
+        mpfr.setsign(this, source, signBit, rounding);
     }
 
     /// <summary>
@@ -192,6 +192,6 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public void CopyWithSignBit(mpfr_t source, mpfr_t signBitSource, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_copysign(ref Value, ref source.Value, ref signBitSource.Value, (__mpfr_rnd_t)rounding);
+        mpfr.copysign(this, source, signBitSource, rounding);
     }
 }

@@ -13,8 +13,8 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public static mpfr_rnd_t DefaultRoundingMode
     {
-        get { return (mpfr_rnd_t)mpfr_get_default_rounding_mode(); }
-        set { mpfr_set_default_rounding_mode((__mpfr_rnd_t)value); }
+        get { return mpfr.get_default_rounding_mode(); }
+        set { mpfr.set_default_rounding_mode(value); }
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_rint(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.rint(z, this, rounding);
 
         return z;
     }
@@ -37,7 +37,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_ceil(ref z.Value, ref Value);
+        mpfr.ceil(z, this);
 
         return z;
     }
@@ -50,7 +50,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_rint_ceil(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.rint_ceil(z, this, rounding);
 
         return z;
     }
@@ -62,7 +62,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_floor(ref z.Value, ref Value);
+        mpfr.floor(z, this);
 
         return z;
     }
@@ -75,7 +75,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_rint_floor(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.rint_floor(z, this, rounding);
 
         return z;
     }
@@ -87,7 +87,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_round(ref z.Value, ref Value);
+        mpfr.round(z, this);
 
         return z;
     }
@@ -100,7 +100,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_rint_round(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.rint_round(z, this, rounding);
 
         return z;
     }
@@ -112,7 +112,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_roundeven(ref z.Value, ref Value);
+        mpfr.roundeven(z, this);
 
         return z;
     }
@@ -125,7 +125,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_rint_roundeven(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.rint_roundeven(z, this, rounding);
 
         return z;
     }
@@ -137,7 +137,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_trunc(ref z.Value, ref Value);
+        mpfr.trunc(z, this);
 
         return z;
     }
@@ -150,7 +150,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_rint_trunc(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.rint_trunc(z, this, rounding);
 
         return z;
     }
@@ -163,7 +163,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_frac(ref z.Value, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.frac(z, this, rounding);
 
         return z;
     }
@@ -179,7 +179,7 @@ public partial class mpfr_t : IDisposable
         integer = new mpfr_t();
         fractional = new mpfr_t();
 
-        mpfr_modf(ref integer.Value, ref fractional.Value, ref Value, (__mpfr_rnd_t)rounding);
+        mpfr.modf(integer, fractional, this, rounding);
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_fmod(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
+        mpfr.fmod(z, x, y, rounding);
 
         return z;
     }
@@ -207,7 +207,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_fmod_ui(ref z.Value, ref x.Value, y, (__mpfr_rnd_t)rounding);
+        mpfr.fmod_ui(z, x, y, rounding);
 
         return z;
     }
@@ -223,7 +223,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_fmodquo(ref z.Value, out q, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
+        mpfr.fmodquo(z, out q, x, y, rounding);
 
         return z;
     }
@@ -238,7 +238,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_remainder(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
+        mpfr.remainder(z, x, y, rounding);
 
         return z;
     }
@@ -254,7 +254,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_remquo(ref z.Value, out q, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
+        mpfr.remquo(z, out q, x, y, rounding);
 
         return z;
     }
@@ -266,7 +266,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public void RoundWithPrecision(ulong precision, mpfr_rnd_t rounding)
     {
-        mpfr_prec_round(ref Value, precision, (__mpfr_rnd_t)rounding);
+        mpfr.prec_round(this, precision, rounding);
     }
 
     /// <summary>
@@ -278,6 +278,6 @@ public partial class mpfr_t : IDisposable
     /// <param name="precision">The precision.</param>
     public bool CanRound(int err, mpfr_rnd_t rounding1, mpfr_rnd_t rounding2, ulong precision)
     {
-        return mpfr_can_round(ref Value, err, (__mpfr_rnd_t)rounding1, (__mpfr_rnd_t)rounding2, precision) != 0;
+        return mpfr.can_round(this, err, rounding1, rounding2, precision);
     }
 }

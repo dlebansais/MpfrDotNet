@@ -21,7 +21,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t()
     {
-        mpfr_init2(ref Value, DefaultPrecision);
+        mpfr.init2(this, DefaultPrecision);
         InitCacheManagement();
     }
 
@@ -34,7 +34,7 @@ public partial class mpfr_t : IDisposable
         mpfr_t Result = new mpfr_t();
 
         ulong EffectivePrecision = (precision == ulong.MaxValue) ? DefaultPrecision : precision;
-        mpfr_init2(ref Result.Value, EffectivePrecision);
+        mpfr.init2(Result, EffectivePrecision);
 
         return Result;
     }
@@ -155,10 +155,10 @@ public partial class mpfr_t : IDisposable
     public static mpfr_t NaN(int sign = +1)
     {
         mpfr_t Result = new();
-        mpfr_set_nan(ref Result.Value);
+        mpfr.set_nan(Result);
 
         if (sign < 0)
-            mpfr_neg(ref Result.Value, ref Result.Value, __mpfr_rnd_t.MPFR_RNDF);
+            mpfr.neg(Result, Result, mpfr_rnd_t.MPFR_RNDF);
 
         return Result;
     }
@@ -170,7 +170,7 @@ public partial class mpfr_t : IDisposable
     public static mpfr_t Infinite(int sign = +1)
     {
         mpfr_t Result = new mpfr_t();
-        mpfr_set_inf(ref Result.Value, sign);
+        mpfr.set_inf(Result, sign);
 
         return Result;
     }
@@ -182,7 +182,7 @@ public partial class mpfr_t : IDisposable
     public static mpfr_t Zero(int sign = +1)
     {
         mpfr_t Result = new mpfr_t();
-        mpfr_set_zero(ref Result.Value, sign);
+        mpfr.set_zero(Result, sign);
 
         return Result;
     }
@@ -195,7 +195,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpfr_t other, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set(ref Value, ref other.Value, (__mpfr_rnd_t)rounding);
+        mpfr.set(this, other, rounding);
     }
 
     /// <summary>
@@ -206,7 +206,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(ulong op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_ui(ref Value, op, (__mpfr_rnd_t)rounding);
+        mpfr.set_ui(this, op, rounding);
     }
 
     /// <summary>
@@ -217,7 +217,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(long op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_si(ref Value, op, (__mpfr_rnd_t)rounding);
+        mpfr.set_si(this, op, rounding);
     }
 
     /// <summary>
@@ -228,7 +228,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(uint op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_uj(ref Value, op, (__mpfr_rnd_t)rounding);
+        mpfr.set_uj(this, op, rounding);
     }
 
     /// <summary>
@@ -239,7 +239,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(int op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_sj(ref Value, op, (__mpfr_rnd_t)rounding);
+        mpfr.set_sj(this, op, rounding);
     }
 
     /// <summary>
@@ -250,7 +250,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(float op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_flt(ref Value, op, (__mpfr_rnd_t)rounding);
+        mpfr.set_flt(this, op, rounding);
     }
 
     /// <summary>
@@ -261,7 +261,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(double op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_d(ref Value, op, (__mpfr_rnd_t)rounding);
+        mpfr.set_d(this, op, rounding);
     }
 
     /// <summary>
@@ -272,7 +272,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpz_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_z(ref Value, ref op.Value, (__mpfr_rnd_t)rounding);
+        mpfr.set_z(this, op, rounding);
     }
 
     /// <summary>
@@ -283,7 +283,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpq_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_q(ref Value, ref op.Value, (__mpfr_rnd_t)rounding);
+        mpfr.set_q(this, op, rounding);
     }
 
     /// <summary>
@@ -294,7 +294,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpf_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_f(ref Value, ref op.Value, (__mpfr_rnd_t)rounding);
+        mpfr.set_f(this, op, rounding);
     }
 
     /// <summary>
@@ -306,8 +306,8 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(string str, uint strbase = 10, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        int Success = mpfr_set_str(ref Value, str, strbase, (__mpfr_rnd_t)rounding);
-        if (Success != 0)
+        bool Success = mpfr.set_str(this, str, strbase, rounding);
+        if (!Success)
         {
             DisposeCache();
             throw new ArgumentException();
@@ -323,7 +323,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(ulong op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_ui_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
+        mpfr.set_ui_2exp(this, op, e, rounding);
     }
 
     /// <summary>
@@ -335,7 +335,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(long op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_si_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
+        mpfr.set_si_2exp(this, op, e, rounding);
     }
 
     /// <summary>
@@ -347,7 +347,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(uint op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_uj_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
+        mpfr.set_uj_2exp(this, op, e, rounding);
     }
 
     /// <summary>
@@ -359,7 +359,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(int op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_sj_2exp(ref Value, op, e, (__mpfr_rnd_t)rounding);
+        mpfr.set_sj_2exp(this, op, e, rounding);
     }
 
     /// <summary>
@@ -371,7 +371,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpz_t op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr_set_z_2exp(ref Value, ref op.Value, e, (__mpfr_rnd_t)rounding);
+        mpfr.set_z_2exp(this, op, e, rounding);
     }
 
     /// <summary>
