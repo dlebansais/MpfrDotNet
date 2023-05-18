@@ -189,10 +189,15 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="value">The value.</param>
     public static explicit operator long(mpz_t value)
     {
-        byte[] Bytes = new byte[8];
+        if (mpz.cmp_si(value, long.MinValue) < 0 || mpz.cmp_si(value, long.MaxValue) > 0)
+            throw new ArgumentOutOfRangeException(nameof(value));
 
-        mpz.import(value, (ulong)Bytes.LongLength, -1, sizeof(byte), -1, 0UL, Bytes);
+        byte[] Bytes = new byte[8];
+        mpz.export(Bytes, out _, -1, sizeof(byte), -1, 0, value);
+
         long Int64Result = BitConverter.ToInt64(Bytes, 0);
+        if (mpz.cmp_si(value, 0) < 0)
+            Int64Result = -Int64Result;
 
         return Int64Result;
     }
@@ -203,9 +208,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="value">The value.</param>
     public static explicit operator ulong(mpz_t value)
     {
-        byte[] Bytes = new byte[8];
+        if (mpz.cmp_ui(value, 0) < 0 || mpz.cmp_ui(value, ulong.MaxValue) > 0)
+            throw new ArgumentOutOfRangeException(nameof(value));
 
-        mpz.import(value, (ulong)Bytes.LongLength, -1, sizeof(byte), -1, 0UL, Bytes);
+        byte[] Bytes = new byte[8];
+        mpz.export(Bytes, out _, -1, sizeof(byte), -1, 0, value);
+
         ulong UInt64Result = BitConverter.ToUInt64(Bytes, 0);
 
         return UInt64Result;

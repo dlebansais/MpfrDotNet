@@ -1253,7 +1253,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     public override bool Equals(object? obj)
     {
         if (obj is mpz_t other)
-            return CompareTo(other) != 0;
+            return CompareTo(other) == 0;
         else
             return false;
     }

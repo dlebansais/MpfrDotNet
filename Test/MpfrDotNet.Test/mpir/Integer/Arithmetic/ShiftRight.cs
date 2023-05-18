@@ -39,5 +39,10 @@ public class ShiftRight
 
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("202805891593000279130400098"));
+
+        using mpz_t c = a >> -Count;
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
     }
 }

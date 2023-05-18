@@ -259,4 +259,44 @@ public class Divide
         AsString = n.ToString();
         Assert.That(AsString, Is.EqualTo("-234052834524092854092874502983745029345723098457209305983434345"));
     }
+
+    [Test]
+    public void DivideUlong()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
+
+        ulong ul = 64200154000UL;
+
+        using mpz_t b = a / ul;
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("3465876927700988043502665674"));
+
+        using mpz_t c = ul / a;
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
+    }
+
+    [Test]
+    public void DivideLong()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
+
+        long l = -64200154000L;
+
+        using mpz_t b = a / l;
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("-3465876927700988043502665674"));
+
+        using mpz_t c = l / a;
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("0"));
+    }
 }

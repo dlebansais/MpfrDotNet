@@ -138,4 +138,44 @@ public class Multiply
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("445019665006900596690059671480587691440"));
     }
+
+    [Test]
+    public void MultiplyUlong()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
+
+        ulong ul = 64200154000UL;
+
+        using mpz_t b = a * ul;
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("14285165513235714685096860589121568900476240880000"));
+
+        using mpz_t c = ul * a;
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("14285165513235714685096860589121568900476240880000"));
+    }
+
+    [Test]
+    public void MultiplyLong()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
+
+        long l = -64200154000L;
+
+        using mpz_t b = a * l;
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("-14285165513235714685096860589121568900476240880000"));
+
+        using mpz_t c = l * a;
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("-14285165513235714685096860589121568900476240880000"));
+    }
 }

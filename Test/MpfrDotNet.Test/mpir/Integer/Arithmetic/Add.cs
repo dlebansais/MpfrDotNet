@@ -155,6 +155,46 @@ public class Add
     }
 
     [Test]
+    public void AddUlong()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
+
+        ulong ul = 64200154000UL;
+
+        using mpz_t b = a + ul;
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835804493999720"));
+
+        using mpz_t c = ul + a;
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835804493999720"));
+    }
+
+    [Test]
+    public void AddLong()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
+
+        long l = -64200154000L;
+
+        using mpz_t b = a + l;
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835676093691720"));
+
+        using mpz_t c = l + a;
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("222509832503450298345029835676093691720"));
+    }
+
+    [Test]
     public void IncrementOperator()
     {
         string AsString;

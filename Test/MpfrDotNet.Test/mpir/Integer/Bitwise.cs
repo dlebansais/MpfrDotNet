@@ -178,6 +178,14 @@ public class Bitwise
         a.SetBit(131);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("8A0000000000000000000800000000001"));
+
+        a.ChangeBit(131, true);
+        AsString = a.ToString(16).ToUpper();
+        Assert.That(AsString, Is.EqualTo("8A0000000000000000000800000000001"));
+
+        a.ChangeBit(131, false);
+        AsString = a.ToString(16).ToUpper();
+        Assert.That(AsString, Is.EqualTo("A0000000000000000000800000000001"));
     }
 
     [Test]
