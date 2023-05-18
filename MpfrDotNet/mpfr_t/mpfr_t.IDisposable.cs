@@ -53,7 +53,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     private void DisposeNow()
     {
-        mpfr_clear(ref Value);
+        mpfr.clear(this);
         DisposeCache();
     }
 }

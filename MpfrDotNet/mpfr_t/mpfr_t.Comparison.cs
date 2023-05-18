@@ -15,7 +15,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="other">The other number.</param>
     public int CompareTo(mpfr_t other)
     {
-        return mpfr_cmp(ref Value, ref other.Value);
+        return mpfr.cmp(this, other);
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="other">The other number.</param>
     public int CompareTo(ulong other)
     {
-        return mpfr_cmp_ui(ref Value, other);
+        return mpfr.cmp_ui(this, other);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="other">The other number.</param>
     public int CompareTo(long other)
     {
-        return mpfr_cmp_si(ref Value, other);
+        return mpfr.cmp_si(this, other);
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="other">The other number.</param>
     public int CompareTo(double other)
     {
-        return mpfr_cmp_d(ref Value, other);
+        return mpfr.cmp_d(this, other);
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="other">The other number.</param>
     public int CompareTo(mpz_t other)
     {
-        return mpfr_cmp_z(ref Value, ref other.Value);
+        return mpfr.cmp_z(this, other);
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="other">The other number.</param>
     public int CompareTo(mpq_t other)
     {
-        return mpfr_cmp_q(ref Value, ref other.Value);
+        return mpfr.cmp_q(this, other);
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="other">The other number.</param>
     public int CompareTo(mpf_t other)
     {
-        return mpfr_cmp_f(ref Value, ref other.Value);
+        return mpfr.cmp_f(this, other);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="e">The shift.</param>
     public int CompareTo(ulong other, int e)
     {
-        return mpfr_cmp_ui_2exp(ref Value, other, e);
+        return mpfr.cmp_ui_2exp(this, other, e);
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="e">The shift.</param>
     public int CompareTo(long other, int e)
     {
-        return mpfr_cmp_si_2exp(ref Value, other, e);
+        return mpfr.cmp_si_2exp(this, other, e);
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public partial class mpfr_t : IDisposable
     /// <returns>0 if <paramref name="x"/> and <paramref name="y"/> are equal, 1 if <paramref name="x"/> &gt; <paramref name="y"/>, -1 if <paramref name="x"/> &lt; <paramref name="y"/>.</returns>
     public static int Compare(mpfr_t x, mpfr_t y)
     {
-        return mpfr_cmp(ref x.Value, ref y.Value);
+        return mpfr.cmp(x, y);
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public partial class mpfr_t : IDisposable
     /// <returns>0 if abs(<paramref name="x"/>) and abs(<paramref name="y"/>) are equal, 1 if abs(<paramref name="x"/>) &gt; abs(<paramref name="y"/>), -1 if abs(<paramref name="x"/>) &lt; abs(<paramref name="y"/>).</returns>
     public static int CompareAbs(mpfr_t x, mpfr_t y)
     {
-        return mpfr_cmpabs(ref x.Value, ref y.Value);
+        return mpfr.cmpabs(x, y);
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second number.</param>
     public static bool IsLesserOrGreater(mpfr_t x, mpfr_t y)
     {
-        return mpfr_lessgreater_p(ref x.Value, ref y.Value) != 0;
+        return mpfr.lessgreater_p(x, y);
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second number.</param>
     public static bool IsUnordered(mpfr_t x, mpfr_t y)
     {
-        return mpfr_unordered_p(ref x.Value, ref y.Value) != 0;
+        return mpfr.unordered_p(x, y);
     }
 
     /// <summary>
@@ -141,7 +141,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second number.</param>
     public static bool IsTotalOrdered(mpfr_t x, mpfr_t y)
     {
-        return mpfr_total_order_p(ref x.Value, ref y.Value) != 0;
+        return mpfr.total_order_p(x, y);
     }
 
     /// <summary>
@@ -152,7 +152,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The bit count.</param>
     public static bool IsEqualBits(mpfr_t x, mpfr_t y, uint n)
     {
-        return mpfr_eq(ref x.Value, ref y.Value, n) != 0;
+        return mpfr.eq(x, y, n);
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = new();
 
-        mpfr_reldiff(ref z.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rounding);
+        mpfr.reldiff(z, x, y, rounding);
 
         return z;
     }

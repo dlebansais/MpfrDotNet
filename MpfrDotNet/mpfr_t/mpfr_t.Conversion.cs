@@ -152,7 +152,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     public static explicit operator long(mpfr_t value)
     {
-        return mpfr_get_si(ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        return mpfr.get_si(value, value.Rounding);
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     public static explicit operator ulong(mpfr_t value)
     {
-        return mpfr_get_ui(ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        return mpfr.get_ui(value, value.Rounding);
     }
 
     /// <summary>
@@ -170,7 +170,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     public static explicit operator float(mpfr_t value)
     {
-        return mpfr_get_flt(ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        return mpfr.get_flt(value, value.Rounding);
     }
 
     /// <summary>
@@ -179,7 +179,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     public static explicit operator double(mpfr_t value)
     {
-        return mpfr_get_d(ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        return mpfr.get_d(value, value.Rounding);
     }
 
     /// <summary>
@@ -190,7 +190,7 @@ public partial class mpfr_t : IDisposable
     {
         using mpz_t Temporary = new mpz_t();
 
-        mpfr_get_z(ref Temporary.Value, ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        mpfr.get_z(Temporary, value, value.Rounding);
 
         BigInteger Result = (BigInteger)Temporary;
         return Result;
@@ -204,7 +204,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="e">The exponent upon return.</param>
     public static void ToDoubleAndExponent(mpfr_t value, out double d, out int e)
     {
-        d = mpfr_get_d_2exp(out e, ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        d = mpfr.get_d_2exp(out e, value, value.Rounding);
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t y = new();
 
-        mpfr_frexp(out e, ref y.Value, ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        mpfr.frexp(out e, y, value, value.Rounding);
 
         return y;
     }
@@ -230,7 +230,7 @@ public partial class mpfr_t : IDisposable
     {
         mpz_t Result = new();
 
-        e = mpfr_get_z_2exp(ref Result.Value, ref value.Value);
+        e = mpfr.get_z_2exp(Result, value);
 
         return Result;
     }
@@ -243,7 +243,7 @@ public partial class mpfr_t : IDisposable
     {
         mpq_t Result = new();
 
-        mpfr_get_q(ref Result.Value, ref value.Value);
+        mpfr.get_q(Result, value);
 
         return Result;
     }
@@ -256,7 +256,7 @@ public partial class mpfr_t : IDisposable
     {
         mpf_t Result = new();
 
-        mpfr_get_f(ref Result.Value, ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        mpfr.get_f(Result, value, value.Rounding);
 
         return Result;
     }
@@ -266,7 +266,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public bool FitsUnsignedLong
     {
-        get { return mpfr_fits_ulong_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+        get { return mpfr.fits_ulong_p(this, Rounding); }
     }
 
     /// <summary>
@@ -274,7 +274,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public bool FitsSignedLong
     {
-        get { return mpfr_fits_slong_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+        get { return mpfr.fits_slong_p(this, Rounding); }
     }
 
     /// <summary>
@@ -282,7 +282,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public bool FitsUnsignedInt
     {
-        get { return mpfr_fits_uint_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+        get { return mpfr.fits_uint_p(this, Rounding); }
     }
 
     /// <summary>
@@ -290,7 +290,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public bool FitsSignedInt
     {
-        get { return mpfr_fits_sint_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+        get { return mpfr.fits_sint_p(this, Rounding); }
     }
 
     /// <summary>
@@ -298,7 +298,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public bool FitsUnsignedShort
     {
-        get { return mpfr_fits_ushort_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+        get { return mpfr.fits_ushort_p(this, Rounding); }
     }
 
     /// <summary>
@@ -306,7 +306,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public bool FitsSignedShort
     {
-        get { return mpfr_fits_sshort_p(ref Value, (__mpfr_rnd_t)Rounding) != 0; }
+        get { return mpfr.fits_sshort_p(this, Rounding); }
     }
 
     /// <summary>
@@ -314,6 +314,6 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public bool IsInteger
     {
-        get { return mpfr_integer_p(ref Value) != 0; }
+        get { return mpfr.integer_p(this); }
     }
 }

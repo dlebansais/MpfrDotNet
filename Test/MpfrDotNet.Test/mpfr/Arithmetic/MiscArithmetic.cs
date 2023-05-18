@@ -61,6 +61,160 @@ public class MiscArithmetic
     }
 
     [Test]
+    public void Dim()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
+
+        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
+
+        using mpfr_t c = mpfr_t.Dim(a, b);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("6.420404990263050002002402189827168664612E+15"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Fma()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
+
+        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
+
+        using mpfr_t c = new mpfr_t("87645");
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7645E+4"));
+
+        using mpfr_t d = mpfr_t.Fma(a, b, c);
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("1.928903612868153707175972877355111472797E+31"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Fms()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
+
+        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
+
+        using mpfr_t c = new mpfr_t("87645");
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7645E+4"));
+
+        using mpfr_t d = mpfr_t.Fms(a, b, c);
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("1.928903612868153707175972859826111472797E+31"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Fmma()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
+
+        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
+
+        using mpfr_t c = new mpfr_t("87645");
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7645E+4"));
+
+        using mpfr_t d = new mpfr_t("32");
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("3.2E+1"));
+
+        using mpfr_t e = mpfr_t.Fmma(a, b, c, d);
+
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("1.928903612868153707175973149054611472797E+31"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Fmms()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
+
+        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
+
+        using mpfr_t c = new mpfr_t("87645");
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("8.7645E+4"));
+
+        using mpfr_t d = new mpfr_t("32");
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("3.2E+1"));
+
+        using mpfr_t e = mpfr_t.Fmms(a, b, c, d);
+
+        AsString = e.ToString();
+        Assert.That(AsString, Is.EqualTo("1.928903612868153707175972588126611472797E+31"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
     public void Factorial()
     {
         string AsString;

@@ -1,5 +1,6 @@
 ﻿namespace Test;
 
+using System;
 using MpfrDotNet;
 using MpirDotNet;
 using NUnit.Framework;
@@ -34,6 +35,22 @@ public class Mul
 
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("4.96168970320598825787795593145394036119E+40"));
+
+        using mpfr_t e1 = a.Mul2(5);
+
+        AsString = e1.ToString();
+        Assert.That(AsString, Is.EqualTo("7.120314640110409547040954743689403063036E+26"));
+
+        using mpfr_t e2 = new();
+        mpfr.mul_2exp(e2, a, 5, a.Rounding);
+        Assert.That(e2, Is.EqualTo(e1));
+
+        using mpfr_t f = a.Mul2(-5);
+
+        AsString = f.ToString();
+        Assert.That(AsString, Is.EqualTo("6.953432265732821823282182366884182678746E+23"));
+
+        Assert.Throws<NotImplementedException>(() => mpfr.dot(a, new mpfr_t[0], new mpfr_t[0], mpfr_rnd_t.MPFR_RNDZ));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

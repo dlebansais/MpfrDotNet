@@ -1,5 +1,6 @@
 ﻿namespace Test;
 
+using System;
 using MpfrDotNet;
 using MpirDotNet;
 using NUnit.Framework;
@@ -34,6 +35,8 @@ public class Add
 
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325257490419438281087997227031224E+25"));
+
+        Assert.Throws<NotImplementedException>(() => mpfr.sum(a, new mpfr_t[0], mpfr_rnd_t.MPFR_RNDZ));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

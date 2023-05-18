@@ -197,4 +197,13 @@ public static partial class mpfr
     {
         return mpfr_fits_sshort_p(ref op.Value, (__mpfr_rnd_t)rnd) != 0;
     }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    public static bool integer_p(mpfr_t op)
+    {
+        return mpfr_integer_p(ref op.Value) != 0;
+    }
 }
