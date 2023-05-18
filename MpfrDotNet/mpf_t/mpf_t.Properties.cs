@@ -1,8 +1,6 @@
 ﻿namespace MpirDotNet;
 
 using System;
-using System.Text;
-using static Interop.Mpir.NativeMethods;
 
 /// <summary>
 /// See http://mpir.org/mpir-3.0.0.pdf.
@@ -15,14 +13,8 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public static ulong DefaultPrecision
     {
-        get
-        {
-            return (ulong)mpf_get_default_prec();
-        }
-        set
-        {
-            mpf_set_default_prec((mp_bitcnt_t)value);
-        }
+        get { return mpf.get_default_prec(); }
+        set { mpf.set_default_prec(value); }
     }
 
     /// <summary>
@@ -31,14 +23,8 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public ulong Precision
     {
-        get
-        {
-            return (ulong)mpf_get_prec(ref Value);
-        }
-        set
-        {
-            mpf_set_prec(ref Value, (mp_bitcnt_t)value);
-        }
+        get { return mpf.get_prec(this); }
+        set { mpf.set_prec(this, value); }
     }
 
     /// <summary>
@@ -47,9 +33,6 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public bool IsInteger
     {
-        get
-        {
-            return mpf_integer_p(ref Value) != 0;
-        }
+        get { return mpf.integer_p(this); }
     }
 }

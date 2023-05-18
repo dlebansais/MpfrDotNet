@@ -1,7 +1,6 @@
 ﻿namespace MpirDotNet;
 
 using System;
-using System.Text;
 using static Interop.Mpir.NativeMethods;
 
 /// <summary>
@@ -17,9 +16,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     public mpf_t(ulong precision = ulong.MaxValue)
     {
         if (precision == ulong.MaxValue)
-            mpf_init(ref Value);
+            mpf.init(this);
         else
-            mpf_init2(ref Value, (mp_bitcnt_t)precision);
+            mpf.init2(this, precision);
     }
 
     /// <summary>
@@ -31,11 +30,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     public mpf_t(ulong n, ulong precision)
     {
         if (precision == ulong.MaxValue)
-            mpf_init_set_ui(ref Value, (mpir_ui)n);
+            mpf.init_set_ui(this, n);
         else
         {
-            mpf_init2(ref Value, (mp_bitcnt_t)precision);
-            mpf_set_ui(ref Value, (mpir_ui)n);
+            mpf.init2(this, precision);
+            mpf.set_ui(this, n);
         }
     }
 
@@ -48,11 +47,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     public mpf_t(long n, ulong precision = ulong.MaxValue)
     {
         if (precision == ulong.MaxValue)
-            mpf_init_set_si(ref Value, (mpir_si)n);
+            mpf.init_set_si(this, n);
         else
         {
-            mpf_init2(ref Value, (mp_bitcnt_t)precision);
-            mpf_set_si(ref Value, (mpir_si)n);
+            mpf.init2(this, precision);
+            mpf.set_si(this, n);
         }
     }
 
@@ -65,11 +64,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     public mpf_t(double d, ulong precision = ulong.MaxValue)
     {
         if (precision == ulong.MaxValue)
-            mpf_init_set_d(ref Value, d);
+            mpf.init_set_d(this, d);
         else
         {
-            mpf_init2(ref Value, (mp_bitcnt_t)precision);
-            mpf_set_d(ref Value, d);
+            mpf.init2(this, precision);
+            mpf.set_d(this, d);
         }
     }
 
@@ -96,11 +95,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         int Success;
 
         if (precision == ulong.MaxValue)
-            Success = mpf_init_set_str(ref Value, s, strBase);
+            Success = mpf.init_set_str(this, s, strBase);
         else
         {
-            mpf_init2(ref Value, (mp_bitcnt_t)precision);
-            Success = mpf_set_str(ref Value, s, strBase);
+            mpf.init2(this, precision);
+            Success = mpf.set_str(this, s, strBase);
         }
 
         if (Success != 0)
@@ -117,12 +116,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         if (useDefaultPrecision)
         {
-            mpf_init_set(ref Value, ref other.Value);
+            mpf.init_set(this, other);
         }
         else
         {
-            mpf_init2(ref Value, mpf_get_prec(ref other.Value));
-            mpf_set(ref Value, ref other.Value);
+            mpf.init2(this, mpf.get_prec(other));
+            mpf.set(this, other);
         }
     }
 

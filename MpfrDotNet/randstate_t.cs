@@ -24,7 +24,7 @@ public class randstate_t : IDisposable
     /// </summary>
     public randstate_t()
     {
-        mp_randinit_default(ref Value);
+        gmp.randinit_default(this);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class randstate_t : IDisposable
     /// <param name="other">The other object.</param>
     public randstate_t(randstate_t other)
     {
-        mp_randinit_set(ref Value, ref other.Value);
+        gmp.randinit_set(this, other);
     }
 
     /// <summary>
@@ -47,18 +47,18 @@ public class randstate_t : IDisposable
         {
             default:
             case RngAlgorithm.Default:
-                mp_randinit_default(ref Value);
+                gmp.randinit_default(this);
                 break;
 
             case RngAlgorithm.MersenneTwister:
-                mp_randinit_mt(ref Value);
+                gmp.randinit_mt(this);
                 break;
 
             case RngAlgorithm.LinearCongruential:
                 if (parameters.Length == 3 && parameters[0] is mpz_t a && parameters[1] is ulong c && parameters[2] is ulong m2exp)
-                    mp_randinit_lc_2exp(ref Value, ref a.Value, (mpir_ui)c, (mp_bitcnt_t)m2exp);
+                    gmp.randinit_lc_2exp(this, a, c, m2exp);
                 else if (parameters.Length == 1 && parameters[0] is ulong size)
-                    mp_randinit_lc_2exp_size(ref Value, (mp_bitcnt_t)size);
+                    gmp.randinit_lc_2exp_size(this, size);
                 else
                     throw new ArgumentException();
                 break;
@@ -115,7 +115,7 @@ public class randstate_t : IDisposable
     /// </summary>
     private void DisposeNow()
     {
-        mp_randclear(ref Value);
+        gmp.randclear(this);
     }
     #endregion
 }

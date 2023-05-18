@@ -31,9 +31,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
 
         StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
 
-        mp_exp_t ExponentStruct;
-        mpf_get_str(Data, out ExponentStruct, resultbase, (size_t)SizeInDigits, ref Value);
-        int Exponent = (int)ExponentStruct;
+        mpf.get_str(Data, out int Exponent, resultbase, SizeInDigits, this);
 
         string Result = Data.ToString();
 
@@ -103,7 +101,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator byte(mpf_t value)
     {
-        return (byte)mpf_get_ui(ref value.Value);
+        return (byte)mpf.get_ui(value);
     }
 
     /// <summary>
@@ -113,7 +111,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator sbyte(mpf_t value)
     {
-        return (sbyte)mpf_get_si(ref value.Value);
+        return (sbyte)mpf.get_si(value);
     }
 
     /// <summary>
@@ -123,7 +121,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator ushort(mpf_t value)
     {
-        return (ushort)mpf_get_ui(ref value.Value);
+        return (ushort)mpf.get_ui(value);
     }
 
     /// <summary>
@@ -133,7 +131,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator short(mpf_t value)
     {
-        return (short)mpf_get_si(ref value.Value);
+        return (short)mpf.get_si(value);
     }
 
     /// <summary>
@@ -143,7 +141,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator uint(mpf_t value)
     {
-        return (uint)mpf_get_ui(ref value.Value);
+        return (uint)mpf.get_ui(value);
     }
 
     /// <summary>
@@ -153,7 +151,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator int(mpf_t value)
     {
-        return (int)mpf_get_si(ref value.Value);
+        return (int)mpf.get_si(value);
     }
 
     /// <summary>
@@ -163,7 +161,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator ulong(mpf_t value)
     {
-        return (ulong)mpf_get_ui(ref value.Value);
+        return (ulong)mpf.get_ui(value);
     }
 
     /// <summary>
@@ -173,7 +171,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator long(mpf_t value)
     {
-        return (long)mpf_get_si(ref value.Value);
+        return (long)mpf.get_si(value);
     }
 
     /// <summary>
@@ -193,6 +191,6 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="value">The value to convert.</param>
     public static explicit operator double(mpf_t value)
     {
-        return mpf_get_d(ref value.Value);
+        return mpf.get_d(value);
     }
 }

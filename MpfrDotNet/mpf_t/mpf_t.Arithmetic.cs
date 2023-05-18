@@ -16,7 +16,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_abs(ref z.Value, ref Value);
+        mpf.abs(z, this);
 
         return z;
     }
@@ -26,7 +26,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public int Sign
     {
-        get { return mpf_sgn(ref Value); }
+        get { return mpf.sgn(this); }
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t Result = new mpf_t();
 
-        mpf_sqrt(ref Result.Value, ref Value);
+        mpf.sqrt(Result, this);
 
         return Result;
     }
@@ -49,7 +49,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t Result = new mpf_t();
 
-        mpf_pow_ui(ref Result.Value, ref Value, (mpir_ui)exp);
+        mpf.pow_ui(Result, this, exp);
 
         return Result;
     }

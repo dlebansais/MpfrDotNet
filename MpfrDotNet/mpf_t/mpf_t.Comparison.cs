@@ -1,7 +1,6 @@
 ﻿namespace MpirDotNet;
 
 using System;
-using System.Text;
 using static Interop.Mpir.NativeMethods;
 
 /// <summary>
@@ -18,7 +17,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         if (ReferenceEquals(other, null))
             throw new ArgumentNullException(nameof(other));
         else
-            return mpf_cmp(ref Value, ref other.Value);
+            return mpf.cmp(this, other);
     }
 
     /// <summary>
@@ -27,7 +26,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="other">The compared value.</param>
     public int CompareTo(long other)
     {
-        return mpf_cmp_si(ref Value, (mpir_si)other);
+        return mpf.cmp_si(this, other);
     }
 
     /// <summary>
@@ -36,7 +35,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="other">The compared value.</param>
     public int CompareTo(ulong other)
     {
-        return mpf_cmp_ui(ref Value, (mpir_ui)other);
+        return mpf.cmp_ui(this, other);
     }
 
     /// <summary>
@@ -45,7 +44,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="other">The compared value.</param>
     public int CompareTo(float other)
     {
-        return mpf_cmp_d(ref Value, (double)other);
+        return mpf.cmp_d(this, (double)other);
     }
 
     /// <summary>
@@ -54,6 +53,6 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="other">The compared value.</param>
     public int CompareTo(double other)
     {
-        return mpf_cmp_d(ref Value, other);
+        return mpf.cmp_d(this, other);
     }
 }

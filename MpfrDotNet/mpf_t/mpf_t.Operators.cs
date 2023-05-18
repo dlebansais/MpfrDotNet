@@ -18,7 +18,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new();
 
-        mpf_add(ref z.Value, ref x.Value, ref y.Value);
+        mpf.add(z, x, y);
 
         return z;
     }
@@ -33,9 +33,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         mpf_t z = new();
 
         if (y >= 0)
-            mpf_add_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)y);
+            mpf.add_ui(z, x, (ulong)y);
         else
-            mpf_sub_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)-y);
+            mpf.sub_ui(z, x, (ulong)-y);
 
         return z;
     }
@@ -50,9 +50,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         mpf_t z = new();
 
         if (x >= 0)
-            mpf_add_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)x);
+            mpf.add_ui(z, y, (ulong)x);
         else
-            mpf_sub_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)-x);
+            mpf.sub_ui(z, y, (ulong)-x);
 
         return z;
     }
@@ -66,7 +66,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_add_ui(ref z.Value, ref x.Value, (mpir_ui)y);
+        mpf.add_ui(z, x, y);
 
         return z;
     }
@@ -80,7 +80,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_add_ui(ref z.Value, ref y.Value, (mpir_ui)x);
+        mpf.add_ui(z, y, x);
 
         return z;
     }
@@ -94,7 +94,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_sub(ref z.Value, ref x.Value, ref y.Value);
+        mpf.sub(z, x, y);
 
         return z;
     }
@@ -110,7 +110,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         {
             mpf_t z = new mpf_t();
 
-            mpf_ui_sub(ref z.Value, (mpir_ui)(ulong)x, ref y.Value);
+            mpf.ui_sub(z, (ulong)x, y);
 
             return z;
         }
@@ -118,8 +118,8 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         {
             mpf_t z = new mpf_t();
 
-            mpf_add_ui(ref z.Value, ref y.Value, (mpir_ui)(ulong)-x);
-            mpf_neg(ref z.Value, ref z.Value);
+            mpf.add_ui(z, y, (ulong)-x);
+            mpf.neg(z, z);
 
             return z;
         }
@@ -135,9 +135,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         mpf_t z = new mpf_t();
 
         if (y >= 0)
-            mpf_sub_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)y);
+            mpf.sub_ui(z, x, (ulong)y);
         else
-            mpf_add_ui(ref z.Value, ref x.Value, (mpir_ui)(ulong)-y);
+            mpf.add_ui(z, x, (ulong)-y);
 
         return z;
     }
@@ -151,7 +151,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_ui_sub(ref z.Value, (mpir_ui)x, ref y.Value);
+        mpf.ui_sub(z, x, y);
 
         return z;
     }
@@ -165,7 +165,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_sub_ui(ref z.Value, ref x.Value, (mpir_ui)y);
+        mpf.sub_ui(z, x, y);
 
         return z;
     }
@@ -179,7 +179,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_mul(ref z.Value, ref x.Value, ref y.Value);
+        mpf.mul(z, x, y);
 
         return z;
     }
@@ -193,7 +193,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_mul_ui(ref z.Value, ref y.Value, (mpir_ui)x);
+        mpf.mul_ui(z, y, x);
 
         return z;
     }
@@ -207,7 +207,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_mul_ui(ref z.Value, ref x.Value, (mpir_ui)y);
+        mpf.mul_ui(z, x, y);
 
         return z;
     }
@@ -222,7 +222,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         mpf_t z = new mpf_t();
 
         if (count >= 0)
-            mpf_mul_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
+            mpf.mul_2exp(z, x, (ulong)count);
 
         return z;
     }
@@ -237,7 +237,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         mpf_t z = new mpf_t();
 
         if (count >= 0)
-            mpf_div_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
+            mpf.div_2exp(z, x, (ulong)count);
 
         return z;
     }
@@ -250,7 +250,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t z = new mpf_t();
 
-        mpf_neg(ref z.Value, ref x.Value);
+        mpf.neg(z, x);
 
         return z;
     }
@@ -264,7 +264,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t quotient = new mpf_t();
 
-        mpf_div(ref quotient.Value, ref x.Value, ref y.Value);
+        mpf.div(quotient, x, y);
 
         return quotient;
     }
@@ -278,7 +278,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t quotient = new mpf_t();
 
-        mpf_div_ui(ref quotient.Value, ref x.Value, (mpir_ui)y);
+        mpf.div_ui(quotient, x, y);
 
         return quotient;
     }
@@ -292,7 +292,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf_t quotient = new mpf_t();
 
-        mpf_ui_div(ref quotient.Value, (mpir_ui)x, ref y.Value);
+        mpf.ui_div(quotient, x, y);
 
         return quotient;
     }
@@ -857,8 +857,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         ulong SizeInDigits = 5;
         StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
 
-        mp_exp_t ExponentStruct;
-        mpf_get_str(Data, out ExponentStruct, mpz_t.DefaultBase, (size_t)SizeInDigits, ref Value);
+        mpf.get_str(Data, out _, mpz_t.DefaultBase, SizeInDigits, this);
 
         return Data.ToString().GetHashCode();
     }

@@ -52,7 +52,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     private void DisposeNow()
     {
-        mpf_clear(ref Value);
+        mpf.clear(this);
     }
     #endregion
 
@@ -66,7 +66,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         if (ReferenceEquals(other, null))
             throw new ArgumentNullException(nameof(other));
         else
-            return mpf_cmp(ref Value, ref other.Value) == 0;
+            return mpf.cmp(this, other) == 0;
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="other">The object to compare with the current object.</param>
     bool IEquatable<mpf_t>.Equals(mpf_t? other)
     {
-        return this.Equals(other);
+        return Equals(other);
     }
     #endregion
 
@@ -93,7 +93,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     object ICloneable.Clone()
     {
-        return this.Clone();
+        return Clone();
     }
     #endregion
 
@@ -310,7 +310,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public string ToString(IFormatProvider? provider)
     {
-        return this.ToString();
+        return ToString();
     }
 
     /// <summary>
@@ -448,7 +448,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="obj">An object to compare with this instance.</param>
     int IComparable.CompareTo(object? obj)
     {
-        return this.CompareTo(obj);
+        return CompareTo(obj);
     }
     #endregion
 }
