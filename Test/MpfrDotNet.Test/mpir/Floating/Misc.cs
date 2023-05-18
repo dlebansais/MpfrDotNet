@@ -96,7 +96,11 @@ public class Misc
         AsString = r.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        Assert.Throws<ArgumentException>(() => { using (mpf_t s = new mpf_t("Foo")) { } });
+        using mpf_t s = new mpf_t(10UL, ulong.MaxValue);
+        AsString = s.ToString();
+        Assert.That(AsString, Is.EqualTo("1E+1"));
+
+        Assert.Throws<ArgumentException>(() => { using (mpf_t x = new mpf_t("Foo")) { } });
     }
 
     [Test]

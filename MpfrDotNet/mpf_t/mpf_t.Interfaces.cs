@@ -121,7 +121,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     bool IConvertible.ToBoolean(IFormatProvider? provider)
     {
-        return ToBoolean(provider);
+        throw new InvalidCastException();
     }
 
     /// <summary>
@@ -157,7 +157,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     char IConvertible.ToChar(IFormatProvider? provider)
     {
-        return ToChar(provider);
+        throw new InvalidCastException();
     }
 
     /// <summary>
@@ -175,7 +175,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     DateTime IConvertible.ToDateTime(IFormatProvider? provider)
     {
-        return ToDateTime(provider);
+        throw new InvalidCastException();
     }
 
     /// <summary>
@@ -193,7 +193,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     decimal IConvertible.ToDecimal(IFormatProvider? provider)
     {
-        return ToDecimal(provider);
+        throw new InvalidCastException();
     }
 
     /// <summary>
