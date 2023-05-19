@@ -21,7 +21,7 @@ MA 02110-1301, USA. */
 
 
 #define FUNCTION   mpf_fits_slong_p
-#define MAXIMUM    LONG_MAX
-#define MINIMUM    LONG_MIN
+#define MAXIMUM    GMP_SI_MAX
+#define MINIMUM    GMP_SI_MIN
 
 #include "fits_s.h"

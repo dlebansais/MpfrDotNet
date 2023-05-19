@@ -202,4 +202,52 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         mpf.get_d_2exp(this, out d, out exp);
     }
+
+    /// <summary>
+    /// Gets a value indicating whether the number can be converted to a <see cref="ulong"/>.
+    /// </summary>
+    public bool FitsUnsignedLong
+    {
+        get { return mpf.fits_ulong_p(this); }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="long"/>.
+    /// </summary>
+    public bool FitsSignedLong
+    {
+        get { return mpf.fits_slong_p(this); }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="uint"/>.
+    /// </summary>
+    public bool FitsUnsignedInt
+    {
+        get { return mpf.fits_uint_p(this); }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="int"/>.
+    /// </summary>
+    public bool FitsSignedInt
+    {
+        get { return mpf.fits_sint_p(this); }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="ushort"/>.
+    /// </summary>
+    public bool FitsUnsignedShort
+    {
+        get { return mpf.fits_ushort_p(this); }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether a number can be converted to a <see cref="short"/>.
+    /// </summary>
+    public bool FitsSignedShort
+    {
+        get { return mpf.fits_sshort_p(this); }
+    }
 }

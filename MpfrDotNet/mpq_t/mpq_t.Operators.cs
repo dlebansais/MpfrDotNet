@@ -18,7 +18,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     {
         mpq_t z = new mpq_t();
 
-        mpq_add(ref z.Value, ref x.Value, ref y.Value);
+        mpq.add(z, x, y);
 
         return z;
     }
@@ -32,7 +32,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     {
         mpq_t z = new mpq_t();
 
-        mpq_sub(ref z.Value, ref x.Value, ref y.Value);
+        mpq.sub(z, x, y);
 
         return z;
     }
@@ -46,7 +46,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     {
         mpq_t z = new mpq_t();
 
-        mpq_mul(ref z.Value, ref x.Value, ref y.Value);
+        mpq.mul(z, x, y);
 
         return z;
     }
@@ -61,7 +61,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
         mpq_t z = new mpq_t();
 
         if (count >= 0)
-            mpq_mul_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
+            mpq.mul_2exp(z, x, (ulong)count);
 
         return z;
     }
@@ -76,7 +76,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
         mpq_t z = new mpq_t();
 
         if (count >= 0)
-            mpq_div_2exp(ref z.Value, ref x.Value, (mp_bitcnt_t)(ulong)count);
+            mpq.div_2exp(z, x, (ulong)count);
 
         return z;
     }
@@ -89,7 +89,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     {
         mpq_t z = new mpq_t();
 
-        mpq_neg(ref z.Value, ref x.Value);
+        mpq.neg(z, x);
 
         return z;
     }
@@ -103,7 +103,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     {
         mpq_t z = new mpq_t();
 
-        mpq_div(ref z.Value, ref x.Value, ref y.Value);
+        mpq.div(z, x, y);
 
         return z;
     }
@@ -246,10 +246,10 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     public override int GetHashCode()
     {
         using mpz_t Numerator = new();
-        mpq_get_num(ref Numerator.Value, ref Value);
+        mpq.get_num(Numerator, this);
 
         using mpz_t Denominator = new();
-        mpq_get_den(ref Denominator.Value, ref Value);
+        mpq.get_den(Denominator, this);
 
         return Numerator.GetHashCode() ^ Denominator.GetHashCode();
     }

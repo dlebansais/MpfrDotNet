@@ -72,6 +72,8 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         Assert.Throws<ArgumentException>(() => { using mpq_t s = new("Foo") { }; });
+        Assert.Throws<NotImplementedException>(() => mpq.inits(new mpq_t[0]));
+        Assert.Throws<NotImplementedException>(() => mpq.clears(new mpq_t[0]));
     }
 
     [Test]

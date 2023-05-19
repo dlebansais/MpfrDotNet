@@ -24,15 +24,15 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     public string ToString(int resultbase)
     {
         using mpz_t Numerator = new();
-        mpq_get_num(ref Numerator.Value, ref Value);
+        mpq.get_num(Numerator, this);
 
         using mpz_t Denominator = new();
-        mpq_get_den(ref Denominator.Value, ref Value);
+        mpq.get_den(Denominator, this);
 
         ulong SizeInDigits = (ulong)mpz_sizeinbase(ref Numerator.Value, (uint)resultbase) + (ulong)mpz_sizeinbase(ref Denominator.Value, (uint)resultbase);
 
         StringBuilder Data = new StringBuilder((int)(SizeInDigits + 3));
-        mpq_get_str(Data, resultbase, ref Value);
+        mpq.get_str(Data, resultbase, this);
 
         string Result = Data.ToString();
         return Result;
@@ -71,6 +71,6 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="value">The value.</param>
     public static explicit operator double(mpq_t value)
     {
-        return mpq_get_d(ref value.Value);
+        return mpq.get_d(value);
     }
 }

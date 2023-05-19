@@ -18,7 +18,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
         if (ReferenceEquals(other, null))
             throw new ArgumentNullException(nameof(other));
         else
-            return mpq_cmp(ref Value, ref other.Value);
+            return mpq.cmp(this, other);
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public int CompareTo(mpz_t other)
     {
-        return mpq_cmp_z(ref Value, ref other.Value);
+        return mpq.cmp_z(this, other);
     }
 
     /// <summary>
@@ -36,6 +36,6 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public bool IsEqualTo(mpq_t other)
     {
-        return mpq_equal(ref Value, ref other.Value) != 0;
+        return mpq.equal(this, other);
     }
 }
