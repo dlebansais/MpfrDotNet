@@ -4,6 +4,7 @@ using MpirDotNet;
 using System.IO;
 using System.Text;
 using NUnit.Framework;
+using System;
 
 [TestFixture]
 public class IO
@@ -21,6 +22,9 @@ public class IO
         {
             using (StreamWriter Writer = new StreamWriter(Stream, Encoding.Default, 0x1000, leaveOpen: true))
             {
+                Assert.Throws<ArgumentOutOfRangeException>(() => mpz.out_str(Writer, 1, a));
+                Assert.Throws<ArgumentOutOfRangeException>(() => mpz.out_str(Writer, 100, a));
+
                 int Length = (int)mpz.out_str(Writer, 10, a);
 
                 Assert.That(AsString.Length, Is.EqualTo(Length));

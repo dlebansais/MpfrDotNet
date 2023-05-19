@@ -132,11 +132,17 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("20"));
 
         BigInteger big = new(20);
-        using mpz_t k = new mpz_t(big);
+        using mpz_t k1 = new mpz_t(big);
 
-        AsString = k.ToString();
+        AsString = k1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
-        Assert.That((BigInteger)k, Is.EqualTo(big));
+        Assert.That((BigInteger)k1, Is.EqualTo(big));
+
+        using mpz_t k2 = (mpz_t)big;
+
+        AsString = k2.ToString();
+        Assert.That(AsString, Is.EqualTo("20"));
+        Assert.That((BigInteger)k2, Is.EqualTo(big));
 
         using mpz_t l = new mpz_t(new bitcount_t(10UL));
 

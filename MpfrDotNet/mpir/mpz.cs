@@ -783,17 +783,6 @@ public static class mpz
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
-    /// <param name="r">The r.</param>
-    /// <param name="n">The n.</param>
-    /// <param name="d">The d.</param>
-    public static ulong mod_ui(mpz_t r, mpz_t n, ulong d)
-    {
-        return (ulong)NativeMethods.mpz_fdiv_r_ui(ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
-    }
-
-    /// <summary>
-    /// See http://mpir.org/mpir-3.0.0.pdf.
-    /// </summary>
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
@@ -1504,14 +1493,14 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static long out_str(StreamWriter writer, int strBase, mpz_t op)
     {
-        ulong SizeInDigits = (ulong)NativeMethods.mpz_sizeinbase(ref op.Value, (uint)(strBase > 0 ? strBase : -strBase));
+        if (strBase < 2 || strBase > 62)
+            throw new ArgumentOutOfRangeException(nameof(strBase));
+
+        ulong SizeInDigits = sizeinbase(op, (uint)strBase);
         SizeInDigits += 2;
 
-        if (SizeInDigits > int.MaxValue)
-            return 0;
-
         StringBuilder Data = new StringBuilder((int)SizeInDigits);
-        NativeMethods.mpz_get_str(Data, strBase, ref op.Value);
+        get_str(Data, strBase, op);
 
         string Content = Data.ToString();
         writer.Write(Content);
@@ -1569,11 +1558,8 @@ public static class mpz
     /// <param name="reader">The input stream.</param>
     public static long inp_raw(mpz_t rop, BinaryReader reader)
     {
-        long ContentLength = reader.BaseStream.Length;
-        if (ContentLength > int.MaxValue)
-            return 0;
-
-        byte[] Content = reader.ReadBytes((int)ContentLength);
+        int ContentLength = (int)reader.BaseStream.Length;
+        byte[] Content = reader.ReadBytes(ContentLength);
 
         NativeMethods.mpz_import(ref rop.Value, (NativeMethods.size_t)(ulong)Content.Length, -1, (NativeMethods.size_t)sizeof(byte), -1, (NativeMethods.size_t)0UL, Content);
 
@@ -1710,7 +1696,8 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static bool odd_p(mpz_t op)
     {
-        if (op.Value.LimbCount == 0 || op.Value.Limbs == System.IntPtr.Zero)
+        bool HasValidLimb = (op.Value.LimbCount != 0) & (op.Value.Limbs != System.IntPtr.Zero);
+        if (!HasValidLimb)
             return false;
 
         return (System.Runtime.InteropServices.Marshal.ReadByte(op.Value.Limbs, 0) & 1) != 0;
@@ -1722,7 +1709,8 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static bool even_p(mpz_t op)
     {
-        if (op.Value.LimbCount == 0 || op.Value.Limbs == System.IntPtr.Zero)
+        bool HasValidLimb = (op.Value.LimbCount != 0) & (op.Value.Limbs != System.IntPtr.Zero);
+        if (!HasValidLimb)
             return false;
 
         return (System.Runtime.InteropServices.Marshal.ReadByte(op.Value.Limbs, 0) & 1) == 0;

@@ -232,6 +232,42 @@ public class NumberTheoretic
     }
 
     [Test]
+    public void Legendre()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("9288562863495827364985273645298367452");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("9288562863495827364985273645298367452"));
+
+        using mpz_t b = new mpz_t("876428957629387610928574612341");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("876428957629387610928574612341"));
+
+        int LegendreSymbol = mpz.legendre(a, b);
+
+        Assert.That(LegendreSymbol, Is.EqualTo(-1));
+    }
+
+    [Test]
+    public void Kronecker()
+    {
+        string AsString;
+
+        using mpz_t a = new mpz_t("9288562863495827364985273645298367452");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("9288562863495827364985273645298367452"));
+
+        using mpz_t b = new mpz_t("876428957629387610928574612341");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("876428957629387610928574612341"));
+
+        int KroneckerSymbol = mpz.kronecker(a, b);
+
+        Assert.That(KroneckerSymbol, Is.EqualTo(-1));
+    }
+
+    [Test]
     public void KroneckerInt()
     {
         string AsString;

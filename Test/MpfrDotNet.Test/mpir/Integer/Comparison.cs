@@ -24,7 +24,7 @@ public class Comparison
         IsGreaterThan = a > b;
         Assert.That(IsGreaterThan, Is.True);
 
-        double f = 50.0F;
+        float f = 50.0F;
 
         IsGreaterThan = a > f;
         Assert.That(IsGreaterThan, Is.True);
@@ -90,7 +90,7 @@ public class Comparison
         IsGreaterThan = a >= b;
         Assert.That(IsGreaterThan, Is.True);
 
-        double f = 50.0F;
+        float f = 50.0F;
 
         IsGreaterThan = a >= f;
         Assert.That(IsGreaterThan, Is.True);
@@ -156,7 +156,7 @@ public class Comparison
         IsLesserThan = a < b;
         Assert.That(IsLesserThan, Is.False);
 
-        double f = 50.0F;
+        float f = 50.0F;
 
         IsLesserThan = a < f;
         Assert.That(IsLesserThan, Is.False);
@@ -222,7 +222,7 @@ public class Comparison
         IsLesserThan = a <= b;
         Assert.That(IsLesserThan, Is.False);
 
-        double f = 50.0F;
+        float f = 50.0F;
 
         IsLesserThan = a <= f;
         Assert.That(IsLesserThan, Is.False);
@@ -353,8 +353,12 @@ public class Comparison
         Assert.Throws<ArgumentNullException>(() => a.CompareTo(Instance));
 
         object? Object = b;
+        IComparable Comparable = a;
 
         IsGreaterThan = a.CompareTo(Object) > 0;
+        Assert.That(IsGreaterThan, Is.True);
+
+        IsGreaterThan = Comparable.CompareTo(Object) > 0;
         Assert.That(IsGreaterThan, Is.True);
 
         Object = null;
@@ -366,6 +370,7 @@ public class Comparison
     {
         string AsString;
         bool IsEqualTo;
+        bool IsDifferentThan;
 
         using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
@@ -379,6 +384,90 @@ public class Comparison
 
         IsEqualTo = a == c;
         Assert.That(IsEqualTo, Is.True);
+
+        float f = 50.0F;
+
+        IsEqualTo = a == f;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsEqualTo  = f == a;
+        Assert.That(IsEqualTo , Is.False);
+
+        IsDifferentThan = a != f;
+        Assert.That(IsDifferentThan, Is.True);
+
+        IsDifferentThan = f != a;
+        Assert.That(IsDifferentThan, Is.True);
+
+        double d = 50.0;
+
+        IsEqualTo = a == d;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsEqualTo = d == a;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsDifferentThan = a != d;
+        Assert.That(IsDifferentThan, Is.True);
+
+        IsDifferentThan = d != a;
+        Assert.That(IsDifferentThan, Is.True);
+
+        int n = 50;
+
+        IsEqualTo = a == n;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsEqualTo = n == a;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsDifferentThan = a != n;
+        Assert.That(IsDifferentThan, Is.True);
+
+        IsDifferentThan = n != a;
+        Assert.That(IsDifferentThan, Is.True);
+
+        uint p = 50U;
+
+        IsEqualTo = a == p;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsEqualTo = p == a;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsDifferentThan = a != p;
+        Assert.That(IsDifferentThan, Is.True);
+
+        IsDifferentThan = p != a;
+        Assert.That(IsDifferentThan, Is.True);
+
+        long l = 50L;
+
+        IsEqualTo = a == l;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsEqualTo = l == a;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsDifferentThan = a != l;
+        Assert.That(IsDifferentThan, Is.True);
+
+        IsDifferentThan = l != a;
+        Assert.That(IsDifferentThan, Is.True);
+
+        ulong ul = 50UL;
+
+        IsEqualTo = a == ul;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsEqualTo = ul == a;
+        Assert.That(IsEqualTo, Is.False);
+
+        IsDifferentThan = a != ul;
+        Assert.That(IsDifferentThan, Is.True);
+
+        IsDifferentThan = ul != a;
+        Assert.That(IsDifferentThan, Is.True);
 
         IEquatable<mpz_t> Equatable = a;
 
