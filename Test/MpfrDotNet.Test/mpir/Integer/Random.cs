@@ -135,6 +135,7 @@ public class Random
     {
         randstate_t? x = randstate_t.Create(RngAlgorithm.MersenneTwister);
         x.Dispose();
+        x.Dispose();
         x.IsDisposed = false;
         GC.ReRegisterForFinalize(x);
 
