@@ -101,6 +101,21 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
         Assert.Throws<ArgumentException>(() => { using (mpf_t x = new mpf_t("Foo")) { } });
+
+        using mpz_t initZ = new mpz_t(20);
+        using mpq_t initQ = new mpq_t(30);
+
+        s.Set(initZ);
+        AsString = s.ToString();
+        Assert.That(AsString, Is.EqualTo("2E+1"));
+
+        s.Set(initQ);
+        AsString = s.ToString();
+        Assert.That(AsString, Is.EqualTo("3E+1"));
+
+        s.GetDoubleWithExponent(out double DoubleValue, out long ExponentValue);
+        Assert.That(DoubleValue, Is.EqualTo(0.9375));
+        Assert.That(ExponentValue, Is.EqualTo(5));
     }
 
     [Test]
@@ -185,6 +200,9 @@ public class Misc
         ulong TestPrecision = 128;
 
         a.Precision = TestPrecision;
+        Assert.That(a.Precision, Is.EqualTo(TestPrecision));
+
+        a.SetPrecisionRaw(TestPrecision);
         Assert.That(a.Precision, Is.EqualTo(TestPrecision));
 
         a.Precision = OldPrecision;
@@ -395,5 +413,27 @@ public class Misc
         Assert.That(str1, Is.EqualTo(a.ToString()));
 
         Assert.Throws<InvalidCastException>(() => a.ToType(typeof(Misc), null));
+    }
+
+    [Test]
+    public void Swap()
+    {
+        string AsString;
+
+        using mpf_t x = new mpf_t("2983.5740293845720");
+        AsString = x.ToString();
+        Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
+
+        using mpf_t y = new mpf_t("68719476735");
+        AsString = y.ToString();
+        Assert.That(AsString, Is.EqualTo("6.8719476735E+10"));
+
+        mpf_t.Swap(x, y);
+
+        AsString = x.ToString();
+        Assert.That(AsString, Is.EqualTo("6.8719476735E+10"));
+
+        AsString = y.ToString();
+        Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
     }
 }

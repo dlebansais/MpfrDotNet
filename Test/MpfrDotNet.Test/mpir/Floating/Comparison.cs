@@ -273,6 +273,9 @@ public class Comparison
         IsDifferentThan = a != b;
         Assert.That(IsDifferentThan, Is.True);
 
+        IsEqualTo = mpf_t.EqualBits(a, c, 1);
+        Assert.That(IsEqualTo, Is.True);
+
         ulong ul = 124UL;
 
         IsEqualTo = a == ul;
@@ -351,6 +354,10 @@ public class Comparison
         Assert.That(IsEqualTo, Is.True);
 
         int HashCode = a.GetHashCode();
+
+        using mpf_t diff = mpf_t.RelativeDifference(a, b);
+        AsString = diff.ToString();
+        Assert.That(AsString, Is.EqualTo("9.99999999899785356234E-1"));
     }
 
     [Test]

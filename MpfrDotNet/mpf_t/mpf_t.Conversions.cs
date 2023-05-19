@@ -2,7 +2,6 @@
 
 using System;
 using System.Text;
-using static Interop.Mpir.NativeMethods;
 
 /// <summary>
 /// See http://mpir.org/mpir-3.0.0.pdf.
@@ -192,5 +191,15 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     public static explicit operator double(mpf_t value)
     {
         return mpf.get_d(value);
+    }
+
+    /// <summary>
+    /// Converts to a double with an exponent returned separately.
+    /// </summary>
+    /// <param name="d">The double upon return.</param>
+    /// <param name="exp">The exponent upon return.</param>
+    public void GetDoubleWithExponent(out double d, out long exp)
+    {
+        mpf.get_d_2exp(this, out d, out exp);
     }
 }

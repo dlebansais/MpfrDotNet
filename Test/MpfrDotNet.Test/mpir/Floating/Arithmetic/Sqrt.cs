@@ -19,5 +19,10 @@ public class Sqrt
 
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("4.71709478920500704353E+12"));
+
+        using mpf_t c = mpf_t.Sqrt(9);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("3E+0"));
     }
 }

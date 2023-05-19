@@ -125,6 +125,43 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         }
     }
 
+    /// <summary>
+    /// Sets the exact precision.
+    /// </summary>
+    /// <param name="value">The precision.</param>
+    public void SetPrecisionRaw(ulong value)
+    {
+        mpf.set_prec_raw(this, value);
+    }
+
+    /// <summary>
+    /// Sets the value from an integer.
+    /// </summary>
+    /// <param name="value">The integer.</param>
+    public void Set(mpz_t value)
+    {
+        mpf.set_z(this, value);
+    }
+
+    /// <summary>
+    /// Sets the value from a rational.
+    /// </summary>
+    /// <param name="value">The rational.</param>
+    public void Set(mpq_t value)
+    {
+        mpf.set_q(this, value);
+    }
+
+    /// <summary>
+    /// Swaps two numbers.
+    /// </summary>
+    /// <param name="x">The first number.</param>
+    /// <param name="y">The second number.</param>
+    public static void Swap(mpf_t x, mpf_t y)
+    {
+        mpf.swap(x, y);
+    }
+
 #pragma warning disable SA1401 // Fields should be private
 #pragma warning disable SA1600 // Elements should be documented
     internal __mpf_t Value;

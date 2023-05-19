@@ -150,6 +150,9 @@ public class Misc
         using mpz_t n = new mpz_t("-222509832503450298345029835740293845720");
         Assert.Throws<ArgumentOutOfRangeException>(() => _ = (long)n);
         Assert.Throws<ArgumentOutOfRangeException>(() => _ = (ulong)n);
+
+        Assert.Throws<NotImplementedException>(() => mpz.inits(new mpz_t[0]));
+        Assert.Throws<NotImplementedException>(() => mpz.clears(new mpz_t[0]));
     }
 
     [Test]

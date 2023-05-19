@@ -55,4 +55,29 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         return mpf.cmp_d(this, other);
     }
+
+    /// <summary>
+    /// See http://mpir.org/mpir-3.0.0.pdf.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <param name="bitcount">The number of bits.</param>
+    public static bool EqualBits(mpf_t x, mpf_t y, ulong bitcount)
+    {
+        return mpf.eq(x, y, bitcount) != 0;
+    }
+
+    /// <summary>
+    /// Returns the relative difference between two numbers.
+    /// </summary>
+    /// <param name="x">The first number.</param>
+    /// <param name="y">The second number.</param>
+    public static mpf_t RelativeDifference(mpf_t x, mpf_t y)
+    {
+        mpf_t z = new();
+
+        mpf.reldiff(z, x, y);
+
+        return z;
+    }
 }
