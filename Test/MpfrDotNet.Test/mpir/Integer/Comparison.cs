@@ -385,6 +385,9 @@ public class Comparison
         IsEqualTo = a == c;
         Assert.That(IsEqualTo, Is.True);
 
+        IsDifferentThan = a != c;
+        Assert.That(IsDifferentThan, Is.False);
+
         float f = 50.0F;
 
         IsEqualTo = a == f;

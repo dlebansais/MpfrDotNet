@@ -1,5 +1,6 @@
 namespace TestInteger;
 
+using System;
 using MpirDotNet;
 using NUnit.Framework;
 
@@ -89,6 +90,14 @@ public class Random
         using mpz_t a = new mpz_t(10);
         using randstate_t state2 = randstate_t.Create(RngAlgorithm.LinearCongruential, a, 10UL, 10UL);
         using randstate_t state3 = new randstate_t(state2);
+
+        using randstate_t state4 = randstate_t.Create(RngAlgorithm.Default);
+
+        Assert.Throws<ArgumentException>(() => { using (randstate_t state = randstate_t.Create(RngAlgorithm.LinearCongruential)) { }; });
+        Assert.Throws<ArgumentException>(() => { using (randstate_t state = randstate_t.Create(RngAlgorithm.LinearCongruential, -10L)) { }; });
+        Assert.Throws<ArgumentException>(() => { using (randstate_t state = randstate_t.Create(RngAlgorithm.LinearCongruential, -10L, -10L, -10L)) { }; });
+        Assert.Throws<ArgumentException>(() => { using (randstate_t state = randstate_t.Create(RngAlgorithm.LinearCongruential, a, -10L, -10L)) { }; });
+        Assert.Throws<ArgumentException>(() => { using (randstate_t state = randstate_t.Create(RngAlgorithm.LinearCongruential, a, 10UL, -10L)) { }; });
     }
 
     [Test]
@@ -119,5 +128,18 @@ public class Random
 
         IsLesserThan = Result < n;
         Assert.IsTrue(IsLesserThan);
+    }
+
+    [Test]
+    public void Finalizer()
+    {
+        randstate_t? x = randstate_t.Create(RngAlgorithm.MersenneTwister);
+        x.Dispose();
+        x.IsDisposed = false;
+        GC.ReRegisterForFinalize(x);
+
+        x = null;
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
     }
 }
