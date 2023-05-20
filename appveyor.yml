@@ -65,7 +65,9 @@ test_script:
 
 after_test:
   - ps: Get-Content Coverage-*.xml -Head 3
-  - if ('%CONFIGURATION%' == 'Debug' AND '%APPVEYOR_REPO_BRANCH%' == 'master') .\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f "Coverage-%APPVEYOR_PROJECT_NAME%.xml"
+  - echo '%CONFIGURATION%'
+  - echo '%APPVEYOR_REPO_BRANCH%'
+  - if ('%CONFIGURATION%' == 'Debug' && '%APPVEYOR_REPO_BRANCH%' == 'master') .\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f "Coverage-%APPVEYOR_PROJECT_NAME%.xml"
 
 artifacts:
   - path: $(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg
