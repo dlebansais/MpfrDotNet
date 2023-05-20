@@ -39,7 +39,7 @@ public class Root
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("936995247845762439229916837840025004943963737679442023171062337518037547173883302933966320549"));
 
-        mpz_t b = a.NthRoot(3);
+        using mpz_t b = a.NthRoot(3);
 
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("9785412309485720938412983404349"));

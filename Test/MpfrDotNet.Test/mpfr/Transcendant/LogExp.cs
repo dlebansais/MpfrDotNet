@@ -85,6 +85,58 @@ public class LogExp
     }
 
     [Test]
+    public void Log2p1()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+
+        using mpfr_t b = a.Log2p1();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("8.42020714610295881674939981367481404851E+1"));
+
+        using mpfr_t c = b.Exp2m1();
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457267E+25"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Log10p1()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+
+        using mpfr_t b = a.Log10p1();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.534734920681197166907985699103906897381E+1"));
+
+        using mpfr_t c = b.Exp10m1();
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457301E+25"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
     public void LogULong()
     {
         string AsString;

@@ -504,6 +504,18 @@ public static partial class mpfr
     {
         return mpfr_rootn_ui(ref rop.Value, ref op.Value, n, (__mpfr_rnd_t)rnd);
     }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="n">The n.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int rootn_si(mpfr_t rop, mpfr_t op, long n, mpfr_rnd_t rnd)
+    {
+        return mpfr_rootn_si(ref rop.Value, ref op.Value, n, (__mpfr_rnd_t)rnd);
+    }
     #endregion
 
     #region Misc

@@ -112,6 +112,29 @@ public class Pow
     }
 
     [Test]
+    public void NthRootLong()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+
+        long root = -140L;
+
+        using mpfr_t b = a.NthRoot(root);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("6.59094223949567188655874037256287510624E-1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
     public void SqrtULong()
     {
         string AsString;
@@ -344,6 +367,32 @@ public class Pow
 
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("2.2298E+4"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Powr()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+
+        using mpfr_t b = new mpfr_t("22298");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.2298E+4"));
+
+        using mpfr_t c = mpfr_t.Powr(a, b);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("1.558165173948259812979840463318544184612E+565195"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

@@ -57,6 +57,19 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
+    /// Gets the nth root.
+    /// </summary>
+    /// <param name="n">The nth.</param>
+    public mpfr_t NthRoot(long n)
+    {
+        mpfr_t z = new();
+
+        LastTernaryResult = mpfr.rootn_si(z, this, n, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
     /// Gets the absolute value.
     /// </summary>
     public mpfr_t Abs()

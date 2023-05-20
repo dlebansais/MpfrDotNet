@@ -369,6 +369,389 @@ public class Trigonometric
     }
 
     [Test]
+    public void Cosu()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        ulong u = 125UL;
+
+        using mpfr_t c = b.Cos(u);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("9.987409225067102363004750947085784850839E-1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Sinu()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        ulong u = 125UL;
+
+        using mpfr_t c = b.Sin(u);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("5.016542345525868840810465011610663860027E-2"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Tanu()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        ulong u = 125UL;
+
+        using mpfr_t c = b.Tan(u);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("5.022866523717680367233148479055482355834E-2"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Acosu()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        ulong u = 125UL;
+
+        using mpfr_t c = b.Acos(u);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("1.115488500985356321410215956994320140935E+0"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Asinu()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        ulong u = 125UL;
+
+        using mpfr_t c = b.Asin(u);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("3.013451149901464367858978404300567985909E+1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Atanu()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        ulong u = 125UL;
+
+        using mpfr_t c = b.Atan(u);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("1.560935528790486500553627310504900540027E+1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Atan2u()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+
+        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
+
+        ulong u = 125UL;
+
+        using mpfr_t c = mpfr_t.Atan2(a, b, u);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("3.124999999800629300930304199250837572914E+1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+
+
+
+
+
+    [Test]
+    public void CosPi()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        using mpfr_t c = b.CosPi();
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("-9.999878123178676261261313274062330204259E-1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void SinPi()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        using mpfr_t c = b.SinPi();
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("4.937126261819925134814751346107539385314E-3"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void TanPi()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        using mpfr_t c = b.TanPi();
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("-4.937186434678819268530501963836541006333E-3"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void AcosPi()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        using mpfr_t c = b.AcosPi();
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("1.784781601576570114256345531190912225492E-2"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void AsinPi()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        using mpfr_t c = b.AsinPi();
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("4.821521839842342988574365446880908777446E-1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void AtanPi()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Tanh();
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("9.984284575170331615981558376475473220348E-1"));
+
+        using mpfr_t c = b.AtanPi();
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("2.497496846064778400885803696807840864048E-1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
+    public void Atan2Pi()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
+
+        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
+
+        using mpfr_t c = mpfr_t.Atan2Pi(a, b);
+
+        AsString = c.ToString();
+        Assert.That(AsString, Is.EqualTo("4.999999999681006881488486718801340116666E-1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
+
+    [Test]
     public void ConstLog2()
     {
         string AsString;

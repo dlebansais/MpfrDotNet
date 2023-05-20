@@ -179,6 +179,10 @@ internal static partial class NativeMethods
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_rootn_ui(ref __mpfr_t rop, ref __mpfr_t op, ulong n, __mpfr_rnd_t rnd);
     public static __mpfr_rootn_ui mpfr_rootn_ui { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_rootn_ui>(GetMpfrPointer(nameof(mpfr_rootn_ui)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_rootn_si(ref __mpfr_t rop, ref __mpfr_t op, long n, __mpfr_rnd_t rnd);
+    public static __mpfr_rootn_si mpfr_rootn_si { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_rootn_si>(GetMpfrPointer(nameof(mpfr_rootn_si)));
     #endregion
 
     #region Misc

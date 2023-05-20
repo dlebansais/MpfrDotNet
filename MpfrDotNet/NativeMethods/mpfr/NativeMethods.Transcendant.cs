@@ -27,6 +27,14 @@ internal static partial class NativeMethods
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_log1p(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
     public static __mpfr_log1p mpfr_log1p { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_log1p>(GetMpfrPointer(nameof(mpfr_log1p)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_log2p1(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_log2p1 mpfr_log2p1 { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_log2p1>(GetMpfrPointer(nameof(mpfr_log2p1)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_log10p1(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_log10p1 mpfr_log10p1 { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_log10p1>(GetMpfrPointer(nameof(mpfr_log10p1)));
     #endregion
 
     #region Exp
@@ -45,6 +53,14 @@ internal static partial class NativeMethods
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_expm1(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
     public static __mpfr_expm1 mpfr_expm1 { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_expm1>(GetMpfrPointer(nameof(mpfr_expm1)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_exp2m1(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_exp2m1 mpfr_exp2m1 { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_exp2m1>(GetMpfrPointer(nameof(mpfr_exp2m1)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_exp10m1(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_exp10m1 mpfr_exp10m1 { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_exp10m1>(GetMpfrPointer(nameof(mpfr_exp10m1)));
     #endregion
 
     #region Pow
@@ -71,6 +87,10 @@ internal static partial class NativeMethods
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_ui_pow(ref __mpfr_t rop, ulong op1, ref __mpfr_t op2, __mpfr_rnd_t rnd);
     public static __mpfr_ui_pow mpfr_ui_pow { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_ui_pow>(GetMpfrPointer(nameof(mpfr_ui_pow)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_powr(ref __mpfr_t rop, ref __mpfr_t op1, ref __mpfr_t op2, __mpfr_rnd_t rnd);
+    public static __mpfr_powr mpfr_powr { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_powr>(GetMpfrPointer(nameof(mpfr_powr)));
     #endregion
 
     #region Trigonometric
@@ -157,6 +177,62 @@ internal static partial class NativeMethods
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_atanh(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
     public static __mpfr_atanh mpfr_atanh { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atanh>(GetMpfrPointer(nameof(mpfr_atanh)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_cosu(ref __mpfr_t rop, ref __mpfr_t op, ulong u, __mpfr_rnd_t rnd);
+    public static __mpfr_cosu mpfr_cosu { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_cosu>(GetMpfrPointer(nameof(mpfr_cosu)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_sinu(ref __mpfr_t rop, ref __mpfr_t op, ulong u, __mpfr_rnd_t rnd);
+    public static __mpfr_sinu mpfr_sinu { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_sinu>(GetMpfrPointer(nameof(mpfr_sinu)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_tanu(ref __mpfr_t rop, ref __mpfr_t op, ulong u, __mpfr_rnd_t rnd);
+    public static __mpfr_tanu mpfr_tanu { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_tanu>(GetMpfrPointer(nameof(mpfr_tanu)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_acosu(ref __mpfr_t rop, ref __mpfr_t op, ulong u, __mpfr_rnd_t rnd);
+    public static __mpfr_acosu mpfr_acosu { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_acosu>(GetMpfrPointer(nameof(mpfr_acosu)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_asinu(ref __mpfr_t rop, ref __mpfr_t op, ulong u, __mpfr_rnd_t rnd);
+    public static __mpfr_asinu mpfr_asinu { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_asinu>(GetMpfrPointer(nameof(mpfr_asinu)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_atanu(ref __mpfr_t rop, ref __mpfr_t op, ulong u, __mpfr_rnd_t rnd);
+    public static __mpfr_atanu mpfr_atanu { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atanu>(GetMpfrPointer(nameof(mpfr_atanu)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_atan2u(ref __mpfr_t rop, ref __mpfr_t x, ref __mpfr_t y, ulong u, __mpfr_rnd_t rnd);
+    public static __mpfr_atan2u mpfr_atan2u { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atan2u>(GetMpfrPointer(nameof(mpfr_atan2u)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_cospi(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_cospi mpfr_cospi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_cospi>(GetMpfrPointer(nameof(mpfr_cospi)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_sinpi(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_sinpi mpfr_sinpi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_sinpi>(GetMpfrPointer(nameof(mpfr_sinpi)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_tanpi(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_tanpi mpfr_tanpi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_tanpi>(GetMpfrPointer(nameof(mpfr_tanpi)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_acospi(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_acospi mpfr_acospi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_acospi>(GetMpfrPointer(nameof(mpfr_acospi)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_asinpi(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_asinpi mpfr_asinpi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_asinpi>(GetMpfrPointer(nameof(mpfr_asinpi)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_atanpi(ref __mpfr_t rop, ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public static __mpfr_atanpi mpfr_atanpi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atanpi>(GetMpfrPointer(nameof(mpfr_atanpi)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_atan2pi(ref __mpfr_t rop, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
+    public static __mpfr_atan2pi mpfr_atan2pi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atan2pi>(GetMpfrPointer(nameof(mpfr_atan2pi)));
     #endregion
 
     #region Other
@@ -255,6 +331,10 @@ internal static partial class NativeMethods
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_const_catalan(ref __mpfr_t rop, __mpfr_rnd_t rnd);
     public static __mpfr_const_catalan mpfr_const_catalan { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_const_catalan>(GetMpfrPointer(nameof(mpfr_const_catalan)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_compound_si(ref __mpfr_t rop, ref __mpfr_t op, long n, __mpfr_rnd_t rnd);
+    public static __mpfr_compound_si mpfr_compound_si { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_compound_si>(GetMpfrPointer(nameof(mpfr_compound_si)));
     #endregion
 }
 #pragma warning restore SA1601 // Partial elements should be documented

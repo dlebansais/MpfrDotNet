@@ -63,6 +63,28 @@ public static partial class mpfr
     {
         return mpfr_log1p(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
     }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int log2p1(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_log2p1(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int log10p1(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_log10p1(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
     #endregion
 
     #region Exp
@@ -108,6 +130,28 @@ public static partial class mpfr
     public static int expm1(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
     {
         return mpfr_expm1(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int exp2m1(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_exp2m1(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int exp10m1(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_exp10m1(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
     }
     #endregion
 
@@ -182,6 +226,18 @@ public static partial class mpfr
     public static int ui_pow(mpfr_t rop, ulong op1, mpfr_t op2, mpfr_rnd_t rnd)
     {
         return mpfr_ui_pow(ref rop.Value, op1, ref op2.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op1">The first operand.</param>
+    /// <param name="op2">The second operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int powr(mpfr_t rop, mpfr_t op1, mpfr_t op2, mpfr_rnd_t rnd)
+    {
+        return mpfr_powr(ref rop.Value, ref op1.Value, ref op2.Value, (__mpfr_rnd_t)rnd);
     }
     #endregion
 
@@ -418,6 +474,169 @@ public static partial class mpfr
     public static int atanh(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
     {
         return mpfr_atanh(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="u">The second operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int cosu(mpfr_t rop, mpfr_t op, ulong u, mpfr_rnd_t rnd)
+    {
+        return mpfr_cosu(ref rop.Value, ref op.Value, u, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="u">The second operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int sinu(mpfr_t rop, mpfr_t op, ulong u, mpfr_rnd_t rnd)
+    {
+        return mpfr_sinu(ref rop.Value, ref op.Value, u, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="u">The second operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int tanu(mpfr_t rop, mpfr_t op, ulong u, mpfr_rnd_t rnd)
+    {
+        return mpfr_tanu(ref rop.Value, ref op.Value, u, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="u">The second operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int acosu(mpfr_t rop, mpfr_t op, ulong u, mpfr_rnd_t rnd)
+    {
+        return mpfr_acosu(ref rop.Value, ref op.Value, u, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="u">The second operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int asinu(mpfr_t rop, mpfr_t op, ulong u, mpfr_rnd_t rnd)
+    {
+        return mpfr_asinu(ref rop.Value, ref op.Value, u, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="u">The second operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int atanu(mpfr_t rop, mpfr_t op, ulong u, mpfr_rnd_t rnd)
+    {
+        return mpfr_atanu(ref rop.Value, ref op.Value, u, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <param name="u">The third operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int atan2u(mpfr_t rop, mpfr_t x, mpfr_t y, ulong u, mpfr_rnd_t rnd)
+    {
+        return mpfr_atan2u(ref rop.Value, ref x.Value, ref y.Value, u, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int cospi(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_cospi(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int sinpi(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_sinpi(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int tanpi(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_tanpi(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int acospi(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_acospi(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int asinpi(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_asinpi(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The first operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int atanpi(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_atanpi(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int atan2pi(mpfr_t rop, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
+    {
+        return mpfr_atan2pi(ref rop.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
     }
     #endregion
 
@@ -686,6 +905,18 @@ public static partial class mpfr
     public static int const_catalan(mpfr_t rop, mpfr_rnd_t rnd)
     {
         return mpfr_const_catalan(ref rop.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="n">The n.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static int compound_si(mpfr_t rop, mpfr_t op, long n, mpfr_rnd_t rnd)
+    {
+        return mpfr_compound_si(ref rop.Value, ref op.Value, n, (__mpfr_rnd_t)rnd);
     }
     #endregion
 }

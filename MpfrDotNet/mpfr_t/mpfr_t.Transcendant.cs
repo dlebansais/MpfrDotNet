@@ -2,7 +2,6 @@
 
 using System;
 using MpirDotNet;
-using static Interop.Mpfr.NativeMethods;
 
 /// <summary>
 /// Represents an arbitrary precision floating-point number.
@@ -74,6 +73,32 @@ public partial class mpfr_t : IDisposable
 
         return z;
     }
+
+    /// <summary>
+    /// Gets the log2.
+    /// </summary>
+    /// <param name="rounding">The rounding mode.</param>
+    public mpfr_t Log2p1(mpfr_rnd_t rounding = DefaultRounding)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.log2p1(z, this, rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets the log10.
+    /// </summary>
+    /// <param name="rounding">The rounding mode.</param>
+    public mpfr_t Log10p1(mpfr_rnd_t rounding = DefaultRounding)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.log10p1(z, this, rounding);
+
+        return z;
+    }
     #endregion
 
     #region Exp
@@ -121,6 +146,30 @@ public partial class mpfr_t : IDisposable
         mpfr_t z = new();
 
         z.LastTernaryResult = mpfr.expm1(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets the exp2.
+    /// </summary>
+    public mpfr_t Exp2m1()
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.exp2m1(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets the exp10.
+    /// </summary>
+    public mpfr_t Exp10m1()
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.exp10m1(z, this, Rounding);
 
         return z;
     }
@@ -204,6 +253,21 @@ public partial class mpfr_t : IDisposable
         mpfr_t z = new();
 
         z.LastTernaryResult = mpfr.ui_pow(z, op1, op2, op2.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets exp(y*log(x)).
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    public static mpfr_t Powr(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.powr(z, x, y, rounding);
 
         return z;
     }
@@ -467,9 +531,188 @@ public partial class mpfr_t : IDisposable
 
         return z;
     }
+
+    /// <summary>
+    /// Gets cos(2*pi*x/u).
+    /// </summary>
+    /// <param name="u">The operand.</param>
+    public mpfr_t Cos(ulong u)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.cosu(z, this, u, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets sin(2*pi*x/u).
+    /// </summary>
+    /// <param name="u">The operand.</param>
+    public mpfr_t Sin(ulong u)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.sinu(z, this, u, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets tan(2*pi*x/u).acos(x)*u/(2*pi).
+    /// </summary>
+    /// <param name="u">The operand.</param>
+    public mpfr_t Tan(ulong u)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.tanu(z, this, u, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets acos(x)*u/(2*pi).
+    /// </summary>
+    /// <param name="u">The operand.</param>
+    public mpfr_t Acos(ulong u)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.acosu(z, this, u, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets asin(x)*u/(2*pi).
+    /// </summary>
+    /// <param name="u">The operand.</param>
+    public mpfr_t Asin(ulong u)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.asinu(z, this, u, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets atan(x)*u/(2*pi).
+    /// </summary>
+    /// <param name="u">The operand.</param>
+    public mpfr_t Atan(ulong u)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.atanu(z, this, u, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets atan(|y/x|)*u/(2*pi) for x &gt; 0, 1-atan(|y/x|)*u/(2*pi) for x &lt; 0.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <param name="u">The third operand.</param>
+    public static mpfr_t Atan2(mpfr_t x, mpfr_t y, ulong u)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.atan2u(z, x, y, u, x.Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets cos(pi*x).
+    /// </summary>
+    public mpfr_t CosPi()
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.cospi(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets sin(pi*x).
+    /// </summary>
+    public mpfr_t SinPi()
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.sinpi(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets tan(pi*x).
+    /// </summary>
+    public mpfr_t TanPi()
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.tanpi(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets acos(x)/pi.
+    /// </summary>
+    public mpfr_t AcosPi()
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.acospi(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets asin(x)/pi.
+    /// </summary>
+    public mpfr_t AsinPi()
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.asinpi(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets atan(x)/pi.
+    /// </summary>
+    public mpfr_t AtanPi()
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.atanpi(z, this, Rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets atan(|y/x|)/pi for x &gt; 0, 1-atan(|y/x|)/pi for x &lt; 0.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    public static mpfr_t Atan2Pi(mpfr_t x, mpfr_t y)
+    {
+        mpfr_t z = new();
+
+        z.LastTernaryResult = mpfr.atan2pi(z, x, y, x.Rounding);
+
+        return z;
+    }
     #endregion
 
-    #region other
+    #region Other
     /// <summary>
     /// Gets the exponential integral.
     /// </summary>
@@ -762,6 +1005,19 @@ public partial class mpfr_t : IDisposable
             mpfr.init2(Result, precision);
 
         Result.LastTernaryResult = mpfr.const_catalan(Result, DefaultRounding);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Gets (1+x)^n.
+    /// </summary>
+    /// <param name="n">The operand.</param>
+    public mpfr_t Compound(long n)
+    {
+        mpfr_t Result = new mpfr_t();
+
+        Result.LastTernaryResult = mpfr.compound_si(Result, this, n, DefaultRounding);
 
         return Result;
     }

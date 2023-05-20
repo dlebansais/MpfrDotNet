@@ -328,4 +328,25 @@ public class OtherTranscendant
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
+
+    [Test]
+    public void Compound()
+    {
+        string AsString;
+
+        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+
+        ulong DefaultPrecision = mpfr_t.DefaultPrecision;
+        mpfr_t.DefaultPrecision = 128;
+
+        using mpfr_t a = new mpfr_t("3.5740293845720");
+        AsString = a.ToString();
+        Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
+
+        using mpfr_t b = a.Compound(2);
+        AsString = b.ToString();
+        Assert.That(AsString, Is.EqualTo("2.092174481092810907162318400000000000001E+1"));
+
+        mpfr_t.DefaultPrecision = DefaultPrecision;
+    }
 }
