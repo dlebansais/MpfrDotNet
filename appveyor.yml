@@ -19,6 +19,9 @@ init:
 environment:
   package_token:
     secure: MvF+AGj2M3nN6iIqDZHxHsDOr6QcqKPhf6xaLwzWpukS+UFiaRDnjum5Rui0AiyF
+  opencover_version: 4.7.1221
+  codecov_version: 0.2.4
+  csharp-format_version: 0.0.9
 
 matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
@@ -30,6 +33,8 @@ before_build:
 
 configuration:
   - Debug
+
+#  - Release
 
 build:
   project: $(APPVEYOR_PROJECT_NAME).sln
@@ -45,7 +50,23 @@ after_build:
   - '%PACKAGER_PATH% %CUSTOM_PACKAGER_OPTIONS% --debug'                         # Execute the packager: the output is nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec
   - if exist nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec nuget pack nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec
 
-test: off
+before_test:
+  - nuget install OpenCover -Version %opencover_version% -OutputDirectory packages
+  - nuget install CodecovUploader -Version %codecov_version% -OutputDirectory packages
+  - |-
+    printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net481/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" > runtests.bat
+  - |-
+    printf "@echo ************************************************************** Starting Tests..\n" > runtests1.bat
+    printf "call runtests.bat\n" >> runtests1.bat
+  - |-
+    printf ".\packages\OpenCover.%opencover_version%\Tools\OpenCover.Console.exe -register:user -returntargetcode -target:\x25\x31 -mergeoutput -output:""Coverage-%APPVEYOR_PROJECT_NAME%"".xml\n" > opencover.bat
+
+test_script:
+  - opencover.bat runtests1.bat
+
+after_test:
+  - ps: Get-Content Coverage-*.xml -Head 3
+  - if '%CONFIGURATION%' == 'Debug' .\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f "Coverage-%APPVEYOR_PROJECT_NAME%.xml"
 
 artifacts:
   - path: $(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg
