@@ -1,11 +1,14 @@
 # MpfrDotNet
+
 A binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET.
 
 This binding is up to date with version 4.2.1 of the [mpfr library](https://www.mpfr.org/mpfr-current/mpfr.html).
 
-[![Build status](https://ci.appveyor.com/api/projects/status/4w46tqucudnkb1u3?svg=true)](https://ci.appveyor.com/project/dlebansais/MpfrDotNet) [![codecov](https://codecov.io/gh/dlebansais/MpfrDotNet/branch/master/graph/badge.svg?token=HMNSZ9X5U2)](https://codecov.io/gh/dlebansais/MpfrDotNet)
+[![Build status](https://ci.appveyor.com/api/projects/status/4w46tqucudnkb1u3?svg=true)](https://ci.appveyor.com/project/dlebansais/MpfrDotNet)
+[![codecov](https://codecov.io/gh/dlebansais/MpfrDotNet/branch/master/graph/badge.svg?token=HMNSZ9X5U2)](https://codecov.io/gh/dlebansais/MpfrDotNet)
 
 # Instructions
+
 + Install Visual Studio 2022.
 + Clone this repository locally.
 + Open `MpfrDotNet.sln` with Visual Studio 2022.
@@ -34,4 +37,5 @@ The package includes:
   * `mpf_t` an implementation of a Multiple Precision Floating-Point type. This type has less features than the more complete `mpfr_t`. 
 
 # Credits, Copyright, License...
+
 See the Linux-style [README](mpfr/README) and [README](mpir/README).

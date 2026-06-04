@@ -1,65 +1,97 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net481;net8.0-windows7.0;net10.0-windows7.0</TargetFrameworks>
-    <LangVersion>14</LangVersion>
-    <Nullable>enable</Nullable>
-    <Platforms>x64</Platforms>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <Version>1.1.0</Version>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Authors>David Le Bansais</Authors>
-    <Company />
-    <Product />
-    <Description>Binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET</Description>
-    <Copyright>Copyright © 2021 David Le Bansais</Copyright>
-    <AssemblyVersion>1.1.0.15</AssemblyVersion>
-    <FileVersion>1.1.0.15</FileVersion>
-    <RepositoryUrl>https://github.com/dlebansais/MpfrDotNet</RepositoryUrl>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net481;net10.0-windows7.0</TargetFrameworks>
+        <LangVersion>14</LangVersion>
+        <Nullable>enable</Nullable>
+        <Platforms>x64</Platforms>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <Version>1.1.0</Version>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Authors>David Le Bansais</Authors>
+        <Company />
+        <Product />
+        <Description>Binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET</Description>
+        <Copyright>Copyright © 2021 David Le Bansais</Copyright>
+        <AssemblyVersion>1.1.0.15</AssemblyVersion>
+        <FileVersion>1.1.0.15</FileVersion>
+        <RepositoryUrl>https://github.com/dlebansais/MpfrDotNet</RepositoryUrl>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+        <PackageIcon>package-icon.png</PackageIcon>
+        <PackageReadmeFile>README-short.md</PackageReadmeFile>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <NoWarn>SA0001;CS8981</NoWarn>
-  </PropertyGroup>
+    <PropertyGroup>
+        <NoWarn>SA0001;CS8981</NoWarn>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\.editorconfig" Link=".editorconfig" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />
-  </Target>
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />
+    </Target>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)'!='*Undefined*'">
-    <Exec Command="if not exist &quot;$(SolutionDir)nuget-debug\lib\$(TargetFramework)&quot; mkdir &quot;$(SolutionDir)nuget-debug\lib\$(TargetFramework)&quot;" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if not exist &quot;$(SolutionDir)nuget-debug\runtimes\win-x64\native&quot; mkdir &quot;$(SolutionDir)nuget-debug\runtimes\win-x64\native&quot;" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\x64\Debug\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\x64\Debug\mpfr.dll&quot; &quot;$(SolutionDir)nuget-debug\runtimes\win-x64\native\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\x64\Debug\mpfr.pdb&quot; copy &quot;$(SolutionDir)mpfr\dll\x64\Debug\mpfr.pdb&quot; &quot;$(SolutionDir)nuget-debug\runtimes\win-x64\native\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if exist &quot;$(SolutionDir)mpir\dll\x64\Debug\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\x64\Debug\mpir.dll&quot; &quot;$(SolutionDir)nuget-debug\runtimes\win-x64\native\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if exist &quot;$(SolutionDir)mpir\dll\x64\Debug\mpir.pdb&quot; copy &quot;$(SolutionDir)mpir\dll\x64\Debug\mpir.pdb&quot; &quot;$(SolutionDir)nuget-debug\runtimes\win-x64\native\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if exist &quot;$(TargetPath)&quot; copy &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)nuget-debug\lib\$(TargetFramework)\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if exist &quot;$(TargetPath)&quot; copy &quot;$(TargetDir)$(ProjectName).xml&quot; &quot;$(SolutionDir)nuget-debug\lib\$(TargetFramework)\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if exist &quot;$(TargetPath)&quot; copy &quot;$(TargetDir)$(ProjectName).pdb&quot; &quot;$(SolutionDir)nuget-debug\lib\$(TargetFramework)\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <Exec Command="if not exist &quot;$(SolutionDir)nuget\lib\$(TargetFramework)&quot; mkdir &quot;$(SolutionDir)nuget\lib\$(TargetFramework)&quot;" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <Exec Command="if not exist &quot;$(SolutionDir)nuget\runtimes\win-x64\native&quot; mkdir &quot;$(SolutionDir)nuget\runtimes\win-x64\native&quot;" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\x64\Release\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\x64\Release\mpfr.dll&quot; &quot;$(SolutionDir)nuget\runtimes\win-x64\native\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <Exec Command="if exist &quot;$(SolutionDir)mpir\dll\x64\Release\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\x64\Release\mpir.dll&quot; &quot;$(SolutionDir)nuget\runtimes\win-x64\native\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <Exec Command="if exist &quot;$(TargetPath)&quot; copy &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)nuget\lib\$(TargetFramework)\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <Exec Command="if exist &quot;$(TargetPath)&quot; copy &quot;$(TargetDir)$(ProjectName).xml&quot; &quot;$(SolutionDir)nuget\lib\$(TargetFramework)\&quot; &gt; nul" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-  </Target>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)'!='*Undefined*'">
+        <ItemGroup>
+            <None Remove="@(None)" />
+        </ItemGroup>
+        <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+            <None Include="$(TargetDir)$(ProjectName).dll" />
+            <None Include="$(TargetDir)$(ProjectName).pdb" />
+            <None Include="$(TargetDir)$(ProjectName).xml" />
+        </ItemGroup>
+        <Copy SourceFiles="@(None)" DestinationFolder="$(SolutionDir)nuget-debug\lib\$(TargetFramework)\" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+
+        <ItemGroup>
+            <None Remove="@(None)" />
+        </ItemGroup>
+        <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+            <None Include="$(SolutionDir)mpfr\dll\x64\Debug\mpfr.dll" />
+            <None Include="$(SolutionDir)mpfr\dll\x64\Debug\mpfr.pdb" />
+            <None Include="$(SolutionDir)mpir\dll\x64\Debug\mpir.dll" />
+            <None Include="$(SolutionDir)mpir\dll\x64\Debug\mpir.pdb" />
+        </ItemGroup>
+        <Copy SourceFiles="@(None)" DestinationFolder="$(SolutionDir)nuget-debug\runtimes\win-x64\native\" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+
+        <Copy SourceFiles="package-icon.png" DestinationFolder="$(SolutionDir)nuget-debug\" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+        <Copy SourceFiles="README-short.md" DestinationFolder="$(SolutionDir)nuget-debug\" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+
+        <ItemGroup>
+            <None Remove="@(None)" />
+        </ItemGroup>
+        <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+            <None Include="$(TargetDir)$(ProjectName).dll" />
+            <None Include="$(TargetDir)$(ProjectName).xml" />
+        </ItemGroup>
+        <Copy SourceFiles="@(None)" DestinationFolder="$(SolutionDir)nuget\lib\$(TargetFramework)\" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+
+        <ItemGroup>
+            <None Remove="@(None)" />
+        </ItemGroup>
+        <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+            <None Include="$(SolutionDir)mpfr\dll\x64\Release\mpfr.dll" />
+            <None Include="$(SolutionDir)mpir\dll\x64\Release\mpir.dll" />
+        </ItemGroup>
+        <Copy SourceFiles="@(None)" DestinationFolder="$(SolutionDir)nuget\runtimes\win-x64\native\" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+
+        <Copy SourceFiles="package-icon.png" DestinationFolder="$(SolutionDir)nuget\" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+        <Copy SourceFiles="README-short.md" DestinationFolder="$(SolutionDir)nuget\" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    </Target>
 
 </Project>

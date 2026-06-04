@@ -1,40 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net481</TargetFrameworks>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <LangVersion>14</LangVersion>
-    <Nullable>enable</Nullable>
-    <Platforms>x64</Platforms>
-    <IsPackable>false</IsPackable>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net481</TargetFrameworks>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+        <LangVersion>14</LangVersion>
+        <Nullable>enable</Nullable>
+        <Platforms>x64</Platforms>
+        <IsPackable>false</IsPackable>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\.editorconfig" Link=".editorconfig" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit.Analyzers" Version="3.6.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />    <PackageReference Include="coverlet.collector" Version="3.2.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+        <PackageReference Include="NUnit" Version="3.13.3" />
+        <PackageReference Include="NUnit.Analyzers" Version="3.6.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
+        <PackageReference Include="coverlet.collector" Version="3.2.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\MpfrDotNet\MpfrDotNet.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\MpfrDotNet\MpfrDotNet.csproj" />
+    </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />
-  </Target>
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />
+    </Target>
 
 </Project>
