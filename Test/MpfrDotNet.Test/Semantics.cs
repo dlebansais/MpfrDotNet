@@ -576,6 +576,37 @@ internal class Semantics
     }
 
     [Test]
+    public void TestFitsLongUsesSixtyFourBits()
+    {
+        // 3e9 does not fit in 32 bits, which is the size of a C long on Windows, but fits in a C# long.
+        const double ThreeBillion = 3e9;
+        const double TwoToThe63 = 9223372036854775808.0;
+        const double TwoToThe64 = 18446744073709551616.0;
+
+        using mpfr_t MpfrThreeBillion = new(ThreeBillion);
+        using mpfr_t MpfrTwoToThe63 = new(TwoToThe63);
+        using mpfr_t MpfrTwoToThe64 = new(TwoToThe64);
+        using mpf_t MpfThreeBillion = new(ThreeBillion);
+        using mpf_t MpfTwoToThe63 = new(TwoToThe63);
+        using mpf_t MpfTwoToThe64 = new(TwoToThe64);
+        using mpf_t MpfMinusOne = new(-1.0);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(MpfrThreeBillion.FitsSignedLong, Is.True);
+        Assert.That(MpfrThreeBillion.FitsUnsignedLong, Is.True);
+        Assert.That(MpfrTwoToThe63.FitsSignedLong, Is.False);
+        Assert.That(MpfrTwoToThe63.FitsUnsignedLong, Is.True);
+        Assert.That(MpfrTwoToThe64.FitsUnsignedLong, Is.False);
+        Assert.That(MpfThreeBillion.FitsSignedLong, Is.True);
+        Assert.That(MpfThreeBillion.FitsUnsignedLong, Is.True);
+        Assert.That(MpfTwoToThe63.FitsSignedLong, Is.False);
+        Assert.That(MpfTwoToThe63.FitsUnsignedLong, Is.True);
+        Assert.That(MpfTwoToThe64.FitsUnsignedLong, Is.False);
+        Assert.That(MpfMinusOne.FitsSignedLong, Is.True);
+        Assert.That(MpfMinusOne.FitsUnsignedLong, Is.False);
+    }
+
+    [Test]
     public void TestOrderingWithNull()
     {
         using mpz_t Integer = new(1);

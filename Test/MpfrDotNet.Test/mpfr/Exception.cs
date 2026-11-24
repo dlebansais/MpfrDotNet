@@ -19,10 +19,10 @@ public class Exception
         Assert.That(MinExponentNew, Is.EqualTo(MinExponentOld + 1));
 
         int MinMinExponent = mpfr_t.MinMinExponent;
-        Assert.That(MinMinExponent, Is.EqualTo(-1073741823));
+        Assert.That(MinMinExponent, Is.EqualTo(Sample.IsWindows ? -1073741823 : int.MinValue));
 
         int MaxMinExponent = mpfr_t.MaxMinExponent;
-        Assert.That(MaxMinExponent, Is.EqualTo(1073741823));
+        Assert.That(MaxMinExponent, Is.EqualTo(Sample.IsWindows ? 1073741823 : int.MaxValue));
 
         int MaxExponentOld = mpfr_t.MaxExponent;
         Assert.That(MaxExponentOld, Is.EqualTo(1073741823));
@@ -33,10 +33,10 @@ public class Exception
         Assert.That(MaxExponentNew, Is.EqualTo(MaxExponentOld - 1));
 
         int MinMaxExponent = mpfr_t.MinMaxExponent;
-        Assert.That(MinMaxExponent, Is.EqualTo(-1073741823));
+        Assert.That(MinMaxExponent, Is.EqualTo(Sample.IsWindows ? -1073741823 : int.MinValue));
 
         int MaxMaxExponent = mpfr_t.MaxMaxExponent;
-        Assert.That(MaxMaxExponent, Is.EqualTo(1073741823));
+        Assert.That(MaxMaxExponent, Is.EqualTo(Sample.IsWindows ? 1073741823 : int.MaxValue));
     }
 
     [Test]

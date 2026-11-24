@@ -136,7 +136,7 @@ public class Rounding
         using mpfr_t e = mpfr_t.FMod(a, b, out long Quotient);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("1.455904307763042498752955870300976687446E+15"));
-        Assert.That(Quotient, Is.EqualTo(1388647004));
+        Assert.That(Quotient, Is.EqualTo(Sample.IsWindows ? 1388647004L : 9978581596L));
 
         using mpfr_t f = mpfr_t.Remainder(a, b);
         AsString = f.ToString();
@@ -145,7 +145,7 @@ public class Rounding
         using mpfr_t g = mpfr_t.Remainder(a, b, out Quotient);
         AsString = g.ToString();
         Assert.That(AsString, Is.EqualTo("-7.739700521167848071899298699978220579464E+14"));
-        Assert.That(Quotient, Is.EqualTo(1388647005));
+        Assert.That(Quotient, Is.EqualTo(Sample.IsWindows ? 1388647005L : 9978581597L));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

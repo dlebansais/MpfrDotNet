@@ -112,7 +112,7 @@ public class Misc
         using mpfr_t x = new(0);
 
         Assert.That(x.MinPrecision, Is.EqualTo(1));
-        Assert.That(x.MaxPrecision, Is.EqualTo(0x7FFFFEFF));
+        Assert.That(x.MaxPrecision, Is.EqualTo(Sample.IsWindows ? 0x7FFFFEFFUL : 0x7FFFFFFFFFFFFEFFUL));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

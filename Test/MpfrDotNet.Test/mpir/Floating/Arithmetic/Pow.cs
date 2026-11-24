@@ -20,6 +20,6 @@ public class Pow
         using mpf_t c = a.Pow(b);
 
         AsString = c.ToString();
-        Assert.That(AsString, Is.EqualTo("8.20501550859436020769E+2255"));
+        Assert.That(AsString, Is.EqualTo(Test.Sample.IsWindows ? "8.20501550859436020769E+2255" : "8.20501550859436020771E+2255"));
     }
 }

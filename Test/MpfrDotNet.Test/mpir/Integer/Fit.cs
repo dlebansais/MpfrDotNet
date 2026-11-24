@@ -15,9 +15,12 @@ public class Fit
         string AsString;
         bool IsFitting;
 
-        using mpz_t a = new("FFFFFFFF", 16);
+        // The largest C unsigned long: 32-bit on Windows, 64-bit on Linux.
+        string MaxValue = Test.Sample.IsWindows ? "FFFFFFFF" : "FFFFFFFFFFFFFFFF";
+
+        using mpz_t a = new(MaxValue, 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.That(AsString, Is.EqualTo("FFFFFFFF"));
+        Assert.That(AsString, Is.EqualTo(MaxValue));
 
         IsFitting = mpz.fits_ulong_p(a);
         Assert.That(IsFitting, Is.True);
@@ -34,9 +37,12 @@ public class Fit
         string AsString;
         bool IsFitting;
 
-        using mpz_t a = new("7FFFFFFF", 16);
+        // The largest C long: 32-bit on Windows, 64-bit on Linux.
+        string MaxValue = Test.Sample.IsWindows ? "7FFFFFFF" : "7FFFFFFFFFFFFFFF";
+
+        using mpz_t a = new(MaxValue, 16);
         AsString = a.ToString(16).ToUpper();
-        Assert.That(AsString, Is.EqualTo("7FFFFFFF"));
+        Assert.That(AsString, Is.EqualTo(MaxValue));
 
         IsFitting = mpz.fits_slong_p(a);
         Assert.That(IsFitting, Is.True);
