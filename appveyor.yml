@@ -13,7 +13,9 @@ skip_tags: true
 skip_commits:
   message: "*[skip ci]*"
 
-image: Visual Studio 2026
+image:
+  - Visual Studio 2026
+  - Ubuntu2404
 
 # scripts that are called at very beginning, before repo cloning
 init:
@@ -29,6 +31,31 @@ environment:
 
 matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
+
+# On Linux, the library uses the system GMP and MPFR libraries, and only the net10.0 target is built and tested.
+# Packaging, the coverage upload and deployment stay on Windows. Each section below replaces the global one.
+for:
+  - matrix:
+      only:
+        - image: Ubuntu2404
+    install:
+      - sudo apt-get update
+      - sudo apt-get install -y libgmp10 libmpfr6
+      # Install the .NET 10 SDK if the image does not provide it.
+      - dotnet --list-sdks | grep -q '^10\.' || (curl -sSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir "$HOME/.dotnet")
+      - export PATH="$HOME/.dotnet:$PATH"
+      - dotnet --list-sdks
+    before_build:
+      - dotnet restore ./Test/$APPVEYOR_PROJECT_NAME.Test/$APPVEYOR_PROJECT_NAME.Test.csproj -p:Platform=x64
+    build_script:
+      - dotnet build ./Test/$APPVEYOR_PROJECT_NAME.Test/$APPVEYOR_PROJECT_NAME.Test.csproj -c $CONFIGURATION -p:Platform=x64 --no-restore
+    after_build:
+      - echo Packaging is done on Windows.
+    test_script:
+      - dotnet test --project ./Test/$APPVEYOR_PROJECT_NAME.Test/$APPVEYOR_PROJECT_NAME.Test.csproj -c $CONFIGURATION -p:Platform=x64 -f net10.0 --no-build --output detailed
+    after_test:
+      - echo Coverage is uploaded from Windows.
+    deploy: off
 
 before_build:
   - nuget restore %APPVEYOR_PROJECT_NAME%.slnx
