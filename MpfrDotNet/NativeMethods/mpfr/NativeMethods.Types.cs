@@ -10,9 +10,9 @@ internal static partial class NativeMethods
     [StructLayout(LayoutKind.Sequential)]
     public struct __mpfr_t
     {
-        public int Precision;
+        public CLong Precision;
         public int Sign;
-        public int Exponent;
+        public CLong Exponent;
         public IntPtr Limbs;
     }
 

@@ -28,7 +28,7 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int log_ui(mpfr_t rop, uint op, mpfr_rnd_t rnd)
     {
-        return mpfr_log_ui(ref rop.Value, op, (__mpfr_rnd_t)rnd);
+        return mpfr_log_ui(ref rop.Value, ToCULong(op), (__mpfr_rnd_t)rnd);
     }
 
     /// <summary>

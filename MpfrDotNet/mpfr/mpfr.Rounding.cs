@@ -182,8 +182,8 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int fmodquo(mpfr_t r, out long q, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
     {
-        int Result = mpfr_fmodquo(ref r.Value, out int NativeQuotient, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
-        q = NativeQuotient;
+        int Result = mpfr_fmodquo(ref r.Value, out CLong NativeQuotient, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        q = NativeQuotient.Value;
 
         return Result;
     }
@@ -210,8 +210,8 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int remquo(mpfr_t r, out long q, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
     {
-        int Result = mpfr_remquo(ref r.Value, out int NativeQuotient, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
-        q = NativeQuotient;
+        int Result = mpfr_remquo(ref r.Value, out CLong NativeQuotient, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        q = NativeQuotient.Value;
 
         return Result;
     }
@@ -256,7 +256,7 @@ public static partial class mpfr
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static bool can_round(mpfr_t b, int err, mpfr_rnd_t rnd1, mpfr_rnd_t rnd2, ulong prec)
     {
-        return mpfr_can_round(ref b.Value, err, (__mpfr_rnd_t)rnd1, (__mpfr_rnd_t)rnd2, ToNativePrecision(prec, nameof(prec))) != 0;
+        return mpfr_can_round(ref b.Value, ToCLong(err), (__mpfr_rnd_t)rnd1, (__mpfr_rnd_t)rnd2, ToNativePrecision(prec, nameof(prec))) != 0;
     }
 
     /// <summary>
@@ -265,7 +265,7 @@ public static partial class mpfr
     /// <param name="x">The operand.</param>
     public static int min_prec(mpfr_t x)
     {
-        return mpfr_min_prec(ref x.Value);
+        return ToClampedInt(mpfr_min_prec(ref x.Value));
     }
 
     /// <summary>

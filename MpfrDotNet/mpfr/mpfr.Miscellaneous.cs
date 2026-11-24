@@ -138,7 +138,7 @@ public static partial class mpfr
     /// <param name="x">The operand.</param>
     public static int get_exp(mpfr_t x)
     {
-        return mpfr_get_exp(ref x.Value);
+        return ToClampedInt(mpfr_get_exp(ref x.Value));
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ public static partial class mpfr
     /// <param name="e">The exponent.</param>
     public static int set_exp(mpfr_t x, int e)
     {
-        return mpfr_set_exp(ref x.Value, e);
+        return mpfr_set_exp(ref x.Value, ToCLong(e));
     }
 
     /// <summary>

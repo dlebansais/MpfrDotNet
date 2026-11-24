@@ -1,6 +1,7 @@
 ﻿namespace MpirDotNet;
 
 using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using Interop.Mpir;
 
@@ -263,8 +264,8 @@ public static class mpf
     /// <param name="exp">The exponent.</param>
     public static void get_d_2exp(mpf_t op, out double d, out long exp)
     {
-        d = NativeMethods.mpf_get_d_2exp(out int NativeExponent, ref op.Value);
-        exp = NativeExponent;
+        d = NativeMethods.mpf_get_d_2exp(out CLong NativeExponent, ref op.Value);
+        exp = NativeExponent.Value;
     }
 
     /// <summary>
@@ -295,8 +296,8 @@ public static class mpf
     /// <param name="op">The operand.</param>
     public static void get_str(StringBuilder str, out int expptr, int strBase, ulong n_digits, mpf_t op)
     {
-        NativeMethods.mpf_get_str(str, out NativeMethods.mp_exp_t expstr, strBase, (NativeMethods.size_t)n_digits, ref op.Value);
-        expptr = (int)expstr;
+        NativeMethods.mpf_get_str(str, out CLong NativeExponent, strBase, (NativeMethods.size_t)n_digits, ref op.Value);
+        expptr = (int)NativeExponent.Value;
     }
     #endregion
 
@@ -384,8 +385,11 @@ public static class mpf
     /// <param name="rop">The result operand.</param>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="op2"/> is zero.</exception>
     public static void div(mpf_t rop, mpf_t op1, mpf_t op2)
     {
+        MpirArgument.CheckDivisor(op2);
+
         NativeMethods.mpf_div(ref rop.Value, ref op1.Value, ref op2.Value);
     }
 
@@ -395,8 +399,11 @@ public static class mpf
     /// <param name="rop">The result operand.</param>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="op2"/> is zero.</exception>
     public static void ui_div(mpf_t rop, ulong op1, mpf_t op2)
     {
+        MpirArgument.CheckDivisor(op2);
+
         NativeMethods.mpf_ui_div(ref rop.Value, (NativeMethods.mpir_ui)op1, ref op2.Value);
     }
 
@@ -406,8 +413,11 @@ public static class mpf
     /// <param name="rop">The result operand.</param>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="op2"/> is zero.</exception>
     public static void div_ui(mpf_t rop, mpf_t op1, ulong op2)
     {
+        MpirArgument.CheckDivisor(op2);
+
         NativeMethods.mpf_div_ui(ref rop.Value, ref op1.Value, (NativeMethods.mpir_ui)op2);
     }
 
@@ -416,8 +426,11 @@ public static class mpf
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="op"/> is negative.</exception>
     public static void sqrt(mpf_t rop, mpf_t op)
     {
+        MpirArgument.CheckNotNegative(op, nameof(op));
+
         NativeMethods.mpf_sqrt(ref rop.Value, ref op.Value);
     }
 
@@ -677,12 +690,15 @@ public static class mpf
     /// <param name="max_size">The max size.</param>
     /// <param name="exp">The exponent.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
+    /// <exception cref="PlatformNotSupportedException">The process does not run on Windows: this function exists in MPIR but not in GMP.</exception>
     public static void rrandomb(mpf_t rop, randstate_t state, ulong max_size, int exp)
     {
         state.ThrowIfDisposed();
 
-        NativeMethods.mp_exp_t e = (NativeMethods.mp_exp_t)exp;
-        NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.size_t)max_size, e);
+        if (!NativeMethods.IsMpir)
+            throw new PlatformNotSupportedException("mpf_rrandomb is only available with MPIR, on Windows.");
+
+        NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.size_t)max_size, new CLong(exp));
     }
     #endregion
 }

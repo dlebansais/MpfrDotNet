@@ -80,7 +80,7 @@ public static partial class mpfr
     /// </summary>
     public static ulong get_default_prec()
     {
-        return (ulong)mpfr_get_default_prec();
+        return (ulong)mpfr_get_default_prec().Value;
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public static partial class mpfr
     /// <param name="x">The value.</param>
     public static ulong get_prec(mpfr_t x)
     {
-        return (ulong)mpfr_get_prec(ref x.Value);
+        return (ulong)mpfr_get_prec(ref x.Value).Value;
     }
 
     /// <summary>

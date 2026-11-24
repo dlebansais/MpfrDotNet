@@ -1,33 +1,15 @@
 ﻿namespace Interop.Mpfr;
 
 using System;
-using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 #pragma warning disable SA1601 // Partial elements should be documented
 #pragma warning disable SA1600 // Elements should be documented
 internal static partial class NativeMethods
 {
-#if NET7_0_OR_GREATER
-    [LibraryImport("kernel32", EntryPoint = "LoadLibraryW", StringMarshalling = StringMarshalling.Utf16)]
-    private static partial IntPtr LoadLibrary(string libraryName);
-#else
-    [DllImport("kernel32", CharSet = CharSet.Unicode)]
-    private static extern IntPtr LoadLibrary(string libraryName);
-#endif
-
-    [DllImport("kernel32", CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-    private static extern IntPtr GetProcAddress(IntPtr hwnd, [MarshalAs(UnmanagedType.LPStr)] string procedureName);
-
     internal static IntPtr GetMpfrPointer(string name)
     {
-        LoadLibrary("mpir.dll", ref hMpirLib);
-
-        if (LoadLibrary("mpfr.dll", ref hMpfrLib))
-            InitializePrecision();
-
-        IntPtr Result = GetProcAddress(hMpfrLib, name);
+        IntPtr Result = NativeLibraryLoader.GetExport(GetMpfrLibrary(), name);
 
         if (Result == IntPtr.Zero)
             throw new ArgumentException($"Method '{name}' not found", nameof(name));
@@ -35,41 +17,24 @@ internal static partial class NativeMethods
         return Result;
     }
 
-    internal static bool LoadLibrary(string libraryName, ref IntPtr hLib)
+    internal static IntPtr GetMpfrLibrary()
     {
-        if (hLib == IntPtr.Zero)
+        if (hMpfrLib == IntPtr.Zero)
         {
-            Assembly Current = Assembly.GetExecutingAssembly();
-            string Location = Current.Location;
+            // MPFR depends on GMP (MPIR on Windows), which is loaded first so that the system finds it.
+            _ = Interop.Mpir.NativeMethods.GetMpirLibrary();
 
-            // Location is empty when the assembly is loaded from memory or bundled in a single-file application.
-            string? AssemblyDirectory = Location.Length > 0 ? Path.GetDirectoryName(Location) : null;
-            string DirectoryName = AssemblyDirectory ?? AppContext.BaseDirectory;
-            string LibraryLocation = Path.Combine(DirectoryName, libraryName);
-
-            hLib = LoadLibrary(LibraryLocation);
-
-            if (hLib == IntPtr.Zero)
-                hLib = LoadLibrary(Path.Combine(DirectoryName, @"runtimes\win-x64\native", libraryName));
-
-            if (hLib == IntPtr.Zero)
-                hLib = LoadLibrary(libraryName);
-
-            if (hLib == IntPtr.Zero)
-                throw new ArgumentException($"File {LibraryLocation} not found or not loaded");
-
-            return true;
+            hMpfrLib = NativeLibraryLoader.Load("mpfr.dll", "libmpfr.so.6", "libmpfr.so");
+            InitializePrecision();
         }
 
-        return false;
+        return hMpfrLib;
     }
 
     internal delegate void DymmyDelegate();
     internal static DymmyDelegate DummyPointer { get => Marshal.GetDelegateForFunctionPointer<DymmyDelegate>(GetMpfrPointer(string.Empty)); }
 
-    private static IntPtr hMpirLib = IntPtr.Zero;
-    private static IntPtr hMpfrLib = IntPtr.Zero;
+    private static IntPtr hMpfrLib;
 }
 #pragma warning restore SA1601 // Partial elements should be documented
 #pragma warning restore SA1600 // Elements should be documented
-

@@ -2,6 +2,7 @@
 
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using MpfrDotNet;
 using NUnit.Framework;
 
@@ -17,6 +18,14 @@ public class Misc
         Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         AsString = mpfr.get_version();
+
+        // Elsewhere than on Windows, MPFR is the system library, with its own version and build options.
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            Assert.That(AsString, Does.StartWith("4."));
+            return;
+        }
+
         Assert.That(AsString, Is.EqualTo("4.2.1-dev"));
 
         AsString = mpfr.get_patches();

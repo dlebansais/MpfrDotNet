@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net481;net10.0-windows7.0</TargetFrameworks>
+        <!-- The targets older than .NET 6 only run on Windows, where a C long is 32-bit. -->
+        <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netstandard2.0;netstandard2.1;netcoreapp3.1;net481;net10.0</TargetFrameworks>
+        <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">net10.0</TargetFrameworks>
         <LangVersion>14</LangVersion>
         <Nullable>enable</Nullable>
         <Platforms>x64</Platforms>
@@ -48,11 +50,11 @@
         </PackageReference>
     </ItemGroup>
 
-    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
         <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />
     </Target>
 
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)'!='*Undefined*'">
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)'!='*Undefined*' And '$(OS)' == 'Windows_NT'">
         <ItemGroup>
             <None Remove="@(None)" />
         </ItemGroup>

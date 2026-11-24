@@ -13,11 +13,14 @@ internal class NativeTypes
     [Test]
     public void TestStructLayout()
     {
+        // mpfr_prec_t and mpfr_exp_t are a C long: 32-bit on Windows, 64-bit on Linux.
+        int ExpectedSize = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? 24 : 32;
+
         using mpfr_t x = mpfr_t.Create(precision: 100);
 
         using IDisposable Scope = Assert.EnterMultipleScope();
-        Assert.That(Marshal.SizeOf<__mpfr_t>(), Is.EqualTo(24));
-        Assert.That(x.Value.Precision, Is.EqualTo(100));
+        Assert.That(Marshal.SizeOf<__mpfr_t>(), Is.EqualTo(ExpectedSize));
+        Assert.That((long)x.Value.Precision.Value, Is.EqualTo(100L));
     }
 
     [Test]
@@ -85,7 +88,7 @@ internal class NativeTypes
     }
 
     [TestCase(0UL)]
-    [TestCase((1UL << 32) + 53)]
+    [TestCase((ulong)long.MaxValue)]
     public void TestPrecisionOutOfRange(ulong precision)
     {
         using mpfr_t x = new();

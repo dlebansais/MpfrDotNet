@@ -206,8 +206,11 @@ public static class mpq
     /// <param name="rop">The result operand.</param>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="op2"/> is zero.</exception>
     public static void div(mpq_t rop, mpq_t op1, mpq_t op2)
     {
+        MpirArgument.CheckDivisor(op2);
+
         NativeMethods.mpq_div(ref rop.Value, ref op1.Value, ref op2.Value);
     }
 
@@ -247,8 +250,11 @@ public static class mpq
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="op"/> is zero.</exception>
     public static void inv(mpq_t rop, mpq_t op)
     {
+        MpirArgument.CheckDivisor(op);
+
         NativeMethods.mpq_inv(ref rop.Value, ref op.Value);
     }
     #endregion
@@ -361,8 +367,11 @@ public static class mpq
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="rational">The value.</param>
+    /// <exception cref="DivideByZeroException">The denominator of <paramref name="rational"/> is zero.</exception>
     public static void canonicalize(mpq_t rational)
     {
+        MpirArgument.CheckDenominator(rational);
+
         NativeMethods.mpq_canonicalize(ref rational.Value);
     }
     #endregion

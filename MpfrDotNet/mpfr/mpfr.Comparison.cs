@@ -86,7 +86,7 @@ public static partial class mpfr
     /// <param name="e">The exponent.</param>
     public static int cmp_ui_2exp(mpfr_t op1, ulong op2, int e)
     {
-        return mpfr_cmp_ui_2exp(ref op1.Value, op2, e);
+        return mpfr_cmp_ui_2exp(ref op1.Value, op2, ToCLong(e));
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public static partial class mpfr
     /// <param name="e">The exponent.</param>
     public static int cmp_si_2exp(mpfr_t op1, long op2, int e)
     {
-        return mpfr_cmp_si_2exp(ref op1.Value, op2, e);
+        return mpfr_cmp_si_2exp(ref op1.Value, op2, ToCLong(e));
     }
 
     /// <summary>
@@ -252,7 +252,7 @@ public static partial class mpfr
     /// <param name="op3">The third operand.</param>
     public static bool eq(mpfr_t op1, mpfr_t op2, uint op3)
     {
-        return mpfr_eq(ref op1.Value, ref op2.Value, op3) != 0;
+        return mpfr_eq(ref op1.Value, ref op2.Value, ToCULong(op3)) != 0;
     }
 
     /// <summary>

@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net481;net10.0-windows</TargetFrameworks>
+        <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net481;net10.0</TargetFrameworks>
+        <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">net10.0</TargetFrameworks>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
         <LangVersion>14</LangVersion>
@@ -44,7 +45,7 @@
         <NativeRoot>$(MSBuildThisFileDirectory)..\..\</NativeRoot>
     </PropertyGroup>
 
-    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
         <Exec Command="if exist &quot;$(NativeRoot)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(NativeRoot)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(NativeRoot)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(NativeRoot)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />
     </Target>
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using Interop.Mpir;
 
@@ -106,7 +107,11 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static void set_ux(mpz_t rop, ulong op)
     {
-        NativeMethods.mpz_set_ux(ref rop.Value, (NativeMethods.uintmax_t)op);
+        // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
+        if (NativeMethods.IsMpir)
+            NativeMethods.mpz_set_ux(ref rop.Value, (NativeMethods.uintmax_t)op);
+        else
+            NativeMethods.mpz_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
     }
 
     /// <summary>
@@ -116,7 +121,11 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static void set_sx(mpz_t rop, long op)
     {
-        NativeMethods.mpz_set_sx(ref rop.Value, (NativeMethods.intmax_t)op);
+        // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
+        if (NativeMethods.IsMpir)
+            NativeMethods.mpz_set_sx(ref rop.Value, (NativeMethods.intmax_t)op);
+        else
+            NativeMethods.mpz_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
     }
 
     /// <summary>
@@ -212,7 +221,11 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static void init_set_ux(mpz_t rop, ulong op)
     {
-        NativeMethods.mpz_init_set_ux(ref rop.Value, (NativeMethods.uintmax_t)op);
+        // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
+        if (NativeMethods.IsMpir)
+            NativeMethods.mpz_init_set_ux(ref rop.Value, (NativeMethods.uintmax_t)op);
+        else
+            NativeMethods.mpz_init_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
     }
 
     /// <summary>
@@ -222,7 +235,11 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static void init_set_sx(mpz_t rop, long op)
     {
-        NativeMethods.mpz_init_set_sx(ref rop.Value, (NativeMethods.intmax_t)op);
+        // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
+        if (NativeMethods.IsMpir)
+            NativeMethods.mpz_init_set_sx(ref rop.Value, (NativeMethods.intmax_t)op);
+        else
+            NativeMethods.mpz_init_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
     }
 
     /// <summary>
@@ -264,7 +281,8 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static ulong get_ux(mpz_t op)
     {
-        return (ulong)NativeMethods.mpz_get_ux(ref op.Value);
+        // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
+        return NativeMethods.IsMpir ? (ulong)NativeMethods.mpz_get_ux(ref op.Value) : (ulong)NativeMethods.mpz_get_ui(ref op.Value);
     }
 
     /// <summary>
@@ -273,7 +291,8 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static long get_sx(mpz_t op)
     {
-        return (long)NativeMethods.mpz_get_sx(ref op.Value);
+        // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
+        return NativeMethods.IsMpir ? (long)NativeMethods.mpz_get_sx(ref op.Value) : (long)NativeMethods.mpz_get_si(ref op.Value);
     }
 
     /// <summary>
@@ -293,8 +312,8 @@ public static class mpz
     /// <param name="exp">The exponent.</param>
     public static void get_d_2exp(mpz_t op, out double d, out long exp)
     {
-        d = NativeMethods.mpz_get_d_2exp(out int NativeExponent, ref op.Value);
-        exp = NativeExponent;
+        d = NativeMethods.mpz_get_d_2exp(out CLong NativeExponent, ref op.Value);
+        exp = NativeExponent.Value;
     }
 
     /// <summary>
@@ -481,8 +500,11 @@ public static class mpz
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void cdiv_q(mpz_t q, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_cdiv_q(ref q.Value, ref n.Value, ref d.Value);
     }
 
@@ -492,8 +514,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void cdiv_r(mpz_t r, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_cdiv_r(ref r.Value, ref n.Value, ref d.Value);
     }
 
@@ -504,8 +529,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void cdiv_qr(mpz_t q, mpz_t r, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_cdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
     }
 
@@ -515,8 +543,11 @@ public static class mpz
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong cdiv_q_ui(mpz_t q, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_cdiv_q_ui(ref q.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -526,8 +557,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong cdiv_r_ui(mpz_t r, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_cdiv_r_ui(ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -538,8 +572,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong cdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_cdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -548,8 +585,11 @@ public static class mpz
     /// </summary>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong cdiv_ui(mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_cdiv_ui(ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -581,8 +621,11 @@ public static class mpz
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void fdiv_q(mpz_t q, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_fdiv_q(ref q.Value, ref n.Value, ref d.Value);
     }
 
@@ -592,8 +635,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void fdiv_r(mpz_t r, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_fdiv_r(ref r.Value, ref n.Value, ref d.Value);
     }
 
@@ -604,8 +650,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void fdiv_qr(mpz_t q, mpz_t r, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_fdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
     }
 
@@ -615,8 +664,11 @@ public static class mpz
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong fdiv_q_ui(mpz_t q, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_fdiv_q_ui(ref q.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -626,8 +678,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong fdiv_r_ui(mpz_t r, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_fdiv_r_ui(ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -638,8 +693,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong fdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_fdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -648,8 +706,11 @@ public static class mpz
     /// </summary>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong fdiv_ui(mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_fdiv_ui(ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -681,8 +742,11 @@ public static class mpz
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void tdiv_q(mpz_t q, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_tdiv_q(ref q.Value, ref n.Value, ref d.Value);
     }
 
@@ -692,8 +756,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void tdiv_r(mpz_t r, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_tdiv_r(ref r.Value, ref n.Value, ref d.Value);
     }
 
@@ -704,8 +771,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void tdiv_qr(mpz_t q, mpz_t r, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_tdiv_qr(ref q.Value, ref r.Value, ref n.Value, ref d.Value);
     }
 
@@ -715,8 +785,11 @@ public static class mpz
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong tdiv_q_ui(mpz_t q, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_tdiv_q_ui(ref q.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -726,8 +799,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong tdiv_r_ui(mpz_t r, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_tdiv_r_ui(ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -738,8 +814,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong tdiv_qr_ui(mpz_t q, mpz_t r, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_tdiv_qr_ui(ref q.Value, ref r.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -748,8 +827,11 @@ public static class mpz
     /// </summary>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static ulong tdiv_ui(mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         return (ulong)NativeMethods.mpz_tdiv_ui(ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -781,8 +863,11 @@ public static class mpz
     /// <param name="r">The r.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void mod(mpz_t r, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_mod(ref r.Value, ref n.Value, ref d.Value);
     }
 
@@ -792,8 +877,11 @@ public static class mpz
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void divexact(mpz_t q, mpz_t n, mpz_t d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_divexact(ref q.Value, ref n.Value, ref d.Value);
     }
 
@@ -803,8 +891,11 @@ public static class mpz
     /// <param name="q">The q.</param>
     /// <param name="n">The n.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="d"/> is zero.</exception>
     public static void divexact_ui(mpz_t q, mpz_t n, ulong d)
     {
+        MpirArgument.CheckDivisor(d);
+
         NativeMethods.mpz_divexact_ui(ref q.Value, ref n.Value, (NativeMethods.mpir_ui)d);
     }
 
@@ -880,8 +971,12 @@ public static class mpz
     /// <param name="opBase">The operand base.</param>
     /// <param name="exp">The exponent.</param>
     /// <param name="mod">The mod.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="mod"/> is zero.</exception>
+    /// <exception cref="ArithmeticException"><paramref name="exp"/> is negative and <paramref name="opBase"/> has no inverse modulo <paramref name="mod"/>.</exception>
     public static void powm(mpz_t rop, mpz_t opBase, mpz_t exp, mpz_t mod)
     {
+        MpirArgument.CheckModularPower(opBase, exp, mod);
+
         NativeMethods.mpz_powm(ref rop.Value, ref opBase.Value, ref exp.Value, ref mod.Value);
     }
 
@@ -892,8 +987,11 @@ public static class mpz
     /// <param name="opBase">The operand base.</param>
     /// <param name="exp">The exponent.</param>
     /// <param name="mod">The mod.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="mod"/> is zero.</exception>
     public static void powm_ui(mpz_t rop, mpz_t opBase, ulong exp, mpz_t mod)
     {
+        MpirArgument.CheckDivisor(mod);
+
         NativeMethods.mpz_powm_ui(ref rop.Value, ref opBase.Value, (NativeMethods.mpir_ui)exp, ref mod.Value);
     }
 
@@ -927,8 +1025,11 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
     /// <param name="n">The n.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="n"/> is zero, or <paramref name="n"/> is even and <paramref name="op"/> is negative.</exception>
     public static bool root(mpz_t rop, mpz_t op, ulong n)
     {
+        MpirArgument.CheckRoot(op, n, nameof(op), nameof(n));
+
         return NativeMethods.mpz_root(ref rop.Value, ref op.Value, (NativeMethods.mpir_ui)n) != 0;
     }
 
@@ -938,9 +1039,16 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
     /// <param name="n">The n.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="n"/> is zero, or <paramref name="n"/> is even and <paramref name="op"/> is negative.</exception>
     public static void nthroot(mpz_t rop, mpz_t op, ulong n)
     {
-        NativeMethods.mpz_nthroot(ref rop.Value, ref op.Value, (NativeMethods.mpir_ui)n);
+        MpirArgument.CheckRoot(op, n, nameof(op), nameof(n));
+
+        // GMP has no mpz_nthroot: mpz_root computes the same truncated root.
+        if (NativeMethods.IsMpir)
+            NativeMethods.mpz_nthroot(ref rop.Value, ref op.Value, (NativeMethods.mpir_ui)n);
+        else
+            _ = NativeMethods.mpz_root(ref rop.Value, ref op.Value, (NativeMethods.mpir_ui)n);
     }
 
     /// <summary>
@@ -950,8 +1058,11 @@ public static class mpz
     /// <param name="rem">The remainder.</param>
     /// <param name="u">The u.</param>
     /// <param name="n">The n.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="n"/> is zero, or <paramref name="n"/> is even and <paramref name="u"/> is negative.</exception>
     public static void rootrem(mpz_t root, mpz_t rem, mpz_t u, ulong n)
     {
+        MpirArgument.CheckRoot(u, n, nameof(u), nameof(n));
+
         NativeMethods.mpz_rootrem(ref root.Value, ref rem.Value, ref u.Value, (NativeMethods.mpir_ui)n);
     }
 
@@ -960,8 +1071,11 @@ public static class mpz
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="op"/> is negative.</exception>
     public static void sqrt(mpz_t rop, mpz_t op)
     {
+        MpirArgument.CheckNotNegative(op, nameof(op));
+
         NativeMethods.mpz_sqrt(ref rop.Value, ref op.Value);
     }
 
@@ -971,8 +1085,11 @@ public static class mpz
     /// <param name="rop1">The first result operand.</param>
     /// <param name="rop2">The second result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="op"/> is negative.</exception>
     public static void sqrtrem(mpz_t rop1, mpz_t rop2, mpz_t op)
     {
+        MpirArgument.CheckNotNegative(op, nameof(op));
+
         NativeMethods.mpz_sqrtrem(ref rop1.Value, ref rop2.Value, ref op.Value);
     }
 
@@ -1008,7 +1125,12 @@ public static class mpz
     {
         state.ThrowIfDisposed();
 
-        return NativeMethods.mpz_probable_prime_p(ref n.Value, ref state.Value, prob, (NativeMethods.mpir_ui)div) != 0;
+        // GMP has no mpz_probable_prime_p. Each Miller-Rabin round of mpz_probab_prime_p errs with a probability of at most 1/4,
+        // so prob / 2 rounds bound the error by 2^-prob.
+        if (NativeMethods.IsMpir)
+            return NativeMethods.mpz_probable_prime_p(ref n.Value, ref state.Value, prob, (NativeMethods.mpir_ui)div) != 0;
+        else
+            return NativeMethods.mpz_probab_prime_p(ref n.Value, Math.Max(1, (prob + 1) / 2)) != 0;
     }
 
     /// <summary>
@@ -1022,7 +1144,11 @@ public static class mpz
     {
         state.ThrowIfDisposed();
 
-        return NativeMethods.mpz_likely_prime_p(ref n.Value, ref state.Value, (NativeMethods.mpir_ui)div) != 0;
+        // GMP has no mpz_likely_prime_p: 25 rounds is the usual choice for mpz_probab_prime_p.
+        if (NativeMethods.IsMpir)
+            return NativeMethods.mpz_likely_prime_p(ref n.Value, ref state.Value, (NativeMethods.mpir_ui)div) != 0;
+        else
+            return NativeMethods.mpz_probab_prime_p(ref n.Value, 25) != 0;
     }
 
     /// <summary>
@@ -1036,7 +1162,11 @@ public static class mpz
     {
         state.ThrowIfDisposed();
 
-        NativeMethods.mpz_next_prime_candidate(ref rop.Value, ref op.Value, ref state.Value);
+        // GMP has no mpz_next_prime_candidate: mpz_nextprime returns the next probable prime, which is also a candidate.
+        if (NativeMethods.IsMpir)
+            NativeMethods.mpz_next_prime_candidate(ref rop.Value, ref op.Value, ref state.Value);
+        else
+            NativeMethods.mpz_nextprime(ref rop.Value, ref op.Value);
     }
 
     /// <summary>
@@ -1102,8 +1232,11 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="op2"/> is zero.</exception>
     public static bool invert(mpz_t rop, mpz_t op1, mpz_t op2)
     {
+        MpirArgument.CheckDivisor(op2);
+
         return NativeMethods.mpz_invert(ref rop.Value, ref op1.Value, ref op2.Value) != 0;
     }
 
@@ -1183,8 +1316,11 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
     /// <param name="f">The f.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="f"/> is zero.</exception>
     public static ulong remove(mpz_t rop, mpz_t op, mpz_t f)
     {
+        MpirArgument.CheckDivisor(f);
+
         return (ulong)NativeMethods.mpz_remove(ref rop.Value, ref op.Value, ref f.Value);
     }
 

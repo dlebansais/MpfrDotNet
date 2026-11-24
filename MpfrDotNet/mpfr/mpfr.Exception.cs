@@ -12,7 +12,7 @@ public static partial class mpfr
     /// </summary>
     public static int get_emin()
     {
-        return mpfr_get_emin();
+        return ToClampedInt(mpfr_get_emin());
     }
 
     /// <summary>
@@ -20,7 +20,7 @@ public static partial class mpfr
     /// </summary>
     public static int get_emax()
     {
-        return mpfr_get_emax();
+        return ToClampedInt(mpfr_get_emax());
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public static partial class mpfr
     /// <param name="exp">The exponent.</param>
     public static int set_emin(int exp)
     {
-        return mpfr_set_emin(exp);
+        return mpfr_set_emin(ToCLong(exp));
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public static partial class mpfr
     /// <param name="exp">The exponent.</param>
     public static int set_emax(int exp)
     {
-        return mpfr_set_emax(exp);
+        return mpfr_set_emax(ToCLong(exp));
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public static partial class mpfr
     /// </summary>
     public static int get_emin_min()
     {
-        return mpfr_get_emin_min();
+        return ToClampedInt(mpfr_get_emin_min());
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public static partial class mpfr
     /// </summary>
     public static int get_emin_max()
     {
-        return mpfr_get_emin_max();
+        return ToClampedInt(mpfr_get_emin_max());
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public static partial class mpfr
     /// </summary>
     public static int get_emax_min()
     {
-        return mpfr_get_emax_min();
+        return ToClampedInt(mpfr_get_emax_min());
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public static partial class mpfr
     /// </summary>
     public static int get_emax_max()
     {
-        return mpfr_get_emax_max();
+        return ToClampedInt(mpfr_get_emax_max());
     }
 
     /// <summary>

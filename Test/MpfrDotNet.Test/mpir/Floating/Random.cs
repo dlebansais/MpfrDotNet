@@ -1,5 +1,7 @@
 namespace TestFloating;
 
+using System;
+using System.Runtime.InteropServices;
 using MpirDotNet;
 using NUnit.Framework;
 
@@ -32,6 +34,13 @@ public class Random
 
         ulong n = 60;
         int exp = 10;
+
+        // mpf_rrandomb exists in MPIR, used on Windows, but not in GMP.
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            Assert.That(() => mpf.rrandomb(a, state, n, exp), Throws.TypeOf<PlatformNotSupportedException>().With.Message.EqualTo("mpf_rrandomb is only available with MPIR, on Windows."));
+            return;
+        }
 
         mpf.rrandomb(a, state, n, exp);
 

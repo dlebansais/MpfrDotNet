@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
@@ -58,7 +59,10 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static double get_d_2exp(out int exp, mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_d_2exp(out exp, ref op.Value, (__mpfr_rnd_t)rnd);
+        double Result = mpfr_get_d_2exp(out CLong NativeExponent, ref op.Value, (__mpfr_rnd_t)rnd);
+        exp = ToClampedInt(NativeExponent);
+
+        return Result;
     }
 
     /// <summary>
@@ -70,7 +74,10 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int frexp(out int exp, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
     {
-        return mpfr_frexp(out exp, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        int Result = mpfr_frexp(out CLong NativeExponent, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        exp = ToClampedInt(NativeExponent);
+
+        return Result;
     }
 
     /// <summary>
@@ -80,7 +87,7 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     public static int get_z_2exp(mpz_t rop, mpfr_t op)
     {
-        return mpfr_get_z_2exp(ref rop.Value, ref op.Value);
+        return ToClampedInt(mpfr_get_z_2exp(ref rop.Value, ref op.Value));
     }
 
     /// <summary>
@@ -137,7 +144,8 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static void get_str(StringBuilder str, out int expptr, int strbase, ulong n, mpfr_t op, mpfr_rnd_t rnd)
     {
-        mpfr_get_str(str, out expptr, strbase, n, ref op.Value, (__mpfr_rnd_t)rnd);
+        mpfr_get_str(str, out CLong NativeExponent, strbase, n, ref op.Value, (__mpfr_rnd_t)rnd);
+        expptr = ToClampedInt(NativeExponent);
     }
 
     /// <summary>

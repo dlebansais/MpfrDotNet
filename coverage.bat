@@ -7,7 +7,7 @@ set TESTPROJECTNAME=%PROJECTNAME%.Test
 rem One coverage report per target framework of the test project.
 set RESULTFILENAME1=Coverage-%PROJECTNAME%-net481.xml
 set RESULTFILEPATH1=".\TestResults\%RESULTFILENAME1%"
-set RESULTFILENAME2=Coverage-%PROJECTNAME%-net10.0-windows.xml
+set RESULTFILENAME2=Coverage-%PROJECTNAME%-net10.0.xml
 set RESULTFILEPATH2=".\TestResults\%RESULTFILENAME2%"
 set CODECOV_VERSION=1.12.2
 set CODECOV=Codecov.%CODECOV_VERSION%
@@ -22,7 +22,7 @@ if exist %RESULTFILEPATH1% del %RESULTFILEPATH1%
 if exist %RESULTFILEPATH2% del %RESULTFILEPATH2%
 
 dotnet test --project ./Test/%TESTPROJECTNAME% -c Debug -p:Platform=x64 -p:SolutionDir=%~dp0 -f net481 --coverage --coverage-output-format cobertura --coverage-output %RESULTFILENAME1% --results-directory .\TestResults
-dotnet test --project ./Test/%TESTPROJECTNAME% -c Debug -p:Platform=x64 -p:SolutionDir=%~dp0 -f net10.0-windows --coverage --coverage-output-format cobertura --coverage-output %RESULTFILENAME2% --results-directory .\TestResults
+dotnet test --project ./Test/%TESTPROJECTNAME% -c Debug -p:Platform=x64 -p:SolutionDir=%~dp0 -f net10.0 --coverage --coverage-output-format cobertura --coverage-output %RESULTFILENAME2% --results-directory .\TestResults
 
 if not exist %RESULTFILEPATH1% goto error_console2
 if not exist %RESULTFILEPATH2% goto error_console2

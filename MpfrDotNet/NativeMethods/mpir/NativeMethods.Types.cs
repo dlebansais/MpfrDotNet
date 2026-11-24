@@ -27,7 +27,7 @@ internal static partial class NativeMethods
     {
         public int Precision;
         public int Size;
-        public long Exponent;
+        public CLong Exponent;
         public IntPtr Limbs;
     }
 
@@ -98,22 +98,6 @@ internal static partial class NativeMethods
         }
 
         public static explicit operator ulong(mpir_ui value)
-        {
-            return value.Value;
-        }
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct mp_exp_t
-    {
-        public int Value;
-
-        public static explicit operator mp_exp_t(int value)
-        {
-            return new mp_exp_t() { Value = value };
-        }
-
-        public static explicit operator int(mp_exp_t value)
         {
             return value.Value;
         }
