@@ -9,6 +9,8 @@ using static Interop.Mpir.NativeMethods;
 /// </summary>
 public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConvertible, IComparable, IComparable<mpq_t>
 {
+    private const int MaxArrayLength = 32;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="mpq_t"/> class.
     /// </summary>
@@ -125,7 +127,10 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
 
         bool Success = mpq.set_str(this, text, strBase);
         if (!Success)
+        {
+            Dispose();
             throw new ArgumentException($"The combination of '{nameof(text)}' and '{nameof(strBase)}' is invalid.");
+        }
 
         if (canonicalize)
             mpq.canonicalize(this);
@@ -135,6 +140,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Creates an array of new instances of the <see cref="mpq_t"/> class.
     /// </summary>
     /// <param name="length">The array length.</param>
+    /// <exception cref="ArgumentException"><paramref name="length"/> is 32 or more.</exception>
     public static mpq_t[] CreateArray(int length)
     {
         if (length >= MaxArrayLength)
@@ -144,43 +150,6 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
         for (int i = 0; i < Result.Length; i++)
             Result[i] = new mpq_t();
 
-        ProcessArray(Result, args =>
-        {
-            int Index = 0;
-            mpq_inits(args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++]);
-        });
-
         return Result;
     }
 
@@ -188,50 +157,19 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Clear an array of numbers.
     /// </summary>
     /// <param name="array">The array.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="array"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="array"/> has 32 elements or more.</exception>
     public static void ClearArray(mpq_t[] array)
     {
+        if (array is null)
+            throw new ArgumentNullException(nameof(array));
+
         if (array.Length >= MaxArrayLength)
             throw new ArgumentException(nameof(array.Length));
 
-        ProcessArray(array, args =>
-        {
-            int Index = 0;
-            mpq_clears(args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++]);
-        });
-
+        // Dispose does nothing for an element that is already disposed or listed twice.
         foreach (mpq_t Item in array)
-            Item.IsDisposed = true;
+            Item.Dispose();
     }
 
 #pragma warning disable SA1401 // Fields should be private

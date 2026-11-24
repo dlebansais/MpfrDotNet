@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using static Interop.Mpfr.NativeMethods;
 
@@ -11,17 +12,19 @@ public partial class mpfr_t : IDisposable
 {
     private void InitCacheManagement()
     {
-        // ObjectCount.IsValueCreated is always set and ObjectCount.Value is initialized to 0
-        ObjectCount.Value++;
+        _ = Interlocked.Increment(ref OwnerObjectCount.Value);
 
         IsCacheInitialized = true;
     }
 
-    private static void DisposeCache()
+    private void DisposeCache()
     {
-        ObjectCount.Value--;
+        // An object can be disposed on another thread, including the finalizer thread: it always
+        // decrements the counter of the thread that created it. MPFR caches are per thread, so they
+        // are freed only when that thread disposes its last object.
+        long Remaining = Interlocked.Decrement(ref OwnerObjectCount.Value);
 
-        if (ObjectCount.Value == 0)
+        if (Remaining == 0 && Environment.CurrentManagedThreadId == OwnerThreadId)
         {
             mpfr.free_cache();
             mpfr.free_cache2(0);
@@ -30,14 +33,29 @@ public partial class mpfr_t : IDisposable
         }
     }
 
-    private static readonly ThreadLocal<ulong> ObjectCount = new();
+    private static StrongBox<long> GetCurrentThreadObjectCount()
+    {
+        StrongBox<long>? Count = ObjectCount.Value;
+
+        if (Count is null)
+        {
+            Count = new StrongBox<long>();
+            ObjectCount.Value = Count;
+        }
+
+        return Count;
+    }
+
+    private static readonly ThreadLocal<StrongBox<long>?> ObjectCount = new();
+    private readonly StrongBox<long> OwnerObjectCount = GetCurrentThreadObjectCount();
+    private readonly int OwnerThreadId = Environment.CurrentManagedThreadId;
 
     /// <summary>
-    /// Returns the number of living items in cache.
+    /// Returns the number of living items created by the current thread.
     /// </summary>
     public static ulong LiveObjectCount()
     {
-        return ObjectCount.Value;
+        return (ulong)Interlocked.Read(ref GetCurrentThreadObjectCount().Value);
     }
 
     /// <summary>

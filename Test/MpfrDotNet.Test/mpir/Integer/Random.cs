@@ -143,10 +143,11 @@ public class Random
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void CreateUnreachableForFinalizer()
     {
-        randstate_t x = randstate_t.Create(RngAlgorithm.MersenneTwister);
-        x.Dispose();
-        x.Dispose();
-        x.IsDisposed = false;
-        GC.ReRegisterForFinalize(x);
+        randstate_t Disposed = randstate_t.Create(RngAlgorithm.MersenneTwister);
+        Disposed.Dispose();
+        Disposed.Dispose();
+
+        // This object is not disposed: its finalizer must release it.
+        _ = randstate_t.Create(RngAlgorithm.MersenneTwister);
     }
 }

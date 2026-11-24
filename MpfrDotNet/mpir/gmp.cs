@@ -43,9 +43,10 @@ public static class gmp
     /// </summary>
     /// <param name="state">The state.</param>
     /// <param name="size">The size.</param>
-    public static void randinit_lc_2exp_size(randstate_t state, ulong size)
+    /// <returns><see langword="true"/> if the state is initialized; <see langword="false"/> if <paramref name="size"/> is greater than 128, in which case the state is not initialized.</returns>
+    public static bool randinit_lc_2exp_size(randstate_t state, ulong size)
     {
-        NativeMethods.mp_randinit_lc_2exp_size(ref state.Value, (NativeMethods.mp_bitcnt_t)size);
+        return NativeMethods.mp_randinit_lc_2exp_size(ref state.Value, (NativeMethods.mp_bitcnt_t)size) != 0;
     }
 
     /// <summary>

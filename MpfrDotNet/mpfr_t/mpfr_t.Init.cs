@@ -16,6 +16,8 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public const mpfr_rnd_t DefaultRounding = mpfr_rnd_t.MPFR_RNDN;
 
+    private const int MaxArrayLength = 32;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="mpfr_t"/> class.
     /// </summary>
@@ -28,123 +30,46 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Creates a new instance of the <see cref="mpfr_t"/> class.
     /// </summary>
-    /// <param name="precision">The precision.</param>
+    /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>
     public static mpfr_t Create(ulong precision = ulong.MaxValue)
-    {
-        mpfr_t Result = new();
-
-        ulong EffectivePrecision = (precision == ulong.MaxValue) ? DefaultPrecision : precision;
-        mpfr.init2(Result, EffectivePrecision);
-
-        return Result;
-    }
+        => CreateWithPrecision(precision, nameof(precision));
 
     /// <summary>
     /// Creates an array of new instances of the <see cref="mpfr_t"/> class.
     /// </summary>
     /// <param name="length">The array length.</param>
-    /// <param name="precision">The precision.</param>
+    /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
+    /// <exception cref="ArgumentException"><paramref name="length"/> is 32 or more.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>
     public static mpfr_t[] CreateArray(int length, ulong precision = ulong.MaxValue)
     {
         if (length >= MaxArrayLength)
             throw new ArgumentException($"The length must be lesser than {MaxArrayLength}.", nameof(length));
 
-        if (precision == ulong.MaxValue)
-            return CreateArrayDefaultPrecision(length);
-        else
-            return CreateArrayCustomPrecision(length, precision);
-    }
-
-    private static mpfr_t[] CreateArrayDefaultPrecision(int length)
-    {
         mpfr_t[] Result = new mpfr_t[length];
         for (int i = 0; i < Result.Length; i++)
-            Result[i] = new mpfr_t();
-
-        ProcessArray(Result, args =>
-        {
-            int Index = 0;
-            mpfr_inits(args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++],
-                       args[Index++]);
-        });
+            Result[i] = CreateWithPrecision(precision, nameof(precision));
 
         return Result;
     }
 
-    private static mpfr_t[] CreateArrayCustomPrecision(int length, ulong precision)
+    /// <summary>
+    /// Creates a new instance of the <see cref="mpfr_t"/> class with the specified precision.
+    /// </summary>
+    /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
+    /// <param name="paramName">The name of the parameter that holds the precision.</param>
+    /// <returns>The new instance.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>
+    internal static mpfr_t CreateWithPrecision(ulong precision, string paramName)
     {
-        int NativePrecision = mpfr.ToNativePrecision(precision, nameof(precision));
-        mpfr_t[] Result = new mpfr_t[length];
-        for (int i = 0; i < Result.Length; i++)
-            Result[i] = new mpfr_t();
+        ulong EffectivePrecision = precision == ulong.MaxValue ? DefaultPrecision : precision;
 
-        ProcessArray(Result, args =>
-        {
-            int Index = 0;
-            mpfr_inits2(NativePrecision,
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++]);
-        });
+        // The precision is checked before the instance is created, so that an invalid precision leaves nothing to release.
+        _ = mpfr.ToNativePrecision(EffectivePrecision, paramName);
+
+        mpfr_t Result = new();
+        mpfr.set_prec(Result, EffectivePrecision);
 
         return Result;
     }
@@ -310,7 +235,7 @@ public partial class mpfr_t : IDisposable
         bool Success = mpfr.set_str(this, str, strbase, rounding);
         if (!Success)
         {
-            DisposeCache();
+            Dispose();
             throw new ArgumentException($"The combination of '{nameof(str)}' and '{nameof(strbase)}' is invalid.");
         }
     }
@@ -379,53 +304,19 @@ public partial class mpfr_t : IDisposable
     /// Clear an array of numbers.
     /// </summary>
     /// <param name="array">The array.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="array"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="array"/> has 32 elements or more.</exception>
     public static void ClearArray(mpfr_t[] array)
     {
+        if (array is null)
+            throw new ArgumentNullException(nameof(array));
+
         if (array.Length >= MaxArrayLength)
             throw new ArgumentException(nameof(array.Length));
 
-        ProcessArray(array, args =>
-        {
-            int Index = 0;
-            mpfr_clears(args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++],
-                        args[Index++]);
-        });
-
+        // Dispose does nothing for an element that is already disposed or listed twice.
         foreach (mpfr_t Item in array)
-        {
-            Item.IsDisposed = true;
-            DisposeCache();
-        }
+            Item.Dispose();
     }
 
     /// <summary>

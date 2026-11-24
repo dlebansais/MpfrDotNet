@@ -21,8 +21,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         {
             IsDisposed = true;
 
-            if (isDisposing)
-                DisposeNow();
+            // Native memory is not managed by the garbage collector, so the finalizer releases it as well.
+            DisposeNow();
         }
     }
 

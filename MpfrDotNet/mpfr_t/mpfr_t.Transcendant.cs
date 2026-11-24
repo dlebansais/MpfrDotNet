@@ -940,15 +940,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the log2.
     /// </summary>
-    /// <param name="precision">The precision.</param>
+    /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>
     public static mpfr_t Log2(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new();
-
-        if (precision == ulong.MaxValue)
-            mpfr.init2(Result, DefaultPrecision);
-        else
-            mpfr.init2(Result, precision);
+        mpfr_t Result = CreateWithPrecision(precision, nameof(precision));
 
         Result.LastTernaryResult = mpfr.const_log2(Result, DefaultRounding);
 
@@ -958,15 +954,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets π.
     /// </summary>
-    /// <param name="precision">The precision.</param>
+    /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>
     public static mpfr_t Pi(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new();
-
-        if (precision == ulong.MaxValue)
-            mpfr.init2(Result, DefaultPrecision);
-        else
-            mpfr.init2(Result, precision);
+        mpfr_t Result = CreateWithPrecision(precision, nameof(precision));
 
         Result.LastTernaryResult = mpfr.const_pi(Result, DefaultRounding);
 
@@ -976,15 +968,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets e.
     /// </summary>
-    /// <param name="precision">The precision.</param>
+    /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>
     public static mpfr_t Euler(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new();
-
-        if (precision == ulong.MaxValue)
-            mpfr.init2(Result, DefaultPrecision);
-        else
-            mpfr.init2(Result, precision);
+        mpfr_t Result = CreateWithPrecision(precision, nameof(precision));
 
         Result.LastTernaryResult = mpfr.const_euler(Result, DefaultRounding);
 
@@ -994,15 +982,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the Catalan constant.
     /// </summary>
-    /// <param name="precision">The precision.</param>
+    /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>
     public static mpfr_t Catalan(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new();
-
-        if (precision == ulong.MaxValue)
-            mpfr.init2(Result, DefaultPrecision);
-        else
-            mpfr.init2(Result, precision);
+        mpfr_t Result = CreateWithPrecision(precision, nameof(precision));
 
         Result.LastTernaryResult = mpfr.const_catalan(Result, DefaultRounding);
 

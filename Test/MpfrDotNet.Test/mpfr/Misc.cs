@@ -165,21 +165,27 @@ public class Misc
     [Test]
     public void Finalizer()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
-
-        CreateUnreachableForFinalizer();
+        // Objects left undisposed by other tests are finalized first, so that they don't change the count below.
         GC.Collect();
         GC.WaitForPendingFinalizers();
+        ulong CountBefore = mpfr_t.LiveObjectCount();
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
+        CreateUnreachableForFinalizer();
+        ulong CountWithObject = mpfr_t.LiveObjectCount();
+
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        ulong CountAfter = mpfr_t.LiveObjectCount();
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(CountWithObject, Is.EqualTo(CountBefore + 1));
+        Assert.That(CountAfter, Is.EqualTo(CountBefore));
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void CreateUnreachableForFinalizer()
     {
-        mpfr_t x = new("22250983250345029834502983.5740293845720");
-        x.Dispose();
-        x.IsDisposed = false;
-        GC.ReRegisterForFinalize(x);
+        // The object is not disposed: its finalizer must release it.
+        _ = new mpfr_t("22250983250345029834502983.5740293845720");
     }
 }

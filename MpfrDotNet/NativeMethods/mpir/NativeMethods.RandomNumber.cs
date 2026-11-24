@@ -20,7 +20,7 @@ internal static partial class NativeMethods
     public static __mp_randinit_lc_2exp mp_randinit_lc_2exp { get; } = Marshal.GetDelegateForFunctionPointer<__mp_randinit_lc_2exp>(GetMpirPointer(nameof(mp_randinit_lc_2exp)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void __mp_randinit_lc_2exp_size(ref __gmp_randstate_t state, mp_bitcnt_t size);
+    public delegate int __mp_randinit_lc_2exp_size(ref __gmp_randstate_t state, mp_bitcnt_t size);
     public static __mp_randinit_lc_2exp_size mp_randinit_lc_2exp_size { get; } = Marshal.GetDelegateForFunctionPointer<__mp_randinit_lc_2exp_size>(GetMpirPointer(nameof(mp_randinit_lc_2exp_size)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

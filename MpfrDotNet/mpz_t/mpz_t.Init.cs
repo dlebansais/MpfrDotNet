@@ -10,6 +10,8 @@ using static Interop.Mpir.NativeMethods;
 /// </summary>
 public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, IComparable, IComparable<mpz_t>
 {
+    private const int MaxArrayLength = 32;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="mpz_t"/> class.
     /// </summary>
@@ -90,7 +92,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         bool Success = mpz.init_set_str(this, text, strBase);
         if (!Success)
+        {
+            // MPIR initializes the number even when the text is invalid.
+            Dispose();
             throw new ArgumentException($"The combination of '{nameof(text)}' and '{nameof(strBase)}' is invalid.");
+        }
     }
 
     /// <summary>
@@ -134,6 +140,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Creates an array of new instances of the <see cref="mpz_t"/> class.
     /// </summary>
     /// <param name="length">The array length.</param>
+    /// <exception cref="ArgumentException"><paramref name="length"/> is 32 or more.</exception>
     public static mpz_t[] CreateArray(int length)
     {
         if (length >= MaxArrayLength)
@@ -142,43 +149,6 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         mpz_t[] Result = new mpz_t[length];
         for (int i = 0; i < Result.Length; i++)
             Result[i] = new mpz_t();
-
-        ProcessArray(Result, args =>
-        {
-            int Index = 0;
-            mpz_inits(args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++],
-                      args[Index++]);
-        });
 
         return Result;
     }

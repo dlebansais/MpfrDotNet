@@ -19,8 +19,8 @@ public partial class mpfr_t : IDisposable
         {
             IsDisposed = true;
 
-            if (isDisposing)
-                DisposeNow();
+            // Native memory is not managed by the garbage collector, so the finalizer releases it as well.
+            DisposeNow();
         }
     }
 

@@ -58,12 +58,30 @@ public class randstate_t : IDisposable
                 if (parameters.Length == 3 && parameters[0] is mpz_t a && parameters[1] is ulong c && parameters[2] is ulong m2exp)
                     gmp.randinit_lc_2exp(this, a, c, m2exp);
                 else if (parameters.Length == 1 && parameters[0] is ulong size)
-                    gmp.randinit_lc_2exp_size(this, size);
+                {
+                    if (!gmp.randinit_lc_2exp_size(this, size))
+                    {
+                        MarkNotInitialized();
+                        throw new ArgumentOutOfRangeException(nameof(parameters), size, "The size must be 128 or less.");
+                    }
+                }
                 else
+                {
+                    MarkNotInitialized();
                     throw new ArgumentException("Invalid combination of parameters for this algorithm.", nameof(algorithm));
+                }
+
                 break;
         }
     }
+
+    private void MarkNotInitialized()
+    {
+        // There is no native state to release, and gmp_randclear would crash on a state that is not initialized.
+        IsNativeStateMissing = true;
+    }
+
+    private bool IsNativeStateMissing;
 
 #pragma warning disable SA1401 // Fields should be private
 #pragma warning disable SA1600 // Elements should be documented
@@ -83,8 +101,8 @@ public class randstate_t : IDisposable
         {
             IsDisposed = true;
 
-            if (isDisposing)
-                DisposeNow();
+            // Native memory is not managed by the garbage collector, so the finalizer releases it as well.
+            DisposeNow();
         }
     }
 
@@ -117,7 +135,8 @@ public class randstate_t : IDisposable
     /// </summary>
     private void DisposeNow()
     {
-        gmp.randclear(this);
+        if (!IsNativeStateMissing)
+            gmp.randclear(this);
     }
     #endregion
 }

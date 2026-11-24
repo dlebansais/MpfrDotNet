@@ -1518,9 +1518,10 @@ public static class mpz
     {
         string Content = reader.ReadToEnd();
 
-        NativeMethods.mpz_init_set_str(ref rop.Value, Content, (uint)strBase);
+        // rop is already initialized: mpz_init_set_str would leak its memory. As in MPIR, 0 means that the input is invalid.
+        int Result = NativeMethods.mpz_set_str(ref rop.Value, Content, (uint)strBase);
 
-        return Content.Length;
+        return Result == 0 ? Content.Length : 0;
     }
 
     /// <summary>

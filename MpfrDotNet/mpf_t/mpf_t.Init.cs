@@ -103,7 +103,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         }
 
         if (Success != 0)
+        {
+            // MPIR initializes the number even when the text is invalid.
+            Dispose();
             throw new ArgumentException($"The combination of '{nameof(s)}' and '{nameof(strBase)}' is invalid.");
+        }
     }
 
     /// <summary>
