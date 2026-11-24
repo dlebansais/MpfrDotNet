@@ -69,7 +69,7 @@ after_build:
   - echo Version is "%VERSION_TAG%"
 
 test_script:
-  - dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 --no-build --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%.xml --results-directory TestResults
+  - dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%.xml --results-directory TestResults
 
 after_test:
   - ps: Get-Content TestResults/Coverage-*.xml -Head 3
