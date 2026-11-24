@@ -98,9 +98,10 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="other">The other number.</param>
     /// <param name="e">The shift.</param>
+    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(ulong other, int e)
     {
-        return mpfr.cmp_ui_2exp(this, other, e);
+        return IsNan ? -1 : mpfr.cmp_ui_2exp(this, other, e);
     }
 
     /// <summary>
@@ -108,9 +109,10 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="other">The other number.</param>
     /// <param name="e">The shift.</param>
+    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(long other, int e)
     {
-        return mpfr.cmp_si_2exp(this, other, e);
+        return IsNan ? -1 : mpfr.cmp_si_2exp(this, other, e);
     }
 
     /// <summary>
@@ -118,8 +120,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first number.</param>
     /// <param name="y">The second number.</param>
-    /// <returns>0 if <paramref name="x"/> and <paramref name="y"/> are equal, 1 if <paramref name="x"/> &gt; <paramref name="y"/>, -1 if <paramref name="x"/> &lt; <paramref name="y"/>.</returns>
-    /// <returns>The same value as <see cref="CompareTo(mpfr_t)"/>: NaN sorts before any number.</returns>
+    /// <returns>Zero if <paramref name="x"/> and <paramref name="y"/> are equal, a positive value if <paramref name="x"/> &gt; <paramref name="y"/>, and a negative value if <paramref name="x"/> &lt; <paramref name="y"/>. As with <see cref="CompareTo(mpfr_t)"/>, NaN sorts before any number.</returns>
     public static int Compare(mpfr_t x, mpfr_t y)
     {
         return x.CompareTo(y);
@@ -185,7 +186,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t RelativeDifference(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
         mpfr.reldiff(z, x, y, rounding);
 

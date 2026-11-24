@@ -13,6 +13,7 @@ public static partial class mpfr
     /// </summary>
     /// <param name="x">The value.</param>
     /// <param name="prec">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static void init2(mpfr_t x, ulong prec)
     {
         mpfr_init2(ref x.Value, ToNativePrecision(prec, nameof(prec)));
@@ -68,6 +69,7 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="prec">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static void set_default_prec(ulong prec)
     {
         mpfr_set_default_prec(ToNativePrecision(prec, nameof(prec)));
@@ -101,6 +103,7 @@ public static partial class mpfr
     /// </summary>
     /// <param name="x">The value.</param>
     /// <param name="prec">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static void set_prec(mpfr_t x, ulong prec)
     {
         mpfr_set_prec(ref x.Value, ToNativePrecision(prec, nameof(prec)));
@@ -120,6 +123,7 @@ public static partial class mpfr
     /// </summary>
     /// <param name="x">The value.</param>
     /// <param name="prec">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static void set_prec_raw(mpfr_t x, ulong prec)
     {
         mpfr_set_prec_raw(ref x.Value, ToNativePrecision(prec, nameof(prec)));

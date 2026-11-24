@@ -89,9 +89,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t EuclideanNorm(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
-        mpfr.hypot(z, x, y, rounding);
+        z.LastTernaryResult = mpfr.hypot(z, x, y, rounding);
 
         return z;
     }
@@ -104,9 +104,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Dim(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
-        mpfr.dim(z, x, y, rounding);
+        z.LastTernaryResult = mpfr.dim(z, x, y, rounding);
 
         return z;
     }
@@ -120,9 +120,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Fma(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(a, b, c);
 
-        mpfr.fma(Result, a, b, c, rounding);
+        Result.LastTernaryResult = mpfr.fma(Result, a, b, c, rounding);
 
         return Result;
     }
@@ -136,9 +136,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Fms(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(a, b, c);
 
-        mpfr.fms(Result, a, b, c, rounding);
+        Result.LastTernaryResult = mpfr.fms(Result, a, b, c, rounding);
 
         return Result;
     }
@@ -153,9 +153,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Fmma(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_t d, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(a, b, c, d);
 
-        mpfr.fmma(Result, a, b, c, d, rounding);
+        Result.LastTernaryResult = mpfr.fmma(Result, a, b, c, d, rounding);
 
         return Result;
     }
@@ -170,9 +170,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Fmms(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_t d, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(a, b, c, d);
 
-        mpfr.fmms(Result, a, b, c, d, rounding);
+        Result.LastTernaryResult = mpfr.fmms(Result, a, b, c, d, rounding);
 
         return Result;
     }

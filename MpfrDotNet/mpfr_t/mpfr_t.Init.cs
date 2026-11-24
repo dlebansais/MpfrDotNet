@@ -134,7 +134,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(ulong op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_ui(this, op, rounding);
+        LastTernaryResult = mpfr.set_ui(this, op, rounding);
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(long op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_si(this, op, rounding);
+        LastTernaryResult = mpfr.set_si(this, op, rounding);
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(uint op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_uj(this, op, rounding);
+        LastTernaryResult = mpfr.set_uj(this, op, rounding);
     }
 
     /// <summary>
@@ -167,7 +167,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(int op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_sj(this, op, rounding);
+        LastTernaryResult = mpfr.set_sj(this, op, rounding);
     }
 
     /// <summary>
@@ -178,7 +178,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(float op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_flt(this, op, rounding);
+        LastTernaryResult = mpfr.set_flt(this, op, rounding);
     }
 
     /// <summary>
@@ -189,7 +189,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(double op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_d(this, op, rounding);
+        LastTernaryResult = mpfr.set_d(this, op, rounding);
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpz_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_z(this, op, rounding);
+        LastTernaryResult = mpfr.set_z(this, op, rounding);
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpq_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_q(this, op, rounding);
+        LastTernaryResult = mpfr.set_q(this, op, rounding);
     }
 
     /// <summary>
@@ -222,7 +222,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpf_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_f(this, op, rounding);
+        LastTernaryResult = mpfr.set_f(this, op, rounding);
     }
 
     /// <summary>
@@ -251,7 +251,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(ulong op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_ui_2exp(this, op, e, rounding);
+        LastTernaryResult = mpfr.set_ui_2exp(this, op, e, rounding);
     }
 
     /// <summary>
@@ -263,7 +263,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(long op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_si_2exp(this, op, e, rounding);
+        LastTernaryResult = mpfr.set_si_2exp(this, op, e, rounding);
     }
 
     /// <summary>
@@ -275,7 +275,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(uint op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_uj_2exp(this, op, e, rounding);
+        LastTernaryResult = mpfr.set_uj_2exp(this, op, e, rounding);
     }
 
     /// <summary>
@@ -287,7 +287,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(int op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_sj_2exp(this, op, e, rounding);
+        LastTernaryResult = mpfr.set_sj_2exp(this, op, e, rounding);
     }
 
     /// <summary>
@@ -299,7 +299,7 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpz_t op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set_z_2exp(this, op, e, rounding);
+        LastTernaryResult = mpfr.set_z_2exp(this, op, e, rounding);
     }
 
     /// <summary>

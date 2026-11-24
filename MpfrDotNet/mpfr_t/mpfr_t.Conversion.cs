@@ -228,9 +228,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="e">The exponent upon return.</param>
     public static mpfr_t ToIntegralFractional(mpfr_t value, out int e)
     {
-        mpfr_t y = new();
+        mpfr_t y = CreateResult(value);
 
-        mpfr.frexp(out e, y, value, value.Rounding);
+        y.LastTernaryResult = mpfr.frexp(out e, y, value, value.Rounding);
 
         return y;
     }

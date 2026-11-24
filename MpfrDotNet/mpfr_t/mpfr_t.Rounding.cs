@@ -23,9 +23,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t RoundToInteger(mpfr_rnd_t rounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.rint(z, this, rounding);
+        z.LastTernaryResult = mpfr.rint(z, this, rounding);
 
         return z;
     }
@@ -35,9 +35,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Ceil()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.ceil(z, this);
+        z.LastTernaryResult = mpfr.ceil(z, this);
 
         return z;
     }
@@ -48,9 +48,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Ceil(mpfr_rnd_t rounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.rint_ceil(z, this, rounding);
+        z.LastTernaryResult = mpfr.rint_ceil(z, this, rounding);
 
         return z;
     }
@@ -60,9 +60,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Floor()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.floor(z, this);
+        z.LastTernaryResult = mpfr.floor(z, this);
 
         return z;
     }
@@ -73,9 +73,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Floor(mpfr_rnd_t rounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.rint_floor(z, this, rounding);
+        z.LastTernaryResult = mpfr.rint_floor(z, this, rounding);
 
         return z;
     }
@@ -85,9 +85,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Round()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.round(z, this);
+        z.LastTernaryResult = mpfr.round(z, this);
 
         return z;
     }
@@ -98,9 +98,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Round(mpfr_rnd_t rounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.rint_round(z, this, rounding);
+        z.LastTernaryResult = mpfr.rint_round(z, this, rounding);
 
         return z;
     }
@@ -110,9 +110,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t RoundEven()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.roundeven(z, this);
+        z.LastTernaryResult = mpfr.roundeven(z, this);
 
         return z;
     }
@@ -123,9 +123,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t RoundEven(mpfr_rnd_t rounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.rint_roundeven(z, this, rounding);
+        z.LastTernaryResult = mpfr.rint_roundeven(z, this, rounding);
 
         return z;
     }
@@ -135,9 +135,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Trunc()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.trunc(z, this);
+        z.LastTernaryResult = mpfr.trunc(z, this);
 
         return z;
     }
@@ -148,9 +148,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Trunc(mpfr_rnd_t rounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.rint_trunc(z, this, rounding);
+        z.LastTernaryResult = mpfr.rint_trunc(z, this, rounding);
 
         return z;
     }
@@ -161,9 +161,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Fractional(mpfr_rnd_t rounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        mpfr.frac(z, this, rounding);
+        z.LastTernaryResult = mpfr.frac(z, this, rounding);
 
         return z;
     }
@@ -176,10 +176,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public void IntegerAndFractional(out mpfr_t integer, out mpfr_t fractional, mpfr_rnd_t rounding = DefaultRounding)
     {
-        integer = new mpfr_t();
-        fractional = new mpfr_t();
+        integer = CreateResult(this);
+        fractional = CreateResult(this);
 
-        mpfr.modf(integer, fractional, this, rounding);
+        int Ternary = mpfr.modf(integer, fractional, this, rounding);
+        integer.LastTernaryResult = DecodeTernary(Ternary);
+        fractional.LastTernaryResult = DecodeTernary(Ternary >> 2);
     }
 
     /// <summary>
@@ -190,9 +192,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t FMod(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
-        mpfr.fmod(z, x, y, rounding);
+        z.LastTernaryResult = mpfr.fmod(z, x, y, rounding);
 
         return z;
     }
@@ -205,9 +207,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t FMod(mpfr_t x, ulong y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
-        mpfr.fmod_ui(z, x, y, rounding);
+        z.LastTernaryResult = mpfr.fmod_ui(z, x, y, rounding);
 
         return z;
     }
@@ -221,9 +223,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t FMod(mpfr_t x, mpfr_t y, out long q, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
-        mpfr.fmodquo(z, out q, x, y, rounding);
+        z.LastTernaryResult = mpfr.fmodquo(z, out q, x, y, rounding);
 
         return z;
     }
@@ -236,9 +238,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Remainder(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
-        mpfr.remainder(z, x, y, rounding);
+        z.LastTernaryResult = mpfr.remainder(z, x, y, rounding);
 
         return z;
     }
@@ -252,9 +254,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Remainder(mpfr_t x, mpfr_t y, out long q, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
-        mpfr.remquo(z, out q, x, y, rounding);
+        z.LastTernaryResult = mpfr.remquo(z, out q, x, y, rounding);
 
         return z;
     }
@@ -264,9 +266,10 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="precision">The precision.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public void RoundWithPrecision(ulong precision, mpfr_rnd_t rounding)
     {
-        mpfr.prec_round(this, precision, rounding);
+        LastTernaryResult = mpfr.prec_round(this, precision, rounding);
     }
 
     /// <summary>
@@ -276,6 +279,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding1">The number rounding.</param>
     /// <param name="rounding2">The precision rounding.</param>
     /// <param name="precision">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public bool CanRound(int err, mpfr_rnd_t rounding1, mpfr_rnd_t rounding2, ulong precision)
     {
         return mpfr.can_round(this, err, rounding1, rounding2, precision);

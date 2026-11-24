@@ -239,6 +239,7 @@ public static partial class mpfr
     /// <param name="x">The operand.</param>
     /// <param name="prec">The precision.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static int prec_round(mpfr_t x, ulong prec, mpfr_rnd_t rnd)
     {
         return mpfr_prec_round(ref x.Value, ToNativePrecision(prec, nameof(prec)), (__mpfr_rnd_t)rnd);
@@ -252,6 +253,7 @@ public static partial class mpfr
     /// <param name="rnd1">The first rounding mode.</param>
     /// <param name="rnd2">The second rounding mode.</param>
     /// <param name="prec">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static bool can_round(mpfr_t b, int err, mpfr_rnd_t rnd1, mpfr_rnd_t rnd2, ulong prec)
     {
         return mpfr_can_round(ref b.Value, err, (__mpfr_rnd_t)rnd1, (__mpfr_rnd_t)rnd2, ToNativePrecision(prec, nameof(prec))) != 0;

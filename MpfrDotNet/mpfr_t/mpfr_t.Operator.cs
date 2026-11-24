@@ -646,10 +646,31 @@ public partial class mpfr_t : IDisposable
         mpq.get_den(Denominator, x);
 
         using mpfr_t ExactNumerator = CreateExact(Numerator);
+
+        // d * y can overflow when y is near the largest exponent, even if x / y can be represented.
+        // A regular y is therefore written y' * 2^e with y' in [0.5, 1): n / (d * y') cannot overflow,
+        // and the exact scaling by 2^-e only overflows or underflows when the result itself does.
+        using mpfr_t ScaledY = CreateResult(y);
+        _ = mpfr.set(ScaledY, y, mpfr_rnd_t.MPFR_RNDN);
+        int Exponent = 0;
+
+        if (mpfr.regular_p(y))
+        {
+            Exponent = mpfr.get_exp(y);
+            _ = mpfr.set_exp(ScaledY, 0);
+        }
+
         using mpfr_t ExactProduct = CreateWithPrecision(mpz.sizeinbase(Denominator, 2) + mpfr.get_prec(y), nameof(y));
-        _ = mpfr.mul_z(ExactProduct, y, Denominator, mpfr_rnd_t.MPFR_RNDN);
+        _ = mpfr.mul_z(ExactProduct, ScaledY, Denominator, mpfr_rnd_t.MPFR_RNDN);
 
         z.LastTernaryResult = mpfr.div(z, ExactNumerator, ExactProduct, y.Rounding);
+
+        if (Exponent != 0)
+        {
+            int ScalingTernary = mpfr.mul_2si(z, z, -(long)Exponent, y.Rounding);
+            if (ScalingTernary != 0)
+                z.LastTernaryResult = ScalingTernary;
+        }
 
         return z;
     }
@@ -1457,6 +1478,15 @@ public partial class mpfr_t : IDisposable
 
     private static mpfr_t CreateResult(mpfr_t x, mpfr_t y)
         => CreateWithPrecision(Math.Max(mpfr.get_prec(x), mpfr.get_prec(y)), nameof(x));
+
+    private static mpfr_t CreateResult(params mpfr_t[] operands)
+    {
+        ulong Precision = mpfr.PrecisionMin;
+        foreach (mpfr_t Operand in operands)
+            Precision = Math.Max(Precision, mpfr.get_prec(Operand));
+
+        return CreateWithPrecision(Precision, nameof(operands));
+    }
 
     private static mpfr_t CreateExact(mpz_t value)
     {

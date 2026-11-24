@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net481</TargetFrameworks>
+        <TargetFrameworks>net481;net10.0-windows</TargetFrameworks>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
         <LangVersion>14</LangVersion>
@@ -39,8 +39,13 @@
         <ProjectReference Include="..\..\MpfrDotNet\MpfrDotNet.csproj" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <!-- Relative to this file rather than $(SolutionDir), which is not defined when the project is built alone. -->
+        <NativeRoot>$(MSBuildThisFileDirectory)..\..\</NativeRoot>
+    </PropertyGroup>
+
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="if exist &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(SolutionDir)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(SolutionDir)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />
+        <Exec Command="if exist &quot;$(NativeRoot)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; copy &quot;$(NativeRoot)mpfr\dll\$(Platform)\$(Configuration)\mpfr.dll&quot; &quot;$(TargetDir)mpfr.dll&quot;&#xD;&#xA;if exist &quot;$(NativeRoot)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; copy &quot;$(NativeRoot)mpir\dll\$(Platform)\$(Configuration)\mpir.dll&quot; &quot;$(TargetDir)mpir.dll&quot;&#xD;&#xA;" />
     </Target>
 
 </Project>

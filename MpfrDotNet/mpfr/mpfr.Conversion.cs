@@ -1,5 +1,6 @@
 ﻿namespace MpfrDotNet;
 
+using System;
 using System.Text;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
@@ -119,6 +120,7 @@ public static partial class mpfr
     /// </summary>
     /// <param name="b">The b.</param>
     /// <param name="p">The p.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="p"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static ulong get_str_ndigits(int b, ulong p)
     {
         return mpfr_get_str_ndigits(b, ToNativePrecision(p, nameof(p)));

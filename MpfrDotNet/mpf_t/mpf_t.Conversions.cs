@@ -25,8 +25,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="resultbase">The base to use for the result.</param>
     /// <returns>The number value.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2.</exception>
     public string ToString(int resultbase)
     {
+        _ = DigitBase.ToDigitCountBase(resultbase, nameof(resultbase));
+
         ulong SizeInDigits = Precision;
 
         StringBuilder Data = new((int)(SizeInDigits + 2));

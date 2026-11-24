@@ -58,6 +58,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
     public mpq_t(ulong numerator, ulong denominator)
     {
+        if (denominator == 0)
+            throw new DivideByZeroException("The denominator cannot be zero.");
+
         mpq.init(this);
         mpq.set_ui(this, numerator, denominator);
         mpq.canonicalize(this);
@@ -84,6 +87,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
     public mpq_t(long numerator, ulong denominator)
     {
+        if (denominator == 0)
+            throw new DivideByZeroException("The denominator cannot be zero.");
+
         mpq.init(this);
         mpq.set_si(this, numerator, denominator);
         mpq.canonicalize(this);
@@ -123,6 +129,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
     public mpq_t(mpz_t numerator, mpz_t denominator)
     {
+        if (mpz.sgn(denominator) == 0)
+            throw new DivideByZeroException("The denominator cannot be zero.");
+
         mpq.init(this);
         mpq.set_num(this, numerator);
         mpq.set_den(this, denominator);

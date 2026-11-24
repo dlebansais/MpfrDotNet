@@ -25,6 +25,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the precision.
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">The value set is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public ulong Precision
     {
         get { return mpfr.get_prec(this); }
@@ -43,6 +44,7 @@ public partial class mpfr_t : IDisposable
     /// Sets the exact precision.
     /// </summary>
     /// <param name="value">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public void SetPrecisionRaw(ulong value)
     {
         mpfr.set_prec_raw(this, value);
@@ -51,6 +53,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the default precision.
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">The value set is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static ulong DefaultPrecision
     {
         get { return mpfr.get_default_prec(); }

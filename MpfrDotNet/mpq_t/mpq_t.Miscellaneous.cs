@@ -56,6 +56,10 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
     public void SetDenominator(mpz_t denominator)
     {
+        // The check comes first: once a zero denominator is stored, any MPIR call on this number aborts the process.
+        if (mpz.sgn(denominator) == 0)
+            throw new DivideByZeroException("The denominator cannot be zero.");
+
         mpq.set_den(this, denominator);
         mpq.canonicalize(this);
     }

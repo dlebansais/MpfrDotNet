@@ -19,9 +19,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Min(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
-        mpfr.min(z, x, y, rounding);
+        z.LastTernaryResult = mpfr.min(z, x, y, rounding);
 
         return z;
     }
@@ -34,9 +34,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Max(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
-        mpfr.max(z, x, y, rounding);
+        z.LastTernaryResult = mpfr.max(z, x, y, rounding);
 
         return z;
     }
@@ -115,7 +115,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new();
 
-        mpfr.urandom(Result, randomState, rounding);
+        Result.LastTernaryResult = mpfr.urandom(Result, randomState, rounding);
 
         return Result;
     }
@@ -129,7 +129,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new();
 
-        mpfr.nrandom(Result, randomState, rounding);
+        Result.LastTernaryResult = mpfr.nrandom(Result, randomState, rounding);
 
         return Result;
     }
@@ -146,7 +146,9 @@ public partial class mpfr_t : IDisposable
         rand1 = new mpfr_t();
         rand2 = new mpfr_t();
 
-        mpfr.grandom(rand1, rand2, randomState, rounding);
+        int Ternary = mpfr.grandom(rand1, rand2, randomState, rounding);
+        rand1.LastTernaryResult = DecodeTernary(Ternary);
+        rand2.LastTernaryResult = DecodeTernary(Ternary >> 2);
     }
 
     /// <summary>
@@ -158,7 +160,7 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t Result = new();
 
-        mpfr.erandom(Result, randomState, rounding);
+        Result.LastTernaryResult = mpfr.erandom(Result, randomState, rounding);
 
         return Result;
     }
@@ -188,7 +190,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public void SetWithSignBit(mpfr_t source, int signBit, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr.setsign(this, source, signBit, rounding);
+        LastTernaryResult = mpfr.setsign(this, source, signBit, rounding);
     }
 
     /// <summary>
@@ -199,6 +201,6 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public void CopyWithSignBit(mpfr_t source, mpfr_t signBitSource, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr.copysign(this, source, signBitSource, rounding);
+        LastTernaryResult = mpfr.copysign(this, source, signBitSource, rounding);
     }
 }

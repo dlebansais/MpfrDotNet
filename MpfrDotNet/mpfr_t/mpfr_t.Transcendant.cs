@@ -14,7 +14,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Log()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.log(z, this, Rounding);
 
@@ -41,7 +41,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Log2(mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.log2(z, this, rounding);
 
@@ -54,7 +54,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Log10(mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.log10(z, this, rounding);
 
@@ -67,7 +67,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Log1p(mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.log1p(z, this, rounding);
 
@@ -80,7 +80,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Log2p1(mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.log2p1(z, this, rounding);
 
@@ -93,7 +93,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Log10p1(mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.log10p1(z, this, rounding);
 
@@ -107,7 +107,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Exp()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.exp(z, this, Rounding);
 
@@ -119,7 +119,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Exp2()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.exp2(z, this, Rounding);
 
@@ -131,7 +131,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Exp10()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.exp10(z, this, Rounding);
 
@@ -143,7 +143,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Expm1()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.expm1(z, this, Rounding);
 
@@ -155,7 +155,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Exp2m1()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.exp2m1(z, this, Rounding);
 
@@ -167,7 +167,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Exp10m1()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.exp10m1(z, this, Rounding);
 
@@ -182,7 +182,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The power operand.</param>
     public mpfr_t Pow(mpfr_t op)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this, op);
 
         z.LastTernaryResult = mpfr.pow(z, this, op, Rounding);
 
@@ -195,7 +195,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The power operand.</param>
     public mpfr_t Pow(ulong op)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.pow_ui(z, this, op, Rounding);
 
@@ -208,7 +208,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The power operand.</param>
     public mpfr_t Pow(long op)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.pow_si(z, this, op, Rounding);
 
@@ -221,7 +221,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The power operand.</param>
     public mpfr_t Pow(mpz_t op)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.pow_z(z, this, op, Rounding);
 
@@ -250,7 +250,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="op2">The second operand.</param>
     public static mpfr_t Pow(ulong op1, mpfr_t op2)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(op2);
 
         z.LastTernaryResult = mpfr.ui_pow(z, op1, op2, op2.Rounding);
 
@@ -265,7 +265,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     public static mpfr_t Powr(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.powr(z, x, y, rounding);
 
@@ -279,7 +279,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Cos()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.cos(z, this, Rounding);
 
@@ -291,7 +291,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Sin()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.sin(z, this, Rounding);
 
@@ -303,7 +303,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Tan()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.tan(z, this, Rounding);
 
@@ -318,8 +318,8 @@ public partial class mpfr_t : IDisposable
     /// <param name="cos">The cosine.</param>
     public static void SinCos(mpfr_t op, out mpfr_t sin, out mpfr_t cos)
     {
-        sin = new();
-        cos = new();
+        sin = CreateResult(op);
+        cos = CreateResult(op);
 
         int Ternary = mpfr.sin_cos(sin, cos, op, op.Rounding);
         sin.LastTernaryResult = DecodeTernary(Ternary);
@@ -331,7 +331,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Sec()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.sec(z, this, Rounding);
 
@@ -343,7 +343,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Csc()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.csc(z, this, Rounding);
 
@@ -355,7 +355,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Cot()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.cot(z, this, Rounding);
 
@@ -367,7 +367,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Acos()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.acos(z, this, Rounding);
 
@@ -379,7 +379,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Asin()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.asin(z, this, Rounding);
 
@@ -391,7 +391,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Atan()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.atan(z, this, Rounding);
 
@@ -405,7 +405,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The denominator, the x coordinate.</param>
     public static mpfr_t Atan2(mpfr_t y, mpfr_t x)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y, x);
 
         z.LastTernaryResult = mpfr.atan2(z, y, x, y.Rounding);
 
@@ -417,7 +417,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Cosh()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.cosh(z, this, Rounding);
 
@@ -429,7 +429,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Sinh()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.sinh(z, this, Rounding);
 
@@ -441,7 +441,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Tanh()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.tanh(z, this, Rounding);
 
@@ -456,8 +456,8 @@ public partial class mpfr_t : IDisposable
     /// <param name="cosh">The hyperbolic cosine.</param>
     public static void SinhCosh(mpfr_t op, out mpfr_t sinh, out mpfr_t cosh)
     {
-        sinh = new();
-        cosh = new();
+        sinh = CreateResult(op);
+        cosh = CreateResult(op);
 
         int Ternary = mpfr.sinh_cosh(sinh, cosh, op, op.Rounding);
         sinh.LastTernaryResult = DecodeTernary(Ternary);
@@ -469,7 +469,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Sech()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.sech(z, this, Rounding);
 
@@ -481,7 +481,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Csch()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.csch(z, this, Rounding);
 
@@ -493,7 +493,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Coth()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.coth(z, this, Rounding);
 
@@ -505,7 +505,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Acosh()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.acosh(z, this, Rounding);
 
@@ -517,7 +517,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Asinh()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.asinh(z, this, Rounding);
 
@@ -529,7 +529,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Atanh()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.atanh(z, this, Rounding);
 
@@ -542,7 +542,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="u">The operand.</param>
     public mpfr_t Cos(ulong u)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.cosu(z, this, u, Rounding);
 
@@ -555,7 +555,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="u">The operand.</param>
     public mpfr_t Sin(ulong u)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.sinu(z, this, u, Rounding);
 
@@ -568,7 +568,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="u">The operand.</param>
     public mpfr_t Tan(ulong u)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.tanu(z, this, u, Rounding);
 
@@ -581,7 +581,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="u">The operand.</param>
     public mpfr_t Acos(ulong u)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.acosu(z, this, u, Rounding);
 
@@ -594,7 +594,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="u">The operand.</param>
     public mpfr_t Asin(ulong u)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.asinu(z, this, u, Rounding);
 
@@ -607,7 +607,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="u">The operand.</param>
     public mpfr_t Atan(ulong u)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.atanu(z, this, u, Rounding);
 
@@ -622,7 +622,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="u">The third operand.</param>
     public static mpfr_t Atan2(mpfr_t y, mpfr_t x, ulong u)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y, x);
 
         z.LastTernaryResult = mpfr.atan2u(z, y, x, u, y.Rounding);
 
@@ -634,7 +634,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t CosPi()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.cospi(z, this, Rounding);
 
@@ -646,7 +646,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t SinPi()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.sinpi(z, this, Rounding);
 
@@ -658,7 +658,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t TanPi()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.tanpi(z, this, Rounding);
 
@@ -670,7 +670,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t AcosPi()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.acospi(z, this, Rounding);
 
@@ -682,7 +682,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t AsinPi()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.asinpi(z, this, Rounding);
 
@@ -694,7 +694,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t AtanPi()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.atanpi(z, this, Rounding);
 
@@ -708,7 +708,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The denominator, the x coordinate.</param>
     public static mpfr_t Atan2Pi(mpfr_t y, mpfr_t x)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y, x);
 
         z.LastTernaryResult = mpfr.atan2pi(z, y, x, y.Rounding);
 
@@ -722,7 +722,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t EInt()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.eint(Result, this, Rounding);
 
@@ -734,7 +734,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Li2()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.li2(Result, this, Rounding);
 
@@ -746,7 +746,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Gamma()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.gamma(Result, this, Rounding);
 
@@ -759,7 +759,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="operand">The operand.</param>
     public mpfr_t IncompleteGamma(mpfr_t operand)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this, operand);
 
         Result.LastTernaryResult = mpfr.gamma_inc(Result, this, operand, Rounding);
 
@@ -771,7 +771,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t LnGamma()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.lngamma(Result, this, Rounding);
 
@@ -784,7 +784,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="sign">The sign of the result upon return.</param>
     public mpfr_t LnGammaAbs(out int sign)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.lgamma(Result, out sign, this, Rounding);
 
@@ -796,7 +796,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Digamma()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.digamma(Result, this, Rounding);
 
@@ -810,7 +810,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     public static mpfr_t Beta(mpfr_t x, mpfr_t y)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(x, y);
 
         Result.LastTernaryResult = mpfr.beta(Result, x, y, x.Rounding);
 
@@ -822,7 +822,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Erf()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.erf(Result, this, Rounding);
 
@@ -834,7 +834,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Erfc()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.erfc(Result, this, Rounding);
 
@@ -846,7 +846,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t BesselFirst0()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.j0(Result, this, Rounding);
 
@@ -858,7 +858,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t BesselFirst1()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.j1(Result, this, Rounding);
 
@@ -871,7 +871,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The order.</param>
     public mpfr_t BesselFirst(int n)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.jn(Result, n, this, Rounding);
 
@@ -883,7 +883,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t BesselSecond0()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.y0(Result, this, Rounding);
 
@@ -895,7 +895,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t BesselSecond1()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.y1(Result, this, Rounding);
 
@@ -908,7 +908,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The order.</param>
     public mpfr_t BesselSecond(int n)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.yn(Result, n, this, Rounding);
 
@@ -922,7 +922,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     public static mpfr_t ArithmeticGeometricMean(mpfr_t x, mpfr_t y)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(x, y);
 
         Result.LastTernaryResult = mpfr.agm(Result, x, y, x.Rounding);
 
@@ -934,7 +934,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Airy()
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.ai(Result, this, Rounding);
 
@@ -1003,7 +1003,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The operand.</param>
     public mpfr_t Compound(long n)
     {
-        mpfr_t Result = new();
+        mpfr_t Result = CreateResult(this);
 
         Result.LastTernaryResult = mpfr.compound_si(Result, this, n, Rounding);
 

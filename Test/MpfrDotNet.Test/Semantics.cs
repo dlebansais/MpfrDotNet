@@ -87,9 +87,9 @@ internal class Semantics
     {
         using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(() => new mpz_t(double.NaN), Throws.TypeOf<OverflowException>().With.Message.EqualTo("NaN and infinities cannot be converted to an MPIR number."));
-        Assert.That(() => new mpz_t(double.PositiveInfinity), Throws.TypeOf<OverflowException>());
-        Assert.That(() => new mpq_t(double.NaN), Throws.TypeOf<OverflowException>());
-        Assert.That(() => new mpf_t(double.NegativeInfinity), Throws.TypeOf<OverflowException>());
+        Assert.That(() => new mpz_t(double.PositiveInfinity), Throws.TypeOf<OverflowException>().With.Message.EqualTo("NaN and infinities cannot be converted to an MPIR number."));
+        Assert.That(() => new mpq_t(double.NaN), Throws.TypeOf<OverflowException>().With.Message.EqualTo("NaN and infinities cannot be converted to an MPIR number."));
+        Assert.That(() => new mpf_t(double.NegativeInfinity), Throws.TypeOf<OverflowException>().With.Message.EqualTo("NaN and infinities cannot be converted to an MPIR number."));
         Assert.That(() => mpz.cmp_d(new mpz_t(1), double.NaN), Throws.ArgumentException.With.Message.StartsWith("NaN cannot be compared with an MPIR number."));
     }
 
@@ -133,7 +133,7 @@ internal class Semantics
         using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(() => (int)Large, Throws.TypeOf<OverflowException>());
         Assert.That(() => (byte)Large, Throws.TypeOf<OverflowException>());
-        Assert.That(() => (long)Huge, Throws.TypeOf<OverflowException>());
+        Assert.That(() => (long)Huge, Throws.TypeOf<OverflowException>().With.Message.EqualTo("The value is outside the range of the target type."));
         Assert.That(() => (int)LargeFloat, Throws.TypeOf<OverflowException>());
         Assert.That(() => LargeRational.ToInt32(null), Throws.TypeOf<OverflowException>());
         Assert.That(() => (int)LargeMpfr, Throws.TypeOf<OverflowException>());
@@ -184,7 +184,7 @@ internal class Semantics
         Assert.That(Integer.ToString(-16), Is.EqualTo("FF"));
         Assert.That(Rational.ToString(-16), Is.EqualTo("FF/10"));
         Assert.That(() => Integer.ToString(1), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The base must be between 2 and 62, or between -36 and -2 for uppercase digits."));
-        Assert.That(() => Rational.ToString(-37), Throws.TypeOf<ArgumentOutOfRangeException>());
+        Assert.That(() => Rational.ToString(-37), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The base must be between 2 and 62, or between -36 and -2 for uppercase digits."));
     }
 
     [Test]
@@ -204,8 +204,8 @@ internal class Semantics
         Assert.That(TwoQuarters.GetHashCode(), Is.EqualTo(Half.GetHashCode()));
         Assert.That(MinusHalf.Sign, Is.EqualTo(-1));
         Assert.That(MinusHalf.ToString(), Is.EqualTo("-1/2"));
-        Assert.That(() => new mpq_t(1L, 0UL), Throws.TypeOf<DivideByZeroException>());
-        Assert.That(() => Half.SetDenominator(Zero), Throws.TypeOf<DivideByZeroException>());
+        Assert.That(() => new mpq_t(1L, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo("The denominator cannot be zero."));
+        Assert.That(() => Half.SetDenominator(Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo("The denominator cannot be zero."));
     }
 
     [Test]
@@ -451,6 +451,128 @@ internal class Semantics
         using mpfr_t ErfDown = Down.Erf();
 
         Assert.That(ErfUp > ErfDown, Is.True);
+    }
+
+    [Test]
+    public void TestFunctionResultPrecision()
+    {
+        const ulong LowPrecision = 100;
+        const ulong HighPrecision = 256;
+
+        using mpfr_t Low = mpfr_t.Create(LowPrecision);
+        _ = mpfr.set_ui(Low, 2UL, mpfr_rnd_t.MPFR_RNDN);
+        using mpfr_t High = mpfr_t.Create(HighPrecision);
+        _ = mpfr.set_ui(High, 3UL, mpfr_rnd_t.MPFR_RNDN);
+
+        using mpfr_t Sin = High.Sin();
+        using mpfr_t Gamma = Low.Gamma();
+        using mpfr_t Beta = mpfr_t.Beta(Low, High);
+        using mpfr_t Fma = mpfr_t.Fma(Low, Low, High);
+        using mpfr_t Power = mpfr_t.Pow(2UL, High);
+        using mpfr_t Floor = High.Floor();
+        mpfr_t.SinCos(High, out mpfr_t SinFromSinCos, out mpfr_t CosFromSinCos);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Sin.Precision, Is.EqualTo(HighPrecision));
+        Assert.That(Gamma.Precision, Is.EqualTo(LowPrecision));
+        Assert.That(Beta.Precision, Is.EqualTo(HighPrecision));
+        Assert.That(Fma.Precision, Is.EqualTo(HighPrecision));
+        Assert.That(Power.Precision, Is.EqualTo(HighPrecision));
+        Assert.That(Floor.Precision, Is.EqualTo(HighPrecision));
+        Assert.That(SinFromSinCos.Precision, Is.EqualTo(HighPrecision));
+        Assert.That(CosFromSinCos.Precision, Is.EqualTo(HighPrecision));
+
+        SinFromSinCos.Dispose();
+        CosFromSinCos.Dispose();
+    }
+
+    [Test]
+    public void TestRandStateNullArguments()
+    {
+        randstate_t NullState = Sample.CreateNull<randstate_t>();
+        object[] NullParameters = Sample.CreateNull<object[]>();
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => new randstate_t(NullState), Throws.ArgumentNullException);
+        Assert.That(() => randstate_t.Create(RngAlgorithm.LinearCongruential, NullParameters), Throws.ArgumentNullException);
+
+        // The objects whose construction failed must not release a state that was never created.
+        Assert.That(() =>
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }, Throws.Nothing);
+    }
+
+    [Test]
+    public void TestLastTernaryResultOfOtherProducers()
+    {
+        using mpq_t OneThird = new(1L, 3UL);
+        using mpfr_t FromRational = new(OneThird);
+        using mpfr_t Exact = new(3);
+        using mpfr_t TwoAndAHalf = new(2.5);
+
+        using mpfr_t Fma = mpfr_t.Fma(FromRational, FromRational, Exact);
+        using mpfr_t Floor = TwoAndAHalf.Floor();
+        using mpfr_t Minimum = mpfr_t.Min(Exact, TwoAndAHalf);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(FromRational.LastTernaryResult, Is.Not.Zero);
+        Assert.That(Exact.LastTernaryResult, Is.Zero);
+        Assert.That(Fma.LastTernaryResult, Is.Not.Zero);
+        Assert.That(Floor.LastTernaryResult, Is.Negative);
+        Assert.That(Minimum.LastTernaryResult, Is.Zero);
+    }
+
+    [Test]
+    public void TestMpqDividedByLargeMpfr()
+    {
+        using mpq_t Rational = new(1000000L, 3UL);
+        using mpfr_t Large = mpfr_t.Create();
+        _ = mpfr.set_ui_2exp(Large, 1UL, mpfr_t.MaxExponent - 1, mpfr_rnd_t.MPFR_RNDN);
+
+        // The rational is rounded once, then scaled exactly by a power of 2.
+        using mpfr_t Expected = mpfr_t.Create();
+        _ = mpfr.set_q(Expected, Rational, mpfr_rnd_t.MPFR_RNDN);
+        _ = mpfr.mul_2si(Expected, Expected, -(mpfr_t.MaxExponent - 1), mpfr_rnd_t.MPFR_RNDN);
+
+        using mpfr_t Quotient = Rational / Large;
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Quotient.IsZero, Is.False);
+        Assert.That(Quotient, Is.EqualTo(Expected));
+    }
+
+    [Test]
+    public void TestZeroDenominatorLeavesValueUnchanged()
+    {
+        using mpq_t Half = new(1L, 2UL);
+        using mpz_t Zero = new(0);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => Half.SetDenominator(Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo("The denominator cannot be zero."));
+        Assert.That(Half.ToString(), Is.EqualTo("1/2"));
+        Assert.That(() => new mpq_t(new mpz_t(1), Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo("The denominator cannot be zero."));
+    }
+
+    [Test]
+    public void TestMpfrCompareTo2ExpWithNaN()
+    {
+        using mpfr_t NaN = mpfr_t.NaN();
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(NaN.CompareTo(1UL, 0), Is.Negative);
+        Assert.That(NaN.CompareTo(1L, 0), Is.Negative);
+    }
+
+    [Test]
+    public void TestMpfToStringInvalidBase()
+    {
+        using mpf_t Float = new(1.0);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => Float.ToString(1), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The base must be between 2 and 62, or between -36 and -2 for uppercase digits."));
+        Assert.That(() => Float.ToString(int.MinValue), Throws.TypeOf<ArgumentOutOfRangeException>());
     }
 
     [Test]
