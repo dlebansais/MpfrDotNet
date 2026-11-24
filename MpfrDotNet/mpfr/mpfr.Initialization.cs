@@ -1,6 +1,8 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Runtime.InteropServices;
+using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
 /// <summary>
@@ -24,9 +26,16 @@ public static partial class mpfr
     /// </summary>
     /// <param name="prec">The precision.</param>
     /// <param name="x">The values.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="x"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="x"/> contains a <see langword="null"/> item.</exception>
     public static void inits2(ulong prec, params mpfr_t[] x)
     {
-        throw new NotImplementedException();
+        CLong NativePrecision = ToNativePrecision(prec, nameof(prec));
+        ArrayArgument.CheckItems(x, nameof(x));
+
+        foreach (mpfr_t Item in x)
+            mpfr_init2(ref Item.Value, NativePrecision);
     }
 
     /// <summary>
@@ -42,9 +51,14 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="x">The values.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="x"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="x"/> contains a <see langword="null"/> item.</exception>
     public static void clears(params mpfr_t[] x)
     {
-        throw new NotImplementedException();
+        ArrayArgument.CheckItems(x, nameof(x));
+
+        foreach (mpfr_t Item in x)
+            mpfr_clear(ref Item.Value);
     }
 
     /// <summary>
@@ -60,9 +74,14 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="x">The values.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="x"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="x"/> contains a <see langword="null"/> item.</exception>
     public static void inits(params mpfr_t[] x)
     {
-        throw new NotImplementedException();
+        ArrayArgument.CheckItems(x, nameof(x));
+
+        foreach (mpfr_t Item in x)
+            mpfr_init(ref Item.Value);
     }
 
     /// <summary>

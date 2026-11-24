@@ -51,9 +51,14 @@ public static class mpf
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="floatings">Values.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="floatings"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="floatings"/> contains a <see langword="null"/> item.</exception>
     public static void inits(params mpf_t[] floatings)
     {
-        throw new System.NotImplementedException();
+        ArrayArgument.CheckItems(floatings, nameof(floatings));
+
+        foreach (mpf_t Item in floatings)
+            NativeMethods.mpf_init(ref Item.Value);
     }
 
     /// <summary>
@@ -69,9 +74,14 @@ public static class mpf
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="floatings">Values.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="floatings"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="floatings"/> contains a <see langword="null"/> item.</exception>
     public static void clears(params mpf_t[] floatings)
     {
-        throw new System.NotImplementedException();
+        ArrayArgument.CheckItems(floatings, nameof(floatings));
+
+        foreach (mpf_t Item in floatings)
+            NativeMethods.mpf_clear(ref Item.Value);
     }
 
     /// <summary>

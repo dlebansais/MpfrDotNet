@@ -25,9 +25,14 @@ public static class mpz
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="integers">The values.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="integers"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="integers"/> contains a <see langword="null"/> item.</exception>
     public static void inits(params mpz_t[] integers)
     {
-        throw new NotImplementedException();
+        ArrayArgument.CheckItems(integers, nameof(integers));
+
+        foreach (mpz_t Item in integers)
+            NativeMethods.mpz_init(ref Item.Value);
     }
 
     /// <summary>
@@ -53,9 +58,14 @@ public static class mpz
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="x">The values.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="x"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="x"/> contains a <see langword="null"/> item.</exception>
     public static void clears(params mpz_t[] x)
     {
-        throw new NotImplementedException();
+        ArrayArgument.CheckItems(x, nameof(x));
+
+        foreach (mpz_t Item in x)
+            NativeMethods.mpz_clear(ref Item.Value);
     }
 
     /// <summary>

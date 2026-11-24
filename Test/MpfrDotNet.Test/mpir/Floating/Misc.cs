@@ -117,9 +117,6 @@ public class Misc
         s.GetDoubleWithExponent(out double DoubleValue, out long ExponentValue);
         Assert.That(DoubleValue, Is.EqualTo(0.9375));
         Assert.That(ExponentValue, Is.EqualTo(5));
-
-        Assert.Throws<NotImplementedException>(() => mpf.inits([]));
-        Assert.Throws<NotImplementedException>(() => mpf.clears([]));
     }
 
     [Test]

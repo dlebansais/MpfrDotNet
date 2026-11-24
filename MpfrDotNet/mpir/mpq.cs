@@ -23,9 +23,14 @@ public static class mpq
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="rationals">The values.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="rationals"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="rationals"/> contains a <see langword="null"/> item.</exception>
     public static void inits(params mpq_t[] rationals)
     {
-        throw new NotImplementedException();
+        ArrayArgument.CheckItems(rationals, nameof(rationals));
+
+        foreach (mpq_t Item in rationals)
+            NativeMethods.mpq_init(ref Item.Value);
     }
 
     /// <summary>
@@ -41,9 +46,14 @@ public static class mpq
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="rationals">The values.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="rationals"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="rationals"/> contains a <see langword="null"/> item.</exception>
     public static void clears(params mpq_t[] rationals)
     {
-        throw new NotImplementedException();
+        ArrayArgument.CheckItems(rationals, nameof(rationals));
+
+        foreach (mpq_t Item in rationals)
+            NativeMethods.mpq_clear(ref Item.Value);
     }
 
     /// <summary>

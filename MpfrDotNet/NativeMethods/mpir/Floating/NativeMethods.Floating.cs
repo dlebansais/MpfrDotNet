@@ -26,16 +26,8 @@ internal static partial class NativeMethods
     public static __mpf_init2 mpf_init2 => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_init2>(GetMpirPointer(nameof(mpf_init2)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void __mpf_inits(IntPtr[] floatings);
-    public static __mpf_inits mpf_inits => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_inits>(GetMpirPointer(nameof(mpf_inits)));
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void __mpf_clear(ref __mpf_t x);
     public static __mpf_clear mpf_clear => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_clear>(GetMpirPointer(nameof(mpf_clear)));
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void __mpf_clears(IntPtr[] floatings);
-    public static __mpf_clears mpf_clears => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_clears>(GetMpirPointer(nameof(mpf_clears)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate mp_bitcnt_t __mpf_get_prec(ref __mpf_t x);

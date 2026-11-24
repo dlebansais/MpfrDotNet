@@ -157,9 +157,6 @@ public class Misc
         using mpz_t n = new("-222509832503450298345029835740293845720");
         Assert.Throws<OverflowException>(() => _ = (long)n);
         Assert.Throws<OverflowException>(() => _ = (ulong)n);
-
-        Assert.Throws<NotImplementedException>(() => mpz.inits([]));
-        Assert.Throws<NotImplementedException>(() => mpz.clears([]));
     }
 
     [Test]

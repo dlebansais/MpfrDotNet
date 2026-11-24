@@ -54,6 +54,26 @@ public static partial class mpfr
     /// <summary>
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static long get_sj(mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_get_sj(ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    public static ulong get_uj(mpfr_t op, mpfr_rnd_t rnd)
+    {
+        return mpfr_get_uj(ref op.Value, (__mpfr_rnd_t)rnd);
+    }
+
+    /// <summary>
+    /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
+    /// </summary>
     /// <param name="exp">The exponent.</param>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>

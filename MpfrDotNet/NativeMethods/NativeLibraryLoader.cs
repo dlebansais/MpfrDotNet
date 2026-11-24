@@ -32,15 +32,16 @@ internal static class NativeLibraryLoader
             throw new PlatformNotSupportedException("Platforms other than Windows require .NET 6 or later.");
 #endif
 
-        foreach (string Candidate in GetCandidates(windowsName, linuxNames))
+        string DirectoryName = GetAssemblyDirectory(Assembly.GetExecutingAssembly().Location);
+
+        foreach (string Candidate in GetCandidates(IsWindows, DirectoryName, windowsName, linuxNames))
         {
             IntPtr Handle = TryLoad(Candidate);
             if (Handle != IntPtr.Zero)
                 return Handle;
         }
 
-        string Hint = IsWindows ? string.Empty : " On Linux, install the GMP and MPFR libraries (for example, the libgmp10 and libmpfr6 packages).";
-        throw new DllNotFoundException($"The native library '{(IsWindows ? windowsName : linuxNames[0])}' cannot be found or loaded.{Hint}");
+        throw new DllNotFoundException(GetNotFoundMessage(IsWindows, windowsName, linuxNames));
     }
 
     /// <summary>
@@ -58,34 +59,58 @@ internal static class NativeLibraryLoader
 #endif
     }
 
-    private static List<string> GetCandidates(string windowsName, string[] linuxNames)
+    /// <summary>
+    /// Gets the paths to try, in order, to load a native library.
+    /// </summary>
+    /// <param name="isWindows"><see langword="true"/> to get the paths used on Windows, <see langword="false"/> for those used on Linux.</param>
+    /// <param name="directoryName">The directory of this assembly, searched before the system search path.</param>
+    /// <param name="windowsName">The name of the library on Windows.</param>
+    /// <param name="linuxNames">The names of the library on Linux, from the most specific.</param>
+    internal static List<string> GetCandidates(bool isWindows, string directoryName, string windowsName, string[] linuxNames)
     {
-        // The directory of this assembly first, then the system search path.
-        string DirectoryName = GetAssemblyDirectory();
         List<string> Candidates = new();
 
-        if (IsWindows)
+        if (isWindows)
         {
-            Candidates.Add(Path.Combine(DirectoryName, windowsName));
-            Candidates.Add(Path.Combine(DirectoryName, "runtimes", "win-x64", "native", windowsName));
+            Candidates.Add(Path.Combine(directoryName, windowsName));
+            Candidates.Add(Path.Combine(directoryName, "runtimes", "win-x64", "native", windowsName));
             Candidates.Add(windowsName);
         }
         else
         {
-            Candidates.Add(Path.Combine(DirectoryName, linuxNames[0]));
+            Candidates.Add(Path.Combine(directoryName, linuxNames[0]));
             Candidates.AddRange(linuxNames);
         }
 
         return Candidates;
     }
 
-    private static string GetAssemblyDirectory()
+    /// <summary>
+    /// Gets the message of the exception thrown when a native library cannot be loaded.
+    /// </summary>
+    /// <param name="isWindows"><see langword="true"/> to get the message used on Windows, <see langword="false"/> for the one used on Linux.</param>
+    /// <param name="windowsName">The name of the library on Windows.</param>
+    /// <param name="linuxNames">The names of the library on Linux, from the most specific.</param>
+    internal static string GetNotFoundMessage(bool isWindows, string windowsName, string[] linuxNames)
     {
-        string Location = Assembly.GetExecutingAssembly().Location;
+        if (isWindows)
+            return $"The native library '{windowsName}' cannot be found or loaded.";
 
+        return $"The native library '{linuxNames[0]}' cannot be found or loaded. On Linux, install the GMP and MPFR libraries (for example, the libgmp10 and libmpfr6 packages).";
+    }
+
+    /// <summary>
+    /// Gets the directory of an assembly from its location.
+    /// </summary>
+    /// <param name="location">The location of the assembly.</param>
+    /// <returns>The directory of the assembly, or the base directory of the application when <paramref name="location"/> has no directory.</returns>
+    internal static string GetAssemblyDirectory(string location)
+    {
         // Location is empty when the assembly is loaded from memory or bundled in a single-file application.
-        string? AssemblyDirectory = Location.Length > 0 ? Path.GetDirectoryName(Location) : null;
-        return AssemblyDirectory ?? AppContext.BaseDirectory;
+        if (location.Length == 0)
+            return AppContext.BaseDirectory;
+
+        return Path.GetDirectoryName(location) ?? AppContext.BaseDirectory;
     }
 
 #if NET6_0_OR_GREATER

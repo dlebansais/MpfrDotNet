@@ -1289,7 +1289,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator ==(mpfr_t? x, mpz_t? y)
     {
-        return x is not null && y is not null && !x.IsNan && x.CompareTo(y) == 0;
+        return x is null ? y is null : y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1299,7 +1299,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator ==(mpz_t? x, mpfr_t? y)
     {
-        return y is not null && x is not null && !y.IsNan && y.CompareTo(x) == 0;
+        return y is null ? x is null : x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1309,7 +1309,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator ==(mpfr_t? x, mpq_t? y)
     {
-        return x is not null && y is not null && !x.IsNan && x.CompareTo(y) == 0;
+        return x is null ? y is null : y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1319,7 +1319,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator ==(mpq_t? x, mpfr_t? y)
     {
-        return y is not null && x is not null && !y.IsNan && y.CompareTo(x) == 0;
+        return y is null ? x is null : x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1329,7 +1329,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator ==(mpfr_t? x, mpf_t? y)
     {
-        return x is not null && y is not null && !x.IsNan && x.CompareTo(y) == 0;
+        return x is null ? y is null : y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1339,7 +1339,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator ==(mpf_t? x, mpfr_t? y)
     {
-        return y is not null && x is not null && !y.IsNan && y.CompareTo(x) == 0;
+        return y is null ? x is null : x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1419,7 +1419,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator !=(mpfr_t? x, mpz_t? y)
     {
-        return x is null || y is null || x.IsNan || x.CompareTo(y) != 0;
+        return !(x == y);
     }
 
     /// <summary>
@@ -1429,7 +1429,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator !=(mpz_t? x, mpfr_t? y)
     {
-        return y is null || x is null || y.IsNan || y.CompareTo(x) != 0;
+        return !(x == y);
     }
 
     /// <summary>
@@ -1439,7 +1439,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator !=(mpfr_t? x, mpq_t? y)
     {
-        return x is null || y is null || x.IsNan || x.CompareTo(y) != 0;
+        return !(x == y);
     }
 
     /// <summary>
@@ -1449,7 +1449,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator !=(mpq_t? x, mpfr_t? y)
     {
-        return y is null || x is null || y.IsNan || y.CompareTo(x) != 0;
+        return !(x == y);
     }
 
     /// <summary>
@@ -1459,7 +1459,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator !=(mpfr_t? x, mpf_t? y)
     {
-        return x is null || y is null || x.IsNan || x.CompareTo(y) != 0;
+        return !(x == y);
     }
 
     /// <summary>
@@ -1469,7 +1469,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator !=(mpf_t? x, mpfr_t? y)
     {
-        return y is null || x is null || y.IsNan || y.CompareTo(x) != 0;
+        return !(x == y);
     }
     #endregion
 

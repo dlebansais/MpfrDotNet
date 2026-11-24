@@ -388,10 +388,6 @@ public class Create
 
         mpfr_t[] LargeArray = new mpfr_t[0xFFFF];
         Assert.Throws<ArgumentException>(() => mpfr_t.ClearArray(LargeArray));
-
-        Assert.Throws<NotImplementedException>(() => mpfr.inits([]));
-        Assert.Throws<NotImplementedException>(() => mpfr.inits2(DefaultPrecision, []));
-        Assert.Throws<NotImplementedException>(() => mpfr.clears([]));
     }
 
     [Test]
