@@ -1,0 +1,25 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="mpfr/build.vs26/mpfr_dll/mpfr_dll_x64.vcxproj">
+    <BuildDependency Project="mpir/mpir_dll_x64.vcxproj" />
+  </Project>
+  <Project Path="MpfrDotNet/MpfrDotNet.csproj">
+    <BuildDependency Project="mpfr/build.vs26/mpfr_dll/mpfr_dll_x64.vcxproj" />
+    <BuildDependency Project="mpir/mpir_dll_x64.vcxproj" />
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="mpir/mpir_dll_x64.vcxproj">
+    <BuildDependency Project="PreBuild/PreBuild.csproj" />
+  </Project>
+  <Project Path="PreBuild/PreBuild.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="Test/MpfrDotNet.Test/MpfrDotNet.Test.csproj">
+    <Platform Project="x64" />
+  </Project>
+</Solution>

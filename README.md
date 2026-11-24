@@ -9,9 +9,9 @@ This binding is up to date with version 4.2.1 of the [mpfr library](https://www.
 
 # Instructions
 
-+ Install Visual Studio 2022.
++ Install Visual Studio 2026.
 + Clone this repository locally.
-+ Open `MpfrDotNet.sln` with Visual Studio 2022.
++ Open `MpfrDotNet.slnx` with Visual Studio 2026.
 + Select the `Debug` or `Release` build in the toolbar.
 + Rebuild the solution (F5 or from the *Build* / *Rebuild Solution* menu).
 

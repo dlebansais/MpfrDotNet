@@ -20,11 +20,11 @@ public class Misc
         AsString = mpfr.get_patches();
         Assert.That(AsString, Is.EqualTo(""));
 
-        Assert.IsTrue(mpfr.buildopt_tls_p());
-        Assert.IsFalse(mpfr.buildopt_float128_p());
-        Assert.IsFalse(mpfr.buildopt_decimal_p());
-        Assert.IsTrue(mpfr.buildopt_gmpinternals_p());
-        Assert.IsFalse(mpfr.buildopt_sharedcache_p());
+        Assert.That(mpfr.buildopt_tls_p(), Is.True);
+        Assert.That(mpfr.buildopt_float128_p(), Is.False);
+        Assert.That(mpfr.buildopt_decimal_p(), Is.False);
+        Assert.That(mpfr.buildopt_gmpinternals_p(), Is.True);
+        Assert.That(mpfr.buildopt_sharedcache_p(), Is.False);
 
         AsString = mpfr.buildopt_tune_case();
         Assert.That(AsString, Is.EqualTo("src/x86_64/corei5/mparam.h"));

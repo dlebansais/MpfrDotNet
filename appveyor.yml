@@ -20,7 +20,6 @@ init:
   - git config --global core.autocrlf input
 
 environment:
-  opencover_version: 4.7.1221
   codecov_version: 0.2.4
   csharp-format_version: 0.0.9
   PACKAGE_PREFIX: dlebansais
@@ -29,7 +28,7 @@ matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
 
 before_build:
-  - nuget restore %APPVEYOR_PROJECT_NAME%.sln
+  - nuget restore %APPVEYOR_PROJECT_NAME%.slnx
   - nuget install dlebansais.GitCommitId -DependencyVersion Highest -OutputDirectory packages
   - dotnet restore
 
@@ -38,7 +37,7 @@ configuration:
   - Release
 
 build:
-  project: $(APPVEYOR_PROJECT_NAME).sln
+  project: $(APPVEYOR_PROJECT_NAME).slnx
 
 after_build:
   - nuget install dlebansais.Packager -DependencyVersion Highest -OutputDirectory packages # Install Packager
@@ -58,22 +57,14 @@ after_build:
   - echo Version is "%VERSION_TAG%"
 
 before_test:
-  - nuget install OpenCover -Version %opencover_version% -OutputDirectory packages
   - nuget install CodecovUploader -Version %codecov_version% -OutputDirectory packages
-  - |-
-    printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net481/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" > runtests.bat
-  - |-
-    printf "@echo ************************************************************** Starting Tests..\n" > runtests1.bat
-    printf "call runtests.bat\n" >> runtests1.bat
-  - |-
-    printf ".\packages\OpenCover.%opencover_version%\Tools\OpenCover.Console.exe -register:user -returntargetcode -target:\x25\x31 -mergeoutput -output:""Coverage-%APPVEYOR_PROJECT_NAME%"".xml\n" > opencover.bat
 
 test_script:
-  - opencover.bat runtests1.bat
+  - dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 --no-build --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%.xml --results-directory TestResults
 
 after_test:
-  - ps: Get-Content Coverage-*.xml -Head 3
-  - if '%CONFIGURATION%' == 'Debug' if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f "Coverage-%APPVEYOR_PROJECT_NAME%.xml"
+  - ps: Get-Content TestResults/Coverage-*.xml -Head 3
+  - if '%CONFIGURATION%' == 'Debug' if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f "TestResults\Coverage-%APPVEYOR_PROJECT_NAME%.xml"
 
 artifacts:
   - path: $(PACKAGE_PREFIX).$(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg

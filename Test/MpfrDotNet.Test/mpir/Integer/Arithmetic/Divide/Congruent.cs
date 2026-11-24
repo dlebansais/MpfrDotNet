@@ -26,7 +26,7 @@ public class Congruent
 
         IsCongruent = a.IsCongruent(b, c);
 
-        Assert.IsTrue(IsCongruent);
+        Assert.That(IsCongruent, Is.True);
 
         using mpz_t d = new mpz_t("2340528345240928540928745029837450293454373193");
         AsString = d.ToString();
@@ -34,7 +34,7 @@ public class Congruent
 
         IsCongruent = d.IsCongruent(b, c);
 
-        Assert.IsFalse(IsCongruent);
+        Assert.That(IsCongruent, Is.False);
     }
 
     [Test]
@@ -52,7 +52,7 @@ public class Congruent
 
         IsCongruent = a.IsCongruent(b, c);
 
-        Assert.IsTrue(IsCongruent);
+        Assert.That(IsCongruent, Is.True);
 
         using mpz_t d = new mpz_t("2340528345240928540928745029837450293454373193");
         AsString = d.ToString();
@@ -60,7 +60,7 @@ public class Congruent
 
         IsCongruent = d.IsCongruent(b, c);
 
-        Assert.IsFalse(IsCongruent);
+        Assert.That(IsCongruent, Is.False);
     }
 
     [Test]
@@ -89,7 +89,7 @@ public class Congruent
 
         IsCongruent = a.IsCongruentPowerOfTwo(b, c);
 
-        Assert.IsTrue(IsCongruent);
+        Assert.That(IsCongruent, Is.True);
 
         using mpz_t d = new mpz_t("2340528345240928540928745029837450293454373193");
         AsString = d.ToString();
@@ -97,6 +97,6 @@ public class Congruent
 
         IsCongruent = d.IsCongruentPowerOfTwo(b, c);
 
-        Assert.IsFalse(IsCongruent);
+        Assert.That(IsCongruent, Is.False);
     }
 }

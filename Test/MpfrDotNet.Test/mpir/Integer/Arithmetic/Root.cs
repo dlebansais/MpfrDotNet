@@ -18,7 +18,7 @@ public class Root
 
         IsRootExact = a.IsRootExact(3);
 
-        Assert.IsFalse(IsRootExact);
+        Assert.That(IsRootExact, Is.False);
 
         mpz_t b = a * a * a;
 
@@ -27,7 +27,7 @@ public class Root
 
         IsRootExact = b.IsRootExact(3);
 
-        Assert.IsTrue(IsRootExact);
+        Assert.That(IsRootExact, Is.True);
     }
 
     [Test]
@@ -107,7 +107,7 @@ public class Root
 
         bool IsPerfectPower = a.IsPerfectPower();
 
-        Assert.IsTrue(IsPerfectPower);
+        Assert.That(IsPerfectPower, Is.True);
     }
 
     [Test]
@@ -121,6 +121,6 @@ public class Root
 
         bool IsPerfectSquare = a.IsPerfectSquare();
 
-        Assert.IsTrue(IsPerfectSquare);
+        Assert.That(IsPerfectSquare, Is.True);
     }
 }

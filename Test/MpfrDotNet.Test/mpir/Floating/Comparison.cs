@@ -28,7 +28,7 @@ public class Comparison
         Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = mpf.cmp_ui(a, 1922215141) > 0;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         double d = 2e25;
 
@@ -95,7 +95,7 @@ public class Comparison
         Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = mpf.cmp_ui(a, 1922215141) > 0;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         double d = 2e25;
 
@@ -159,7 +159,7 @@ public class Comparison
         Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = mpf.cmp_si(a, -1922215141) < 0;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         double d = 2e5;
 
@@ -215,7 +215,7 @@ public class Comparison
         Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = mpf.cmp_si(a, -1922215141) < 0;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         double d = 2e5;
 

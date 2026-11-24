@@ -199,9 +199,9 @@ public class Bitwise
         Assert.That(AsString, Is.EqualTo("A000000000000000000200000000001"));
 
         IsBitSet = a.GetBit(45);
-        Assert.IsTrue(IsBitSet);
+        Assert.That(IsBitSet, Is.True);
 
         IsBitSet = a.GetBit(46);
-        Assert.IsFalse(IsBitSet);
+        Assert.That(IsBitSet, Is.False);
     }
 }

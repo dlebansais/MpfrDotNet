@@ -27,74 +27,74 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("2.2298125E+4"));
 
         IsGreaterThan = a > b;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         Assert.That(mpfr_t.Compare(a, a), Is.EqualTo(0));
         Assert.That(mpfr_t.Compare(a, b), Is.EqualTo(1));
         Assert.That(mpfr_t.Compare(b, a), Is.EqualTo(-1));
 
         IsGreaterThan = b > a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = a > 8720124937520142UL;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = a > 8720124937520143UL;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = 8720124937520142UL > a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = 8720124937520143UL > a;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = a > 8720124937520142L;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = a > 8720124937520143L;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = 8720124937520142L > a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = 8720124937520143L > a;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = a > 8720124937520142.1;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = 8720124937520142.9 > a;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         using mpz_t c = new mpz_t("1720124937520142");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("1720124937520142"));
 
         IsGreaterThan = a > c;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = c > a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsGreaterThan = a > d;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = d > a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         using mpf_t e = new mpf_t("8720124937520142.1");
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("8.7201249375201421E+15"));
 
         IsGreaterThan = a > e;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = e > a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -119,58 +119,58 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsGreaterThan = a >= b;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = b >= a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = a >= 1UL;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = 1UL >= a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = a >= 1L;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = 1L >= a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         IsGreaterThan = a >= 1.0;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = 1.0 >= a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsGreaterThan = a >= c;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = c >= a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsGreaterThan = a >= d;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = d >= a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsGreaterThan = a >= e;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = e >= a;
-        Assert.IsFalse(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.False);
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -195,58 +195,58 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsLesserThan = a < b;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = b < a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         IsLesserThan = a < 1UL;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = 1UL < a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         IsLesserThan = a < 1L;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = 1L < a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         IsLesserThan = a < 1.0;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = 1.0 < a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsLesserThan = a < c;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = c < a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsLesserThan = a < d;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = d < a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsLesserThan = a < e;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = e < a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -271,58 +271,58 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsLesserThan = a <= b;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = b <= a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         IsLesserThan = a <= 1UL;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = 1UL <= a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         IsLesserThan = a <= 1L;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = 1L <= a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         IsLesserThan = a <= 1.0;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = 1.0 <= a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsLesserThan = a <= c;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = c <= a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsLesserThan = a <= d;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = d <= a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsLesserThan = a <= e;
-        Assert.IsFalse(IsLesserThan);
+        Assert.That(IsLesserThan, Is.False);
 
         IsLesserThan = e <= a;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -347,58 +347,58 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsEqualTo = a == b;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = b == a;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = a == 1UL;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = 1UL == a;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = a == 1L;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = 1L == a;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = a == 1.0;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = 1.0 == a;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsEqualTo = a == c;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = c == a;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsEqualTo = a == d;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = d == a;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsEqualTo = a == e;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = e == a;
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -423,10 +423,10 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("2E+0"));
 
         IsEqualTo = a.Equals(b);
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         IsEqualTo = a.Equals(null);
-        Assert.IsFalse(IsEqualTo);
+        Assert.That(IsEqualTo, Is.False);
 
         int HashCode = b.GetHashCode();
 
@@ -453,58 +453,58 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
         IsEqualTo = a != b;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = b != a;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = a != 1UL;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = 1UL != a;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = a != 1L;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = 1L != a;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = a != 1.0;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = 1.0 != a;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         using mpz_t c = new mpz_t("222509832503450298345029");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029"));
 
         IsEqualTo = a != c;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = c != a;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         using mpq_t d = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         IsEqualTo = a != d;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = d != a;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         using mpf_t e = new mpf_t("222583250345029834502983.5");
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("2.22583250345029834503E+23"));
 
         IsEqualTo = a != e;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsEqualTo = e != a;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -832,58 +832,58 @@ public class Comparison
     public void Special()
     {
         using mpfr_t a = new();
-        Assert.IsTrue(a.IsNan);
-        Assert.IsFalse(a.IsInf);
-        Assert.IsFalse(a.IsZero);
-        Assert.IsFalse(a.IsNumber);
-        Assert.IsFalse(a.IsRegular);
+        Assert.That(a.IsNan, Is.True);
+        Assert.That(a.IsInf, Is.False);
+        Assert.That(a.IsZero, Is.False);
+        Assert.That(a.IsNumber, Is.False);
+        Assert.That(a.IsRegular, Is.False);
 
         using mpfr_t b = mpfr_t.Infinite();
-        Assert.IsTrue(b.IsInf);
-        Assert.IsFalse(b.IsNan);
-        Assert.IsFalse(b.IsZero);
-        Assert.IsFalse(b.IsNumber);
-        Assert.IsFalse(b.IsRegular);
-        Assert.IsTrue(b.Sign > 0);
+        Assert.That(b.IsInf, Is.True);
+        Assert.That(b.IsNan, Is.False);
+        Assert.That(b.IsZero, Is.False);
+        Assert.That(b.IsNumber, Is.False);
+        Assert.That(b.IsRegular, Is.False);
+        Assert.That(b.Sign > 0, Is.True);
 
         using mpfr_t c = mpfr_t.Infinite(-1);
-        Assert.IsTrue(c.IsInf);
-        Assert.IsFalse(c.IsNan);
-        Assert.IsFalse(c.IsZero);
-        Assert.IsFalse(c.IsNumber);
-        Assert.IsFalse(c.IsRegular);
-        Assert.IsTrue(c.Sign < 0);
+        Assert.That(c.IsInf, Is.True);
+        Assert.That(c.IsNan, Is.False);
+        Assert.That(c.IsZero, Is.False);
+        Assert.That(c.IsNumber, Is.False);
+        Assert.That(c.IsRegular, Is.False);
+        Assert.That(c.Sign < 0, Is.True);
 
         using mpfr_t d = mpfr_t.Zero();
-        Assert.IsTrue(d.IsZero);
-        Assert.IsFalse(d.IsNan);
-        Assert.IsFalse(d.IsInf);
-        Assert.IsTrue(d.IsNumber);
-        Assert.IsFalse(d.IsRegular);
-        Assert.IsTrue(d.Sign == 0);
+        Assert.That(d.IsZero, Is.True);
+        Assert.That(d.IsNan, Is.False);
+        Assert.That(d.IsInf, Is.False);
+        Assert.That(d.IsNumber, Is.True);
+        Assert.That(d.IsRegular, Is.False);
+        Assert.That(d.Sign == 0, Is.True);
 
         using mpfr_t e = mpfr_t.Zero(-1);
-        Assert.IsTrue(e.IsZero);
-        Assert.IsFalse(e.IsNan);
-        Assert.IsFalse(e.IsInf);
-        Assert.IsTrue(e.IsNumber);
-        Assert.IsFalse(e.IsRegular);
-        Assert.IsTrue(e.Sign == 0);
+        Assert.That(e.IsZero, Is.True);
+        Assert.That(e.IsNan, Is.False);
+        Assert.That(e.IsInf, Is.False);
+        Assert.That(e.IsNumber, Is.True);
+        Assert.That(e.IsRegular, Is.False);
+        Assert.That(e.Sign == 0, Is.True);
 
         using mpfr_t f = new mpfr_t(1.0);
-        Assert.IsFalse(f.IsZero);
-        Assert.IsFalse(f.IsNan);
-        Assert.IsFalse(f.IsInf);
-        Assert.IsTrue(f.IsNumber);
-        Assert.IsTrue(f.IsRegular);
-        Assert.IsTrue(f.Sign > 0);
+        Assert.That(f.IsZero, Is.False);
+        Assert.That(f.IsNan, Is.False);
+        Assert.That(f.IsInf, Is.False);
+        Assert.That(f.IsNumber, Is.True);
+        Assert.That(f.IsRegular, Is.True);
+        Assert.That(f.Sign > 0, Is.True);
 
         using mpfr_t g = new mpfr_t(-1.0);
-        Assert.IsFalse(g.IsZero);
-        Assert.IsFalse(g.IsNan);
-        Assert.IsFalse(g.IsInf);
-        Assert.IsTrue(g.IsNumber);
-        Assert.IsTrue(g.IsRegular);
-        Assert.IsTrue(g.Sign < 0);
+        Assert.That(g.IsZero, Is.False);
+        Assert.That(g.IsNan, Is.False);
+        Assert.That(g.IsInf, Is.False);
+        Assert.That(g.IsNumber, Is.True);
+        Assert.That(g.IsRegular, Is.True);
+        Assert.That(g.Sign < 0, Is.True);
     }
 }

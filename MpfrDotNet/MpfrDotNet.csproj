@@ -13,8 +13,8 @@
         <Product />
         <Description>Binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET</Description>
         <Copyright>Copyright © 2021 David Le Bansais</Copyright>
-        <AssemblyVersion>1.1.0.15</AssemblyVersion>
-        <FileVersion>1.1.0.15</FileVersion>
+        <AssemblyVersion>1.1.0.16</AssemblyVersion>
+        <FileVersion>1.1.0.16</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/MpfrDotNet</RepositoryUrl>
         <NeutralLanguage>en-US</NeutralLanguage>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>

@@ -41,15 +41,15 @@ public class Random
         IsPositive = a >= 0;
         IsLesserThan = a < b;
 
-        Assert.IsTrue(IsPositive);
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsPositive, Is.True);
+        Assert.That(IsLesserThan, Is.True);
 
         mpz.urandomm(a, state, b);
         IsPositive = a >= 0;
         IsLesserThan = a < b;
 
-        Assert.IsTrue(IsPositive);
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsPositive, Is.True);
+        Assert.That(IsLesserThan, Is.True);
 
         string AsString1 = a.ToString();
         Assert.That(AsString0, Is.Not.EqualTo(AsString1));
@@ -58,7 +58,7 @@ public class Random
         ulong RandomNumber = gmp.urandomm_ui(state, c);
         IsLesserThan = RandomNumber < c;
 
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         Assert.That(AsString0, Is.Not.EqualTo(AsString1));
     }
@@ -122,12 +122,12 @@ public class Random
         Result = gmp.urandomb_ui(state, n);
 
         IsLesserThan = Result < (1UL << (int)n);
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         Result = gmp.urandomm_ui(state, n);
 
         IsLesserThan = Result < n;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
     }
 
     [Test]

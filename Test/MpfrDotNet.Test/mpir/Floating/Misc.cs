@@ -17,8 +17,8 @@ public class Misc
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("0"));
 
-        Assert.IsTrue(a.IsInteger);
-        Assert.IsTrue(a.Sign == 0);
+        Assert.That(a.IsInteger, Is.True);
+        Assert.That(a.Sign == 0, Is.True);
 
         ulong DefaultPrecision = mpf.get_default_prec();
         Assert.That(DefaultPrecision, Is.EqualTo(64UL));
@@ -175,27 +175,27 @@ public class Misc
         ulong DefaultPrecision;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.IsTrue(DefaultPrecision == 64);
+        Assert.That(DefaultPrecision == 64, Is.True);
 
         mpf_t.DefaultPrecision = 128;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.IsTrue(DefaultPrecision == 128);
+        Assert.That(DefaultPrecision == 128, Is.True);
 
         mpf_t.DefaultPrecision = 0x7FFFFFFF;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.IsTrue(DefaultPrecision >= 0x7FFFFFFF);
+        Assert.That(DefaultPrecision >= 0x7FFFFFFF, Is.True);
 
         mpf_t.DefaultPrecision = 0xFFFFFFFF;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.IsTrue(DefaultPrecision >= 0xFFFFFFFF);
+        Assert.That(DefaultPrecision >= 0xFFFFFFFF, Is.True);
 
         mpf_t.DefaultPrecision = 0x1FFFFFFFF;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.IsTrue(DefaultPrecision >= 0x1FFFFFFFF);
+        Assert.That(DefaultPrecision >= 0x1FFFFFFFF, Is.True);
 
         using mpf_t a = new mpf_t();
 

@@ -9,8 +9,8 @@ rem %6 = build tests (|+tests)
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
 
-rem Visual Studio version 2022
-set vs_version=2022
+rem Visual Studio version 2026
+set vs_version=2026
 
 set vsw_exe="%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
 

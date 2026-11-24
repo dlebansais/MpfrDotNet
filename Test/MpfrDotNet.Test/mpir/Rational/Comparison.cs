@@ -22,10 +22,10 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539/590872612825179551336102196593"));
 
         IsGreaterThan = a > b;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = mpq.cmp_ui(a, 1922215141, 1) > 0;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         using mpz_t c = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = c.ToString();
@@ -50,10 +50,10 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539/590872612825179551336102196593"));
 
         IsGreaterThan = a >= b;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         IsGreaterThan = mpq.cmp_ui(a, 1922215141, 1) > 0;
-        Assert.IsTrue(IsGreaterThan);
+        Assert.That(IsGreaterThan, Is.True);
 
         using mpz_t c = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = c.ToString();
@@ -78,10 +78,10 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539/590872612825179551336102196593"));
 
         IsLesserThan = a < b;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         IsLesserThan = mpq.cmp_si(a, -1922215141, 1) < 0;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         using mpz_t c = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = c.ToString();
@@ -106,10 +106,10 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539/590872612825179551336102196593"));
 
         IsLesserThan = a <= b;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         IsLesserThan = mpq.cmp_si(a, -1922215141, 1) < 0;
-        Assert.IsTrue(IsLesserThan);
+        Assert.That(IsLesserThan, Is.True);
 
         using mpz_t c = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = c.ToString();
@@ -137,10 +137,10 @@ public class Comparison
         using mpq_t c = a;
 
         IsEqualTo = a == c;
-        Assert.IsTrue(IsEqualTo);
+        Assert.That(IsEqualTo, Is.True);
 
         IsDifferentThan = a != b;
-        Assert.IsTrue(IsDifferentThan);
+        Assert.That(IsDifferentThan, Is.True);
 
         using mpz_t d = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
         AsString = d.ToString();

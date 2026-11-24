@@ -28,22 +28,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
@@ -73,7 +73,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
       <Command>cd ..\..\
-prebuild gc Win32 19
+call .\prebuild.bat gc Win32 26
       </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -82,14 +82,14 @@ prebuild gc Win32 19
     </ClCompile>
     <PostBuildEvent>
       <Command>cd ..\..\
-postbuild "$(TargetPath)" 19
+call .\postbuild.bat "$(TargetPath)" 26
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
       <Command>cd ..\..\
-prebuild gc Win32 19
+call .\prebuild.bat gc Win32 26
       </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -98,14 +98,14 @@ prebuild gc Win32 19
     </ClCompile>
     <PostBuildEvent>
       <Command>cd ..\..\
-postbuild "$(TargetPath)" 19
+call .\postbuild.bat "$(TargetPath)" 26
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
       <Command>cd ..\..\
-prebuild gc x64 19
+call .\prebuild.bat gc x64 26
       </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -114,14 +114,14 @@ prebuild gc x64 19
     </ClCompile>
     <PostBuildEvent>
       <Command>cd ..\..\
-postbuild "$(TargetPath)" 19
+call .\postbuild.bat "$(TargetPath)" 26
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
       <Command>cd ..\..\
-prebuild gc x64 19
+call .\prebuild.bat gc x64 26
       </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -130,7 +130,7 @@ prebuild gc x64 19
     </ClCompile>
     <PostBuildEvent>
       <Command>cd ..\..\
-postbuild "$(TargetPath)" 19
+call .\postbuild.bat "$(TargetPath)" 26
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

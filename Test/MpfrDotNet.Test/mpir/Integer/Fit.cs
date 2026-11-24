@@ -19,12 +19,12 @@ public class Fit
         Assert.That(AsString, Is.EqualTo("FFFFFFFF"));
 
         IsFitting = mpz.fits_ulong_p(a);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t b = a + 1;
 
         IsFitting = mpz.fits_ulong_p(b);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
     }
 
     [Test]
@@ -38,22 +38,22 @@ public class Fit
         Assert.That(AsString, Is.EqualTo("7FFFFFFF"));
 
         IsFitting = mpz.fits_slong_p(a);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t b = a + 1;
 
         IsFitting = mpz.fits_slong_p(b);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
 
         using mpz_t c = -b;
 
         IsFitting = mpz.fits_slong_p(c);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t d = c - 1;
 
         IsFitting = mpz.fits_slong_p(d);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
     }
 
     [Test]
@@ -67,12 +67,12 @@ public class Fit
         Assert.That(AsString, Is.EqualTo("FFFFFFFF"));
 
         IsFitting = mpz.fits_uint_p(a);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t b = a + 1;
 
         IsFitting = mpz.fits_uint_p(b);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
     }
 
     [Test]
@@ -86,22 +86,22 @@ public class Fit
         Assert.That(AsString, Is.EqualTo("7FFFFFFF"));
 
         IsFitting = mpz.fits_sint_p(a);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t b = a + 1;
 
         IsFitting = mpz.fits_sint_p(b);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
 
         using mpz_t c = -b;
 
         IsFitting = mpz.fits_sint_p(c);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t d = c - 1;
 
         IsFitting = mpz.fits_sint_p(d);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
     }
 
     [Test]
@@ -115,12 +115,12 @@ public class Fit
         Assert.That(AsString, Is.EqualTo("FFFF"));
 
         IsFitting = mpz.fits_ushort_p(a);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t b = a + 1;
 
         IsFitting = mpz.fits_ushort_p(b);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
     }
 
     [Test]
@@ -134,22 +134,22 @@ public class Fit
         Assert.That(AsString, Is.EqualTo("7FFF"));
 
         IsFitting = mpz.fits_sshort_p(a);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t b = a + 1;
 
         IsFitting = mpz.fits_sshort_p(b);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
 
         using mpz_t c = -b;
 
         IsFitting = mpz.fits_sshort_p(c);
-        Assert.IsTrue(IsFitting);
+        Assert.That(IsFitting, Is.True);
 
         using mpz_t d = c - 1;
 
         IsFitting = mpz.fits_sshort_p(d);
-        Assert.IsFalse(IsFitting);
+        Assert.That(IsFitting, Is.False);
     }
 
     [Test]
@@ -166,16 +166,16 @@ public class Fit
         IsEven = mpz.even_p(a);
         IsOdd = mpz.odd_p(a);
 
-        Assert.IsTrue(IsEven);
-        Assert.IsFalse(IsOdd);
+        Assert.That(IsEven, Is.True);
+        Assert.That(IsOdd, Is.False);
 
         using mpz_t b = a + 1;
 
         IsEven = mpz.even_p(b);
         IsOdd = mpz.odd_p(b);
 
-        Assert.IsFalse(IsEven);
-        Assert.IsTrue(IsOdd);
+        Assert.That(IsEven, Is.False);
+        Assert.That(IsOdd, Is.True);
 
         using mpz_t c = new mpz_t(0);
 

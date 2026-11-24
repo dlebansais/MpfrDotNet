@@ -62,8 +62,8 @@
     </Link>
     <PreBuildEvent>
       <Command>set msbdir="$(MSBuildBinPath)"
-cd ./msvc/vs22
-msbuild gc DLL x64 $(Configuration)</Command>
+cd ./msvc/vs26
+call .\msbuild.bat gc DLL x64 $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -83,8 +83,8 @@ msbuild gc DLL x64 $(Configuration)</Command>
     </Link>
     <PreBuildEvent>
       <Command>set msbdir="$(MSBuildBinPath)"
-cd ./msvc/vs22
-msbuild gc DLL x64 $(Configuration)</Command>
+cd ./msvc/vs26
+call .\msbuild.bat gc DLL x64 $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

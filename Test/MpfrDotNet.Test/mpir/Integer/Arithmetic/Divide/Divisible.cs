@@ -22,7 +22,7 @@ public class Divisible
 
         IsDivisible = a.IsDivisible(b);
 
-        Assert.IsTrue(IsDivisible);
+        Assert.That(IsDivisible, Is.True);
 
         using mpz_t c = new mpz_t("234052834524092854092874502983745029345723098457209305981001313");
         AsString = c.ToString();
@@ -30,7 +30,7 @@ public class Divisible
 
         IsDivisible = c.IsDivisible(b);
 
-        Assert.IsFalse(IsDivisible);
+        Assert.That(IsDivisible, Is.False);
     }
 
     [Test]
@@ -47,7 +47,7 @@ public class Divisible
 
         IsDivisible = a.IsDivisible(b);
 
-        Assert.IsTrue(IsDivisible);
+        Assert.That(IsDivisible, Is.True);
 
         using mpz_t c = new mpz_t("234052834524092854092874502983745029345723098457209305981001313");
         AsString = c.ToString();
@@ -55,7 +55,7 @@ public class Divisible
 
         IsDivisible = c.IsDivisible(b);
 
-        Assert.IsFalse(IsDivisible);
+        Assert.That(IsDivisible, Is.False);
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class Divisible
 
         IsPowerOfTwo = a.IsDivisibleByPowerOfTwo(b);
 
-        Assert.IsTrue(IsPowerOfTwo);
+        Assert.That(IsPowerOfTwo, Is.True);
 
         using mpz_t c = new mpz_t("234052834524092854092874502983745029345723098457209305981001313");
         AsString = c.ToString();
@@ -80,6 +80,6 @@ public class Divisible
 
         IsPowerOfTwo = c.IsDivisibleByPowerOfTwo(b);
 
-        Assert.IsFalse(IsPowerOfTwo);
+        Assert.That(IsPowerOfTwo, Is.False);
     }
 }

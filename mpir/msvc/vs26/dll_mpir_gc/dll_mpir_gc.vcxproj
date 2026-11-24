@@ -73,7 +73,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
       <Command>cd ..\..\
-prebuild gc Win32 22
+call .\prebuild.bat gc Win32 26
       </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -84,14 +84,14 @@ prebuild gc Win32 22
     </Link>
     <PostBuildEvent>
       <Command>cd ..\..\
-postbuild "$(TargetPath)" 22
+call .\postbuild.bat "$(TargetPath)" 26
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
       <Command>cd ..\..\
-prebuild gc Win32 22
+call .\prebuild.bat gc Win32 26
       </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -102,7 +102,7 @@ prebuild gc Win32 22
     </Link>
     <PostBuildEvent>
       <Command>cd ..\..\
-postbuild "$(TargetPath)" 22
+call .\postbuild.bat "$(TargetPath)" 26
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -110,7 +110,7 @@ postbuild "$(TargetPath)" 22
     <PreBuildEvent>
       <Command>echo "Release|x64"
 cd ..\..\
-prebuild gc x64 22
+call .\prebuild.bat gc x64 26
       </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -121,7 +121,7 @@ prebuild gc x64 22
     </Link>
     <PostBuildEvent>
       <Command>cd ..\..\
-postbuild "$(TargetPath)" 22
+call .\postbuild.bat "$(TargetPath)" 26
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -129,7 +129,7 @@ postbuild "$(TargetPath)" 22
     <PreBuildEvent>
       <Command>echo "Debug|x64"
 cd ..\..\
-prebuild gc x64 22
+call .\prebuild.bat gc x64 26
       </Command>
     </PreBuildEvent>
     <ClCompile>
@@ -140,7 +140,7 @@ prebuild gc x64 22
     </Link>
     <PostBuildEvent>
       <Command>cd ..\..\
-postbuild "$(TargetPath)" 22
+call .\postbuild.bat "$(TargetPath)" 26
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

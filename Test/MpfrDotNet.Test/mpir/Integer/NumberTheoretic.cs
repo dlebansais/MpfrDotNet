@@ -21,12 +21,12 @@ public class NumberTheoretic
         using randstate_t state = new randstate_t();
 
         IsProbablePrime = mpz.probable_prime_p(a, state, 10, 0);
-        Assert.IsTrue(IsProbablePrime);
+        Assert.That(IsProbablePrime, Is.True);
 
         using mpz_t b = a * 2;
 
         IsProbablePrime = mpz.probable_prime_p(b, state, 10, 0);
-        Assert.IsFalse(IsProbablePrime);
+        Assert.That(IsProbablePrime, Is.False);
     }
 
     [Test]
@@ -42,12 +42,12 @@ public class NumberTheoretic
         using randstate_t state = new randstate_t();
 
         IsLikelyPrime = mpz.likely_prime_p(a, state, 0);
-        Assert.IsTrue(IsLikelyPrime);
+        Assert.That(IsLikelyPrime, Is.True);
 
         using mpz_t b = a * 2;
 
         IsLikelyPrime = mpz.likely_prime_p(b, state, 0);
-        Assert.IsFalse(IsLikelyPrime);
+        Assert.That(IsLikelyPrime, Is.False);
     }
 
     [Test]

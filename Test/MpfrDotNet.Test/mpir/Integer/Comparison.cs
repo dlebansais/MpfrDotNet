@@ -309,19 +309,19 @@ public class Comparison
         Assert.That(AsString, Is.EqualTo("-622288097498926496141095869268883999563096063592498055290461"));
 
         bool IsNegative = mpz.sgn(a) < 0;
-        Assert.IsTrue(IsNegative);
+        Assert.That(IsNegative, Is.True);
 
         using mpz_t b = -a;
 
         bool IsPositive = mpz.sgn(b) > 0;
-        Assert.IsTrue(IsPositive);
+        Assert.That(IsPositive, Is.True);
 
         using mpz_t c = new mpz_t();
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("0"));
 
         bool HasNoSign = mpz.sgn(c) == 0;
-        Assert.IsTrue(HasNoSign);
+        Assert.That(HasNoSign, Is.True);
     }
 
     [Test]
