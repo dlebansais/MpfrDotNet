@@ -156,7 +156,8 @@ public class Comparison
         Assert.That(IsEqualTo, Is.False);
 
         mpq_t? Instance = null;
-        Assert.Throws<ArgumentNullException>(() => a.Equals(Instance));
+        IsEqualTo = a.Equals(Instance);
+        Assert.That(IsEqualTo, Is.False);
 
         IEquatable<mpq_t> Equatable = a;
 
@@ -194,7 +195,7 @@ public class Comparison
         Assert.That(IsLesserThan, Is.True);
 
         using mpq_t? c = null;
-        Assert.Throws<ArgumentNullException>(() => _ = a.CompareTo(c));
+        Assert.That(a.CompareTo(c), Is.Positive);
 
         object? Instance = b;
 
@@ -207,6 +208,6 @@ public class Comparison
         Assert.That(IsLesserThan, Is.True);
 
         Instance = null;
-        Assert.Throws<ArgumentException>(() => _ = a.CompareTo(Instance));
+        Assert.That(a.CompareTo(Instance), Is.Positive);
     }
 }

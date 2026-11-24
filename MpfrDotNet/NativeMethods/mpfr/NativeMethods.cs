@@ -41,7 +41,10 @@ internal static partial class NativeMethods
         {
             Assembly Current = Assembly.GetExecutingAssembly();
             string Location = Current.Location;
-            string DirectoryName = Path.GetDirectoryName(Location)!;
+
+            // Location is empty when the assembly is loaded from memory or bundled in a single-file application.
+            string? AssemblyDirectory = Location.Length > 0 ? Path.GetDirectoryName(Location) : null;
+            string DirectoryName = AssemblyDirectory ?? AppContext.BaseDirectory;
             string LibraryLocation = Path.Combine(DirectoryName, libraryName);
 
             hLib = LoadLibrary(LibraryLocation);

@@ -124,8 +124,11 @@ public static class mpz
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="OverflowException"><paramref name="op"/> is NaN or an infinity.</exception>
     public static void set_d(mpz_t rop, double op)
     {
+        DoubleArgument.CheckFinite(op);
+
         NativeMethods.mpz_set_d(ref rop.Value, op);
     }
 
@@ -227,8 +230,11 @@ public static class mpz
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="OverflowException"><paramref name="op"/> is NaN or an infinity.</exception>
     public static void init_set_d(mpz_t rop, double op)
     {
+        DoubleArgument.CheckFinite(op);
+
         NativeMethods.mpz_init_set_d(ref rop.Value, op);
     }
     #endregion
@@ -1295,8 +1301,11 @@ public static class mpz
     /// </summary>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="ArgumentException"><paramref name="op2"/> is NaN.</exception>
     public static int cmp_d(mpz_t op1, double op2)
     {
+        DoubleArgument.CheckNotNaN(op2, nameof(op2));
+
         return NativeMethods.mpz_cmp_d(ref op1.Value, op2);
     }
 
@@ -1335,8 +1344,11 @@ public static class mpz
     /// </summary>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="ArgumentException"><paramref name="op2"/> is NaN.</exception>
     public static int cmpabs_d(mpz_t op1, double op2)
     {
+        DoubleArgument.CheckNotNaN(op2, nameof(op2));
+
         return NativeMethods.mpz_cmpabs_d(ref op1.Value, op2);
     }
 
@@ -1710,11 +1722,7 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static bool even_p(mpz_t op)
     {
-        bool HasValidLimb = (op.Value.LimbCount != 0) & (op.Value.Limbs != System.IntPtr.Zero);
-        if (!HasValidLimb)
-            return false;
-
-        return (System.Runtime.InteropServices.Marshal.ReadByte(op.Value.Limbs, 0) & 1) == 0;
+        return !odd_p(op);
     }
 
     /// <summary>

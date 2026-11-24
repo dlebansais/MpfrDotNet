@@ -357,12 +357,12 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="rop">The result operand.</param>
-    /// <param name="x">The first operand.</param>
-    /// <param name="y">The second operand.</param>
+    /// <param name="y">The numerator, the y coordinate.</param>
+    /// <param name="x">The denominator, the x coordinate.</param>
     /// <param name="rnd">The rounding mode.</param>
-    public static int atan2(mpfr_t rop, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
+    public static int atan2(mpfr_t rop, mpfr_t y, mpfr_t x, mpfr_rnd_t rnd)
     {
-        return mpfr_atan2(ref rop.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_atan2(ref rop.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)rnd);
     }
 
     /// <summary>
@@ -552,13 +552,13 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="rop">The result operand.</param>
-    /// <param name="x">The first operand.</param>
-    /// <param name="y">The second operand.</param>
+    /// <param name="y">The numerator, the y coordinate.</param>
+    /// <param name="x">The denominator, the x coordinate.</param>
     /// <param name="u">The third operand.</param>
     /// <param name="rnd">The rounding mode.</param>
-    public static int atan2u(mpfr_t rop, mpfr_t x, mpfr_t y, ulong u, mpfr_rnd_t rnd)
+    public static int atan2u(mpfr_t rop, mpfr_t y, mpfr_t x, ulong u, mpfr_rnd_t rnd)
     {
-        return mpfr_atan2u(ref rop.Value, ref x.Value, ref y.Value, u, (__mpfr_rnd_t)rnd);
+        return mpfr_atan2u(ref rop.Value, ref y.Value, ref x.Value, u, (__mpfr_rnd_t)rnd);
     }
 
     /// <summary>
@@ -631,12 +631,12 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="rop">The result operand.</param>
-    /// <param name="x">The first operand.</param>
-    /// <param name="y">The second operand.</param>
+    /// <param name="y">The numerator, the y coordinate.</param>
+    /// <param name="x">The denominator, the x coordinate.</param>
     /// <param name="rnd">The rounding mode.</param>
-    public static int atan2pi(mpfr_t rop, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
+    public static int atan2pi(mpfr_t rop, mpfr_t y, mpfr_t x, mpfr_rnd_t rnd)
     {
-        return mpfr_atan2pi(ref rop.Value, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_atan2pi(ref rop.Value, ref y.Value, ref x.Value, (__mpfr_rnd_t)rnd);
     }
     #endregion
 

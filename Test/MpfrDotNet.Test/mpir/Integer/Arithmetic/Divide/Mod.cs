@@ -76,8 +76,12 @@ public class Mod
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("1573091"));
 
-        b = -1;
-        Assert.Throws<ArgumentOutOfRangeException>(() => _ = a % b);
+        // The sign of the divisor does not change the remainder.
+        b = -5486219L;
+        using mpz_t d = a % b;
+
+        AsString = d.ToString();
+        Assert.That(AsString, Is.EqualTo("1573091"));
 
         b = 0;
         Assert.Throws<DivideByZeroException>(() => _ = a % b);

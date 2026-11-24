@@ -21,15 +21,18 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Returns a string that represents the current object.
     /// </summary>
     /// <param name="resultbase">The digit base.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2.</exception>
     public string ToString(int resultbase)
     {
+        uint DigitCountBase = DigitBase.ToDigitCountBase(resultbase, nameof(resultbase));
+
         using mpz_t Numerator = new();
         mpq.get_num(Numerator, this);
 
         using mpz_t Denominator = new();
         mpq.get_den(Denominator, this);
 
-        ulong SizeInDigits = (ulong)mpz_sizeinbase(ref Numerator.Value, (uint)resultbase) + (ulong)mpz_sizeinbase(ref Denominator.Value, (uint)resultbase);
+        ulong SizeInDigits = (ulong)mpz_sizeinbase(ref Numerator.Value, DigitCountBase) + (ulong)mpz_sizeinbase(ref Denominator.Value, DigitCountBase);
 
         StringBuilder Data = new((int)(SizeInDigits + 3));
         mpq.get_str(Data, resultbase, this);

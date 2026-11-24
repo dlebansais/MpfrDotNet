@@ -1,6 +1,7 @@
 ﻿namespace MpirDotNet;
 
 using System;
+using System.Globalization;
 using System.Text;
 
 /// <summary>
@@ -44,11 +45,13 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         if (FractionalPart.Length > 0)
             FractionalPart = "." + FractionalPart;
 
-        string ExponentPart = (Exponent - 1).ToString();
+        string ExponentPart = (Exponent - 1).ToString(CultureInfo.InvariantCulture);
         if (Exponent > 0)
             ExponentPart = "+" + ExponentPart;
 
-        Result = $"{IntegerPart}{FractionalPart}E{ExponentPart}";
+        // MPIR reads '@' as the exponent marker in bases above 10, where 'E' can be a digit. The exponent is written in decimal.
+        char ExponentMarker = Math.Abs(resultbase) > 10 ? '@' : 'E';
+        Result = $"{IntegerPart}{FractionalPart}{ExponentMarker}{ExponentPart}";
 
         return Result;
     }
@@ -98,9 +101,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator byte(mpf_t value)
     {
-        return (byte)mpf.get_ui(value);
+        using mpz_t Integer = value.ToTruncatedInteger();
+        return (byte)Integer;
     }
 
     /// <summary>
@@ -108,9 +113,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator sbyte(mpf_t value)
     {
-        return (sbyte)mpf.get_si(value);
+        using mpz_t Integer = value.ToTruncatedInteger();
+        return checked((sbyte)(long)Integer);
     }
 
     /// <summary>
@@ -118,9 +125,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator ushort(mpf_t value)
     {
-        return (ushort)mpf.get_ui(value);
+        using mpz_t Integer = value.ToTruncatedInteger();
+        return (ushort)Integer;
     }
 
     /// <summary>
@@ -128,9 +137,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator short(mpf_t value)
     {
-        return (short)mpf.get_si(value);
+        using mpz_t Integer = value.ToTruncatedInteger();
+        return (short)Integer;
     }
 
     /// <summary>
@@ -138,9 +149,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator uint(mpf_t value)
     {
-        return (uint)mpf.get_ui(value);
+        using mpz_t Integer = value.ToTruncatedInteger();
+        return (uint)Integer;
     }
 
     /// <summary>
@@ -148,9 +161,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator int(mpf_t value)
     {
-        return (int)mpf.get_si(value);
+        using mpz_t Integer = value.ToTruncatedInteger();
+        return (int)Integer;
     }
 
     /// <summary>
@@ -158,9 +173,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator ulong(mpf_t value)
     {
-        return (ulong)mpf.get_ui(value);
+        using mpz_t Integer = value.ToTruncatedInteger();
+        return (ulong)Integer;
     }
 
     /// <summary>
@@ -168,9 +185,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator long(mpf_t value)
     {
-        return (long)mpf.get_si(value);
+        using mpz_t Integer = value.ToTruncatedInteger();
+        return (long)Integer;
     }
 
     /// <summary>
@@ -249,5 +268,13 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     public bool FitsSignedShort
     {
         get { return mpf.fits_sshort_p(this); }
+    }
+
+    private mpz_t ToTruncatedInteger()
+    {
+        mpz_t Result = new();
+        mpz.set_f(Result, this);
+
+        return Result;
     }
 }

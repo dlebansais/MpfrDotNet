@@ -55,13 +55,15 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Shifts a number to the left.
     /// </summary>
     /// <param name="x">The operand.</param>
-    /// <param name="count">The number of bits to shift.</param>
+    /// <param name="count">The number of bits to shift. A negative count shifts to the right.</param>
     public static mpq_t operator <<(mpq_t x, int count)
     {
         mpq_t z = new();
 
         if (count >= 0)
             mpq.mul_2exp(z, x, (ulong)count);
+        else
+            mpq.div_2exp(z, x, (ulong)-(long)count);
 
         return z;
     }
@@ -70,13 +72,15 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Shifts a number to the right.
     /// </summary>
     /// <param name="x">The operand.</param>
-    /// <param name="count">The number of bits to shift.</param>
+    /// <param name="count">The number of bits to shift. A negative count shifts to the left.</param>
     public static mpq_t operator >>(mpq_t x, int count)
     {
         mpq_t z = new();
 
         if (count >= 0)
             mpq.div_2exp(z, x, (ulong)count);
+        else
+            mpq.mul_2exp(z, x, (ulong)-(long)count);
 
         return z;
     }
@@ -153,9 +157,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator ==(mpq_t x, mpq_t y)
+    public static bool operator ==(mpq_t? x, mpq_t? y)
     {
-        return x.IsEqualTo(y);
+        return x is null ? y is null : x.Equals(y);
     }
 
     /// <summary>
@@ -163,9 +167,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator !=(mpq_t x, mpq_t y)
+    public static bool operator !=(mpq_t? x, mpq_t? y)
     {
-        return !x.IsEqualTo(y);
+        return !(x == y);
     }
 
     /// <summary>
@@ -213,9 +217,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator ==(mpq_t x, mpz_t y)
+    public static bool operator ==(mpq_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) == 0;
+        return x is null ? y is null : y is not null && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -223,9 +227,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator !=(mpq_t x, mpz_t y)
+    public static bool operator !=(mpq_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) != 0;
+        return !(x == y);
     }
 
     /// <summary>
@@ -234,10 +238,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="obj">The object to compare with the current object..</param>
     public override bool Equals(object? obj)
     {
-        if (obj is mpq_t other)
-            return IsEqualTo(other);
-        else
-            return false;
+        return obj is mpq_t other && Equals(other);
     }
 
     /// <summary>

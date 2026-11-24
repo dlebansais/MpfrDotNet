@@ -37,9 +37,10 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="resultbase">The digit base used in the result.</param>
     /// <returns>The number value.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2.</exception>
     public string ToString(int resultbase)
     {
-        ulong SizeInDigits = mpz.sizeinbase(this, (uint)resultbase);
+        ulong SizeInDigits = mpz.sizeinbase(this, DigitBase.ToDigitCountBase(resultbase, nameof(resultbase)));
 
         StringBuilder Data = new((int)(SizeInDigits + 2));
         mpz.get_str(Data, resultbase, this);
@@ -142,55 +143,61 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts to a <see cref="byte"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator byte(mpz_t value)
     {
-        return (byte)(uint)value;
+        return checked((byte)(ulong)value);
     }
 
     /// <summary>
     /// Converts to a <see cref="int"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator int(mpz_t value)
     {
-        return (int)mpz.get_si(value);
+        return checked((int)(long)value);
     }
 
     /// <summary>
     /// Converts to a <see cref="uint"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator uint(mpz_t value)
     {
-        return (uint)mpz.get_ui(value);
+        return checked((uint)(ulong)value);
     }
 
     /// <summary>
     /// Converts to a <see cref="short"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator short(mpz_t value)
     {
-        return (short)(int)value;
+        return checked((short)(long)value);
     }
 
     /// <summary>
     /// Converts to a <see cref="ushort"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator ushort(mpz_t value)
     {
-        return (ushort)(uint)value;
+        return checked((ushort)(ulong)value);
     }
 
     /// <summary>
     /// Converts to a <see cref="long"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator long(mpz_t value)
     {
         if (mpz.cmp_si(value, long.MinValue) < 0 || mpz.cmp_si(value, long.MaxValue) > 0)
-            throw new ArgumentOutOfRangeException(nameof(value));
+            throw new OverflowException("The value is outside the range of the target type.");
 
         byte[] Bytes = new byte[8];
         mpz.export(Bytes, out _, -1, sizeof(byte), -1, 0, value);
@@ -206,10 +213,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts to a <see cref="ulong"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
     public static explicit operator ulong(mpz_t value)
     {
         if (mpz.cmp_ui(value, 0) < 0 || mpz.cmp_ui(value, ulong.MaxValue) > 0)
-            throw new ArgumentOutOfRangeException(nameof(value));
+            throw new OverflowException("The value is outside the range of the target type.");
 
         byte[] Bytes = new byte[8];
         mpz.export(Bytes, out _, -1, sizeof(byte), -1, 0, value);
@@ -245,7 +253,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         byte[] Bytes = value.ToByteArray();
 
-        BigInteger Result = new(Bytes);
-        return Result;
+        // ToByteArray returns the magnitude, least significant byte first. BigInteger reads two's complement,
+        // so an extra zero byte keeps the magnitude positive, and the sign is applied afterwards.
+        byte[] UnsignedBytes = new byte[Bytes.Length + 1];
+        Array.Copy(Bytes, UnsignedBytes, Bytes.Length);
+
+        BigInteger Magnitude = new(UnsignedBytes);
+        return mpz.sgn(value) < 0 ? -Magnitude : Magnitude;
     }
 }

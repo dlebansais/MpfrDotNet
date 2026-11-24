@@ -38,6 +38,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     public void SetNumerator(mpz_t numerator)
     {
         mpq.set_num(this, numerator);
+        mpq.canonicalize(this);
     }
 
     /// <summary>
@@ -52,9 +53,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Sets the number denominator.
     /// </summary>
     /// <param name="denominator">The denominator.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
     public void SetDenominator(mpz_t denominator)
     {
         mpq.set_den(this, denominator);
+        mpq.canonicalize(this);
     }
 
     /// <summary>

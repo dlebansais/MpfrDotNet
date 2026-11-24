@@ -13,8 +13,18 @@ public partial class mpfr_t : IDisposable
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
-    public int CompareTo(mpfr_t other)
+    /// <returns>A positive value if <paramref name="other"/> is <see langword="null"/> or NaN, and a negative value if only this number is NaN: NaN sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
+    public int CompareTo(mpfr_t? other)
     {
+        if (other is null)
+            return 1;
+
+        bool IsThisNaN = IsNan;
+        bool IsOtherNaN = other.IsNan;
+
+        if (IsThisNaN || IsOtherNaN)
+            return IsThisNaN ? (IsOtherNaN ? 0 : -1) : 1;
+
         return mpfr.cmp(this, other);
     }
 
@@ -22,26 +32,34 @@ public partial class mpfr_t : IDisposable
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(ulong other)
     {
-        return mpfr.cmp_ui(this, other);
+        return IsNan ? -1 : mpfr.cmp_ui(this, other);
     }
 
     /// <summary>
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(long other)
     {
-        return mpfr.cmp_si(this, other);
+        return IsNan ? -1 : mpfr.cmp_si(this, other);
     }
 
     /// <summary>
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <returns>A negative value if only this number is NaN, and a positive value if only <paramref name="other"/> is NaN: NaN sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(double other)
     {
+        bool IsOtherNaN = double.IsNaN(other);
+
+        if (IsNan || IsOtherNaN)
+            return IsNan ? (IsOtherNaN ? 0 : -1) : 1;
+
         return mpfr.cmp_d(this, other);
     }
 
@@ -49,27 +67,30 @@ public partial class mpfr_t : IDisposable
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(mpz_t other)
     {
-        return mpfr.cmp_z(this, other);
+        return IsNan ? -1 : mpfr.cmp_z(this, other);
     }
 
     /// <summary>
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(mpq_t other)
     {
-        return mpfr.cmp_q(this, other);
+        return IsNan ? -1 : mpfr.cmp_q(this, other);
     }
 
     /// <summary>
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(mpf_t other)
     {
-        return mpfr.cmp_f(this, other);
+        return IsNan ? -1 : mpfr.cmp_f(this, other);
     }
 
     /// <summary>
@@ -98,9 +119,10 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first number.</param>
     /// <param name="y">The second number.</param>
     /// <returns>0 if <paramref name="x"/> and <paramref name="y"/> are equal, 1 if <paramref name="x"/> &gt; <paramref name="y"/>, -1 if <paramref name="x"/> &lt; <paramref name="y"/>.</returns>
+    /// <returns>The same value as <see cref="CompareTo(mpfr_t)"/>: NaN sorts before any number.</returns>
     public static int Compare(mpfr_t x, mpfr_t y)
     {
-        return mpfr.cmp(x, y);
+        return x.CompareTo(y);
     }
 
     /// <summary>
@@ -204,12 +226,16 @@ public partial class mpfr_t : IDisposable
     /// Determines whether the specified object is equal to the current object.
     /// </summary>
     /// <param name="obj">The object to compare with the current object..</param>
+    /// <remarks>As with <see cref="double.Equals(double)"/>, NaN is equal to NaN, unlike with the == operator.</remarks>
     public override bool Equals(object? obj)
     {
-        if (obj is mpfr_t other)
-            return mpfr.equal_p(this, other);
-        else
+        if (obj is not mpfr_t other)
             return false;
+
+        if (IsNan || other.IsNan)
+            return IsNan && other.IsNan;
+
+        return mpfr.equal_p(this, other);
     }
 
     /// <summary>

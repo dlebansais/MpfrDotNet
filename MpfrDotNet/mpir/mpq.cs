@@ -125,8 +125,11 @@ public static class mpq
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="OverflowException"><paramref name="op"/> is NaN or an infinity.</exception>
     public static void set_d(mpq_t rop, double op)
     {
+        DoubleArgument.CheckFinite(op);
+
         NativeMethods.mpq_set_d(ref rop.Value, op);
     }
 

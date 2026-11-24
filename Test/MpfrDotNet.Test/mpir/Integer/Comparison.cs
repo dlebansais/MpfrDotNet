@@ -350,7 +350,8 @@ public class Comparison
         Assert.That(IsGreaterThan, Is.True);
 
         Instance = null;
-        Assert.Throws<ArgumentNullException>(() => a.CompareTo(Instance));
+        // As with other .NET types, null sorts before any number.
+        Assert.That(a.CompareTo(Instance), Is.Positive);
 
         object? Object = b;
         IComparable Comparable = a;
@@ -362,7 +363,7 @@ public class Comparison
         Assert.That(IsGreaterThan, Is.True);
 
         Object = null;
-        Assert.Throws<ArgumentException>(() => a.CompareTo(Object));
+        Assert.That(a.CompareTo(Object), Is.Positive);
     }
 
     [Test]
@@ -484,7 +485,8 @@ public class Comparison
 
         Instance = null;
 
-        Assert.Throws<ArgumentNullException>(() => a.Equals(Instance));
+        IsEqualTo = a.Equals(Instance);
+        Assert.That(IsEqualTo, Is.False);
 
         object? Object = c;
 

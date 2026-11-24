@@ -10,6 +10,7 @@ using static Interop.Mpir.NativeMethods;
 public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConvertible, IComparable, IComparable<mpq_t>
 {
     private const int MaxArrayLength = 32;
+    private const string ObsoleteCanonicalizeMessage = "Rational numbers are always canonicalized: remove the canonicalize argument.";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="mpq_t"/> class.
@@ -50,78 +51,129 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="mpq_t"/> class.
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
     /// </summary>
     /// <param name="numerator">The numerator.</param>
     /// <param name="denominator">The denominator.</param>
-    /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
-    public mpq_t(ulong numerator, ulong denominator, bool canonicalize = false)
+    /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    public mpq_t(ulong numerator, ulong denominator)
     {
         mpq.init(this);
         mpq.set_ui(this, numerator, denominator);
-
-        if (canonicalize)
-            mpq.canonicalize(this);
+        mpq.canonicalize(this);
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="mpq_t"/> class.
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
     /// </summary>
     /// <param name="numerator">The numerator.</param>
     /// <param name="denominator">The denominator.</param>
-    /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
-    public mpq_t(long numerator, ulong denominator, bool canonicalize = false)
+    /// <param name="canonicalize">Ignored: the number is always canonicalized.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    [Obsolete(ObsoleteCanonicalizeMessage)]
+    public mpq_t(ulong numerator, ulong denominator, bool canonicalize)
+        : this(numerator, denominator)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
+    /// </summary>
+    /// <param name="numerator">The numerator.</param>
+    /// <param name="denominator">The denominator.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    public mpq_t(long numerator, ulong denominator)
     {
         mpq.init(this);
         mpq.set_si(this, numerator, denominator);
+        mpq.canonicalize(this);
+    }
 
-        if (canonicalize)
-            mpq.canonicalize(this);
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
+    /// </summary>
+    /// <param name="numerator">The numerator.</param>
+    /// <param name="denominator">The denominator.</param>
+    /// <param name="canonicalize">Ignored: the number is always canonicalized.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    [Obsolete(ObsoleteCanonicalizeMessage)]
+    public mpq_t(long numerator, ulong denominator, bool canonicalize)
+        : this(numerator, denominator)
+    {
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="mpq_t"/> class.
     /// </summary>
     /// <param name="op">The value.</param>
+    /// <exception cref="OverflowException"><paramref name="op"/> is NaN or an infinity.</exception>
     public mpq_t(double op)
     {
+        DoubleArgument.CheckFinite(op);
+
         mpq.init(this);
         mpq.set_d(this, op);
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="mpq_t"/> class.
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
     /// </summary>
     /// <param name="numerator">The numerator.</param>
     /// <param name="denominator">The denominator.</param>
-    /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
-    public mpq_t(mpz_t numerator, mpz_t denominator, bool canonicalize = false)
+    /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    public mpq_t(mpz_t numerator, mpz_t denominator)
     {
         mpq.init(this);
         mpq.set_num(this, numerator);
         mpq.set_den(this, denominator);
-
-        if (canonicalize)
-            mpq.canonicalize(this);
+        mpq.canonicalize(this);
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="mpq_t"/> class.
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
     /// </summary>
-    /// <param name="text">The value text.</param>
-    /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
-    public mpq_t(string text, bool canonicalize = false)
-        : this(text, mpz_t.DefaultBase, canonicalize)
+    /// <param name="numerator">The numerator.</param>
+    /// <param name="denominator">The denominator.</param>
+    /// <param name="canonicalize">Ignored: the number is always canonicalized.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    [Obsolete(ObsoleteCanonicalizeMessage)]
+    public mpq_t(mpz_t numerator, mpz_t denominator, bool canonicalize)
+        : this(numerator, denominator)
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="mpq_t"/> class.
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
+    /// </summary>
+    /// <param name="text">The value text.</param>
+    /// <exception cref="ArgumentException"><paramref name="text"/> is not a valid number.</exception>
+    /// <exception cref="DivideByZeroException">The denominator in <paramref name="text"/> is zero.</exception>
+    public mpq_t(string text)
+        : this(text, mpz_t.DefaultBase)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
+    /// </summary>
+    /// <param name="text">The value text.</param>
+    /// <param name="canonicalize">Ignored: the number is always canonicalized.</param>
+    /// <exception cref="ArgumentException"><paramref name="text"/> is not a valid number.</exception>
+    /// <exception cref="DivideByZeroException">The denominator in <paramref name="text"/> is zero.</exception>
+    [Obsolete(ObsoleteCanonicalizeMessage)]
+    public mpq_t(string text, bool canonicalize)
+        : this(text, mpz_t.DefaultBase)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
     /// </summary>
     /// <param name="text">The value text.</param>
     /// <param name="strBase">The digit base.</param>
-    /// <param name="canonicalize">True if the new instance should use canonical numerator and denominator.</param>
-    public mpq_t(string text, int strBase, bool canonicalize = false)
+    /// <exception cref="ArgumentException">The combination of <paramref name="text"/> and <paramref name="strBase"/> is invalid.</exception>
+    /// <exception cref="DivideByZeroException">The denominator in <paramref name="text"/> is zero.</exception>
+    public mpq_t(string text, int strBase)
     {
         mpq.init(this);
 
@@ -132,8 +184,21 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
             throw new ArgumentException($"The combination of '{nameof(text)}' and '{nameof(strBase)}' is invalid.");
         }
 
-        if (canonicalize)
-            mpq.canonicalize(this);
+        mpq.canonicalize(this);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
+    /// </summary>
+    /// <param name="text">The value text.</param>
+    /// <param name="strBase">The digit base.</param>
+    /// <param name="canonicalize">Ignored: the number is always canonicalized.</param>
+    /// <exception cref="ArgumentException">The combination of <paramref name="text"/> and <paramref name="strBase"/> is invalid.</exception>
+    /// <exception cref="DivideByZeroException">The denominator in <paramref name="text"/> is zero.</exception>
+    [Obsolete(ObsoleteCanonicalizeMessage)]
+    public mpq_t(string text, int strBase, bool canonicalize)
+        : this(text, strBase)
+    {
     }
 
     /// <summary>

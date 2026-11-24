@@ -104,8 +104,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="op">The operand.</param>
     public mpz_t(BigInteger op)
-        : this(op.ToByteArray())
+        : this(BigInteger.Abs(op).ToByteArray())
     {
+        // The bytes are imported as a magnitude, so the sign is applied afterwards.
+        if (op.Sign < 0)
+            mpz.neg(this, this);
     }
 
     /// <summary>

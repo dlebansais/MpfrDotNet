@@ -201,7 +201,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The flags value.</param>
     public static void SetFlags(uint mask, uint value)
     {
-        mpfr.flags_restore(mask, value);
+        mpfr.flags_restore(value, mask);
     }
 
     /// <summary>

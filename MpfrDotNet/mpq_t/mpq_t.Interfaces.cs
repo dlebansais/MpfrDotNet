@@ -52,7 +52,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     private void DisposeNow()
     {
-        mpq.clear(this);
+        // A constructor that throws before initializing the number leaves no native memory to release.
+        if (Value.Numerator.Limbs != IntPtr.Zero)
+            mpq.clear(this);
     }
     #endregion
 
@@ -63,10 +65,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public bool Equals(mpq_t? other)
     {
-        if (other is null)
-            throw new ArgumentNullException(nameof(other));
-        else
-            return mpq.cmp(this, other) == 0;
+        return other is not null && mpq.equal(this, other);
     }
 
     /// <summary>
@@ -287,7 +286,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     public sbyte ToSByte(IFormatProvider? provider)
     {
         using mpz_t Integer = ToTruncatedInteger();
-        return (sbyte)(short)Integer;
+        return checked((sbyte)(short)Integer);
     }
 
     /// <summary>
@@ -458,9 +457,13 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
     /// </summary>
     /// <param name="obj">An object to compare with this instance.</param>
+    /// <returns>A positive value if <paramref name="obj"/> is <see langword="null"/>, as with other .NET types.</returns>
+    /// <exception cref="ArgumentException"><paramref name="obj"/> is not an <see cref="mpq_t"/>.</exception>
     public int CompareTo(object? obj)
     {
-        if (obj is mpq_t other)
+        if (obj is null)
+            return 1;
+        else if (obj is mpq_t other)
             return CompareTo(other);
         else
             throw new ArgumentException("Invalid comparison with an object of a different type.", nameof(obj));

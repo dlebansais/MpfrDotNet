@@ -639,7 +639,7 @@ public class Comparison
 
         using mpq_t q1 = new("100935446151795644800/11575");
         AsString = q1.ToString();
-        Assert.That(AsString, Is.EqualTo("100935446151795644800/11575"));
+        Assert.That(AsString, Is.EqualTo("4037417846071825792/463"));
 
         using mpq_t q2 = new("100935446151795654067/11575");
         AsString = q2.ToString();

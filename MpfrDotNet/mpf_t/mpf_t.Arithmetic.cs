@@ -14,7 +14,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public mpf_t Abs()
     {
-        mpf_t z = new();
+        mpf_t z = new(mpf.get_prec(this));
 
         mpf.abs(z, this);
 
@@ -34,7 +34,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public mpf_t Sqrt()
     {
-        mpf_t Result = new();
+        mpf_t Result = new(mpf.get_prec(this));
 
         mpf.sqrt(Result, this);
 
@@ -47,7 +47,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="exp">The power.</param>
     public mpf_t Pow(ulong exp)
     {
-        mpf_t Result = new();
+        mpf_t Result = new(mpf.get_prec(this));
 
         mpf.pow_ui(Result, this, exp);
 

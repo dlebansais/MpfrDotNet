@@ -12,9 +12,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Sqr()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.sqr(z, this, Rounding);
+        z.LastTernaryResult = mpfr.sqr(z, this, Rounding);
 
         return z;
     }
@@ -24,9 +24,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Sqrt()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.sqrt(z, this, Rounding);
+        z.LastTernaryResult = mpfr.sqrt(z, this, Rounding);
 
         return z;
     }
@@ -36,9 +36,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Cbrt()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.cbrt(z, this, Rounding);
+        z.LastTernaryResult = mpfr.cbrt(z, this, Rounding);
 
         return z;
     }
@@ -49,9 +49,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The nth.</param>
     public mpfr_t NthRoot(ulong n)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.rootn_ui(z, this, n, Rounding);
+        z.LastTernaryResult = mpfr.rootn_ui(z, this, n, Rounding);
 
         return z;
     }
@@ -62,9 +62,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The nth.</param>
     public mpfr_t NthRoot(long n)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.rootn_si(z, this, n, Rounding);
+        z.LastTernaryResult = mpfr.rootn_si(z, this, n, Rounding);
 
         return z;
     }
@@ -74,9 +74,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Abs()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.abs(z, this, Rounding);
+        z.LastTernaryResult = mpfr.abs(z, this, Rounding);
 
         return z;
     }
@@ -183,9 +183,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The power.</param>
     public mpfr_t Mul2(ulong n)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.mul_2ui(z, this, n, Rounding);
+        z.LastTernaryResult = mpfr.mul_2ui(z, this, n, Rounding);
 
         return z;
     }
@@ -196,9 +196,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The power.</param>
     public mpfr_t Mul2(long n)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.mul_2si(z, this, n, Rounding);
+        z.LastTernaryResult = mpfr.mul_2si(z, this, n, Rounding);
 
         return z;
     }
@@ -209,9 +209,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The power.</param>
     public mpfr_t Div2(ulong n)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.div_2ui(z, this, n, Rounding);
+        z.LastTernaryResult = mpfr.div_2ui(z, this, n, Rounding);
 
         return z;
     }
@@ -222,9 +222,9 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The power.</param>
     public mpfr_t Div2(long n)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.div_2si(z, this, n, Rounding);
+        z.LastTernaryResult = mpfr.div_2si(z, this, n, Rounding);
 
         return z;
     }
@@ -234,9 +234,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t RecSqrt()
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(this);
 
-        LastTernaryResult = mpfr.rec_sqrt(z, this, Rounding);
+        z.LastTernaryResult = mpfr.rec_sqrt(z, this, Rounding);
 
         return z;
     }

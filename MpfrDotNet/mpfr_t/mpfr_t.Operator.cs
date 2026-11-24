@@ -16,7 +16,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(mpfr_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.add(z, x, y, x.Rounding);
 
@@ -30,7 +30,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(mpfr_t x, ulong y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.add_ui(z, x, y, x.Rounding);
 
@@ -44,7 +44,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(ulong x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.add_ui(z, y, x, y.Rounding);
 
@@ -58,7 +58,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(mpfr_t x, long y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.add_si(z, x, y, x.Rounding);
 
@@ -72,7 +72,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(long x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.add_si(z, y, x, y.Rounding);
 
@@ -86,7 +86,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(mpfr_t x, double y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.add_d(z, x, y, x.Rounding);
 
@@ -100,7 +100,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(double x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.add_d(z, y, x, y.Rounding);
 
@@ -114,7 +114,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(mpfr_t x, mpz_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.add_z(z, x, y, x.Rounding);
 
@@ -128,7 +128,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(mpz_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.add_z(z, y, x, y.Rounding);
 
@@ -142,7 +142,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(mpfr_t x, mpq_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.add_q(z, x, y, x.Rounding);
 
@@ -156,7 +156,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator +(mpq_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.add_q(z, y, x, y.Rounding);
 
@@ -172,7 +172,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(mpfr_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.sub(z, x, y, x.Rounding);
 
@@ -186,7 +186,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(mpfr_t x, ulong y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.sub_ui(z, x, y, x.Rounding);
 
@@ -200,7 +200,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(ulong x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.ui_sub(z, x, y, y.Rounding);
 
@@ -214,7 +214,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(mpfr_t x, long y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.sub_si(z, x, y, x.Rounding);
 
@@ -228,7 +228,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(long x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.si_sub(z, x, y, y.Rounding);
 
@@ -242,7 +242,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(mpfr_t x, double y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.sub_d(z, x, y, x.Rounding);
 
@@ -256,7 +256,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(double x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.d_sub(z, x, y, y.Rounding);
 
@@ -270,7 +270,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(mpfr_t x, mpz_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.sub_z(z, x, y, x.Rounding);
 
@@ -284,7 +284,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(mpz_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.z_sub(z, x, y, y.Rounding);
 
@@ -298,7 +298,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(mpfr_t x, mpq_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.sub_q(z, x, y, x.Rounding);
 
@@ -312,12 +312,20 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator -(mpq_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
-        z.LastTernaryResult = mpfr.sub_q(z, y, x, y.Rounding);
+        // x - y is computed as -(y - x). Negation is exact but reverses the direction of rounding,
+        // so y - x is rounded in the opposite direction.
+        z.LastTernaryResult = -mpfr.sub_q(z, y, x, OppositeRounding(y.Rounding));
+        _ = mpfr.neg(z, z, y.Rounding);
 
-        mpfr.neg(z, z, y.Rounding);
-        z.LastTernaryResult = -z.LastTernaryResult;
+        // An exact zero gets the sign that MPFR gives to x - y: +0, or -0 when rounding toward -infinity,
+        // except that 0 - (-0) is +0.
+        if (z.IsZero)
+        {
+            bool IsNegativeZeroOperand = y.IsZero && mpfr.signbit(y) != 0;
+            mpfr.set_zero(z, y.Rounding == mpfr_rnd_t.MPFR_RNDD && !IsNegativeZeroOperand ? -1 : +1);
+        }
 
         return z;
     }
@@ -331,7 +339,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(mpfr_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.mul(z, x, y, x.Rounding);
 
@@ -345,7 +353,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(mpfr_t x, ulong y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.mul_ui(z, x, y, x.Rounding);
 
@@ -359,7 +367,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(ulong x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.mul_ui(z, y, x, y.Rounding);
 
@@ -373,7 +381,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(mpfr_t x, long y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.mul_si(z, x, y, x.Rounding);
 
@@ -387,7 +395,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(long x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.mul_si(z, y, x, y.Rounding);
 
@@ -401,7 +409,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(mpfr_t x, double y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.mul_d(z, x, y, x.Rounding);
 
@@ -415,7 +423,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(double x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.mul_d(z, y, x, y.Rounding);
 
@@ -429,7 +437,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(mpfr_t x, mpz_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.mul_z(z, x, y, x.Rounding);
 
@@ -443,7 +451,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(mpz_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.mul_z(z, y, x, y.Rounding);
 
@@ -457,7 +465,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(mpfr_t x, mpq_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.mul_q(z, x, y, x.Rounding);
 
@@ -471,7 +479,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator *(mpq_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.mul_q(z, y, x, y.Rounding);
 
@@ -487,7 +495,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(mpfr_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.div(z, x, y, x.Rounding);
 
@@ -501,7 +509,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(mpfr_t x, ulong y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.div_ui(z, x, y, x.Rounding);
 
@@ -515,7 +523,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(ulong x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.ui_div(z, x, y, y.Rounding);
 
@@ -529,7 +537,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(mpfr_t x, long y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.div_si(z, x, y, x.Rounding);
 
@@ -543,7 +551,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(long x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.si_div(z, x, y, y.Rounding);
 
@@ -557,7 +565,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(mpfr_t x, double y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.div_d(z, x, y, x.Rounding);
 
@@ -571,7 +579,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(double x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = mpfr.d_div(z, x, y, y.Rounding);
 
@@ -585,7 +593,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(mpfr_t x, mpz_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.div_z(z, x, y, x.Rounding);
 
@@ -599,10 +607,11 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(mpz_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
-        mpfr.div_z(z, y, x, y.Rounding);
-        z.LastTernaryResult = mpfr.ui_div(z, 1, z, y.Rounding);
+        // x is converted exactly, so that the result is rounded once.
+        using mpfr_t ExactX = CreateExact(x);
+        z.LastTernaryResult = mpfr.div(z, ExactX, y, y.Rounding);
 
         return z;
     }
@@ -614,7 +623,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(mpfr_t x, mpq_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.div_q(z, x, y, x.Rounding);
 
@@ -628,10 +637,19 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static mpfr_t operator /(mpq_t x, mpfr_t y)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(y);
 
-        mpfr.div_q(z, y, x, y.Rounding);
-        z.LastTernaryResult = mpfr.ui_div(z, 1, z, y.Rounding);
+        // With x = n / d, x / y = n / (d * y). Both n and d * y are computed exactly, so that the result is rounded once.
+        using mpz_t Numerator = new();
+        mpq.get_num(Numerator, x);
+        using mpz_t Denominator = new();
+        mpq.get_den(Denominator, x);
+
+        using mpfr_t ExactNumerator = CreateExact(Numerator);
+        using mpfr_t ExactProduct = CreateWithPrecision(mpz.sizeinbase(Denominator, 2) + mpfr.get_prec(y), nameof(y));
+        _ = mpfr.mul_z(ExactProduct, y, Denominator, mpfr_rnd_t.MPFR_RNDN);
+
+        z.LastTernaryResult = mpfr.div(z, ExactNumerator, ExactProduct, y.Rounding);
 
         return z;
     }
@@ -644,7 +662,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The value.</param>
     public static mpfr_t operator -(mpfr_t x)
     {
-        mpfr_t z = new();
+        mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.neg(z, x, x.Rounding);
 
@@ -670,7 +688,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpfr_t x, ulong y)
     {
-        return x.CompareTo(y) > 0;
+        return !x.IsNan && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -680,7 +698,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(ulong x, mpfr_t y)
     {
-        return y.CompareTo(x) < 0;
+        return !y.IsNan && y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -690,7 +708,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpfr_t x, long y)
     {
-        return x.CompareTo(y) > 0;
+        return !x.IsNan && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -700,7 +718,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(long x, mpfr_t y)
     {
-        return y.CompareTo(x) < 0;
+        return !y.IsNan && y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -710,7 +728,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpfr_t x, double y)
     {
-        return x.CompareTo(y) > 0;
+        return !x.IsNan && !double.IsNaN(y) && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -720,7 +738,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(double x, mpfr_t y)
     {
-        return y.CompareTo(x) < 0;
+        return !y.IsNan && !double.IsNaN(x) && y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -730,7 +748,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpfr_t x, mpz_t y)
     {
-        return x.CompareTo(y) > 0;
+        return !x.IsNan && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -740,7 +758,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpz_t x, mpfr_t y)
     {
-        return y.CompareTo(x) < 0;
+        return !y.IsNan && y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -750,7 +768,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpfr_t x, mpq_t y)
     {
-        return x.CompareTo(y) > 0;
+        return !x.IsNan && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -760,7 +778,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpq_t x, mpfr_t y)
     {
-        return y.CompareTo(x) < 0;
+        return !y.IsNan && y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -770,7 +788,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpfr_t x, mpf_t y)
     {
-        return x.CompareTo(y) > 0;
+        return !x.IsNan && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -780,7 +798,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >(mpf_t x, mpfr_t y)
     {
-        return y.CompareTo(x) < 0;
+        return !y.IsNan && y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -800,7 +818,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpfr_t x, ulong y)
     {
-        return x.CompareTo(y) >= 0;
+        return !x.IsNan && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -810,7 +828,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(ulong x, mpfr_t y)
     {
-        return y.CompareTo(x) <= 0;
+        return !y.IsNan && y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -820,7 +838,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpfr_t x, long y)
     {
-        return x.CompareTo(y) >= 0;
+        return !x.IsNan && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -830,7 +848,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(long x, mpfr_t y)
     {
-        return y.CompareTo(x) <= 0;
+        return !y.IsNan && y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -840,7 +858,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpfr_t x, double y)
     {
-        return x.CompareTo(y) >= 0;
+        return !x.IsNan && !double.IsNaN(y) && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -850,7 +868,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(double x, mpfr_t y)
     {
-        return y.CompareTo(x) <= 0;
+        return !y.IsNan && !double.IsNaN(x) && y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -860,7 +878,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpfr_t x, mpz_t y)
     {
-        return x.CompareTo(y) >= 0;
+        return !x.IsNan && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -870,7 +888,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpz_t x, mpfr_t y)
     {
-        return y.CompareTo(x) <= 0;
+        return !y.IsNan && y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -880,7 +898,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpfr_t x, mpq_t y)
     {
-        return x.CompareTo(y) >= 0;
+        return !x.IsNan && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -890,7 +908,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpq_t x, mpfr_t y)
     {
-        return y.CompareTo(x) <= 0;
+        return !y.IsNan && y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -900,7 +918,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpfr_t x, mpf_t y)
     {
-        return x.CompareTo(y) >= 0;
+        return !x.IsNan && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -910,7 +928,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator >=(mpf_t x, mpfr_t y)
     {
-        return y.CompareTo(x) <= 0;
+        return !y.IsNan && y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -930,7 +948,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpfr_t x, ulong y)
     {
-        return x.CompareTo(y) < 0;
+        return !x.IsNan && x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -940,7 +958,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(ulong x, mpfr_t y)
     {
-        return y.CompareTo(x) > 0;
+        return !y.IsNan && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -950,7 +968,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpfr_t x, long y)
     {
-        return x.CompareTo(y) < 0;
+        return !x.IsNan && x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -960,7 +978,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(long x, mpfr_t y)
     {
-        return y.CompareTo(x) > 0;
+        return !y.IsNan && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -970,7 +988,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpfr_t x, double y)
     {
-        return x.CompareTo(y) < 0;
+        return !x.IsNan && !double.IsNaN(y) && x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -980,7 +998,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(double x, mpfr_t y)
     {
-        return y.CompareTo(x) > 0;
+        return !y.IsNan && !double.IsNaN(x) && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -990,7 +1008,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpfr_t x, mpz_t y)
     {
-        return x.CompareTo(y) < 0;
+        return !x.IsNan && x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -1000,7 +1018,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpz_t x, mpfr_t y)
     {
-        return y.CompareTo(x) > 0;
+        return !y.IsNan && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -1010,7 +1028,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpfr_t x, mpq_t y)
     {
-        return x.CompareTo(y) < 0;
+        return !x.IsNan && x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -1020,7 +1038,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpq_t x, mpfr_t y)
     {
-        return y.CompareTo(x) > 0;
+        return !y.IsNan && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -1030,7 +1048,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpfr_t x, mpf_t y)
     {
-        return x.CompareTo(y) < 0;
+        return !x.IsNan && x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -1040,7 +1058,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <(mpf_t x, mpfr_t y)
     {
-        return y.CompareTo(x) > 0;
+        return !y.IsNan && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -1060,7 +1078,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpfr_t x, ulong y)
     {
-        return x.CompareTo(y) <= 0;
+        return !x.IsNan && x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -1070,7 +1088,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(ulong x, mpfr_t y)
     {
-        return y.CompareTo(x) >= 0;
+        return !y.IsNan && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -1080,7 +1098,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpfr_t x, long y)
     {
-        return x.CompareTo(y) <= 0;
+        return !x.IsNan && x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -1090,7 +1108,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(long x, mpfr_t y)
     {
-        return y.CompareTo(x) >= 0;
+        return !y.IsNan && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -1100,7 +1118,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpfr_t x, double y)
     {
-        return x.CompareTo(y) <= 0;
+        return !x.IsNan && !double.IsNaN(y) && x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -1110,7 +1128,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(double x, mpfr_t y)
     {
-        return y.CompareTo(x) >= 0;
+        return !y.IsNan && !double.IsNaN(x) && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -1120,7 +1138,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpfr_t x, mpz_t y)
     {
-        return x.CompareTo(y) <= 0;
+        return !x.IsNan && x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -1130,7 +1148,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpz_t x, mpfr_t y)
     {
-        return y.CompareTo(x) >= 0;
+        return !y.IsNan && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -1140,7 +1158,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpfr_t x, mpq_t y)
     {
-        return x.CompareTo(y) <= 0;
+        return !x.IsNan && x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -1150,7 +1168,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpq_t x, mpfr_t y)
     {
-        return y.CompareTo(x) >= 0;
+        return !y.IsNan && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -1160,7 +1178,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpfr_t x, mpf_t y)
     {
-        return x.CompareTo(y) <= 0;
+        return !x.IsNan && x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -1170,7 +1188,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second value.</param>
     public static bool operator <=(mpf_t x, mpfr_t y)
     {
-        return y.CompareTo(x) >= 0;
+        return !y.IsNan && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -1178,9 +1196,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpfr_t x, mpfr_t y)
+    public static bool operator ==(mpfr_t? x, mpfr_t? y)
     {
-        return mpfr.equal_p(x, y);
+        return x is null ? y is null : y is not null && mpfr.equal_p(x, y);
     }
 
     /// <summary>
@@ -1188,9 +1206,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpfr_t x, ulong y)
+    public static bool operator ==(mpfr_t? x, ulong y)
     {
-        return x.CompareTo(y) == 0;
+        return x is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1198,9 +1216,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(ulong x, mpfr_t y)
+    public static bool operator ==(ulong x, mpfr_t? y)
     {
-        return y.CompareTo(x) == 0;
+        return y is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1208,9 +1226,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpfr_t x, long y)
+    public static bool operator ==(mpfr_t? x, long y)
     {
-        return x.CompareTo(y) == 0;
+        return x is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1218,9 +1236,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(long x, mpfr_t y)
+    public static bool operator ==(long x, mpfr_t? y)
     {
-        return y.CompareTo(x) == 0;
+        return y is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1228,9 +1246,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpfr_t x, double y)
+    public static bool operator ==(mpfr_t? x, double y)
     {
-        return x.CompareTo(y) == 0;
+        return x is not null && !x.IsNan && !double.IsNaN(y) && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1238,9 +1256,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(double x, mpfr_t y)
+    public static bool operator ==(double x, mpfr_t? y)
     {
-        return y.CompareTo(x) == 0;
+        return y is not null && !y.IsNan && !double.IsNaN(x) && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1248,9 +1266,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpfr_t x, mpz_t y)
+    public static bool operator ==(mpfr_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) == 0;
+        return x is not null && y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1258,9 +1276,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpz_t x, mpfr_t y)
+    public static bool operator ==(mpz_t? x, mpfr_t? y)
     {
-        return y.CompareTo(x) == 0;
+        return y is not null && x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1268,9 +1286,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpfr_t x, mpq_t y)
+    public static bool operator ==(mpfr_t? x, mpq_t? y)
     {
-        return x.CompareTo(y) == 0;
+        return x is not null && y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1278,9 +1296,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpq_t x, mpfr_t y)
+    public static bool operator ==(mpq_t? x, mpfr_t? y)
     {
-        return y.CompareTo(x) == 0;
+        return y is not null && x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1288,9 +1306,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpfr_t x, mpf_t y)
+    public static bool operator ==(mpfr_t? x, mpf_t? y)
     {
-        return x.CompareTo(y) == 0;
+        return x is not null && y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
     /// <summary>
@@ -1298,9 +1316,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator ==(mpf_t x, mpfr_t y)
+    public static bool operator ==(mpf_t? x, mpfr_t? y)
     {
-        return y.CompareTo(x) == 0;
+        return y is not null && x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
     /// <summary>
@@ -1308,9 +1326,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpfr_t x, mpfr_t y)
+    public static bool operator !=(mpfr_t? x, mpfr_t? y)
     {
-        return !mpfr.equal_p(x, y);
+        return !(x == y);
     }
 
     /// <summary>
@@ -1318,9 +1336,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpfr_t x, ulong y)
+    public static bool operator !=(mpfr_t? x, ulong y)
     {
-        return x.CompareTo(y) != 0;
+        return x is null || x.IsNan || x.CompareTo(y) != 0;
     }
 
     /// <summary>
@@ -1328,9 +1346,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(ulong x, mpfr_t y)
+    public static bool operator !=(ulong x, mpfr_t? y)
     {
-        return y.CompareTo(x) != 0;
+        return y is null || y.IsNan || y.CompareTo(x) != 0;
     }
 
     /// <summary>
@@ -1338,9 +1356,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpfr_t x, long y)
+    public static bool operator !=(mpfr_t? x, long y)
     {
-        return x.CompareTo(y) != 0;
+        return x is null || x.IsNan || x.CompareTo(y) != 0;
     }
 
     /// <summary>
@@ -1348,9 +1366,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(long x, mpfr_t y)
+    public static bool operator !=(long x, mpfr_t? y)
     {
-        return y.CompareTo(x) != 0;
+        return y is null || y.IsNan || y.CompareTo(x) != 0;
     }
 
     /// <summary>
@@ -1358,9 +1376,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpfr_t x, double y)
+    public static bool operator !=(mpfr_t? x, double y)
     {
-        return x.CompareTo(y) != 0;
+        return x is null || x.IsNan || double.IsNaN(y) || x.CompareTo(y) != 0;
     }
 
     /// <summary>
@@ -1368,9 +1386,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(double x, mpfr_t y)
+    public static bool operator !=(double x, mpfr_t? y)
     {
-        return y.CompareTo(x) != 0;
+        return y is null || y.IsNan || double.IsNaN(x) || y.CompareTo(x) != 0;
     }
 
     /// <summary>
@@ -1378,9 +1396,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpfr_t x, mpz_t y)
+    public static bool operator !=(mpfr_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) != 0;
+        return x is null || y is null || x.IsNan || x.CompareTo(y) != 0;
     }
 
     /// <summary>
@@ -1388,9 +1406,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpz_t x, mpfr_t y)
+    public static bool operator !=(mpz_t? x, mpfr_t? y)
     {
-        return y.CompareTo(x) != 0;
+        return y is null || x is null || y.IsNan || y.CompareTo(x) != 0;
     }
 
     /// <summary>
@@ -1398,9 +1416,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpfr_t x, mpq_t y)
+    public static bool operator !=(mpfr_t? x, mpq_t? y)
     {
-        return x.CompareTo(y) != 0;
+        return x is null || y is null || x.IsNan || x.CompareTo(y) != 0;
     }
 
     /// <summary>
@@ -1408,9 +1426,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpq_t x, mpfr_t y)
+    public static bool operator !=(mpq_t? x, mpfr_t? y)
     {
-        return y.CompareTo(x) != 0;
+        return y is null || x is null || y.IsNan || y.CompareTo(x) != 0;
     }
 
     /// <summary>
@@ -1418,9 +1436,9 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpfr_t x, mpf_t y)
+    public static bool operator !=(mpfr_t? x, mpf_t? y)
     {
-        return x.CompareTo(y) != 0;
+        return x is null || y is null || x.IsNan || x.CompareTo(y) != 0;
     }
 
     /// <summary>
@@ -1428,9 +1446,31 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
-    public static bool operator !=(mpf_t x, mpfr_t y)
+    public static bool operator !=(mpf_t? x, mpfr_t? y)
     {
-        return y.CompareTo(x) != 0;
+        return y is null || x is null || y.IsNan || y.CompareTo(x) != 0;
     }
     #endregion
+
+    private static mpfr_t CreateResult(mpfr_t x)
+        => CreateWithPrecision(mpfr.get_prec(x), nameof(x));
+
+    private static mpfr_t CreateResult(mpfr_t x, mpfr_t y)
+        => CreateWithPrecision(Math.Max(mpfr.get_prec(x), mpfr.get_prec(y)), nameof(x));
+
+    private static mpfr_t CreateExact(mpz_t value)
+    {
+        mpfr_t Result = CreateWithPrecision(Math.Max(mpz.sizeinbase(value, 2), mpfr.PrecisionMin), nameof(value));
+        _ = mpfr.set_z(Result, value, mpfr_rnd_t.MPFR_RNDN);
+
+        return Result;
+    }
+
+    private static mpfr_rnd_t OppositeRounding(mpfr_rnd_t rounding)
+        => rounding switch
+        {
+            mpfr_rnd_t.MPFR_RNDU => mpfr_rnd_t.MPFR_RNDD,
+            mpfr_rnd_t.MPFR_RNDD => mpfr_rnd_t.MPFR_RNDU,
+            _ => rounding,
+        };
 }

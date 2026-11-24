@@ -13,12 +13,10 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <returns>A positive value if <paramref name="other"/> is <see langword="null"/>, as with other .NET types.</returns>
     public int CompareTo(mpq_t? other)
     {
-        if (other is null)
-            throw new ArgumentNullException(nameof(other));
-        else
-            return mpq.cmp(this, other);
+        return other is null ? 1 : mpq.cmp(this, other);
     }
 
     /// <summary>

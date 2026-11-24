@@ -184,7 +184,7 @@ public class Fit
         IsEven = mpz.even_p(c);
         IsOdd = mpz.odd_p(c);
 
-        Assert.That(IsEven, Is.False);
+        Assert.That(IsEven, Is.True);
         Assert.That(IsOdd, Is.False);
     }
 }

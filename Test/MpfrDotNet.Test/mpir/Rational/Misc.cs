@@ -26,25 +26,25 @@ public class Misc
 
         using mpq_t d = new(30UL, 10);
         AsString = d.ToString();
-        Assert.That(AsString, Is.EqualTo("30/10"));
+        Assert.That(AsString, Is.EqualTo("3"));
 
         d.SetNumerator(40);
         AsString = d.ToString();
-        Assert.That(AsString, Is.EqualTo("40/10"));
+        Assert.That(AsString, Is.EqualTo("40"));
 
         d.SetDenominator(20);
         AsString = d.ToString();
-        Assert.That(AsString, Is.EqualTo("40/20"));
+        Assert.That(AsString, Is.EqualTo("2"));
 
-        using mpq_t e = new(30UL, 10, true);
+        using mpq_t e = new(30UL, 10);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("3"));
 
         using mpq_t f = new(-30L, 10);
         AsString = f.ToString();
-        Assert.That(AsString, Is.EqualTo("-30/10"));
+        Assert.That(AsString, Is.EqualTo("-3"));
 
-        using mpq_t g = new(-30L, 10, true);
+        using mpq_t g = new(-30L, 10);
         AsString = g.ToString();
         Assert.That(AsString, Is.EqualTo("-3"));
 
@@ -58,7 +58,7 @@ public class Misc
         AsString = q0.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
         
-        using mpq_t q1 = new(n0, d0, canonicalize: true);
+        using mpq_t q1 = new(n0, d0);
         AsString = q1.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
@@ -67,7 +67,7 @@ public class Misc
         AsString = i.ToString();
         Assert.That(AsString, Is.EqualTo("1/4"));
 
-        using mpq_t r = new("222509832503450298345029835740293845720/115756986668303657898962467957", canonicalize: true);
+        using mpq_t r = new("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = r.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 

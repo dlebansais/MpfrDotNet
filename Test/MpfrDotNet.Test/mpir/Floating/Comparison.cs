@@ -338,15 +338,17 @@ public class Comparison
         object? Instance = c;
 
         IsEqualTo = a.Equals(Instance);
-        Assert.That(IsEqualTo, Is.False);
+        Assert.That(IsEqualTo, Is.True);
 
         Instance = null;
 
         IsEqualTo = a.Equals(Instance);
         Assert.That(IsEqualTo, Is.False);
 
-        Assert.Throws<ArgumentNullException>(() => a.Equals(null));
-        Assert.Throws<ArgumentNullException>(() => a.CompareTo(null));
+        mpf_t? NullNumber = null;
+        IsEqualTo = a.Equals(NullNumber);
+        Assert.That(IsEqualTo, Is.False);
+        Assert.That(a.CompareTo(NullNumber), Is.Positive);
 
         IEquatable<mpf_t> Equatable = a;
 
@@ -385,7 +387,7 @@ public class Comparison
         Assert.That(IsLesserThan, Is.True);
 
         Instance = null;
-        Assert.Throws<ArgumentException>(() => a.CompareTo(Instance));
-        Assert.Throws<ArgumentException>(() => Comparable.CompareTo(Instance));
+        Assert.That(a.CompareTo(Instance), Is.Positive);
+        Assert.That(Comparable.CompareTo(Instance), Is.Positive);
     }
 }

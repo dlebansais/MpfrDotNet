@@ -121,7 +121,9 @@ public partial class mpfr_t : IDisposable
     public mpfr_t(mpfr_t other, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
-        mpfr.set(this, other, rounding);
+        // The copy has the precision of the original, so that it is exact.
+        mpfr.set_prec(this, mpfr.get_prec(other));
+        LastTernaryResult = mpfr.set(this, other, rounding);
     }
 
     /// <summary>

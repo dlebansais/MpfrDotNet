@@ -52,7 +52,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     private void DisposeNow()
     {
-        mpf.clear(this);
+        // A constructor that throws before initializing the number leaves no native memory to release.
+        if (Value.Limbs != IntPtr.Zero)
+            mpf.clear(this);
     }
     #endregion
 
@@ -63,10 +65,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="other">The object to compare with the current object.</param>
     public bool Equals(mpf_t? other)
     {
-        if (other is null)
-            throw new ArgumentNullException(nameof(other));
-        else
-            return mpf.cmp(this, other) == 0;
+        return other is not null && mpf.cmp(this, other) == 0;
     }
 
     /// <summary>
@@ -132,7 +131,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public byte ToByte(IFormatProvider? provider)
     {
-        return (byte)(int)this;
+        return (byte)this;
     }
 
     /// <summary>
@@ -228,7 +227,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public short ToInt16(IFormatProvider? provider)
     {
-        return (short)(int)this;
+        return (short)this;
     }
 
     /// <summary>
@@ -388,7 +387,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public ushort ToUInt16(IFormatProvider? provider)
     {
-        return (ushort)(uint)this;
+        return (ushort)this;
     }
 
     /// <summary>
@@ -442,9 +441,13 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
     /// </summary>
     /// <param name="obj">An object to compare with this instance.</param>
+    /// <returns>A positive value if <paramref name="obj"/> is <see langword="null"/>, as with other .NET types.</returns>
+    /// <exception cref="ArgumentException"><paramref name="obj"/> is not an <see cref="mpf_t"/>.</exception>
     public int CompareTo(object? obj)
     {
-        if (obj is mpf_t other)
+        if (obj is null)
+            return 1;
+        else if (obj is mpf_t other)
             return CompareTo(other);
         else
             throw new ArgumentException("Invalid comparison with an object of a different type.", nameof(obj));

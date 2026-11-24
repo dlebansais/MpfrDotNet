@@ -151,12 +151,12 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("0"));
 
         using mpz_t m = new("222509832503450298345029835740293845720");
-        Assert.Throws<ArgumentOutOfRangeException>(() => _ = (long)m);
-        Assert.Throws<ArgumentOutOfRangeException>(() => _ = (ulong)m);
+        Assert.Throws<OverflowException>(() => _ = (long)m);
+        Assert.Throws<OverflowException>(() => _ = (ulong)m);
 
         using mpz_t n = new("-222509832503450298345029835740293845720");
-        Assert.Throws<ArgumentOutOfRangeException>(() => _ = (long)n);
-        Assert.Throws<ArgumentOutOfRangeException>(() => _ = (ulong)n);
+        Assert.Throws<OverflowException>(() => _ = (long)n);
+        Assert.Throws<OverflowException>(() => _ = (ulong)n);
 
         Assert.Throws<NotImplementedException>(() => mpz.inits([]));
         Assert.Throws<NotImplementedException>(() => mpz.clears([]));
@@ -442,17 +442,11 @@ public class Misc
         double d2 = Convertible.ToDouble(null);
         Assert.That(d2, Is.EqualTo((double)a));
 
-        sbyte b1 = a.ToSByte(null);
-        Assert.That(b1, Is.EqualTo((sbyte)(short)a));
-
-        sbyte b2 = Convertible.ToSByte(null);
-        Assert.That(b2, Is.EqualTo((sbyte)(short)a));
-
-        byte ub1 = a.ToByte(null);
-        Assert.That(ub1, Is.EqualTo((byte)a));
-
-        byte ub2 = Convertible.ToByte(null);
-        Assert.That(ub2, Is.EqualTo((byte)a));
+        // 2983 does not fit in a byte or an sbyte.
+        Assert.Throws<OverflowException>(() => a.ToSByte(null));
+        Assert.Throws<OverflowException>(() => Convertible.ToSByte(null));
+        Assert.Throws<OverflowException>(() => a.ToByte(null));
+        Assert.Throws<OverflowException>(() => Convertible.ToByte(null));
 
         short s1 = a.ToInt16(null);
         Assert.That(s1, Is.EqualTo((short)a));
@@ -527,11 +521,9 @@ public class Misc
         double d1 = (double)a.ToType(typeof(double), null);
         Assert.That(d1, Is.EqualTo((double)a));
 
-        sbyte b1 = (sbyte)a.ToType(typeof(sbyte), null);
-        Assert.That(b1, Is.EqualTo((sbyte)(short)a));
-
-        byte ub1 = (byte)a.ToType(typeof(byte), null);
-        Assert.That(ub1, Is.EqualTo((byte)a));
+        // 2983 does not fit in a byte or an sbyte.
+        Assert.Throws<OverflowException>(() => a.ToType(typeof(sbyte), null));
+        Assert.Throws<OverflowException>(() => a.ToType(typeof(byte), null));
 
         short s1 = (short)a.ToType(typeof(short), null);
         Assert.That(s1, Is.EqualTo((short)a));

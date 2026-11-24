@@ -43,6 +43,6 @@ public class ShiftRight
         using mpz_t c = a >> -Count;
 
         AsString = c.ToString();
-        Assert.That(AsString, Is.EqualTo("0"));
+        Assert.That(AsString, Is.EqualTo("245177278716743494890303505880271100916118547595264"));
     }
 }

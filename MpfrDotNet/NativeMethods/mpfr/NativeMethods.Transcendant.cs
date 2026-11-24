@@ -135,7 +135,7 @@ internal static partial class NativeMethods
     public static __mpfr_atan mpfr_atan { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atan>(GetMpfrPointer(nameof(mpfr_atan)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_atan2(ref __mpfr_t rop, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_atan2(ref __mpfr_t rop, ref __mpfr_t y, ref __mpfr_t x, __mpfr_rnd_t rnd);
     public static __mpfr_atan2 mpfr_atan2 { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atan2>(GetMpfrPointer(nameof(mpfr_atan2)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -203,7 +203,7 @@ internal static partial class NativeMethods
     public static __mpfr_atanu mpfr_atanu { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atanu>(GetMpfrPointer(nameof(mpfr_atanu)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_atan2u(ref __mpfr_t rop, ref __mpfr_t x, ref __mpfr_t y, ulong u, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_atan2u(ref __mpfr_t rop, ref __mpfr_t y, ref __mpfr_t x, ulong u, __mpfr_rnd_t rnd);
     public static __mpfr_atan2u mpfr_atan2u { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atan2u>(GetMpfrPointer(nameof(mpfr_atan2u)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -231,7 +231,7 @@ internal static partial class NativeMethods
     public static __mpfr_atanpi mpfr_atanpi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atanpi>(GetMpfrPointer(nameof(mpfr_atanpi)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_atan2pi(ref __mpfr_t rop, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_atan2pi(ref __mpfr_t rop, ref __mpfr_t y, ref __mpfr_t x, __mpfr_rnd_t rnd);
     public static __mpfr_atan2pi mpfr_atan2pi { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_atan2pi>(GetMpfrPointer(nameof(mpfr_atan2pi)));
     #endregion
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
@@ -34,11 +35,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="resultbase">The digit base.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <returns>The number value.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2.</exception>
     public string ToString(int resultbase, mpfr_rnd_t rounding)
     {
         Debug.Assert(IsCacheInitialized);
 
-        ulong SizeInDigits = DigitCount;
+        ulong SizeInDigits = mpfr.get_str_ndigits((int)DigitBase.ToDigitCountBase(resultbase, nameof(resultbase)), Precision);
         StringBuilder Data = new((int)(SizeInDigits + 2));
 
         mpfr.get_str(Data, out int Exponent, resultbase, SizeInDigits, this, rounding);
@@ -77,11 +79,13 @@ public partial class mpfr_t : IDisposable
         if (FractionalPart.Length > 0)
             FractionalPart = "." + FractionalPart;
 
-        string ExponentPart = (Exponent - 1).ToString();
+        string ExponentPart = (Exponent - 1).ToString(CultureInfo.InvariantCulture);
         if (Exponent > 0)
             ExponentPart = "+" + ExponentPart;
 
-        Result = $"{IntegerPart}{FractionalPart}E{ExponentPart}";
+        // MPFR reads '@' as the exponent marker in bases above 10, where 'E' can be a digit. The exponent is written in decimal.
+        char ExponentMarker = Math.Abs(resultbase) > 10 ? '@' : 'E';
+        Result = $"{IntegerPart}{FractionalPart}{ExponentMarker}{ExponentPart}";
 
         return Result;
     }

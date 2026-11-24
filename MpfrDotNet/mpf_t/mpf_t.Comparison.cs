@@ -12,12 +12,10 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="other">The compared value.</param>
+    /// <returns>A positive value if <paramref name="other"/> is <see langword="null"/>, as with other .NET types.</returns>
     public int CompareTo(mpf_t? other)
     {
-        if (other is null)
-            throw new ArgumentNullException(nameof(other));
-        else
-            return mpf.cmp(this, other);
+        return other is null ? 1 : mpf.cmp(this, other);
     }
 
     /// <summary>
@@ -42,18 +40,20 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="other">The compared value.</param>
+    /// <returns>A positive value if <paramref name="other"/> is NaN, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(float other)
     {
-        return mpf.cmp_d(this, (double)other);
+        return CompareTo((double)other);
     }
 
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="other">The compared value.</param>
+    /// <returns>A positive value if <paramref name="other"/> is NaN, as with <see cref="double.CompareTo(double)"/>.</returns>
     public int CompareTo(double other)
     {
-        return mpf.cmp_d(this, other);
+        return double.IsNaN(other) ? 1 : mpf.cmp_d(this, other);
     }
 
     /// <summary>

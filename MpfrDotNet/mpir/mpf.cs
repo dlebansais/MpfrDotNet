@@ -1,5 +1,6 @@
 ﻿namespace MpirDotNet;
 
+using System;
 using System.Text;
 using Interop.Mpir;
 
@@ -138,8 +139,11 @@ public static class mpf
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="OverflowException"><paramref name="op"/> is NaN or an infinity.</exception>
     public static void set_d(mpf_t rop, double op)
     {
+        DoubleArgument.CheckFinite(op);
+
         NativeMethods.mpf_set_d(ref rop.Value, op);
     }
 
@@ -221,8 +225,11 @@ public static class mpf
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="OverflowException"><paramref name="op"/> is NaN or an infinity.</exception>
     public static void init_set_d(mpf_t rop, double op)
     {
+        DoubleArgument.CheckFinite(op);
+
         NativeMethods.mpf_init_set_d(ref rop.Value, op);
     }
 
@@ -494,8 +501,11 @@ public static class mpf
     /// </summary>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="ArgumentException"><paramref name="op2"/> is NaN.</exception>
     public static int cmp_d(mpf_t op1, double op2)
     {
+        DoubleArgument.CheckNotNaN(op2, nameof(op2));
+
         return NativeMethods.mpf_cmp_d(ref op1.Value, op2);
     }
 

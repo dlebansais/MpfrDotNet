@@ -43,6 +43,6 @@ public class ShiftLeft
         using mpz_t c = a << -Count;
 
         AsString = c.ToString();
-        Assert.That(AsString, Is.EqualTo("0"));
+        Assert.That(AsString, Is.EqualTo("202805891593000279130400098"));
     }
 }

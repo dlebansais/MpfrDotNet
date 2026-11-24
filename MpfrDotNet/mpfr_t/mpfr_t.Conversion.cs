@@ -105,63 +105,77 @@ public partial class mpfr_t : IDisposable
     /// Converts to a <see cref="byte"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
     public static explicit operator byte(mpfr_t value)
     {
-        return (byte)(uint)value;
+        using mpz_t Integer = value.ToRoundedInteger();
+        return (byte)Integer;
     }
 
     /// <summary>
     /// Converts to a <see cref="int"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
     public static explicit operator int(mpfr_t value)
     {
-        return (int)mpfr_get_sj(ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        using mpz_t Integer = value.ToRoundedInteger();
+        return (int)Integer;
     }
 
     /// <summary>
     /// Converts to a <see cref="uint"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
     public static explicit operator uint(mpfr_t value)
     {
-        return (uint)mpfr_get_uj(ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        using mpz_t Integer = value.ToRoundedInteger();
+        return (uint)Integer;
     }
 
     /// <summary>
     /// Converts to a <see cref="short"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
     public static explicit operator short(mpfr_t value)
     {
-        return (short)(int)value;
+        using mpz_t Integer = value.ToRoundedInteger();
+        return (short)Integer;
     }
 
     /// <summary>
     /// Converts to a <see cref="ushort"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
     public static explicit operator ushort(mpfr_t value)
     {
-        return (ushort)(uint)value;
+        using mpz_t Integer = value.ToRoundedInteger();
+        return (ushort)Integer;
     }
 
     /// <summary>
     /// Converts to a <see cref="long"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
     public static explicit operator long(mpfr_t value)
     {
-        return mpfr.get_si(value, value.Rounding);
+        using mpz_t Integer = value.ToRoundedInteger();
+        return (long)Integer;
     }
 
     /// <summary>
     /// Converts to a <see cref="ulong"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
     public static explicit operator ulong(mpfr_t value)
     {
-        return mpfr.get_ui(value, value.Rounding);
+        using mpz_t Integer = value.ToRoundedInteger();
+        return (ulong)Integer;
     }
 
     /// <summary>
@@ -315,5 +329,17 @@ public partial class mpfr_t : IDisposable
     public bool IsInteger
     {
         get { return mpfr.integer_p(this); }
+    }
+
+    private mpz_t ToRoundedInteger()
+    {
+        // mpfr_get_z returns 0 for NaN and infinities.
+        if (!IsNumber)
+            throw new OverflowException("NaN and infinities cannot be converted to an integer.");
+
+        mpz_t Result = new();
+        _ = mpfr.get_z(Result, this, Rounding);
+
+        return Result;
     }
 }
