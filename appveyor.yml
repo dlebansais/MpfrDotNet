@@ -14,8 +14,8 @@ skip_commits:
   message: "*[skip ci]*"
 
 image:
-  - Ubuntu2404
   - Visual Studio 2026
+  - Ubuntu2404
 
 # scripts that are called at very beginning, before repo cloning
 init:
@@ -33,7 +33,7 @@ matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
 
 # On Linux, the library uses the system GMP and MPFR libraries, and only the net10.0 target is built and tested.
-# Packaging, the coverage upload and deployment stay on Windows. Each section below replaces the global one.
+# Packaging and deployment stay on Windows. Each section below replaces the global one.
 for:
   - matrix:
       only:
@@ -52,9 +52,19 @@ for:
     after_build:
       - echo Packaging is done on Windows.
     test_script:
-      - dotnet test --project ./Test/$APPVEYOR_PROJECT_NAME.Test/$APPVEYOR_PROJECT_NAME.Test.csproj -c $CONFIGURATION -p:Platform=x64 -f net10.0 --no-build --output detailed
+      - dotnet test --project ./Test/$APPVEYOR_PROJECT_NAME.Test/$APPVEYOR_PROJECT_NAME.Test.csproj -c $CONFIGURATION -p:Platform=x64 -f net10.0 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-$APPVEYOR_PROJECT_NAME-linux.xml --results-directory TestResults
     after_test:
-      - echo Coverage is uploaded from Windows.
+      - head -n 3 TestResults/Coverage-*.xml
+      # The CodecovUploader NuGet package only contains the Windows uploader: download the Linux build of the same version,
+      # and check its checksum before running it. Codecov merges this report with the Windows ones for the same commit.
+      - |
+        if [ "$CONFIGURATION" = "Debug" ] && [ "$APPVEYOR_REPO_BRANCH" = "master" ]; then
+          curl -sSfLO "https://uploader.codecov.io/v${codecov_uploader_version}/linux/codecov" &&
+          curl -sSfLO "https://uploader.codecov.io/v${codecov_uploader_version}/linux/codecov.SHA256SUM" &&
+          sha256sum -c codecov.SHA256SUM &&
+          chmod +x codecov &&
+          ./codecov -f "TestResults/Coverage-$APPVEYOR_PROJECT_NAME-linux.xml"
+        fi
     deploy: off
 
 before_build:
