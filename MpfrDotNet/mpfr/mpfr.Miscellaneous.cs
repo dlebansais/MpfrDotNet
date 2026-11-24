@@ -67,8 +67,11 @@ public static partial class mpfr
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="state">The state.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static int urandomb(mpfr_t rop, randstate_t state)
     {
+        state.ThrowIfDisposed();
+
         return mpfr_urandomb(ref rop.Value, ref state.Value);
     }
 
@@ -78,8 +81,11 @@ public static partial class mpfr
     /// <param name="rop">The result operand.</param>
     /// <param name="state">The state.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static int urandom(mpfr_t rop, randstate_t state, mpfr_rnd_t rnd)
     {
+        state.ThrowIfDisposed();
+
         return mpfr_urandom(ref rop.Value, ref state.Value, (__mpfr_rnd_t)rnd);
     }
 
@@ -89,8 +95,11 @@ public static partial class mpfr
     /// <param name="rop1">The result operand.</param>
     /// <param name="state">The state.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static int nrandom(mpfr_t rop1, randstate_t state, mpfr_rnd_t rnd)
     {
+        state.ThrowIfDisposed();
+
         return mpfr_nrandom(ref rop1.Value, ref state.Value, (__mpfr_rnd_t)rnd);
     }
 
@@ -101,8 +110,11 @@ public static partial class mpfr
     /// <param name="rop2">The second result operand.</param>
     /// <param name="state">The state.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static int grandom(mpfr_t rop1, mpfr_t rop2, randstate_t state, mpfr_rnd_t rnd)
     {
+        state.ThrowIfDisposed();
+
         return mpfr_grandom(ref rop1.Value, ref rop2.Value, ref state.Value, (__mpfr_rnd_t)rnd);
     }
 
@@ -112,8 +124,11 @@ public static partial class mpfr
     /// <param name="rop1">The result operand.</param>
     /// <param name="state">The state.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static int erandom(mpfr_t rop1, randstate_t state, mpfr_rnd_t rnd)
     {
+        state.ThrowIfDisposed();
+
         return mpfr_erandom(ref rop1.Value, ref state.Value, (__mpfr_rnd_t)rnd);
     }
 

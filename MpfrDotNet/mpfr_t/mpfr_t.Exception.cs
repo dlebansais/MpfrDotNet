@@ -221,5 +221,8 @@ public partial class mpfr_t : IDisposable
         return mpfr.flags_save();
     }
 
-    private int LastTernaryResult;
+    /// <summary>
+    /// Gets the ternary value of the operation that computed this number: zero if the result is exact, a positive value if it is greater than the exact result, and a negative value if it is lower.
+    /// </summary>
+    public int LastTernaryResult { get; private set; }
 }

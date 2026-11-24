@@ -1,5 +1,6 @@
 ﻿namespace MpirDotNet;
 
+using System;
 using Interop.Mpir;
 
 /// <summary>
@@ -54,8 +55,11 @@ public static class gmp
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
     public static void randinit_set(randstate_t rop, randstate_t op)
     {
+        op.ThrowIfDisposed();
+
         NativeMethods.mp_randinit_set(ref rop.Value, ref op.Value);
     }
 
@@ -75,8 +79,11 @@ public static class gmp
     /// </summary>
     /// <param name="state">The state.</param>
     /// <param name="seed">The seed.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static void randseed(randstate_t state, mpz_t seed)
     {
+        state.ThrowIfDisposed();
+
         NativeMethods.mp_randseed(ref state.Value, ref seed.Value);
     }
 
@@ -85,8 +92,11 @@ public static class gmp
     /// </summary>
     /// <param name="state">The state.</param>
     /// <param name="seed">The seed.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static void randseed_ui(randstate_t state, ulong seed)
     {
+        state.ThrowIfDisposed();
+
         NativeMethods.mp_randseed_ui(ref state.Value, (NativeMethods.mpir_ui)seed);
     }
     #endregion
@@ -97,8 +107,11 @@ public static class gmp
     /// </summary>
     /// <param name="state">The state.</param>
     /// <param name="m2exp">The m2exp.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static ulong urandomb_ui(randstate_t state, ulong m2exp)
     {
+        state.ThrowIfDisposed();
+
         return (ulong)NativeMethods.mp_urandomb_ui(ref state.Value, (NativeMethods.mpir_ui)m2exp);
     }
 
@@ -107,8 +120,11 @@ public static class gmp
     /// </summary>
     /// <param name="state">The state.</param>
     /// <param name="n">The n.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static ulong urandomm_ui(randstate_t state, ulong n)
     {
+        state.ThrowIfDisposed();
+
         return (ulong)NativeMethods.mp_urandomm_ui(ref state.Value, (NativeMethods.mpir_ui)n);
     }
     #endregion

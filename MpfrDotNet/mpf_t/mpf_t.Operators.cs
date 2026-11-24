@@ -306,9 +306,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpf_t x, mpf_t y)
+    public static bool operator <(mpf_t? x, mpf_t? y)
     {
-        return x.CompareTo(y) < 0;
+        return y is not null && (x is null || x.CompareTo(y) < 0);
     }
 
     /// <summary>
@@ -316,9 +316,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(long x, mpf_t y)
+    public static bool operator <(long x, mpf_t? y)
     {
-        return y.CompareTo(x) > 0;
+        return y is not null && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -326,9 +326,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpf_t x, long y)
+    public static bool operator <(mpf_t? x, long y)
     {
-        return x.CompareTo(y) < 0;
+        return x is null || x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -336,9 +336,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(ulong x, mpf_t y)
+    public static bool operator <(ulong x, mpf_t? y)
     {
-        return y.CompareTo(x) > 0;
+        return y is not null && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -346,9 +346,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpf_t x, ulong y)
+    public static bool operator <(mpf_t? x, ulong y)
     {
-        return x.CompareTo(y) < 0;
+        return x is null || x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -356,9 +356,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(float x, mpf_t y)
+    public static bool operator <(float x, mpf_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) > 0;
+        return y is not null && (!double.IsNaN(x) && y.CompareTo(x) > 0);
     }
 
     /// <summary>
@@ -366,9 +366,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpf_t x, float y)
+    public static bool operator <(mpf_t? x, float y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) < 0;
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
     }
 
     /// <summary>
@@ -376,9 +376,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(double x, mpf_t y)
+    public static bool operator <(double x, mpf_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) > 0;
+        return y is not null && (!double.IsNaN(x) && y.CompareTo(x) > 0);
     }
 
     /// <summary>
@@ -386,9 +386,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpf_t x, double y)
+    public static bool operator <(mpf_t? x, double y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) < 0;
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
     }
 
     /// <summary>
@@ -396,9 +396,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpf_t x, mpf_t y)
+    public static bool operator <=(mpf_t? x, mpf_t? y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || (y is not null && x.CompareTo(y) <= 0);
     }
 
     /// <summary>
@@ -406,9 +406,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(long x, mpf_t y)
+    public static bool operator <=(long x, mpf_t? y)
     {
-        return y.CompareTo(x) >= 0;
+        return y is not null && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -416,9 +416,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpf_t x, long y)
+    public static bool operator <=(mpf_t? x, long y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -426,9 +426,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(ulong x, mpf_t y)
+    public static bool operator <=(ulong x, mpf_t? y)
     {
-        return y.CompareTo(x) >= 0;
+        return y is not null && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -436,9 +436,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpf_t x, ulong y)
+    public static bool operator <=(mpf_t? x, ulong y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -446,9 +446,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(float x, mpf_t y)
+    public static bool operator <=(float x, mpf_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) >= 0;
+        return y is not null && (!double.IsNaN(x) && y.CompareTo(x) >= 0);
     }
 
     /// <summary>
@@ -456,9 +456,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpf_t x, float y)
+    public static bool operator <=(mpf_t? x, float y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) <= 0;
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
     }
 
     /// <summary>
@@ -466,9 +466,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(double x, mpf_t y)
+    public static bool operator <=(double x, mpf_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) >= 0;
+        return y is not null && (!double.IsNaN(x) && y.CompareTo(x) >= 0);
     }
 
     /// <summary>
@@ -476,9 +476,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpf_t x, double y)
+    public static bool operator <=(mpf_t? x, double y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) <= 0;
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
     }
 
     /// <summary>
@@ -486,9 +486,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpf_t x, mpf_t y)
+    public static bool operator >(mpf_t? x, mpf_t? y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && (y is null || x.CompareTo(y) > 0);
     }
 
     /// <summary>
@@ -496,9 +496,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(long x, mpf_t y)
+    public static bool operator >(long x, mpf_t? y)
     {
-        return y.CompareTo(x) < 0;
+        return y is null || y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -506,9 +506,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpf_t x, long y)
+    public static bool operator >(mpf_t? x, long y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -516,9 +516,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(ulong x, mpf_t y)
+    public static bool operator >(ulong x, mpf_t? y)
     {
-        return y.CompareTo(x) < 0;
+        return y is null || y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -526,9 +526,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpf_t x, ulong y)
+    public static bool operator >(mpf_t? x, ulong y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -536,9 +536,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(float x, mpf_t y)
+    public static bool operator >(float x, mpf_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) < 0;
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
     }
 
     /// <summary>
@@ -546,9 +546,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpf_t x, float y)
+    public static bool operator >(mpf_t? x, float y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) > 0;
+        return x is not null && (!double.IsNaN(y) && x.CompareTo(y) > 0);
     }
 
     /// <summary>
@@ -556,9 +556,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(double x, mpf_t y)
+    public static bool operator >(double x, mpf_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) < 0;
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
     }
 
     /// <summary>
@@ -566,9 +566,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpf_t x, double y)
+    public static bool operator >(mpf_t? x, double y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) > 0;
+        return x is not null && (!double.IsNaN(y) && x.CompareTo(y) > 0);
     }
 
     /// <summary>
@@ -576,9 +576,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpf_t x, mpf_t y)
+    public static bool operator >=(mpf_t? x, mpf_t? y)
     {
-        return x.CompareTo(y) >= 0;
+        return y is null || (x is not null && x.CompareTo(y) >= 0);
     }
 
     /// <summary>
@@ -586,9 +586,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(long x, mpf_t y)
+    public static bool operator >=(long x, mpf_t? y)
     {
-        return y.CompareTo(x) <= 0;
+        return y is null || y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -596,9 +596,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpf_t x, long y)
+    public static bool operator >=(mpf_t? x, long y)
     {
-        return x.CompareTo(y) >= 0;
+        return x is not null && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -606,9 +606,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(ulong x, mpf_t y)
+    public static bool operator >=(ulong x, mpf_t? y)
     {
-        return y.CompareTo(x) <= 0;
+        return y is null || y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -616,9 +616,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpf_t x, ulong y)
+    public static bool operator >=(mpf_t? x, ulong y)
     {
-        return x.CompareTo(y) >= 0;
+        return x is not null && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -626,9 +626,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(float x, mpf_t y)
+    public static bool operator >=(float x, mpf_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) <= 0;
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
     }
 
     /// <summary>
@@ -636,9 +636,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpf_t x, float y)
+    public static bool operator >=(mpf_t? x, float y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) >= 0;
+        return x is not null && (!double.IsNaN(y) && x.CompareTo(y) >= 0);
     }
 
     /// <summary>
@@ -646,9 +646,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(double x, mpf_t y)
+    public static bool operator >=(double x, mpf_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) <= 0;
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
     }
 
     /// <summary>
@@ -656,9 +656,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpf_t x, double y)
+    public static bool operator >=(mpf_t? x, double y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) >= 0;
+        return x is not null && (!double.IsNaN(y) && x.CompareTo(y) >= 0);
     }
 
     /// <summary>

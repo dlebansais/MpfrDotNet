@@ -31,8 +31,15 @@ public class randstate_t : IDisposable
     /// Initializes a new instance of the <see cref="randstate_t"/> class.
     /// </summary>
     /// <param name="other">The other object.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="other"/> is disposed.</exception>
     public randstate_t(randstate_t other)
     {
+        if (other.IsDisposed)
+        {
+            MarkNotInitialized();
+            throw new ObjectDisposedException(nameof(randstate_t));
+        }
+
         gmp.randinit_set(this, other);
     }
 
@@ -82,6 +89,16 @@ public class randstate_t : IDisposable
     }
 
     private bool IsNativeStateMissing;
+
+    /// <summary>
+    /// Throws if the state has been disposed, since its native memory is then released.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">The state is disposed.</exception>
+    internal void ThrowIfDisposed()
+    {
+        if (IsDisposed)
+            throw new ObjectDisposedException(nameof(randstate_t));
+    }
 
 #pragma warning disable SA1401 // Fields should be private
 #pragma warning disable SA1600 // Elements should be documented

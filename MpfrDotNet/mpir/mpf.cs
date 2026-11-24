@@ -661,8 +661,11 @@ public static class mpf
     /// <param name="rop">The result operand.</param>
     /// <param name="state">The state.</param>
     /// <param name="nbits">The count of bits.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static void urandomb(mpf_t rop, randstate_t state, ulong nbits)
     {
+        state.ThrowIfDisposed();
+
         NativeMethods.mpf_urandomb(ref rop.Value, ref state.Value, (NativeMethods.mp_bitcnt_t)nbits);
     }
 
@@ -673,8 +676,11 @@ public static class mpf
     /// <param name="state">The state.</param>
     /// <param name="max_size">The max size.</param>
     /// <param name="exp">The exponent.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static void rrandomb(mpf_t rop, randstate_t state, ulong max_size, int exp)
     {
+        state.ThrowIfDisposed();
+
         NativeMethods.mp_exp_t e = (NativeMethods.mp_exp_t)exp;
         NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.size_t)max_size, e);
     }

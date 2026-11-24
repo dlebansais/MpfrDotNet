@@ -1003,8 +1003,11 @@ public static class mpz
     /// <param name="state">The state.</param>
     /// <param name="prob">The probability.</param>
     /// <param name="div">The divider.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static bool probable_prime_p(mpz_t n, randstate_t state, int prob, ulong div)
     {
+        state.ThrowIfDisposed();
+
         return NativeMethods.mpz_probable_prime_p(ref n.Value, ref state.Value, prob, (NativeMethods.mpir_ui)div) != 0;
     }
 
@@ -1014,8 +1017,11 @@ public static class mpz
     /// <param name="n">The value.</param>
     /// <param name="state">The state.</param>
     /// <param name="div">The divider.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static bool likely_prime_p(mpz_t n, randstate_t state, ulong div)
     {
+        state.ThrowIfDisposed();
+
         return NativeMethods.mpz_likely_prime_p(ref n.Value, ref state.Value, (NativeMethods.mpir_ui)div) != 0;
     }
 
@@ -1025,8 +1031,11 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
     /// <param name="state">The state.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static void next_prime_candidate(mpz_t rop, mpz_t op, randstate_t state)
     {
+        state.ThrowIfDisposed();
+
         NativeMethods.mpz_next_prime_candidate(ref rop.Value, ref op.Value, ref state.Value);
     }
 
@@ -1620,8 +1629,11 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="state">The state.</param>
     /// <param name="n">The n.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static void urandomb(mpz_t rop, randstate_t state, ulong n)
     {
+        state.ThrowIfDisposed();
+
         NativeMethods.mpz_urandomb(ref rop.Value, ref state.Value, (NativeMethods.mp_bitcnt_t)n);
     }
 
@@ -1631,8 +1643,11 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="state">The state.</param>
     /// <param name="n">The n.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static void urandomm(mpz_t rop, randstate_t state, mpz_t n)
     {
+        state.ThrowIfDisposed();
+
         NativeMethods.mpz_urandomm(ref rop.Value, ref state.Value, ref n.Value);
     }
 
@@ -1642,8 +1657,11 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="state">The state.</param>
     /// <param name="n">The n.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     public static void rrandomb(mpz_t rop, randstate_t state, ulong n)
     {
+        state.ThrowIfDisposed();
+
         NativeMethods.mpz_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.mp_bitcnt_t)n);
     }
     #endregion

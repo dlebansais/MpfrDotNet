@@ -117,9 +117,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpq_t x, mpq_t y)
+    public static bool operator <(mpq_t? x, mpq_t? y)
     {
-        return x.CompareTo(y) < 0;
+        return y is not null && (x is null || x.CompareTo(y) < 0);
     }
 
     /// <summary>
@@ -127,9 +127,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpq_t x, mpq_t y)
+    public static bool operator <=(mpq_t? x, mpq_t? y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || (y is not null && x.CompareTo(y) <= 0);
     }
 
     /// <summary>
@@ -137,9 +137,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpq_t x, mpq_t y)
+    public static bool operator >(mpq_t? x, mpq_t? y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && (y is null || x.CompareTo(y) > 0);
     }
 
     /// <summary>
@@ -147,9 +147,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpq_t x, mpq_t y)
+    public static bool operator >=(mpq_t? x, mpq_t? y)
     {
-        return x.CompareTo(y) >= 0;
+        return y is null || (x is not null && x.CompareTo(y) >= 0);
     }
 
     /// <summary>
@@ -177,9 +177,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpq_t x, mpz_t y)
+    public static bool operator <(mpq_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) < 0;
+        return y is not null && (x is null || x.CompareTo(y) < 0);
     }
 
     /// <summary>
@@ -187,9 +187,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpq_t x, mpz_t y)
+    public static bool operator <=(mpq_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || (y is not null && x.CompareTo(y) <= 0);
     }
 
     /// <summary>
@@ -197,9 +197,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpq_t x, mpz_t y)
+    public static bool operator >(mpq_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && (y is null || x.CompareTo(y) > 0);
     }
 
     /// <summary>
@@ -207,9 +207,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpq_t x, mpz_t y)
+    public static bool operator >=(mpq_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) >= 0;
+        return y is null || (x is not null && x.CompareTo(y) >= 0);
     }
 
     /// <summary>

@@ -453,6 +453,91 @@ internal class Semantics
         Assert.That(ErfUp > ErfDown, Is.True);
     }
 
+    [Test]
+    public void TestOrderingWithNull()
+    {
+        using mpz_t Integer = new(1);
+        using mpq_t Rational = new(1L, 2UL);
+        using mpf_t Float = new(1.0);
+        using mpfr_t Mpfr = new(1);
+        mpz_t? NullInteger = null;
+        mpz_t? OtherNullInteger = null;
+        mpq_t? NullRational = null;
+        mpf_t? NullFloat = null;
+        mpfr_t? NullMpfr = null;
+
+        // As with System.Version, null sorts before any number.
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Integer > NullInteger, Is.True);
+        Assert.That(NullInteger < Integer, Is.True);
+        Assert.That(Integer < NullInteger, Is.False);
+        Assert.That(NullInteger <= OtherNullInteger, Is.True);
+        Assert.That(NullInteger >= Integer, Is.False);
+        Assert.That(5 > NullInteger, Is.True);
+        Assert.That(NullInteger < 5.0, Is.True);
+        Assert.That(Rational >= NullRational, Is.True);
+        Assert.That(NullRational > Rational, Is.False);
+        Assert.That(Float > NullFloat, Is.True);
+        Assert.That(NullFloat <= Float, Is.True);
+        Assert.That(Mpfr > NullMpfr, Is.True);
+        Assert.That(NullMpfr < Mpfr, Is.True);
+        Assert.That(1UL < NullMpfr, Is.False);
+        Assert.That(NullMpfr <= Integer, Is.True);
+    }
+
+    [Test]
+    public void TestLastTernaryResult()
+    {
+        using mpfr_t Two = new(2);
+        using mpfr_t Four = new(4);
+        using mpfr_t One = new(1);
+        using mpq_t OneThird = new(1L, 3UL);
+        using mpfr_t Zero = new(0);
+        Zero.Rounding = mpfr_rnd_t.MPFR_RNDU;
+
+        using mpfr_t InexactRoot = Two.Sqrt();
+        using mpfr_t ExactRoot = Four.Sqrt();
+        using mpfr_t Sin = One.Sin();
+        using mpfr_t Cos = One.Cos();
+        mpfr_t.SinCos(One, out mpfr_t SinFromSinCos, out mpfr_t CosFromSinCos);
+        using mpfr_t RoundedUp = OneThird - Zero;
+        using mpfr_t Copy = new(Two);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(InexactRoot.LastTernaryResult, Is.Not.Zero);
+        Assert.That(Two.LastTernaryResult, Is.Zero);
+        Assert.That(ExactRoot.LastTernaryResult, Is.Zero);
+        Assert.That(SinFromSinCos.LastTernaryResult, Is.Not.Zero);
+        Assert.That(SinFromSinCos.LastTernaryResult, Is.EqualTo(Math.Sign(Sin.LastTernaryResult)));
+        Assert.That(CosFromSinCos.LastTernaryResult, Is.Not.Zero);
+        Assert.That(CosFromSinCos.LastTernaryResult, Is.EqualTo(Math.Sign(Cos.LastTernaryResult)));
+        Assert.That(RoundedUp.LastTernaryResult, Is.Positive);
+        Assert.That(Copy.LastTernaryResult, Is.Zero);
+
+        SinFromSinCos.Dispose();
+        CosFromSinCos.Dispose();
+    }
+
+    [Test]
+    public void TestRandStateUseAfterDispose()
+    {
+        randstate_t State = randstate_t.Create(RngAlgorithm.MersenneTwister);
+        State.Dispose();
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => gmp.urandomb_ui(State, 10UL), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpfr_t.UniformRandom(State), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => new randstate_t(State), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(State.Dispose, Throws.Nothing);
+
+        // The copy that failed must not release a state it never created.
+        Assert.That(() =>
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }, Throws.Nothing);
+    }
+
     private static mpfr_t ReferenceQuotient(mpz_t numerator, ulong denominator, mpfr_t divisor, ulong precision)
     {
         // numerator / (denominator * divisor), with every intermediate value exact and a single rounding.

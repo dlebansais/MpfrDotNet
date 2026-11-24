@@ -423,9 +423,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpz_t x, mpz_t y)
+    public static bool operator <(mpz_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) < 0;
+        return y is not null && (x is null || x.CompareTo(y) < 0);
     }
 
     /// <summary>
@@ -433,9 +433,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(int x, mpz_t y)
+    public static bool operator <(int x, mpz_t? y)
     {
-        return y.CompareTo(x) > 0;
+        return y is not null && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -443,9 +443,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpz_t x, int y)
+    public static bool operator <(mpz_t? x, int y)
     {
-        return x.CompareTo(y) < 0;
+        return x is null || x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -453,9 +453,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(uint x, mpz_t y)
+    public static bool operator <(uint x, mpz_t? y)
     {
-        return y.CompareTo(x) > 0;
+        return y is not null && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -463,9 +463,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpz_t x, uint y)
+    public static bool operator <(mpz_t? x, uint y)
     {
-        return x.CompareTo(y) < 0;
+        return x is null || x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -473,9 +473,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(long x, mpz_t y)
+    public static bool operator <(long x, mpz_t? y)
     {
-        return y.CompareTo(x) > 0;
+        return y is not null && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -483,9 +483,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpz_t x, long y)
+    public static bool operator <(mpz_t? x, long y)
     {
-        return x.CompareTo(y) < 0;
+        return x is null || x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -493,9 +493,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(ulong x, mpz_t y)
+    public static bool operator <(ulong x, mpz_t? y)
     {
-        return y.CompareTo(x) > 0;
+        return y is not null && y.CompareTo(x) > 0;
     }
 
     /// <summary>
@@ -503,9 +503,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpz_t x, ulong y)
+    public static bool operator <(mpz_t? x, ulong y)
     {
-        return x.CompareTo(y) < 0;
+        return x is null || x.CompareTo(y) < 0;
     }
 
     /// <summary>
@@ -513,9 +513,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(float x, mpz_t y)
+    public static bool operator <(float x, mpz_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) > 0;
+        return y is not null && (!double.IsNaN(x) && y.CompareTo(x) > 0);
     }
 
     /// <summary>
@@ -523,9 +523,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpz_t x, float y)
+    public static bool operator <(mpz_t? x, float y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) < 0;
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
     }
 
     /// <summary>
@@ -533,9 +533,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(double x, mpz_t y)
+    public static bool operator <(double x, mpz_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) > 0;
+        return y is not null && (!double.IsNaN(x) && y.CompareTo(x) > 0);
     }
 
     /// <summary>
@@ -543,9 +543,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <(mpz_t x, double y)
+    public static bool operator <(mpz_t? x, double y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) < 0;
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
     }
 
     /// <summary>
@@ -553,9 +553,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpz_t x, mpz_t y)
+    public static bool operator <=(mpz_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || (y is not null && x.CompareTo(y) <= 0);
     }
 
     /// <summary>
@@ -563,9 +563,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(int x, mpz_t y)
+    public static bool operator <=(int x, mpz_t? y)
     {
-        return y.CompareTo(x) >= 0;
+        return y is not null && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -573,9 +573,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpz_t x, int y)
+    public static bool operator <=(mpz_t? x, int y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -583,9 +583,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(uint x, mpz_t y)
+    public static bool operator <=(uint x, mpz_t? y)
     {
-        return y.CompareTo(x) >= 0;
+        return y is not null && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -593,9 +593,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpz_t x, uint y)
+    public static bool operator <=(mpz_t? x, uint y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -603,9 +603,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(long x, mpz_t y)
+    public static bool operator <=(long x, mpz_t? y)
     {
-        return y.CompareTo(x) >= 0;
+        return y is not null && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -613,9 +613,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpz_t x, long y)
+    public static bool operator <=(mpz_t? x, long y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -623,9 +623,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(ulong x, mpz_t y)
+    public static bool operator <=(ulong x, mpz_t? y)
     {
-        return y.CompareTo(x) >= 0;
+        return y is not null && y.CompareTo(x) >= 0;
     }
 
     /// <summary>
@@ -633,9 +633,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpz_t x, ulong y)
+    public static bool operator <=(mpz_t? x, ulong y)
     {
-        return x.CompareTo(y) <= 0;
+        return x is null || x.CompareTo(y) <= 0;
     }
 
     /// <summary>
@@ -643,9 +643,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(float x, mpz_t y)
+    public static bool operator <=(float x, mpz_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) >= 0;
+        return y is not null && (!double.IsNaN(x) && y.CompareTo(x) >= 0);
     }
 
     /// <summary>
@@ -653,9 +653,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpz_t x, float y)
+    public static bool operator <=(mpz_t? x, float y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) <= 0;
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
     }
 
     /// <summary>
@@ -663,9 +663,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(double x, mpz_t y)
+    public static bool operator <=(double x, mpz_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) >= 0;
+        return y is not null && (!double.IsNaN(x) && y.CompareTo(x) >= 0);
     }
 
     /// <summary>
@@ -673,9 +673,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator <=(mpz_t x, double y)
+    public static bool operator <=(mpz_t? x, double y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) <= 0;
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
     }
 
     /// <summary>
@@ -683,9 +683,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpz_t x, mpz_t y)
+    public static bool operator >(mpz_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && (y is null || x.CompareTo(y) > 0);
     }
 
     /// <summary>
@@ -693,9 +693,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(int x, mpz_t y)
+    public static bool operator >(int x, mpz_t? y)
     {
-        return y.CompareTo(x) < 0;
+        return y is null || y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -703,9 +703,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpz_t x, int y)
+    public static bool operator >(mpz_t? x, int y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -713,9 +713,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(uint x, mpz_t y)
+    public static bool operator >(uint x, mpz_t? y)
     {
-        return y.CompareTo(x) < 0;
+        return y is null || y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -723,9 +723,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpz_t x, uint y)
+    public static bool operator >(mpz_t? x, uint y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -733,9 +733,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(long x, mpz_t y)
+    public static bool operator >(long x, mpz_t? y)
     {
-        return y.CompareTo(x) < 0;
+        return y is null || y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -743,9 +743,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpz_t x, long y)
+    public static bool operator >(mpz_t? x, long y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -753,9 +753,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(ulong x, mpz_t y)
+    public static bool operator >(ulong x, mpz_t? y)
     {
-        return y.CompareTo(x) < 0;
+        return y is null || y.CompareTo(x) < 0;
     }
 
     /// <summary>
@@ -763,9 +763,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpz_t x, ulong y)
+    public static bool operator >(mpz_t? x, ulong y)
     {
-        return x.CompareTo(y) > 0;
+        return x is not null && x.CompareTo(y) > 0;
     }
 
     /// <summary>
@@ -773,9 +773,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(float x, mpz_t y)
+    public static bool operator >(float x, mpz_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) < 0;
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
     }
 
     /// <summary>
@@ -783,9 +783,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpz_t x, float y)
+    public static bool operator >(mpz_t? x, float y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) > 0;
+        return x is not null && (!double.IsNaN(y) && x.CompareTo(y) > 0);
     }
 
     /// <summary>
@@ -793,9 +793,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(double x, mpz_t y)
+    public static bool operator >(double x, mpz_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) < 0;
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
     }
 
     /// <summary>
@@ -803,9 +803,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >(mpz_t x, double y)
+    public static bool operator >(mpz_t? x, double y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) > 0;
+        return x is not null && (!double.IsNaN(y) && x.CompareTo(y) > 0);
     }
 
     /// <summary>
@@ -813,9 +813,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpz_t x, mpz_t y)
+    public static bool operator >=(mpz_t? x, mpz_t? y)
     {
-        return x.CompareTo(y) >= 0;
+        return y is null || (x is not null && x.CompareTo(y) >= 0);
     }
 
     /// <summary>
@@ -823,9 +823,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(int x, mpz_t y)
+    public static bool operator >=(int x, mpz_t? y)
     {
-        return y.CompareTo(x) <= 0;
+        return y is null || y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -833,9 +833,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpz_t x, int y)
+    public static bool operator >=(mpz_t? x, int y)
     {
-        return x.CompareTo(y) >= 0;
+        return x is not null && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -843,9 +843,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(uint x, mpz_t y)
+    public static bool operator >=(uint x, mpz_t? y)
     {
-        return y.CompareTo(x) <= 0;
+        return y is null || y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -853,9 +853,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpz_t x, uint y)
+    public static bool operator >=(mpz_t? x, uint y)
     {
-        return x.CompareTo(y) >= 0;
+        return x is not null && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -863,9 +863,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(long x, mpz_t y)
+    public static bool operator >=(long x, mpz_t? y)
     {
-        return y.CompareTo(x) <= 0;
+        return y is null || y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -873,9 +873,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpz_t x, long y)
+    public static bool operator >=(mpz_t? x, long y)
     {
-        return x.CompareTo(y) >= 0;
+        return x is not null && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -883,9 +883,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(ulong x, mpz_t y)
+    public static bool operator >=(ulong x, mpz_t? y)
     {
-        return y.CompareTo(x) <= 0;
+        return y is null || y.CompareTo(x) <= 0;
     }
 
     /// <summary>
@@ -893,9 +893,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpz_t x, ulong y)
+    public static bool operator >=(mpz_t? x, ulong y)
     {
-        return x.CompareTo(y) >= 0;
+        return x is not null && x.CompareTo(y) >= 0;
     }
 
     /// <summary>
@@ -903,9 +903,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(float x, mpz_t y)
+    public static bool operator >=(float x, mpz_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) <= 0;
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
     }
 
     /// <summary>
@@ -913,9 +913,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpz_t x, float y)
+    public static bool operator >=(mpz_t? x, float y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) >= 0;
+        return x is not null && (!double.IsNaN(y) && x.CompareTo(y) >= 0);
     }
 
     /// <summary>
@@ -923,9 +923,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(double x, mpz_t y)
+    public static bool operator >=(double x, mpz_t? y)
     {
-        return !double.IsNaN(x) && y.CompareTo(x) <= 0;
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
     }
 
     /// <summary>
@@ -933,9 +933,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
-    public static bool operator >=(mpz_t x, double y)
+    public static bool operator >=(mpz_t? x, double y)
     {
-        return !double.IsNaN(y) && x.CompareTo(y) >= 0;
+        return x is not null && (!double.IsNaN(y) && x.CompareTo(y) >= 0);
     }
 
     /// <summary>
