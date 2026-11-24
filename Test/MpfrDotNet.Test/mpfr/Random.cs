@@ -1,5 +1,6 @@
 ﻿namespace Test;
 
+using System;
 using MpfrDotNet;
 using MpirDotNet;
 using NUnit.Framework;
@@ -10,30 +11,31 @@ public class Random
     [Test]
     public void Uniform()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        using randstate_t state = new randstate_t();
+        using randstate_t state = new();
 
         using mpfr_t Zero = new(0);
         using mpfr_t One = new(1);
 
         using mpfr_t x = mpfr_t.UniformRandom(state);
 
-        Assert.That(x >= Zero, Is.True);
-        Assert.That(x <= One, Is.True);
+        Assert.That(x, Is.GreaterThanOrEqualTo(Zero));
+        Assert.That(x, Is.LessThanOrEqualTo(One));
 
         using mpfr_t y = mpfr_t.UniformRandom(state, mpfr_rnd_t.MPFR_RNDZ);
 
-        Assert.That(y >= Zero, Is.True);
-        Assert.That(y <= One, Is.True);
+        Assert.That(y, Is.GreaterThanOrEqualTo(Zero));
+        Assert.That(y, Is.LessThanOrEqualTo(One));
     }
 
     [Test]
     public void Gaussian()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        using randstate_t state = new randstate_t();
+        using randstate_t state = new();
 
         using mpfr_t x = mpfr_t.GaussianRandom(state);
 
@@ -51,9 +53,9 @@ public class Random
     [Test]
     public void Exponential()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        using randstate_t state = new randstate_t();
+        using randstate_t state = new();
 
         using mpfr_t x = mpfr_t.ExponentialRandom(state);
 

@@ -1,6 +1,7 @@
 namespace TestInteger;
 
 using MpirDotNet;
+using System;
 using System.Text;
 using NUnit.Framework;
 using Interop.Mpir;
@@ -14,11 +15,11 @@ public class NumberTheoretic
         string AsString;
         bool IsProbablePrime;
 
-        using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
+        using mpz_t a = new("622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
 
-        using randstate_t state = new randstate_t();
+        using randstate_t state = new();
 
         IsProbablePrime = mpz.probable_prime_p(a, state, 10, 0);
         Assert.That(IsProbablePrime, Is.True);
@@ -35,11 +36,11 @@ public class NumberTheoretic
         string AsString;
         bool IsLikelyPrime;
 
-        using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
+        using mpz_t a = new("622288097498926496141095869268883999563096063592498055290461");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
 
-        using randstate_t state = new randstate_t();
+        using randstate_t state = new();
 
         IsLikelyPrime = mpz.likely_prime_p(a, state, 0);
         Assert.That(IsLikelyPrime, Is.True);
@@ -55,11 +56,11 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("622288097498926496141095869268883999563096063592498055290460");
+        using mpz_t a = new("622288097498926496141095869268883999563096063592498055290460");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290460"));
 
-        using randstate_t state = new randstate_t();
+        using randstate_t state = new();
 
         using mpz_t b = new();
         mpz.next_prime_candidate(b, a, state);
@@ -73,7 +74,7 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("29927402397991286489627837734179186385188296382227");
+        using mpz_t a = new("29927402397991286489627837734179186385188296382227");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("29927402397991286489627837734179186385188296382227"));
 
@@ -97,8 +98,9 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("29927402397991286489627837734179186385188296382227");
+        using mpz_t a = new("29927402397991286489627837734179186385188296382227");
         AsString = a.ToString();
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(AsString, Is.EqualTo("29927402397991286489627837734179186385188296382227"));
 
         ulong c = 80;
@@ -120,7 +122,7 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("29927402397991286489627837734179186385188296382227");
+        using mpz_t a = new("29927402397991286489627837734179186385188296382227");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("29927402397991286489627837734179186385188296382227"));
 
@@ -156,11 +158,11 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("1167168693521660173095485671632988269022343558906853");
+        using mpz_t a = new("1167168693521660173095485671632988269022343558906853");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1167168693521660173095485671632988269022343558906853"));
 
-        using mpz_t b = new mpz_t("1227023498317642746074741347101346641792720151671307");
+        using mpz_t b = new("1227023498317642746074741347101346641792720151671307");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1227023498317642746074741347101346641792720151671307"));
 
@@ -176,7 +178,7 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("1167168693521660173095485671632988269022343558906853");
+        using mpz_t a = new("1167168693521660173095485671632988269022343558906853");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1167168693521660173095485671632988269022343558906853"));
 
@@ -194,11 +196,11 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("29927402397991286489627837734179186385188296382227");
+        using mpz_t a = new("29927402397991286489627837734179186385188296382227");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("29927402397991286489627837734179186385188296382227"));
 
-        using mpz_t b = new mpz_t("622288097498926496141095869268883999563096063592498055290461");
+        using mpz_t b = new("622288097498926496141095869268883999563096063592498055290461");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
 
@@ -218,11 +220,11 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("9288562863495827364985273645298367452");
+        using mpz_t a = new("9288562863495827364985273645298367452");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("9288562863495827364985273645298367452"));
 
-        using mpz_t b = new mpz_t("876428957629387610928574612341");
+        using mpz_t b = new("876428957629387610928574612341");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("876428957629387610928574612341"));
 
@@ -236,11 +238,11 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("9288562863495827364985273645298367452");
+        using mpz_t a = new("9288562863495827364985273645298367452");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("9288562863495827364985273645298367452"));
 
-        using mpz_t b = new mpz_t("876428957629387610928574612341");
+        using mpz_t b = new("876428957629387610928574612341");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("876428957629387610928574612341"));
 
@@ -254,11 +256,11 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("9288562863495827364985273645298367452");
+        using mpz_t a = new("9288562863495827364985273645298367452");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("9288562863495827364985273645298367452"));
 
-        using mpz_t b = new mpz_t("876428957629387610928574612341");
+        using mpz_t b = new("876428957629387610928574612341");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("876428957629387610928574612341"));
 
@@ -272,7 +274,7 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("9288562863495827364985273645298367452");
+        using mpz_t a = new("9288562863495827364985273645298367452");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("9288562863495827364985273645298367452"));
 
@@ -280,7 +282,7 @@ public class NumberTheoretic
 
         int JacobiSymbol = mpz.kronecker_si(a, b);
 
-        Assert.That(JacobiSymbol, Is.EqualTo(0));
+        Assert.That(JacobiSymbol, Is.Zero);
     }
 
     [Test]
@@ -288,7 +290,7 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("9288562863495827364985273645298367452");
+        using mpz_t a = new("9288562863495827364985273645298367452");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("9288562863495827364985273645298367452"));
 
@@ -296,7 +298,7 @@ public class NumberTheoretic
 
         int JacobiSymbol = mpz.si_kronecker(b, a);
 
-        Assert.That(JacobiSymbol, Is.EqualTo(0));
+        Assert.That(JacobiSymbol, Is.Zero);
     }
 
     [Test]
@@ -304,7 +306,7 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("29927402397991286489627837734179186385188296382227");
+        using mpz_t a = new("29927402397991286489627837734179186385188296382227");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("29927402397991286489627837734179186385188296382227"));
 
@@ -320,7 +322,7 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("29927402397991286489627837734179186385188296382227");
+        using mpz_t a = new("29927402397991286489627837734179186385188296382227");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("29927402397991286489627837734179186385188296382227"));
 
@@ -336,11 +338,12 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("9288562863495827364985273645298367452");
+        using mpz_t a = new("9288562863495827364985273645298367452");
         AsString = a.ToString();
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(AsString, Is.EqualTo("9288562863495827364985273645298367452"));
 
-        using mpz_t b = new mpz_t("29927402397991286489627837734179186385188296382227");
+        using mpz_t b = new("29927402397991286489627837734179186385188296382227");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("29927402397991286489627837734179186385188296382227"));
 
@@ -402,7 +405,7 @@ public class NumberTheoretic
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("95424793124934570246014589630147");
+        using mpz_t a = new("95424793124934570246014589630147");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("95424793124934570246014589630147"));
 

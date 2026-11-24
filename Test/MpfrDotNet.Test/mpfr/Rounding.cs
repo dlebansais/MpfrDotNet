@@ -1,5 +1,6 @@
 ﻿namespace Test;
 
+using System;
 using MpfrDotNet;
 using NUnit.Framework;
 
@@ -22,12 +23,12 @@ public class Rounding
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
@@ -79,9 +80,7 @@ public class Rounding
         AsString = m.ToString();
         Assert.That(AsString, Is.EqualTo("5.74029384571986156515777111053466796875E-1"));
 
-        mpfr_t Integer;
-        mpfr_t Fractional;
-        a.IntegerAndFractional(out Integer, out Fractional);
+        a.IntegerAndFractional(out mpfr_t Integer, out mpfr_t Fractional);
 
         AsString = Integer.ToString();
         Assert.That(AsString, Is.EqualTo("2.2250983250345029834502983E+25"));
@@ -110,16 +109,17 @@ public class Rounding
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
@@ -128,13 +128,12 @@ public class Rounding
         Assert.That(AsString, Is.EqualTo("1.455904307763042498752955870300976687446E+15"));
 
         ulong ui = 2229874359879827;
-        long Quotient;
 
         using mpfr_t d = mpfr_t.FMod(a, ui);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("1.455907360639091574029384571986156515777E+15"));
 
-        using mpfr_t e = mpfr_t.FMod(a, b, out Quotient);
+        using mpfr_t e = mpfr_t.FMod(a, b, out long Quotient);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("1.455904307763042498752955870300976687446E+15"));
         Assert.That(Quotient, Is.EqualTo(1388647004));
@@ -154,7 +153,7 @@ public class Rounding
     [Test]
     public void Print()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         string AsString = mpfr.print_rnd_mode(mpfr_rnd_t.MPFR_RNDZ);
         Assert.That(AsString, Is.EqualTo("MPFR_RNDZ"));

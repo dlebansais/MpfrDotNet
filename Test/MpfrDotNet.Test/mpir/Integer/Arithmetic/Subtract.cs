@@ -11,11 +11,11 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("445497268491433028939318409770173720259");
+        using mpz_t a = new("445497268491433028939318409770173720259");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("445497268491433028939318409770173720259"));
 
-        using mpz_t b = new mpz_t("222987435987982730594288574029879874539");
+        using mpz_t b = new("222987435987982730594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539"));
 
@@ -30,11 +30,11 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("445497268491433028939318409770173720259");
+        using mpz_t a = new("445497268491433028939318409770173720259");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("445497268491433028939318409770173720259"));
 
-        using mpz_t b = new mpz_t("222987435987982730594288574029879874539");
+        using mpz_t b = new("222987435987982730594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539"));
 
@@ -48,7 +48,7 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -63,7 +63,7 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -79,7 +79,7 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -95,7 +95,7 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -111,7 +111,7 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -127,7 +127,7 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -159,7 +159,7 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -179,7 +179,7 @@ public class Subtract
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -199,7 +199,7 @@ public class Subtract
     {
         string AsString;
 
-        mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -208,8 +208,6 @@ public class Subtract
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845719"));
 
-        using (mpz_t clear = a)
-        {
-        }
+        using mpz_t clear = a;
     }
 }

@@ -18,7 +18,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         ulong SizeInBits = (ulong)mpz_sizeinbase(ref Value, 2);
         byte[] Result = new byte[(SizeInBits + 7) / 8];
 
-        mpz.export(Result, out ulong countp, -1, sizeof(byte), -1, 0UL, this);
+        mpz.export(Result, out _, -1, sizeof(byte), -1, 0UL, this);
 
         return Result;
     }
@@ -41,7 +41,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         ulong SizeInDigits = mpz.sizeinbase(this, (uint)resultbase);
 
-        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
+        StringBuilder Data = new((int)(SizeInDigits + 2));
         mpz.get_str(Data, resultbase, this);
 
         string Result = Data.ToString();
@@ -245,7 +245,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         byte[] Bytes = value.ToByteArray();
 
-        BigInteger Result = new BigInteger(Bytes);
+        BigInteger Result = new(Bytes);
         return Result;
     }
 }

@@ -12,11 +12,11 @@ public class Misc
     {
         string AsString;
 
-        using mpq_t a = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
+        using mpq_t a = new("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
-        using mpq_t b = new mpq_t(a);
+        using mpq_t b = new(a);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
@@ -52,13 +52,13 @@ public class Misc
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("1/4"));
 
-        using mpz_t n0 = new mpz_t("222509832503450298345029835740293845720");
-        using mpz_t d0 = new mpz_t("115756986668303657898962467957");
-        using mpq_t q0 = new mpq_t(n0, d0);
+        using mpz_t n0 = new("222509832503450298345029835740293845720");
+        using mpz_t d0 = new("115756986668303657898962467957");
+        using mpq_t q0 = new(n0, d0);
         AsString = q0.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
         
-        using mpq_t q1 = new mpq_t(n0, d0, canonicalize: true);
+        using mpq_t q1 = new(n0, d0, canonicalize: true);
         AsString = q1.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
@@ -67,13 +67,13 @@ public class Misc
         AsString = i.ToString();
         Assert.That(AsString, Is.EqualTo("1/4"));
 
-        using mpq_t r = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957", canonicalize: true);
+        using mpq_t r = new("222509832503450298345029835740293845720/115756986668303657898962467957", canonicalize: true);
         AsString = r.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         Assert.Throws<ArgumentException>(() => { using mpq_t s = new("Foo") { }; });
-        Assert.Throws<NotImplementedException>(() => mpq.inits(new mpq_t[0]));
-        Assert.Throws<NotImplementedException>(() => mpq.clears(new mpq_t[0]));
+        Assert.Throws<NotImplementedException>(() => mpq.inits([]));
+        Assert.Throws<NotImplementedException>(() => mpq.clears([]));
     }
 
     [Test]
@@ -84,7 +84,7 @@ public class Misc
 
         mpq_t[] TestArray = mpq_t.CreateArray(ArrayLength);
 
-        Assert.That(TestArray.Length, Is.EqualTo(ArrayLength));
+        Assert.That(TestArray, Has.Length.EqualTo(ArrayLength));
 
         foreach (mpq_t Item in TestArray)
         {
@@ -106,17 +106,17 @@ public class Misc
     [Test]
     public void Sign()
     {
-        using mpq_t a = new mpq_t(2);
+        using mpq_t a = new(2);
 
         bool IsPositive = a.Sign > 0;
         Assert.That(IsPositive, Is.True);
 
-        using mpq_t b = new mpq_t(-2);
+        using mpq_t b = new(-2);
 
         bool IsNegative = b.Sign < 0;
         Assert.That(IsNegative, Is.True);
 
-        using mpq_t c = new mpq_t();
+        using mpq_t c = new();
 
         bool HasNoSign = c.Sign == 0;
         Assert.That(HasNoSign, Is.True);
@@ -127,11 +127,11 @@ public class Misc
     {
         string AsString;
 
-        using mpq_t a = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
+        using mpq_t a = new("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
-        using mpq_t b = new mpq_t("222987435987982730594288574029879874539/590872612825179551336102196593");
+        using mpq_t b = new("222987435987982730594288574029879874539/590872612825179551336102196593");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539/590872612825179551336102196593"));
 
@@ -149,7 +149,7 @@ public class Misc
     {
         string AsString;
 
-        using mpq_t a = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
+        using mpq_t a = new("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
@@ -162,7 +162,7 @@ public class Misc
     {
         string AsString;
 
-        using mpq_t a = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
+        using mpq_t a = new("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
@@ -180,7 +180,7 @@ public class Misc
     {
         string AsString;
 
-        using mpq_t a = new mpq_t("2983/5740293845720");
+        using mpq_t a = new("2983/5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2983/5740293845720"));
 
@@ -209,52 +209,52 @@ public class Misc
         Assert.That(d2, Is.EqualTo((double)a));
 
         sbyte b1 = a.ToSByte(null);
-        Assert.That(b1, Is.EqualTo((sbyte)a));
+        Assert.That(b1, Is.Zero);
 
         sbyte b2 = Convertible.ToSByte(null);
-        Assert.That(b2, Is.EqualTo((sbyte)a));
+        Assert.That(b2, Is.Zero);
 
         byte ub1 = a.ToByte(null);
-        Assert.That(ub1, Is.EqualTo((byte)a));
+        Assert.That(ub1, Is.Zero);
 
         byte ub2 = Convertible.ToByte(null);
-        Assert.That(ub2, Is.EqualTo((byte)a));
+        Assert.That(ub2, Is.Zero);
 
         short s1 = a.ToInt16(null);
-        Assert.That(s1, Is.EqualTo((short)a));
+        Assert.That(s1, Is.Zero);
 
         short s2 = Convertible.ToInt16(null);
-        Assert.That(s2, Is.EqualTo((short)a));
+        Assert.That(s2, Is.Zero);
 
         ushort us1 = a.ToUInt16(null);
-        Assert.That(us1, Is.EqualTo((ushort)a));
+        Assert.That(us1, Is.Zero);
 
         ushort us2 = Convertible.ToUInt16(null);
-        Assert.That(us2, Is.EqualTo((ushort)a));
+        Assert.That(us2, Is.Zero);
 
         int i1 = a.ToInt32(null);
-        Assert.That(i1, Is.EqualTo((int)a));
+        Assert.That(i1, Is.Zero);
 
         int i2 = Convertible.ToInt32(null);
-        Assert.That(i2, Is.EqualTo((int)a));
+        Assert.That(i2, Is.Zero);
 
         uint ui1 = a.ToUInt32(null);
-        Assert.That(ui1, Is.EqualTo((uint)a));
+        Assert.That(ui1, Is.Zero);
 
         uint ui2 = Convertible.ToUInt32(null);
-        Assert.That(ui2, Is.EqualTo((uint)a));
+        Assert.That(ui2, Is.Zero);
 
         long l1 = a.ToInt64(null);
-        Assert.That(l1, Is.EqualTo((long)a));
+        Assert.That(l1, Is.Zero);
 
         long l2 = Convertible.ToInt64(null);
-        Assert.That(l2, Is.EqualTo((long)a));
+        Assert.That(l2, Is.Zero);
 
         ulong ul1 = a.ToUInt64(null);
-        Assert.That(ul1, Is.EqualTo((ulong)a));
+        Assert.That(ul1, Is.Zero);
 
         ulong ul2 = Convertible.ToUInt64(null);
-        Assert.That(ul2, Is.EqualTo((ulong)a));
+        Assert.That(ul2, Is.Zero);
 
         string str1 = a.ToString(null);
         Assert.That(str1, Is.EqualTo(a.ToString()));
@@ -268,7 +268,7 @@ public class Misc
     {
         string AsString;
 
-        using mpq_t a = new mpq_t("2983/5740293845720");
+        using mpq_t a = new("2983/5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2983/5740293845720"));
 
@@ -294,32 +294,46 @@ public class Misc
         Assert.That(d1, Is.EqualTo((double)a));
 
         sbyte b1 = (sbyte)a.ToType(typeof(sbyte), null);
-        Assert.That(b1, Is.EqualTo((sbyte)a));
+        Assert.That(b1, Is.Zero);
 
         byte ub1 = (byte)a.ToType(typeof(byte), null);
-        Assert.That(ub1, Is.EqualTo((byte)a));
+        Assert.That(ub1, Is.Zero);
 
         short s1 = (short)a.ToType(typeof(short), null);
-        Assert.That(s1, Is.EqualTo((short)a));
+        Assert.That(s1, Is.Zero);
 
         ushort us1 = (ushort)a.ToType(typeof(ushort), null);
-        Assert.That(us1, Is.EqualTo((ushort)a));
+        Assert.That(us1, Is.Zero);
 
         int i1 = (int)a.ToType(typeof(int), null);
-        Assert.That(i1, Is.EqualTo((int)a));
+        Assert.That(i1, Is.Zero);
 
         uint ui1 = (uint)a.ToType(typeof(uint), null);
-        Assert.That(ui1, Is.EqualTo((uint)a));
+        Assert.That(ui1, Is.Zero);
 
         long l1 = (long)a.ToType(typeof(long), null);
-        Assert.That(l1, Is.EqualTo((long)a));
+        Assert.That(l1, Is.Zero);
 
         ulong ul1 = (ulong)a.ToType(typeof(ulong), null);
-        Assert.That(ul1, Is.EqualTo((ulong)a));
+        Assert.That(ul1, Is.Zero);
 
         string str1 = (string)a.ToType(typeof(string), null);
         Assert.That(str1, Is.EqualTo(a.ToString()));
 
         Assert.Throws<InvalidCastException>(() => a.ToType(typeof(Misc), null));
+    }
+
+    [Test]
+    public void TruncatedConversion()
+    {
+        using mpq_t Large = new("2199023255555/2");
+        using mpq_t Negative = new("-7/2");
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Large.ToInt64(null), Is.EqualTo(1099511627777L));
+        Assert.That(Large.ToUInt64(null), Is.EqualTo(1099511627777UL));
+        Assert.That(Negative.ToInt32(null), Is.EqualTo(-3));
+        Assert.That(Negative.ToInt16(null), Is.EqualTo(-3));
+        Assert.That(Negative.ToSByte(null), Is.EqualTo(-3));
     }
 }

@@ -13,12 +13,13 @@
         <Product />
         <Description>Binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET</Description>
         <Copyright>Copyright © 2021 David Le Bansais</Copyright>
-        <AssemblyVersion>1.1.0.16</AssemblyVersion>
-        <FileVersion>1.1.0.16</FileVersion>
+        <AssemblyVersion>1.1.0.17</AssemblyVersion>
+        <FileVersion>1.1.0.17</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/MpfrDotNet</RepositoryUrl>
         <NeutralLanguage>en-US</NeutralLanguage>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
         <PackageIcon>package-icon.png</PackageIcon>
         <PackageReadmeFile>README-short.md</PackageReadmeFile>
@@ -34,6 +35,10 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="PolySharp" Version="1.17.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

@@ -103,7 +103,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         }
 
         if (Success != 0)
-            throw new ArgumentException();
+            throw new ArgumentException($"The combination of '{nameof(s)}' and '{nameof(strBase)}' is invalid.");
     }
 
     /// <summary>

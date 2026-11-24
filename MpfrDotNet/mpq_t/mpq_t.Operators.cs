@@ -16,7 +16,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpq_t operator +(mpq_t x, mpq_t y)
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         mpq.add(z, x, y);
 
@@ -30,7 +30,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpq_t operator -(mpq_t x, mpq_t y)
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         mpq.sub(z, x, y);
 
@@ -44,7 +44,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpq_t operator *(mpq_t x, mpq_t y)
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         mpq.mul(z, x, y);
 
@@ -58,7 +58,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="count">The number of bits to shift.</param>
     public static mpq_t operator <<(mpq_t x, int count)
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         if (count >= 0)
             mpq.mul_2exp(z, x, (ulong)count);
@@ -73,7 +73,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="count">The number of bits to shift.</param>
     public static mpq_t operator >>(mpq_t x, int count)
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         if (count >= 0)
             mpq.div_2exp(z, x, (ulong)count);
@@ -87,7 +87,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="x">The number.</param>
     public static mpq_t operator -(mpq_t x)
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         mpq.neg(z, x);
 
@@ -101,7 +101,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpq_t operator /(mpq_t x, mpq_t y)
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         mpq.div(z, x, y);
 

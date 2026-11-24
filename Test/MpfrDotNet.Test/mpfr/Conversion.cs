@@ -3,6 +3,7 @@
 using MpfrDotNet;
 using MpirDotNet;
 using NUnit.Framework;
+using System;
 using System.Numerics;
 
 [TestFixture]
@@ -13,7 +14,8 @@ public class Conversion
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -65,7 +67,7 @@ public class Conversion
 
         Assert.That(i.IsInteger, Is.False);
 
-        BigInteger bj = new BigInteger(898989898989898989);
+        BigInteger bj = new(898989898989898989);
         using mpfr_t j = bj;
         AsString = j.ToString();
         Assert.That(AsString, Is.EqualTo("8.98989898989898989E+17"));
@@ -79,19 +81,18 @@ public class Conversion
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        double d;
-        int e;
 
         using mpfr_t a = 16.5;
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1.65E+1"));
 
-        mpfr_t.ToDoubleAndExponent(a, out d, out e);
+        mpfr_t.ToDoubleAndExponent(a, out double d, out int e);
 
         Assert.That(d, Is.EqualTo(0.515625));
         Assert.That(e, Is.EqualTo(5));
@@ -137,18 +138,18 @@ public class Conversion
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        int e;
 
         using mpfr_t a = 16.5;
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1.65E+1"));
 
-        using mpfr_t b = mpfr_t.ToIntegralFractional(a, out e);
+        using mpfr_t b = mpfr_t.ToIntegralFractional(a, out int e);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("5.15625E-1"));
         Assert.That(e, Is.EqualTo(5));
@@ -161,16 +162,16 @@ public class Conversion
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpq_t a = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
+        using mpq_t a = new("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
-        using mpfr_t b = new mpfr_t(a);
+        using mpfr_t b = new(a);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349265E+9"));
 
@@ -178,7 +179,7 @@ public class Conversion
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("19036696701859040601814679603844175557/9903520314283042199192993792"));
 
-        using mpfr_t d = new mpfr_t(c);
+        using mpfr_t d = new(c);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349265E+9"));
 
@@ -190,16 +191,16 @@ public class Conversion
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpf_t a = new mpf_t("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9");
+        using mpf_t a = new("1.922215141458735700317777668394096349264532710024993989646213167488131290383535088039934635162353515625E+9");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1.92221514145873570032E+9"));
 
-        using mpfr_t b = new mpfr_t(a);
+        using mpfr_t b = new(a);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.922215141458735700317777668394096349265E+9"));
 
@@ -215,7 +216,8 @@ public class Conversion
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;

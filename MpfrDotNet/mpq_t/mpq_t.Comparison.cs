@@ -15,7 +15,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public int CompareTo(mpq_t? other)
     {
-        if (ReferenceEquals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
         else
             return mpq.cmp(this, other);

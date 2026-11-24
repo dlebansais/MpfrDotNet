@@ -9,11 +9,16 @@ using System.Runtime.InteropServices;
 #pragma warning disable SA1600 // Elements should be documented
 internal static partial class NativeMethods
 {
-    [DllImport("kernel32")]
+#if NET7_0_OR_GREATER
+    [LibraryImport("kernel32", EntryPoint = "LoadLibraryW", StringMarshalling = StringMarshalling.Utf16)]
+    private static partial IntPtr LoadLibrary(string libraryName);
+#else
+    [DllImport("kernel32", CharSet = CharSet.Unicode)]
     private static extern IntPtr LoadLibrary(string libraryName);
+#endif
 
-    [DllImport("kernel32", CharSet = CharSet.Ansi)]
-    private static extern IntPtr GetProcAddress(IntPtr hwnd, string procedureName);
+    [DllImport("kernel32", CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+    private static extern IntPtr GetProcAddress(IntPtr hwnd, [MarshalAs(UnmanagedType.LPStr)] string procedureName);
 
     internal static IntPtr GetMpfrPointer(string name)
     {
@@ -45,7 +50,7 @@ internal static partial class NativeMethods
                 hLib = LoadLibrary(Path.Combine(DirectoryName, @"runtimes\win-x64\native", libraryName));
 
             if (hLib == IntPtr.Zero)
-                LoadLibrary(libraryName);
+                hLib = LoadLibrary(libraryName);
 
             if (hLib == IntPtr.Zero)
                 throw new ArgumentException($"File {LibraryLocation} not found or not loaded");

@@ -1,5 +1,6 @@
 ﻿namespace Test;
 
+using System;
 using MpfrDotNet;
 using NUnit.Framework;
 
@@ -11,12 +12,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -32,12 +33,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -53,12 +54,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -74,16 +75,16 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
-        using mpfr_t b = new mpfr_t("1.5");
+        using mpfr_t b = new("1.5");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.5E+0"));
 
@@ -99,12 +100,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -120,12 +121,13 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -142,12 +144,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -163,16 +165,16 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
-        using mpfr_t b = new mpfr_t("1.5");
+        using mpfr_t b = new("1.5");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.5E+0"));
 
@@ -188,12 +190,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -209,12 +211,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -230,12 +232,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -259,12 +261,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -288,16 +290,16 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
-        using mpfr_t b = new mpfr_t("1.5");
+        using mpfr_t b = new("1.5");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.5E+0"));
 
@@ -313,12 +315,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 
@@ -334,12 +336,12 @@ public class OtherTranscendant
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("3.5740293845720");
+        using mpfr_t a = new("3.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("3.574029384572E+0"));
 

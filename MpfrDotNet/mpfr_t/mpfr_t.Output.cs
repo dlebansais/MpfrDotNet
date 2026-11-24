@@ -39,10 +39,9 @@ public partial class mpfr_t : IDisposable
         Debug.Assert(IsCacheInitialized);
 
         ulong SizeInDigits = DigitCount;
-        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
+        StringBuilder Data = new((int)(SizeInDigits + 2));
 
-        int Exponent;
-        mpfr.get_str(Data, out Exponent, resultbase, SizeInDigits, this, rounding);
+        mpfr.get_str(Data, out int Exponent, resultbase, SizeInDigits, this, rounding);
 
         string Result = Data.ToString();
         Debug.Assert(Result.Length > 0);
@@ -66,14 +65,14 @@ public partial class mpfr_t : IDisposable
         int FractionalIndex = IsNegative ? 2 : 1;
         Debug.Assert(FractionalIndex <= Result.Length);
 
-        string IntegerPart = Result.Substring(0, FractionalIndex);
-        string FractionalPart = Result.Substring(FractionalIndex);
+        string IntegerPart = Result[..FractionalIndex];
+        string FractionalPart = Result[FractionalIndex..];
 
         int LastNonZero = FractionalPart.Length;
         while (LastNonZero > 0 && FractionalPart[LastNonZero - 1] == '0')
             LastNonZero--;
 
-        FractionalPart = FractionalPart.Substring(0, LastNonZero);
+        FractionalPart = FractionalPart[..LastNonZero];
 
         if (FractionalPart.Length > 0)
             FractionalPart = "." + FractionalPart;

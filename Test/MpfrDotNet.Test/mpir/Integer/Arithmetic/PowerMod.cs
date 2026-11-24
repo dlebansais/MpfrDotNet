@@ -11,15 +11,15 @@ public class PowerMod
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("2835698356928736487698769283645293409781234");
+        using mpz_t a = new("2835698356928736487698769283645293409781234");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2835698356928736487698769283645293409781234"));
 
-        using mpz_t b = new mpz_t("3");
+        using mpz_t b = new("3");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("3"));
 
-        using mpz_t c = new mpz_t("9786459872639458729387304958673243509870923452745892673402935742456");
+        using mpz_t c = new("9786459872639458729387304958673243509870923452745892673402935742456");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("9786459872639458729387304958673243509870923452745892673402935742456"));
 
@@ -33,11 +33,11 @@ public class PowerMod
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("2835698356928736487698769283645293409781234");
+        using mpz_t a = new("2835698356928736487698769283645293409781234");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2835698356928736487698769283645293409781234"));
 
-        using mpz_t c = new mpz_t("9786459872639458729387304958673243509870923452745892673402935742456");
+        using mpz_t c = new("9786459872639458729387304958673243509870923452745892673402935742456");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("9786459872639458729387304958673243509870923452745892673402935742456"));
 

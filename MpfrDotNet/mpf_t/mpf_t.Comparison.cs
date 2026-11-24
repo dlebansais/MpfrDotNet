@@ -14,7 +14,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="other">The compared value.</param>
     public int CompareTo(mpf_t? other)
     {
-        if (ReferenceEquals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
         else
             return mpf.cmp(this, other);

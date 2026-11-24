@@ -10,7 +10,7 @@ public class Random
     public void UniformExp()
     {
         using randstate_t state = new();
-        using mpf_t a = new mpf_t();
+        using mpf_t a = new();
 
         ulong n = 60;
 
@@ -28,7 +28,7 @@ public class Random
     public void NonUniformExp()
     {
         using randstate_t state = new();
-        using mpf_t a = new mpf_t();
+        using mpf_t a = new();
 
         ulong n = 60;
         int exp = 10;

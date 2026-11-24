@@ -13,7 +13,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     public mpz_t Abs()
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.abs(z, this);
 
@@ -35,7 +35,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     public mpz_t Quotient(mpz_t y, Rounding rounding = Rounding.TowardZero)
     {
-        mpz_t quotient = new mpz_t();
+        mpz_t quotient = new();
 
         switch (rounding)
         {
@@ -63,7 +63,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     public mpz_t Remainder(mpz_t y, Rounding rounding = Rounding.TowardZero)
     {
-        mpz_t remainder = new mpz_t();
+        mpz_t remainder = new();
 
         switch (rounding)
         {
@@ -121,7 +121,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     public mpz_t Quotient(ulong y, Rounding rounding = Rounding.TowardZero)
     {
-        mpz_t quotient = new mpz_t();
+        mpz_t quotient = new();
 
         switch (rounding)
         {
@@ -149,7 +149,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     public mpz_t Remainder(ulong y, Rounding rounding = Rounding.TowardZero)
     {
-        mpz_t remainder = new mpz_t();
+        mpz_t remainder = new();
 
         switch (rounding)
         {
@@ -207,25 +207,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     public ulong AbsRemainder(ulong y, Rounding rounding = Rounding.TowardZero)
     {
-        ulong remainder;
-
-        switch (rounding)
+        return rounding switch
         {
-            default:
-            case Rounding.TowardZero:
-                remainder = mpz.tdiv_ui(this, y);
-                break;
-
-            case Rounding.TowardPositiveInfinity:
-                remainder = mpz.cdiv_ui(this, y);
-                break;
-
-            case Rounding.TowardNegativeInfinity:
-                remainder = mpz.fdiv_ui(this, y);
-                break;
-        }
-
-        return remainder;
+            Rounding.TowardPositiveInfinity => mpz.cdiv_ui(this, y),
+            Rounding.TowardNegativeInfinity => mpz.fdiv_ui(this, y),
+            _ => mpz.tdiv_ui(this, y),
+        };
     }
 
     /// <summary>
@@ -235,7 +222,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     public mpz_t RightShift(ulong y, Rounding rounding = Rounding.TowardZero)
     {
-        mpz_t quotient = new mpz_t();
+        mpz_t quotient = new();
 
         switch (rounding)
         {
@@ -263,7 +250,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     public mpz_t RightShiftRemainder(ulong y, Rounding rounding = Rounding.TowardZero)
     {
-        mpz_t remainder = new mpz_t();
+        mpz_t remainder = new();
 
         switch (rounding)
         {
@@ -290,7 +277,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The divider.</param>
     public mpz_t DivExact(mpz_t y)
     {
-        mpz_t quotient = new mpz_t();
+        mpz_t quotient = new();
 
         mpz.divexact(quotient, this, y);
 
@@ -303,7 +290,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The divider.</param>
     public mpz_t DivExact(ulong y)
     {
-        mpz_t quotient = new mpz_t();
+        mpz_t quotient = new();
 
         mpz.divexact_ui(quotient, this, y);
 
@@ -374,7 +361,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="mod">The modulo.</param>
     public mpz_t PowerMod(mpz_t exp, mpz_t mod)
     {
-        mpz_t Result = new mpz_t();
+        mpz_t Result = new();
 
         mpz.powm(Result, this, exp, mod);
 
@@ -388,7 +375,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="mod">The modulo.</param>
     public mpz_t PowerMod(ulong exp, mpz_t mod)
     {
-        mpz_t Result = new mpz_t();
+        mpz_t Result = new();
 
         mpz.powm_ui(Result, this, exp, mod);
 
@@ -401,7 +388,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="exp">The power.</param>
     public mpz_t Pow(ulong exp)
     {
-        mpz_t Result = new mpz_t();
+        mpz_t Result = new();
 
         mpz.pow_ui(Result, this, exp);
 
@@ -414,7 +401,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="n">The root number.</param>
     public bool IsRootExact(ulong n)
     {
-        using mpz_t Result = new mpz_t();
+        using mpz_t Result = new();
 
         return mpz.root(Result, this, n);
     }
@@ -425,7 +412,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="n">The root.</param>
     public mpz_t NthRoot(ulong n)
     {
-        mpz_t Result = new mpz_t();
+        mpz_t Result = new();
 
         mpz.nthroot(Result, this, n);
 
@@ -452,7 +439,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     public mpz_t Sqrt()
     {
-        mpz_t Result = new mpz_t();
+        mpz_t Result = new();
 
         mpz.sqrt(Result, this);
 

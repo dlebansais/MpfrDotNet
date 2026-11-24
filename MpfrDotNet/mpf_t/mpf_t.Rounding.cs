@@ -14,7 +14,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public mpf_t Ceil()
     {
-        mpf_t z = new mpf_t(Precision);
+        mpf_t z = new(Precision);
 
         mpf.ceil(z, this);
 
@@ -26,7 +26,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public mpf_t Floor()
     {
-        mpf_t z = new mpf_t(Precision);
+        mpf_t z = new(Precision);
 
         mpf.floor(z, this);
 
@@ -38,7 +38,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     public mpf_t Trunc()
     {
-        mpf_t z = new mpf_t(Precision);
+        mpf_t z = new(Precision);
 
         mpf.trunc(z, this);
 

@@ -13,12 +13,12 @@ public class MiscArithmetic
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("-22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("-22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("-2.225098325034502983450298357402938457199E+25"));
 
@@ -39,16 +39,16 @@ public class MiscArithmetic
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        using mpfr_t a = new("8650279350142877.30794528793012596741");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
@@ -65,16 +65,16 @@ public class MiscArithmetic
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        using mpfr_t a = new("8650279350142877.30794528793012596741");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
@@ -91,20 +91,20 @@ public class MiscArithmetic
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        using mpfr_t a = new("8650279350142877.30794528793012596741");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
-        using mpfr_t c = new mpfr_t("87645");
+        using mpfr_t c = new("87645");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("8.7645E+4"));
 
@@ -121,20 +121,20 @@ public class MiscArithmetic
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        using mpfr_t a = new("8650279350142877.30794528793012596741");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
-        using mpfr_t c = new mpfr_t("87645");
+        using mpfr_t c = new("87645");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("8.7645E+4"));
 
@@ -151,24 +151,24 @@ public class MiscArithmetic
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        using mpfr_t a = new("8650279350142877.30794528793012596741");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
-        using mpfr_t c = new mpfr_t("87645");
+        using mpfr_t c = new("87645");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("8.7645E+4"));
 
-        using mpfr_t d = new mpfr_t("32");
+        using mpfr_t d = new("32");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("3.2E+1"));
 
@@ -185,24 +185,24 @@ public class MiscArithmetic
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("8650279350142877.30794528793012596741");
+        using mpfr_t a = new("8650279350142877.30794528793012596741");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("8.650279350142877307945287930125967410004E+15"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
-        using mpfr_t c = new mpfr_t("87645");
+        using mpfr_t c = new("87645");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("8.7645E+4"));
 
-        using mpfr_t d = new mpfr_t("32");
+        using mpfr_t d = new("32");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("3.2E+1"));
 
@@ -219,7 +219,7 @@ public class MiscArithmetic
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -235,7 +235,7 @@ public class MiscArithmetic
         using mpz_t c = new();
         mpz.fac_ui(c, a);
 
-        AsString = c.ToString().Substring(0, 15);
+        AsString = c.ToString()[..15];
         Assert.That(AsString, Is.EqualTo("670303704579715"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;

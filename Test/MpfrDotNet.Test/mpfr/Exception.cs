@@ -1,5 +1,6 @@
 ﻿namespace Test;
 
+using System;
 using MpfrDotNet;
 using NUnit.Framework;
 
@@ -47,7 +48,7 @@ public class Exception
         string AsString;
         int RangeCheckResult;
 
-        using mpfr_t a = new mpfr_t("11");
+        using mpfr_t a = new("11");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1.1E+1"));
 
@@ -56,16 +57,16 @@ public class Exception
 
         Assert.That(RangeCheckResult, Is.EqualTo(1));
 
-        using mpfr_t c = new mpfr_t("10");
+        using mpfr_t c = new("10");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
         using mpfr_t d = c.Log10();
         RangeCheckResult = d.CheckRange();
 
-        Assert.That(RangeCheckResult, Is.EqualTo(0));
+        Assert.That(RangeCheckResult, Is.Zero);
 
-        using mpfr_t e = new mpfr_t("9");
+        using mpfr_t e = new("9");
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("9E+0"));
 
@@ -86,14 +87,14 @@ public class Exception
         string AsString;
         int SubnormalizeResult;
 
-        using mpfr_t a = new mpfr_t("10");
+        using mpfr_t a = new("10");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
         using mpfr_t b = a.Log10();
         SubnormalizeResult = b.Subnormalize();
 
-        Assert.That(SubnormalizeResult, Is.EqualTo(0));
+        Assert.That(SubnormalizeResult, Is.Zero);
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -106,7 +107,7 @@ public class Exception
 
         mpfr_t.ClearAllFlags();
 
-        using mpfr_t x = new mpfr_t("1");
+        using mpfr_t x = new("1");
         using mpfr_t y = x + x;
 
         bool Underflow = mpfr_t.Underflow;
@@ -116,12 +117,13 @@ public class Exception
         bool Inexact = mpfr_t.Inexact;
         bool ERange = mpfr_t.ERange;
 
-        Assert.That(Underflow, Is.EqualTo(false));
-        Assert.That(Overflow, Is.EqualTo(false));
-        Assert.That(DivideByZero, Is.EqualTo(false));
-        Assert.That(NaNFlag, Is.EqualTo(false));
-        Assert.That(Inexact, Is.EqualTo(false));
-        Assert.That(ERange, Is.EqualTo(false));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Underflow, Is.False);
+        Assert.That(Overflow, Is.False);
+        Assert.That(DivideByZero, Is.False);
+        Assert.That(NaNFlag, Is.False);
+        Assert.That(Inexact, Is.False);
+        Assert.That(ERange, Is.False);
 
         mpfr_t.Underflow = !Underflow;
         mpfr_t.Overflow = !Overflow;
@@ -130,21 +132,21 @@ public class Exception
         mpfr_t.Inexact = !Inexact;
         mpfr_t.ERange = !ERange;
 
-        Assert.That(mpfr_t.Underflow, Is.EqualTo(true));
-        Assert.That(mpfr_t.Overflow, Is.EqualTo(true));
-        Assert.That(mpfr_t.DivideByZero, Is.EqualTo(true));
-        Assert.That(mpfr_t.NaNFlag, Is.EqualTo(true));
-        Assert.That(mpfr_t.Inexact, Is.EqualTo(true));
-        Assert.That(mpfr_t.ERange, Is.EqualTo(true));
+        Assert.That(mpfr_t.Underflow, Is.True);
+        Assert.That(mpfr_t.Overflow, Is.True);
+        Assert.That(mpfr_t.DivideByZero, Is.True);
+        Assert.That(mpfr_t.NaNFlag, Is.True);
+        Assert.That(mpfr_t.Inexact, Is.True);
+        Assert.That(mpfr_t.ERange, Is.True);
 
         mpfr_t.ClearFlags(0);
 
-        Assert.That(mpfr_t.Underflow, Is.EqualTo(true));
-        Assert.That(mpfr_t.Overflow, Is.EqualTo(true));
-        Assert.That(mpfr_t.DivideByZero, Is.EqualTo(true));
-        Assert.That(mpfr_t.NaNFlag, Is.EqualTo(true));
-        Assert.That(mpfr_t.Inexact, Is.EqualTo(true));
-        Assert.That(mpfr_t.ERange, Is.EqualTo(true));
+        Assert.That(mpfr_t.Underflow, Is.True);
+        Assert.That(mpfr_t.Overflow, Is.True);
+        Assert.That(mpfr_t.DivideByZero, Is.True);
+        Assert.That(mpfr_t.NaNFlag, Is.True);
+        Assert.That(mpfr_t.Inexact, Is.True);
+        Assert.That(mpfr_t.ERange, Is.True);
 
         uint Flags = mpfr_t.GetAllFlags();
         mpfr_t.SetFlags(Flags);
@@ -154,12 +156,12 @@ public class Exception
 
         mpfr_t.SetFlags(0xFFFF, Flags);
 
-        Assert.That(mpfr_t.Underflow, Is.EqualTo(true));
-        Assert.That(mpfr_t.Overflow, Is.EqualTo(true));
-        Assert.That(mpfr_t.DivideByZero, Is.EqualTo(true));
-        Assert.That(mpfr_t.NaNFlag, Is.EqualTo(true));
-        Assert.That(mpfr_t.Inexact, Is.EqualTo(true));
-        Assert.That(mpfr_t.ERange, Is.EqualTo(true));
+        Assert.That(mpfr_t.Underflow, Is.True);
+        Assert.That(mpfr_t.Overflow, Is.True);
+        Assert.That(mpfr_t.DivideByZero, Is.True);
+        Assert.That(mpfr_t.NaNFlag, Is.True);
+        Assert.That(mpfr_t.Inexact, Is.True);
+        Assert.That(mpfr_t.ERange, Is.True);
 
         mpfr_t.Underflow = false;
         mpfr_t.Overflow = false;
@@ -168,12 +170,12 @@ public class Exception
         mpfr_t.Inexact = false;
         mpfr_t.ERange = false;
 
-        Assert.That(mpfr_t.Underflow, Is.EqualTo(false));
-        Assert.That(mpfr_t.Overflow, Is.EqualTo(false));
-        Assert.That(mpfr_t.DivideByZero, Is.EqualTo(false));
-        Assert.That(mpfr_t.NaNFlag, Is.EqualTo(false));
-        Assert.That(mpfr_t.Inexact, Is.EqualTo(false));
-        Assert.That(mpfr_t.ERange, Is.EqualTo(false));
+        Assert.That(mpfr_t.Underflow, Is.False);
+        Assert.That(mpfr_t.Overflow, Is.False);
+        Assert.That(mpfr_t.DivideByZero, Is.False);
+        Assert.That(mpfr_t.NaNFlag, Is.False);
+        Assert.That(mpfr_t.Inexact, Is.False);
+        Assert.That(mpfr_t.ERange, Is.False);
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

@@ -1,6 +1,7 @@
 ﻿namespace Test;
 
 using System;
+using System.Runtime.CompilerServices;
 using MpfrDotNet;
 using NUnit.Framework;
 
@@ -12,7 +13,8 @@ public class Misc
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         AsString = mpfr.get_version();
         Assert.That(AsString, Is.EqualTo("4.2.1-dev"));
@@ -35,7 +37,7 @@ public class Misc
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         using mpfr_t a = new();
         AsString = a.ToString();
@@ -63,16 +65,16 @@ public class Misc
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
@@ -90,14 +92,15 @@ public class Misc
     [Test]
     public void Precision()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         Assert.That(mpfr_t.DefaultPrecisionInit, Is.EqualTo(53));
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t x = new mpfr_t(0);
+        using mpfr_t x = new(0);
 
         Assert.That(x.MinPrecision, Is.EqualTo(1));
         Assert.That(x.MaxPrecision, Is.EqualTo(0x7FFFFEFF));
@@ -110,16 +113,16 @@ public class Misc
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t x = new mpfr_t("-22250983250345029834502983.5740293845720");
+        using mpfr_t x = new("-22250983250345029834502983.5740293845720");
         AsString = x.ToString();
         Assert.That(AsString, Is.EqualTo("-2.225098325034502983450298357402938457199E+25"));
 
-        using mpfr_t y = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t y = new("2229874359879827.30594288574029879874539");
         AsString = y.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
@@ -139,12 +142,12 @@ public class Misc
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t x = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t x = new("22250983250345029834502983.5740293845720");
         AsString = x.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
@@ -162,17 +165,21 @@ public class Misc
     [Test]
     public void Finalizer()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        mpfr_t? x = new("22250983250345029834502983.5740293845720");
-        x.Dispose();
-        x.IsDisposed = false;
-        GC.ReRegisterForFinalize(x);
-
-        x = null;
+        CreateUnreachableForFinalizer();
         GC.Collect();
         GC.WaitForPendingFinalizers();
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void CreateUnreachableForFinalizer()
+    {
+        mpfr_t x = new("22250983250345029834502983.5740293845720");
+        x.Dispose();
+        x.IsDisposed = false;
+        GC.ReRegisterForFinalize(x);
     }
 }

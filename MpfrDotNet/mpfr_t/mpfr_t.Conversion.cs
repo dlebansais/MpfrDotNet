@@ -97,7 +97,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     public static implicit operator mpfr_t(BigInteger value)
     {
-        using mpz_t Temporary = new mpz_t(value);
+        using mpz_t Temporary = new(value);
         return new mpfr_t(Temporary);
     }
 
@@ -188,7 +188,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     public static explicit operator BigInteger(mpfr_t value)
     {
-        using mpz_t Temporary = new mpz_t();
+        using mpz_t Temporary = new();
 
         mpfr.get_z(Temporary, value, value.Rounding);
 

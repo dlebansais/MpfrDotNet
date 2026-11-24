@@ -63,7 +63,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="other">The other number.</param>
     public bool Equals(mpq_t? other)
     {
-        if (ReferenceEquals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
         else
             return mpq.cmp(this, other) == 0;
@@ -110,7 +110,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="bool"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+#pragma warning disable CA1822
     public bool ToBoolean(IFormatProvider? provider)
+#pragma warning restore CA1822
     {
         throw new InvalidCastException();
     }
@@ -130,7 +132,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public byte ToByte(IFormatProvider? provider)
     {
-        return (byte)this;
+        using mpz_t Integer = ToTruncatedInteger();
+        return (byte)Integer;
     }
 
     /// <summary>
@@ -146,7 +149,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="char"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+#pragma warning disable CA1822
     public char ToChar(IFormatProvider? provider)
+#pragma warning restore CA1822
     {
         throw new InvalidCastException();
     }
@@ -164,7 +169,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="DateTime"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+#pragma warning disable CA1822
     public DateTime ToDateTime(IFormatProvider? provider)
+#pragma warning restore CA1822
     {
         throw new InvalidCastException();
     }
@@ -182,7 +189,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="decimal"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+#pragma warning disable CA1822
     public decimal ToDecimal(IFormatProvider? provider)
+#pragma warning restore CA1822
     {
         throw new InvalidCastException();
     }
@@ -220,7 +229,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public short ToInt16(IFormatProvider? provider)
     {
-        return (short)this;
+        using mpz_t Integer = ToTruncatedInteger();
+        return (short)Integer;
     }
 
     /// <summary>
@@ -238,7 +248,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public int ToInt32(IFormatProvider? provider)
     {
-        return (int)this;
+        using mpz_t Integer = ToTruncatedInteger();
+        return (int)Integer;
     }
 
     /// <summary>
@@ -256,7 +267,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public long ToInt64(IFormatProvider? provider)
     {
-        return (long)this;
+        using mpz_t Integer = ToTruncatedInteger();
+        return (long)Integer;
     }
 
     /// <summary>
@@ -274,7 +286,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public sbyte ToSByte(IFormatProvider? provider)
     {
-        return (sbyte)this;
+        using mpz_t Integer = ToTruncatedInteger();
+        return (sbyte)(short)Integer;
     }
 
     /// <summary>
@@ -380,7 +393,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public ushort ToUInt16(IFormatProvider? provider)
     {
-        return (ushort)this;
+        using mpz_t Integer = ToTruncatedInteger();
+        return (ushort)Integer;
     }
 
     /// <summary>
@@ -398,7 +412,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public uint ToUInt32(IFormatProvider? provider)
     {
-        return (uint)this;
+        using mpz_t Integer = ToTruncatedInteger();
+        return (uint)Integer;
     }
 
     /// <summary>
@@ -416,7 +431,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="provider">Culture-specific formatting information.</param>
     public ulong ToUInt64(IFormatProvider? provider)
     {
-        return (ulong)this;
+        using mpz_t Integer = ToTruncatedInteger();
+        return (ulong)Integer;
     }
 
     /// <summary>
@@ -426,6 +442,14 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     ulong IConvertible.ToUInt64(IFormatProvider? provider)
     {
         return ToUInt64(provider);
+    }
+
+    private mpz_t ToTruncatedInteger()
+    {
+        mpz_t Result = new();
+        mpz.set_q(Result, this);
+
+        return Result;
     }
     #endregion
 
@@ -439,7 +463,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
         if (obj is mpq_t other)
             return CompareTo(other);
         else
-            throw new ArgumentException();
+            throw new ArgumentException("Invalid comparison with an object of a different type.", nameof(obj));
     }
 
     /// <summary>

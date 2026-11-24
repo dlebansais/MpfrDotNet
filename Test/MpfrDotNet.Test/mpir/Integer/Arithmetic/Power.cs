@@ -11,7 +11,7 @@ public class Power
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("9785412309485720938412983404349");
+        using mpz_t a = new("9785412309485720938412983404349");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("9785412309485720938412983404349"));
 
@@ -29,7 +29,7 @@ public class Power
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("9785412309485720938412983404349");
+        using mpz_t a = new("9785412309485720938412983404349");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("9785412309485720938412983404349"));
 

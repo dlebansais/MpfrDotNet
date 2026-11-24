@@ -13,16 +13,16 @@ public class Mul
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        using mpfr_t b = new mpfr_t("2229874359879827.30594288574029879874539");
+        using mpfr_t b = new("2229874359879827.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229874359879827305942885740298798745393E+15"));
 
@@ -50,7 +50,7 @@ public class Mul
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("6.953432265732821823282182366884182678746E+23"));
 
-        Assert.Throws<NotImplementedException>(() => mpfr.dot(a, new mpfr_t[0], new mpfr_t[0], mpfr_rnd_t.MPFR_RNDZ));
+        Assert.Throws<NotImplementedException>(() => mpfr.dot(a, [], [], mpfr_rnd_t.MPFR_RNDZ));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
@@ -60,12 +60,12 @@ public class Mul
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
@@ -99,12 +99,12 @@ public class Mul
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
@@ -138,12 +138,12 @@ public class Mul
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
@@ -167,16 +167,16 @@ public class Mul
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        using mpz_t b = new mpz_t("8720124937520142");
+        using mpz_t b = new("8720124937520142");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("8720124937520142"));
 
@@ -198,16 +198,16 @@ public class Mul
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        using mpq_t b = new mpq_t("222987435987982730594288574029879874539/590872612825179551336102196593");
+        using mpq_t b = new("222987435987982730594288574029879874539/590872612825179551336102196593");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539/590872612825179551336102196593"));
 

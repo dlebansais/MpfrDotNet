@@ -31,7 +31,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="precision">The precision.</param>
     public static mpfr_t Create(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         ulong EffectivePrecision = (precision == ulong.MaxValue) ? DefaultPrecision : precision;
         mpfr.init2(Result, EffectivePrecision);
@@ -47,7 +47,7 @@ public partial class mpfr_t : IDisposable
     public static mpfr_t[] CreateArray(int length, ulong precision = ulong.MaxValue)
     {
         if (length >= MaxArrayLength)
-            throw new ArgumentException(nameof(length));
+            throw new ArgumentException($"The length must be lesser than {MaxArrayLength}.", nameof(length));
 
         if (precision == ulong.MaxValue)
             return CreateArrayDefaultPrecision(length);
@@ -61,7 +61,7 @@ public partial class mpfr_t : IDisposable
         for (int i = 0; i < Result.Length; i++)
             Result[i] = new mpfr_t();
 
-        ProcessArray(Result, (IntPtr[] args) =>
+        ProcessArray(Result, args =>
         {
             int Index = 0;
             mpfr_inits(args[Index++],
@@ -107,7 +107,7 @@ public partial class mpfr_t : IDisposable
         for (int i = 0; i < Result.Length; i++)
             Result[i] = new mpfr_t();
 
-        ProcessArray(Result, (IntPtr[] args) =>
+        ProcessArray(Result, args =>
         {
             int Index = 0;
             mpfr_inits2(precision,
@@ -169,7 +169,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="sign">The sign.</param>
     public static mpfr_t Infinite(int sign = +1)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
         mpfr.set_inf(Result, sign);
 
         return Result;
@@ -181,7 +181,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="sign">The sign.</param>
     public static mpfr_t Zero(int sign = +1)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
         mpfr.set_zero(Result, sign);
 
         return Result;
@@ -310,7 +310,7 @@ public partial class mpfr_t : IDisposable
         if (!Success)
         {
             DisposeCache();
-            throw new ArgumentException();
+            throw new ArgumentException($"The combination of '{nameof(str)}' and '{nameof(strbase)}' is invalid.");
         }
     }
 
@@ -383,7 +383,7 @@ public partial class mpfr_t : IDisposable
         if (array.Length >= MaxArrayLength)
             throw new ArgumentException(nameof(array.Length));
 
-        ProcessArray(array, (IntPtr[] args) =>
+        ProcessArray(array, args =>
         {
             int Index = 0;
             mpfr_clears(args[Index++],
@@ -423,7 +423,7 @@ public partial class mpfr_t : IDisposable
         foreach (mpfr_t Item in array)
         {
             Item.IsDisposed = true;
-            Item.DisposeCache();
+            DisposeCache();
         }
     }
 

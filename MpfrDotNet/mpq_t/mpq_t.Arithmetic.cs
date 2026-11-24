@@ -14,7 +14,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     public mpq_t Abs()
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         mpq.abs(z, this);
 
@@ -26,7 +26,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     public mpq_t Inverse()
     {
-        mpq_t z = new mpq_t();
+        mpq_t z = new();
 
         mpq.inv(z, this);
 

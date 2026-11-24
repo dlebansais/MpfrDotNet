@@ -1,6 +1,7 @@
 namespace TestInteger;
 
 using MpirDotNet;
+using System;
 using System.IO;
 using System.Text;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ public class Fit
         string AsString;
         bool IsFitting;
 
-        using mpz_t a = new mpz_t("FFFFFFFF", 16);
+        using mpz_t a = new("FFFFFFFF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("FFFFFFFF"));
 
@@ -33,7 +34,7 @@ public class Fit
         string AsString;
         bool IsFitting;
 
-        using mpz_t a = new mpz_t("7FFFFFFF", 16);
+        using mpz_t a = new("7FFFFFFF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("7FFFFFFF"));
 
@@ -62,7 +63,7 @@ public class Fit
         string AsString;
         bool IsFitting;
 
-        using mpz_t a = new mpz_t("FFFFFFFF", 16);
+        using mpz_t a = new("FFFFFFFF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("FFFFFFFF"));
 
@@ -81,7 +82,7 @@ public class Fit
         string AsString;
         bool IsFitting;
 
-        using mpz_t a = new mpz_t("7FFFFFFF", 16);
+        using mpz_t a = new("7FFFFFFF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("7FFFFFFF"));
 
@@ -110,7 +111,7 @@ public class Fit
         string AsString;
         bool IsFitting;
 
-        using mpz_t a = new mpz_t("FFFF", 16);
+        using mpz_t a = new("FFFF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("FFFF"));
 
@@ -129,7 +130,7 @@ public class Fit
         string AsString;
         bool IsFitting;
 
-        using mpz_t a = new mpz_t("7FFF", 16);
+        using mpz_t a = new("7FFF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("7FFF"));
 
@@ -159,8 +160,9 @@ public class Fit
         bool IsEven;
         bool IsOdd;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720", 16);
+        using mpz_t a = new("222509832503450298345029835740293845720", 16);
         AsString = a.ToString(16).ToUpper();
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
         IsEven = mpz.even_p(a);
@@ -177,7 +179,7 @@ public class Fit
         Assert.That(IsEven, Is.False);
         Assert.That(IsOdd, Is.True);
 
-        using mpz_t c = new mpz_t(0);
+        using mpz_t c = new(0);
 
         IsEven = mpz.even_p(c);
         IsOdd = mpz.odd_p(c);

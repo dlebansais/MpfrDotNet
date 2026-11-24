@@ -13,62 +13,63 @@ public class Misc
     {
         string AsString;
 
-        using mpf_t a = new mpf_t();
+        using mpf_t a = new();
         AsString = a.ToString();
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(AsString, Is.EqualTo("0"));
 
         Assert.That(a.IsInteger, Is.True);
-        Assert.That(a.Sign == 0, Is.True);
+        Assert.That(a.Sign, Is.Zero);
 
         ulong DefaultPrecision = mpf.get_default_prec();
         Assert.That(DefaultPrecision, Is.EqualTo(64UL));
         Assert.That(DefaultPrecision, Is.EqualTo(a.Precision));
 
-        using mpf_t b = new mpf_t(10U);
+        using mpf_t b = new(10U);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
         Assert.That((uint)b, Is.EqualTo(10U));
 
-        using mpf_t c = new mpf_t(-10);
+        using mpf_t c = new(-10);
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("-1E+1"));
 
         Assert.That((int)c, Is.EqualTo(-10));
 
-        using mpf_t d = new mpf_t(10U, DefaultPrecision);
+        using mpf_t d = new(10U, DefaultPrecision);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        using mpf_t e = new mpf_t(-10, DefaultPrecision);
+        using mpf_t e = new(-10, DefaultPrecision);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("-1E+1"));
 
-        using mpf_t f = new mpf_t(50.2);
+        using mpf_t f = new(50.2);
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("5.02000000000000028422E+1"));
 
         Assert.That((double)f, Is.EqualTo(50.2));
 
-        using mpf_t g = new mpf_t(50.2, DefaultPrecision + 64);
+        using mpf_t g = new(50.2, DefaultPrecision + 64);
         AsString = g.ToString();
         Assert.That(AsString, Is.EqualTo("5.02000000000000028421709430404007434845E+1"));
 
         Assert.That(g.Precision, Is.EqualTo(DefaultPrecision + 64));
 
-        using mpf_t h = new mpf_t("2225098325034502983450298.3574029384572");
+        using mpf_t h = new("2225098325034502983450298.3574029384572");
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+24"));
 
-        using mpf_t i = new mpf_t("2225098325034502983450298.3574029384572", 10, 200);
+        using mpf_t i = new("2225098325034502983450298.3574029384572", 10, 200);
         AsString = i.ToString();
         Assert.That(AsString, Is.EqualTo("2.2250983250345029834502983574029384572E+24"));
 
-        using mpf_t j = new mpf_t(i);
+        using mpf_t j = new(i);
         AsString = j.ToString();
         Assert.That(AsString, Is.EqualTo("2.2250983250345029834502983574029384572E+24"));
 
-        using mpf_t k = new mpf_t(i, true);
+        using mpf_t k = new(i, true);
         AsString = k.ToString();
         Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+24"));
 
@@ -80,30 +81,30 @@ public class Misc
         AsString = m.ToString();
         Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+24"));
 
-        using mpf_t p = new mpf_t("68719476735");
+        using mpf_t p = new("68719476735");
         AsString = p.ToString();
         Assert.That(AsString, Is.EqualTo("6.8719476735E+10"));
         ulong UlongCast = (ulong)p;
         Assert.That(UlongCast, Is.EqualTo(68719476735UL));
 
-        using mpf_t q = new mpf_t("2147483647");
+        using mpf_t q = new("2147483647");
         AsString = q.ToString();
         Assert.That(AsString, Is.EqualTo("2.147483647E+9"));
         uint UintCast = (uint)q;
         Assert.That(UintCast, Is.EqualTo(2147483647U));
 
-        using mpf_t r = new mpf_t(10UL, DefaultPrecision);
+        using mpf_t r = new(10UL, DefaultPrecision);
         AsString = r.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        using mpf_t s = new mpf_t(10UL, ulong.MaxValue);
+        using mpf_t s = new(10UL, ulong.MaxValue);
         AsString = s.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        Assert.Throws<ArgumentException>(() => { using (mpf_t x = new mpf_t("Foo")) { } });
+        Assert.Throws<ArgumentException>(() => { using mpf_t x = new("Foo"); });
 
-        using mpz_t initZ = new mpz_t(20);
-        using mpq_t initQ = new mpq_t(30);
+        using mpz_t initZ = new(20);
+        using mpq_t initQ = new(30);
 
         s.Set(initZ);
         AsString = s.ToString();
@@ -117,8 +118,8 @@ public class Misc
         Assert.That(DoubleValue, Is.EqualTo(0.9375));
         Assert.That(ExponentValue, Is.EqualTo(5));
 
-        Assert.Throws<NotImplementedException>(() => mpf.inits(new mpf_t[0]));
-        Assert.Throws<NotImplementedException>(() => mpf.clears(new mpf_t[0]));
+        Assert.Throws<NotImplementedException>(() => mpf.inits([]));
+        Assert.Throws<NotImplementedException>(() => mpf.clears([]));
     }
 
     [Test]
@@ -175,29 +176,29 @@ public class Misc
         ulong DefaultPrecision;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.That(DefaultPrecision == 64, Is.True);
+        Assert.That(DefaultPrecision, Is.EqualTo(64));
 
         mpf_t.DefaultPrecision = 128;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.That(DefaultPrecision == 128, Is.True);
+        Assert.That(DefaultPrecision, Is.EqualTo(128));
 
         mpf_t.DefaultPrecision = 0x7FFFFFFF;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.That(DefaultPrecision >= 0x7FFFFFFF, Is.True);
+        Assert.That(DefaultPrecision, Is.GreaterThanOrEqualTo(0x7FFFFFFF));
 
         mpf_t.DefaultPrecision = 0xFFFFFFFF;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.That(DefaultPrecision >= 0xFFFFFFFF, Is.True);
+        Assert.That(DefaultPrecision, Is.GreaterThanOrEqualTo(0xFFFFFFFF));
 
         mpf_t.DefaultPrecision = 0x1FFFFFFFF;
 
         DefaultPrecision = mpf_t.DefaultPrecision;
-        Assert.That(DefaultPrecision >= 0x1FFFFFFFF, Is.True);
+        Assert.That(DefaultPrecision, Is.GreaterThanOrEqualTo(0x1FFFFFFFF));
 
-        using mpf_t a = new mpf_t();
+        using mpf_t a = new();
 
         ulong OldPrecision = a.Precision;
         ulong TestPrecision = 128;
@@ -219,7 +220,7 @@ public class Misc
     {
         string AsString;
 
-        using mpf_t a = new mpf_t("2983.5740293845720");
+        using mpf_t a = new("2983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
 
@@ -241,13 +242,13 @@ public class Misc
     {
         string AsString;
 
-        using mpf_t a = new mpf_t("2983.5740293845720");
+        using mpf_t a = new("2983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
 
         int Base = 10;
         ulong Digits = 20;
-        StringBuilder Builder = new StringBuilder((int)(Digits + 2));
+        StringBuilder Builder = new((int)(Digits + 2));
         mpf.get_str(Builder, out int Expptr, Base, Digits, a);
         string Str = Builder.ToString();
 
@@ -259,7 +260,7 @@ public class Misc
     {
         string AsString;
 
-        using mpf_t a = new mpf_t("2983.5740293845720");
+        using mpf_t a = new("2983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
 
@@ -275,7 +276,7 @@ public class Misc
     {
         string AsString;
 
-        using mpf_t a = new mpf_t("2983.5740293845720");
+        using mpf_t a = new("2983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
 
@@ -363,7 +364,7 @@ public class Misc
     {
         string AsString;
 
-        using mpf_t a = new mpf_t("2983.5740293845720");
+        using mpf_t a = new("2983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
 
@@ -423,11 +424,11 @@ public class Misc
     {
         string AsString;
 
-        using mpf_t x = new mpf_t("2983.5740293845720");
+        using mpf_t x = new("2983.5740293845720");
         AsString = x.ToString();
         Assert.That(AsString, Is.EqualTo("2.983574029384572E+3"));
 
-        using mpf_t y = new mpf_t("68719476735");
+        using mpf_t y = new("68719476735");
         AsString = y.ToString();
         Assert.That(AsString, Is.EqualTo("6.8719476735E+10"));
 
@@ -447,6 +448,7 @@ public class Misc
 
         using mpf_t a = new("18446744073709551616");
         AsString = a.ToString();
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(AsString, Is.EqualTo("1.8446744073709551616E+19"));
 
         Assert.That(a.FitsUnsignedLong, Is.False);

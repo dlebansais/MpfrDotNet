@@ -65,7 +65,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator +(mpz_t x, ulong y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.add_ui(z, x, y);
 
@@ -79,7 +79,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator +(ulong x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.add_ui(z, y, x);
 
@@ -92,7 +92,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="x">The operand.</param>
     public static mpz_t operator ++(mpz_t x)
     {
-        using mpz_t z = new mpz_t();
+        using mpz_t z = new();
 
         mpz.add_ui(z, x, 1UL);
         mpz.set(x, z);
@@ -107,7 +107,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator -(mpz_t x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.sub(z, x, y);
 
@@ -123,7 +123,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         if (x >= 0)
         {
-            mpz_t z = new mpz_t();
+            mpz_t z = new();
 
             mpz.ui_sub(z, (ulong)x, y);
 
@@ -131,7 +131,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         }
         else
         {
-            mpz_t z = new mpz_t();
+            mpz_t z = new();
 
             mpz.add_ui(z, y, (ulong)-x);
             mpz.neg(z, z);
@@ -147,7 +147,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator -(mpz_t x, long y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         if (y >= 0)
             mpz.sub_ui(z, x, (ulong)y);
@@ -164,7 +164,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator -(ulong x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.ui_sub(z, x, y);
 
@@ -178,7 +178,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator -(mpz_t x, ulong y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.sub_ui(z, x, y);
 
@@ -191,7 +191,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="x">The operand.</param>
     public static mpz_t operator --(mpz_t x)
     {
-        using mpz_t z = new mpz_t();
+        using mpz_t z = new();
 
         mpz.sub_ui(z, x, 1UL);
         mpz.set(x, z);
@@ -206,7 +206,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator *(mpz_t x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.mul(z, x, y);
 
@@ -220,7 +220,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator *(long x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.mul_si(z, y, x);
 
@@ -234,7 +234,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator *(mpz_t x, long y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.mul_si(z, x, y);
 
@@ -248,7 +248,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator *(ulong x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.mul_ui(z, y, x);
 
@@ -262,7 +262,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator *(mpz_t x, ulong y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.mul_ui(z, x, y);
 
@@ -276,7 +276,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="count">The number of bits to shift.</param>
     public static mpz_t operator <<(mpz_t x, int count)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         if (count >= 0)
             mpz.mul_2exp(z, x, (ulong)count);
@@ -291,7 +291,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="count">The number of bits to shift.</param>
     public static mpz_t operator >>(mpz_t x, int count)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         if (count >= 0)
             mpz.tdiv_q_2exp(z, x, (ulong)count);
@@ -305,7 +305,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="x">The operand.</param>
     public static mpz_t operator -(mpz_t x)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.neg(z, x);
 
@@ -319,7 +319,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator /(mpz_t x, mpz_t y)
     {
-        mpz_t quotient = new mpz_t();
+        mpz_t quotient = new();
 
         mpz.tdiv_q(quotient, x, y);
 
@@ -335,7 +335,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         if (y >= 0)
         {
-            mpz_t quotient = new mpz_t();
+            mpz_t quotient = new();
 
             mpz.tdiv_q_ui(quotient, x, (ulong)y);
 
@@ -343,7 +343,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         }
         else
         {
-            mpz_t quotient = new mpz_t();
+            mpz_t quotient = new();
 
             mpz.tdiv_q_ui(quotient, x, (ulong)-y);
             mpz.neg(quotient, quotient);
@@ -359,7 +359,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator /(mpz_t x, ulong y)
     {
-        mpz_t quotient = new mpz_t();
+        mpz_t quotient = new();
 
         mpz.tdiv_q_ui(quotient, x, y);
 
@@ -373,7 +373,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="mod">The modulo.</param>
     public static mpz_t operator %(mpz_t x, mpz_t mod)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.mod(z, x, mod);
 
@@ -387,10 +387,14 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="mod">The modulo.</param>
     public static mpz_t operator %(mpz_t x, long mod)
     {
+#if NET8_0_OR_GREATER
+        ArgumentOutOfRangeException.ThrowIfNegative(mod);
+#else
         if (mod < 0)
             throw new ArgumentOutOfRangeException(nameof(mod));
+#endif
 
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.fdiv_r_ui(z, x, (ulong)mod);
 
@@ -404,7 +408,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="mod">The modulo.</param>
     public static mpz_t operator %(mpz_t x, ulong mod)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.fdiv_r_ui(z, x, mod);
 
@@ -1198,7 +1202,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator &(mpz_t x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.and(z, x, y);
 
@@ -1212,7 +1216,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator |(mpz_t x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.ior(z, x, y);
 
@@ -1226,7 +1230,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpz_t operator ^(mpz_t x, mpz_t y)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.xor(z, x, y);
 
@@ -1239,7 +1243,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="x">The operand.</param>
     public static mpz_t operator ~(mpz_t x)
     {
-        mpz_t z = new mpz_t();
+        mpz_t z = new();
 
         mpz.com(z, x);
 

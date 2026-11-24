@@ -12,12 +12,12 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
@@ -38,12 +38,12 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
@@ -65,14 +65,14 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 2048;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 4);
+        AsString = AsString[..20] + "..." + AsString[^4..];
         Assert.That(AsString, Is.EqualTo("2.225098325034502983...E+25"));
 
         ulong root = 5040625102UL;
@@ -80,32 +80,32 @@ public class Pow
 
         using mpfr_t b = a.NthRoot(root);
         AsString = b.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..20] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.000000023157615543...E+0"));
 
         using mpfr_t c = b.Sqrt();
         AsString = c.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..20] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.000000011578807704...E+0"));
 
         using mpfr_t d = a.NthRoot(root << 1);
         AsString = d.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..20] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.000000011578807704...E+0"));
 
         using mpfr_t e = b.Pow(root);
         AsString = e.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 4);
+        AsString = AsString[..20] + "..." + AsString[^4..];
         Assert.That(AsString, Is.EqualTo("2.225098325034502983...E+25"));
 
         using mpfr_t f = c.Pow(root << 1);
         AsString = f.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 4);
+        AsString = AsString[..20] + "..." + AsString[^4..];
         Assert.That(AsString, Is.EqualTo("2.225098325034502983...E+25"));
 
         using mpfr_t g = d.Pow(root << 1);
         AsString = g.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 4);
+        AsString = AsString[..20] + "..." + AsString[^4..];
         Assert.That(AsString, Is.EqualTo("2.225098325034502983...E+25"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
@@ -116,12 +116,12 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
@@ -139,7 +139,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 2048;
@@ -150,16 +150,16 @@ public class Pow
 
         mpfr.sqrt_ui(b, a, mpfr_rnd_t.MPFR_RNDN);
         AsString = b.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..20] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("7.099735982415120765...E+4"));
 
-        using mpfr_t c = new mpfr_t(a);
+        using mpfr_t c = new(a);
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("5.040625102E+9"));
 
         using mpfr_t d = c.Sqrt();
         AsString = d.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..20] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("7.099735982415120765...E+4"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
@@ -170,16 +170,16 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        using mpfr_t b = new mpfr_t("22298.30594288574029879874539");
+        using mpfr_t b = new("22298.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229830594288574029879874538999999999999E+4"));
 
@@ -196,14 +196,14 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 2048;
 
-        using mpfr_t a = new mpfr_t("22250983250.3450298345029835740293845720");
+        using mpfr_t a = new("22250983250.3450298345029835740293845720");
         AsString = a.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 4);
+        AsString = AsString[..20] + "..." + AsString[^4..];
         Assert.That(AsString, Is.EqualTo("2.225098325034502983...E+10"));
 
         using mpfr_t a2 = 1 / a;
@@ -213,17 +213,17 @@ public class Pow
 
         using mpfr_t c = a3.Pow(b >> 1);
         AsString = c.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.1199314396039264372253958740...E+0"));
 
         using mpfr_t d = a3.Pow(b);
         AsString = d.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.2542464294133231291486886786...E+0"));
 
         using mpfr_t e = c * c;
         AsString = e.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.2542464294133231291486886786...E+0"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
@@ -234,14 +234,14 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 2048;
 
-        using mpfr_t a = new mpfr_t("22250983250.3450298345029835740293845720");
+        using mpfr_t a = new("22250983250.3450298345029835740293845720");
         AsString = a.ToString();
-        AsString = AsString.Substring(0, 20) + "..." + AsString.Substring(AsString.Length - 4);
+        AsString = AsString[..20] + "..." + AsString[^4..];
         Assert.That(AsString, Is.EqualTo("2.225098325034502983...E+10"));
 
         using mpfr_t a2 = 1 / a;
@@ -251,32 +251,32 @@ public class Pow
 
         using mpfr_t c = a3.Pow(b >> 1);
         AsString = c.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.1199314396039264372253958740...E+0"));
 
         using mpfr_t d = a3.Pow(b);
         AsString = d.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.2542464294133231291486886786...E+0"));
 
         using mpfr_t e = c * c;
         AsString = e.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("1.2542464294133231291486886786...E+0"));
 
         using mpfr_t f = a3.Pow(-b);
         AsString = f.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("7.9729148638497816923324220753...E-1"));
 
         using mpfr_t g = a3.Pow(-(b >> 1));
         AsString = g.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("8.9291180213108291585559055960...E-1"));
 
         using mpfr_t h = g * g;
         AsString = h.ToString();
-        AsString = AsString.Substring(0, 30) + "..." + AsString.Substring(AsString.Length - 3);
+        AsString = AsString[..30] + "..." + AsString[^3..];
         Assert.That(AsString, Is.EqualTo("7.9729148638497816923324220753...E-1"));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
@@ -287,16 +287,16 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        using mpz_t b = new mpz_t("22298");
+        using mpz_t b = new("22298");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("22298"));
 
@@ -313,7 +313,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -343,14 +343,14 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
         ulong a = 986301247803256UL;
 
-        using mpfr_t b = new mpfr_t("22298.30594288574029879874539");
+        using mpfr_t b = new("22298.30594288574029879874539");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.229830594288574029879874538999999999999E+4"));
 
@@ -376,16 +376,16 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 
-        using mpfr_t b = new mpfr_t("22298");
+        using mpfr_t b = new("22298");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2.2298E+4"));
 
@@ -402,7 +402,7 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 0x1000;
@@ -415,11 +415,11 @@ public class Pow
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1E+0"));
 
-        using mpfr_t c = new mpfr_t(a);
+        using mpfr_t c = new(a);
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("9.614E+3"));
 
-        using mpfr_t d = new mpfr_t();
+        using mpfr_t d = new();
         mpfr.zeta(d, c, mpfr_rnd_t.MPFR_RNDN);
 
         AsString = d.ToString();
@@ -433,11 +433,11 @@ public class Pow
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("1.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004216192384269752499388183905909712823552642472824239075504792703958562564023290864441301683499099853726894121946926963705140966533654951001922295014517202082976217185316426058545481925677071116916958195665160734511399965054937114136812129052643766741774425574908878224372933084124251265937150011630578024374122923532652081364759190101789053513561211740924256788399012839376279329676442267188676974826779527249449821889791076109977807650903889202489952099756921652401124040677007076487320775503555557461569013299E+0"));
 
-        using mpfr_t f = new mpfr_t(a);
+        using mpfr_t f = new(a);
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("2.403E+3"));
 
-        using mpfr_t g = new mpfr_t();
+        using mpfr_t g = new();
         mpfr.zeta(g, f, mpfr_rnd_t.MPFR_RNDN);
 
         AsString = g.ToString();
@@ -451,12 +451,12 @@ public class Pow
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
-        using mpfr_t a = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325034502983450298357402938457199E+25"));
 

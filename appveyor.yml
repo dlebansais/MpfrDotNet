@@ -37,7 +37,7 @@ before_build:
   - nuget install OpenCover -Version %opencover_version% -OutputDirectory packages
   - nuget install CodecovUploader -Version %codecov_uploader_version% -OutputDirectory packages
   - nuget install ReportGenerator -Version %report_generator_version% -OutputDirectory packages
-  - dotnet restore
+  - dotnet restore $(APPVEYOR_PROJECT_NAME).slnx
 
 configuration:
   - Debug

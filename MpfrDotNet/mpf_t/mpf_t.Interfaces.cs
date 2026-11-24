@@ -63,7 +63,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="other">The object to compare with the current object.</param>
     public bool Equals(mpf_t? other)
     {
-        if (ReferenceEquals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
         else
             return mpf.cmp(this, other) == 0;
@@ -110,7 +110,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="bool"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+#pragma warning disable CA1822
     public bool ToBoolean(IFormatProvider? provider)
+#pragma warning restore CA1822
     {
         throw new InvalidCastException();
     }
@@ -146,7 +148,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="char"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+#pragma warning disable CA1822
     public char ToChar(IFormatProvider? provider)
+#pragma warning restore CA1822
     {
         throw new InvalidCastException();
     }
@@ -164,7 +168,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="DateTime"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+#pragma warning disable CA1822
     public DateTime ToDateTime(IFormatProvider? provider)
+#pragma warning restore CA1822
     {
         throw new InvalidCastException();
     }
@@ -182,7 +188,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="decimal"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+#pragma warning disable CA1822
     public decimal ToDecimal(IFormatProvider? provider)
+#pragma warning restore CA1822
     {
         throw new InvalidCastException();
     }
@@ -439,7 +447,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         if (obj is mpf_t other)
             return CompareTo(other);
         else
-            throw new ArgumentException();
+            throw new ArgumentException("Invalid comparison with an object of a different type.", nameof(obj));
     }
 
     /// <summary>

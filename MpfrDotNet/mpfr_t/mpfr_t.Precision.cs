@@ -11,12 +11,16 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the minimum precision.
     /// </summary>
+#pragma warning disable CA1822
     public ulong MinPrecision { get { return mpfr.PrecisionMin; } }
+#pragma warning restore CA1822
 
     /// <summary>
     /// Gets the maximum precision.
     /// </summary>
+#pragma warning disable CA1822
     public ulong MaxPrecision { get { return mpfr.PrecisionMax; } }
+#pragma warning restore CA1822
 
     /// <summary>
     /// Gets or sets the precision.

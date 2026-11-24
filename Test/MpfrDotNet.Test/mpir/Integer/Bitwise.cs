@@ -12,11 +12,11 @@ public class Bitwise
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
+        using mpz_t a = new("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"));
 
-        using mpz_t b = new mpz_t("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF", 16);
+        using mpz_t b = new("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF", 16);
         AsString = b.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF"));
 
@@ -30,11 +30,11 @@ public class Bitwise
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
+        using mpz_t a = new("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"));
 
-        using mpz_t b = new mpz_t("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF", 16);
+        using mpz_t b = new("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF", 16);
         AsString = b.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF"));
 
@@ -48,11 +48,11 @@ public class Bitwise
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
+        using mpz_t a = new("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"));
 
-        using mpz_t b = new mpz_t("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF", 16);
+        using mpz_t b = new("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF", 16);
         AsString = b.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("100000000000000000123456789ABCDEFFFFFFFFFFFFFFFFF"));
 
@@ -66,7 +66,7 @@ public class Bitwise
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
+        using mpz_t a = new("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"));
 
@@ -84,7 +84,7 @@ public class Bitwise
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
+        using mpz_t a = new("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"));
 
@@ -98,11 +98,11 @@ public class Bitwise
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("1ABCDE08984948281360922385394772450147012613851354F03", 16);
+        using mpz_t a = new("1ABCDE08984948281360922385394772450147012613851354F03", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("1ABCDE08984948281360922385394772450147012613851354F03"));
 
-        using mpz_t b = new mpz_t("1ABCDEF8984948281360922345394772450147012613851354303", 16);
+        using mpz_t b = new("1ABCDEF8984948281360922345394772450147012613851354303", 16);
         AsString = b.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("1ABCDEF8984948281360922345394772450147012613851354303"));
 
@@ -117,7 +117,7 @@ public class Bitwise
         string AsString;
         ulong Scan;
 
-        using mpz_t a = new mpz_t("A0000000000000000000800000000001", 16);
+        using mpz_t a = new("A0000000000000000000800000000001", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("A0000000000000000000800000000001"));
 
@@ -134,7 +134,7 @@ public class Bitwise
         Assert.That(Scan, Is.EqualTo(128UL));
 
         Scan = mpz.scan1(a, 0);
-        Assert.That(Scan, Is.EqualTo(0UL));
+        Assert.That(Scan, Is.Zero);
 
         Scan = mpz.scan1(a, 1UL);
         Assert.That(Scan, Is.EqualTo(47UL));
@@ -151,7 +151,7 @@ public class Bitwise
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("A0000000000000000000200000000001", 16);
+        using mpz_t a = new("A0000000000000000000200000000001", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("A0000000000000000000200000000001"));
 
@@ -194,7 +194,7 @@ public class Bitwise
         string AsString;
         bool IsBitSet;
 
-        using mpz_t a = new mpz_t("A000000000000000000200000000001", 16);
+        using mpz_t a = new("A000000000000000000200000000001", 16);
         AsString = a.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("A000000000000000000200000000001"));
 

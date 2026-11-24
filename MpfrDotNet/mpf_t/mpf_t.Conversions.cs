@@ -28,7 +28,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         ulong SizeInDigits = Precision;
 
-        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
+        StringBuilder Data = new((int)(SizeInDigits + 2));
 
         mpf.get_str(Data, out int Exponent, resultbase, SizeInDigits, this);
 
@@ -38,9 +38,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
             return "0";
 
         int FractionalIndex = Result[0] == '-' ? 2 : 1;
-        string IntegerPart = Result.Substring(0, FractionalIndex);
+        string IntegerPart = Result[..FractionalIndex];
 
-        string FractionalPart = Result.Substring(FractionalIndex);
+        string FractionalPart = Result[FractionalIndex..];
         if (FractionalPart.Length > 0)
             FractionalPart = "." + FractionalPart;
 

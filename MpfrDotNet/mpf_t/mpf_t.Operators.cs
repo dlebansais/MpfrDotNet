@@ -64,7 +64,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator +(mpf_t x, ulong y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.add_ui(z, x, y);
 
@@ -78,7 +78,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator +(ulong x, mpf_t y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.add_ui(z, y, x);
 
@@ -92,7 +92,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator -(mpf_t x, mpf_t y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.sub(z, x, y);
 
@@ -108,7 +108,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         if (x >= 0)
         {
-            mpf_t z = new mpf_t();
+            mpf_t z = new();
 
             mpf.ui_sub(z, (ulong)x, y);
 
@@ -116,7 +116,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         }
         else
         {
-            mpf_t z = new mpf_t();
+            mpf_t z = new();
 
             mpf.add_ui(z, y, (ulong)-x);
             mpf.neg(z, z);
@@ -132,7 +132,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator -(mpf_t x, long y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         if (y >= 0)
             mpf.sub_ui(z, x, (ulong)y);
@@ -149,7 +149,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator -(ulong x, mpf_t y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.ui_sub(z, x, y);
 
@@ -163,7 +163,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator -(mpf_t x, ulong y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.sub_ui(z, x, y);
 
@@ -177,7 +177,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator *(mpf_t x, mpf_t y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.mul(z, x, y);
 
@@ -191,7 +191,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator *(ulong x, mpf_t y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.mul_ui(z, y, x);
 
@@ -205,7 +205,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator *(mpf_t x, ulong y)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.mul_ui(z, x, y);
 
@@ -219,7 +219,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="count">The shift.</param>
     public static mpf_t operator <<(mpf_t x, int count)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         if (count >= 0)
             mpf.mul_2exp(z, x, (ulong)count);
@@ -234,7 +234,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="count">The shift.</param>
     public static mpf_t operator >>(mpf_t x, int count)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         if (count >= 0)
             mpf.div_2exp(z, x, (ulong)count);
@@ -248,7 +248,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="x">The value.</param>
     public static mpf_t operator -(mpf_t x)
     {
-        mpf_t z = new mpf_t();
+        mpf_t z = new();
 
         mpf.neg(z, x);
 
@@ -262,7 +262,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator /(mpf_t x, mpf_t y)
     {
-        mpf_t quotient = new mpf_t();
+        mpf_t quotient = new();
 
         mpf.div(quotient, x, y);
 
@@ -276,7 +276,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator /(mpf_t x, ulong y)
     {
-        mpf_t quotient = new mpf_t();
+        mpf_t quotient = new();
 
         mpf.div_ui(quotient, x, y);
 
@@ -290,7 +290,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second operand.</param>
     public static mpf_t operator /(ulong x, mpf_t y)
     {
-        mpf_t quotient = new mpf_t();
+        mpf_t quotient = new();
 
         mpf.ui_div(quotient, x, y);
 
@@ -855,7 +855,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     public override int GetHashCode()
     {
         ulong SizeInDigits = 5;
-        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
+        StringBuilder Data = new((int)(SizeInDigits + 2));
 
         mpf.get_str(Data, out _, mpz_t.DefaultBase, SizeInDigits, this);
 

@@ -11,11 +11,11 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("90234098723098475098479385345098345");
+        using mpz_t a = new("90234098723098475098479385345098345");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("90234098723098475098479385345098345"));
 
-        using mpz_t b = new mpz_t("7859487359873459872354987610987897");
+        using mpz_t b = new("7859487359873459872354987610987897");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("7859487359873459872354987610987897"));
 
@@ -30,11 +30,11 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("90234098723098475098479385345098345");
+        using mpz_t a = new("90234098723098475098479385345098345");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("90234098723098475098479385345098345"));
 
-        using mpz_t b = new mpz_t("7859487359873459872354987610987897");
+        using mpz_t b = new("7859487359873459872354987610987897");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("7859487359873459872354987610987897"));
 
@@ -48,7 +48,7 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -64,7 +64,7 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -80,7 +80,7 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -96,7 +96,7 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -112,7 +112,7 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -144,7 +144,7 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -164,7 +164,7 @@ public class Multiply
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 

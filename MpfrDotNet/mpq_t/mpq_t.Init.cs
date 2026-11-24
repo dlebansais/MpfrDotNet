@@ -125,7 +125,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
 
         bool Success = mpq.set_str(this, text, strBase);
         if (!Success)
-            throw new ArgumentException();
+            throw new ArgumentException($"The combination of '{nameof(text)}' and '{nameof(strBase)}' is invalid.");
 
         if (canonicalize)
             mpq.canonicalize(this);
@@ -138,13 +138,13 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     public static mpq_t[] CreateArray(int length)
     {
         if (length >= MaxArrayLength)
-            throw new ArgumentException(nameof(length));
+            throw new ArgumentException($"The length must be lesser than {MaxArrayLength}.", nameof(length));
 
         mpq_t[] Result = new mpq_t[length];
         for (int i = 0; i < Result.Length; i++)
             Result[i] = new mpq_t();
 
-        ProcessArray(Result, (IntPtr[] args) =>
+        ProcessArray(Result, args =>
         {
             int Index = 0;
             mpq_inits(args[Index++],
@@ -193,7 +193,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
         if (array.Length >= MaxArrayLength)
             throw new ArgumentException(nameof(array.Length));
 
-        ProcessArray(array, (IntPtr[] args) =>
+        ProcessArray(array, args =>
         {
             int Index = 0;
             mpq_clears(args[Index++],

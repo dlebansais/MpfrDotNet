@@ -11,7 +11,7 @@ public class Negate
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222987435987982730594288574029879874539");
+        using mpz_t a = new("222987435987982730594288574029879874539");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539"));
 
@@ -27,7 +27,7 @@ public class Negate
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222987435987982730594288574029879874539");
+        using mpz_t a = new("222987435987982730594288574029879874539");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222987435987982730594288574029879874539"));
 

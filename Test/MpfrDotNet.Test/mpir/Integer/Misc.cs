@@ -12,7 +12,7 @@ public class Misc
     [Test]
     public void Init2()
     {
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
 
         mpz.init2(a, 20);
 
@@ -25,15 +25,16 @@ public class Misc
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
 
         AsString = a.ToString();
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
-        Assert.Throws<ArgumentException>(() => { using (mpz_t x = new mpz_t("Foo")) { }; });
+        Assert.Throws<ArgumentException>(() => { using (mpz_t x = new("Foo")) { }; });
 
         byte nb = 20;
-        using mpz_t b1 = new mpz_t(nb);
+        using mpz_t b1 = new(nb);
 
         AsString = b1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
@@ -44,7 +45,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("20"));
 
         int ni = -20;
-        using mpz_t c1 = new mpz_t(ni);
+        using mpz_t c1 = new(ni);
 
         AsString = c1.ToString();
         Assert.That(AsString, Is.EqualTo("-20"));
@@ -55,7 +56,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("-20"));
 
         uint nui = 20;
-        using mpz_t d1 = new mpz_t(nui);
+        using mpz_t d1 = new(nui);
 
         AsString = d1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
@@ -66,7 +67,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("20"));
 
         long nl = -20L;
-        using mpz_t e1 = new mpz_t(nl);
+        using mpz_t e1 = new(nl);
 
         AsString = e1.ToString();
         Assert.That(AsString, Is.EqualTo("-20"));
@@ -77,7 +78,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("-20"));
 
         ulong nul = 20UL;
-        using mpz_t f1 = new mpz_t(nul);
+        using mpz_t f1 = new(nul);
 
         AsString = f1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
@@ -88,7 +89,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("20"));
 
         short ns = -20;
-        using mpz_t g1 = new mpz_t(ns);
+        using mpz_t g1 = new(ns);
 
         AsString = g1.ToString();
         Assert.That(AsString, Is.EqualTo("-20"));
@@ -99,7 +100,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("-20"));
 
         ushort nus = 20;
-        using mpz_t h1 = new mpz_t(nus);
+        using mpz_t h1 = new(nus);
 
         AsString = h1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
@@ -110,7 +111,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("20"));
 
         float nf = 20.0F;
-        using mpz_t i1 = new mpz_t(nf);
+        using mpz_t i1 = new(nf);
 
         AsString = i1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
@@ -121,7 +122,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("20"));
 
         double nd = 20.0;
-        using mpz_t j1 = new mpz_t(nd);
+        using mpz_t j1 = new(nd);
 
         AsString = j1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
@@ -132,7 +133,7 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("20"));
 
         BigInteger big = new(20);
-        using mpz_t k1 = new mpz_t(big);
+        using mpz_t k1 = new(big);
 
         AsString = k1.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
@@ -144,21 +145,21 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("20"));
         Assert.That((BigInteger)k2, Is.EqualTo(big));
 
-        using mpz_t l = new mpz_t(new bitcount_t(10UL));
+        using mpz_t l = new(new bitcount_t(10UL));
 
         AsString = l.ToString();
         Assert.That(AsString, Is.EqualTo("0"));
 
-        using mpz_t m = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t m = new("222509832503450298345029835740293845720");
         Assert.Throws<ArgumentOutOfRangeException>(() => _ = (long)m);
         Assert.Throws<ArgumentOutOfRangeException>(() => _ = (ulong)m);
 
-        using mpz_t n = new mpz_t("-222509832503450298345029835740293845720");
+        using mpz_t n = new("-222509832503450298345029835740293845720");
         Assert.Throws<ArgumentOutOfRangeException>(() => _ = (long)n);
         Assert.Throws<ArgumentOutOfRangeException>(() => _ = (ulong)n);
 
-        Assert.Throws<NotImplementedException>(() => mpz.inits(new mpz_t[0]));
-        Assert.Throws<NotImplementedException>(() => mpz.clears(new mpz_t[0]));
+        Assert.Throws<NotImplementedException>(() => mpz.inits([]));
+        Assert.Throws<NotImplementedException>(() => mpz.clears([]));
     }
 
     [Test]
@@ -169,7 +170,7 @@ public class Misc
 
         mpz_t[] TestArray = mpz_t.CreateArray(ArrayLength);
 
-        Assert.That(TestArray.Length, Is.EqualTo(ArrayLength));
+        Assert.That(TestArray, Has.Length.EqualTo(ArrayLength));
 
         foreach (mpz_t Item in TestArray)
         {
@@ -188,7 +189,7 @@ public class Misc
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
 
         mpz.realloc2(a, 2000);
 
@@ -206,7 +207,7 @@ public class Misc
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
 
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
@@ -236,13 +237,13 @@ public class Misc
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("-45487"));
 
-        using mpq_t q = new mpq_t(50, 1);
+        using mpq_t q = new(50, 1);
         mpz.set_q(a, q);
 
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("50"));
 
-        using mpf_t f = new mpf_t(-80);
+        using mpf_t f = new(-80);
         mpz.set_f(a, f);
 
         AsString = a.ToString();
@@ -258,7 +259,7 @@ public class Misc
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("255"));
 
-        using mpz_t b = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t b = new("222509832503450298345029835740293845720");
 
         mpz.swap(a, b);
 
@@ -271,47 +272,47 @@ public class Misc
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
 
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
-        using mpz_t b = new mpz_t(a);
+        using mpz_t b = new(a);
 
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
-        using mpz_t c = new mpz_t(20U);
+        using mpz_t c = new(20U);
 
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
 
-        using mpz_t d = new mpz_t(-20);
+        using mpz_t d = new(-20);
 
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("-20"));
 
-        using mpz_t e = new mpz_t(1099511627557);
+        using mpz_t e = new(1099511627557);
 
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("1099511627557"));
 
-        using mpz_t f = new mpz_t(-2597542236477880L);
+        using mpz_t f = new(-2597542236477880L);
 
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("-2597542236477880"));
 
-        using mpz_t g = new mpz_t(896.0);
+        using mpz_t g = new(896.0);
 
         AsString = g.ToString();
         Assert.That(AsString, Is.EqualTo("896"));
 
-        using mpz_t h = new mpz_t("FF", 16);
+        using mpz_t h = new("FF", 16);
 
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("255"));
 
-        using mpz_t i = new mpz_t(20UL);
+        using mpz_t i = new(20UL);
 
         AsString = i.ToString();
         Assert.That(AsString, Is.EqualTo("20"));
@@ -320,9 +321,10 @@ public class Misc
     [Test]
     public void Get()
     {
-        using mpz_t a = new mpz_t();
+        using mpz_t a = new();
 
         mpz.set_ui(a, 2000U);
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(mpz.get_ui(a), Is.EqualTo(2000U));
 
         mpz.set_si(a, -1000);
@@ -351,7 +353,7 @@ public class Misc
     [Test]
     public void Complement()
     {
-        using mpz_t a = new mpz_t(2);
+        using mpz_t a = new(2);
 
         a.ComplementBit(1);
 
@@ -364,7 +366,7 @@ public class Misc
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
@@ -387,24 +389,24 @@ public class Misc
         string AsString;
         int Sign;
 
-        using mpz_t a = new mpz_t("222509832503450298345029835740293845720");
+        using mpz_t a = new("222509832503450298345029835740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720"));
 
         Sign = a.Sign;
         Assert.That(Sign, Is.EqualTo(1));
 
-        using mpz_t b = new mpz_t("-222509832503450298345029835740293845720");
+        using mpz_t b = new("-222509832503450298345029835740293845720");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("-222509832503450298345029835740293845720"));
 
         Sign = b.Sign;
         Assert.That(Sign, Is.EqualTo(-1));
 
-        using mpz_t c = new mpz_t(0);
+        using mpz_t c = new(0);
 
         Sign = c.Sign;
-        Assert.That(Sign, Is.EqualTo(0));
+        Assert.That(Sign, Is.Zero);
     }
 
     [Test]
@@ -412,7 +414,7 @@ public class Misc
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("2983");
+        using mpz_t a = new("2983");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2983"));
 
@@ -441,10 +443,10 @@ public class Misc
         Assert.That(d2, Is.EqualTo((double)a));
 
         sbyte b1 = a.ToSByte(null);
-        Assert.That(b1, Is.EqualTo((sbyte)a));
+        Assert.That(b1, Is.EqualTo((sbyte)(short)a));
 
         sbyte b2 = Convertible.ToSByte(null);
-        Assert.That(b2, Is.EqualTo((sbyte)a));
+        Assert.That(b2, Is.EqualTo((sbyte)(short)a));
 
         byte ub1 = a.ToByte(null);
         Assert.That(ub1, Is.EqualTo((byte)a));
@@ -500,7 +502,7 @@ public class Misc
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("2983");
+        using mpz_t a = new("2983");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2983"));
 
@@ -526,7 +528,7 @@ public class Misc
         Assert.That(d1, Is.EqualTo((double)a));
 
         sbyte b1 = (sbyte)a.ToType(typeof(sbyte), null);
-        Assert.That(b1, Is.EqualTo((sbyte)a));
+        Assert.That(b1, Is.EqualTo((sbyte)(short)a));
 
         byte ub1 = (byte)a.ToType(typeof(byte), null);
         Assert.That(ub1, Is.EqualTo((byte)a));

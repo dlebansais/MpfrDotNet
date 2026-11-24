@@ -11,7 +11,7 @@ public class Pow
     {
         string AsString;
 
-        using mpf_t a = new mpf_t("22250983250345029834502983.5740293845720");
+        using mpf_t a = new("22250983250345029834502983.5740293845720");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 

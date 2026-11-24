@@ -31,7 +31,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
 
         ulong SizeInDigits = (ulong)mpz_sizeinbase(ref Numerator.Value, (uint)resultbase) + (ulong)mpz_sizeinbase(ref Denominator.Value, (uint)resultbase);
 
-        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 3));
+        StringBuilder Data = new((int)(SizeInDigits + 3));
         mpq.get_str(Data, resultbase, this);
 
         string Result = Data.ToString();

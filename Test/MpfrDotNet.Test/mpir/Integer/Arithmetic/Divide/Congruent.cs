@@ -12,15 +12,15 @@ public class Congruent
         string AsString;
         bool IsCongruent;
 
-        using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305981001312");
+        using mpz_t a = new("234052834524092854092874502983745029345723098457209305981001312");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305981001312"));
 
-        using mpz_t b = new mpz_t("2340528345240928540928745029837450293454373192");
+        using mpz_t b = new("2340528345240928540928745029837450293454373192");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2340528345240928540928745029837450293454373192"));
 
-        using mpz_t c = new mpz_t("7879512");
+        using mpz_t c = new("7879512");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("7879512"));
 
@@ -28,7 +28,7 @@ public class Congruent
 
         Assert.That(IsCongruent, Is.True);
 
-        using mpz_t d = new mpz_t("2340528345240928540928745029837450293454373193");
+        using mpz_t d = new("2340528345240928540928745029837450293454373193");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("2340528345240928540928745029837450293454373193"));
 
@@ -43,7 +43,7 @@ public class Congruent
         string AsString;
         bool IsCongruent;
 
-        using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305981001312");
+        using mpz_t a = new("234052834524092854092874502983745029345723098457209305981001312");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305981001312"));
 
@@ -54,7 +54,7 @@ public class Congruent
 
         Assert.That(IsCongruent, Is.True);
 
-        using mpz_t d = new mpz_t("2340528345240928540928745029837450293454373193");
+        using mpz_t d = new("2340528345240928540928745029837450293454373193");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("2340528345240928540928745029837450293454373193"));
 
@@ -69,11 +69,11 @@ public class Congruent
         string AsString;
         bool IsCongruent;
 
-        using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305981001312");
+        using mpz_t a = new("234052834524092854092874502983745029345723098457209305981001312");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305981001312"));
 
-        using mpz_t b = new mpz_t("2340528345240928540928745029837450293451169376");
+        using mpz_t b = new("2340528345240928540928745029837450293451169376");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2340528345240928540928745029837450293451169376"));
 
@@ -91,7 +91,7 @@ public class Congruent
 
         Assert.That(IsCongruent, Is.True);
 
-        using mpz_t d = new mpz_t("2340528345240928540928745029837450293454373193");
+        using mpz_t d = new("2340528345240928540928745029837450293454373193");
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("2340528345240928540928745029837450293454373193"));
 

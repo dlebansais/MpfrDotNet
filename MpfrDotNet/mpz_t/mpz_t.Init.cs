@@ -90,7 +90,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         bool Success = mpz.init_set_str(this, text, strBase);
         if (!Success)
-            throw new ArgumentException();
+            throw new ArgumentException($"The combination of '{nameof(text)}' and '{nameof(strBase)}' is invalid.");
     }
 
     /// <summary>
@@ -137,13 +137,13 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     public static mpz_t[] CreateArray(int length)
     {
         if (length >= MaxArrayLength)
-            throw new ArgumentException(nameof(length));
+            throw new ArgumentException($"The length must be lesser than {MaxArrayLength}.", nameof(length));
 
         mpz_t[] Result = new mpz_t[length];
         for (int i = 0; i < Result.Length; i++)
             Result[i] = new mpz_t();
 
-        ProcessArray(Result, (IntPtr[] args) =>
+        ProcessArray(Result, args =>
         {
             int Index = 0;
             mpz_inits(args[Index++],

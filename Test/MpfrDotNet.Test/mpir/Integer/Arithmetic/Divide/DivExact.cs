@@ -11,11 +11,11 @@ public class DivExact
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305981001312");
+        using mpz_t a = new("234052834524092854092874502983745029345723098457209305981001312");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305981001312"));
 
-        using mpz_t b = new mpz_t("7879512");
+        using mpz_t b = new("7879512");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("7879512"));
 
@@ -34,7 +34,7 @@ public class DivExact
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("234052834524092854092874502983745029345723098457209305981001312");
+        using mpz_t a = new("234052834524092854092874502983745029345723098457209305981001312");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("234052834524092854092874502983745029345723098457209305981001312"));
 

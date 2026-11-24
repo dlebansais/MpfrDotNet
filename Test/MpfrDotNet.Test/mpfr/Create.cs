@@ -11,11 +11,11 @@ public class Create
     [Test]
     public void CreateDefaultPrecision()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
 
-        using mpfr_t a = new mpfr_t();
+        using mpfr_t a = new();
         Assert.That(a.Precision, Is.EqualTo(DefaultPrecision));
 
         mpfr.init(a);
@@ -25,12 +25,12 @@ public class Create
     [Test]
     public void CreateCustomPrecision()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         ulong CustomPrecision = DefaultPrecision + 64;
 
-        using mpfr_t a = new mpfr_t();
+        using mpfr_t a = new();
         Assert.That(a.Precision, Is.EqualTo(DefaultPrecision));
 
         mpfr.init(a);
@@ -50,7 +50,7 @@ public class Create
 
         mpfr_t.DefaultPrecision = CustomPrecision;
 
-        using mpfr_t c = new mpfr_t();
+        using mpfr_t c = new();
         Assert.That(c.Precision, Is.EqualTo(CustomPrecision));
 
         mpfr.init(c);
@@ -73,7 +73,7 @@ public class Create
         e.Precision = CustomPrecision;
         Assert.That(e.Precision, Is.EqualTo(CustomPrecision));
 
-        using mpfr_t f = new mpfr_t();
+        using mpfr_t f = new();
         Assert.That(f.Precision, Is.EqualTo(DefaultPrecision));
 
         mpfr.init(f);
@@ -91,9 +91,10 @@ public class Create
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        using mpfr_t NaNDefault = new mpfr_t();
+        using mpfr_t NaNDefault = new();
         AsString = NaNDefault.ToString();
         Assert.That(AsString, Is.EqualTo("@NaN@"));
 
@@ -117,68 +118,68 @@ public class Create
         AsString = NegativeZero.ToString();
         Assert.That(AsString, Is.EqualTo("-0"));
 
-        using mpfr_t b = new mpfr_t(10);
+        using mpfr_t b = new(10);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        using mpfr_t c = new mpfr_t(b);
+        using mpfr_t c = new(b);
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        using mpfr_t d = new mpfr_t(100UL);
+        using mpfr_t d = new(100UL);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("1E+2"));
 
-        using mpfr_t e = new mpfr_t(-100L);
+        using mpfr_t e = new(-100L);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("-1E+2"));
 
-        using mpfr_t f = new mpfr_t(100U);
+        using mpfr_t f = new(100U);
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("1E+2"));
 
-        using mpfr_t g = new mpfr_t(200.1F);
+        using mpfr_t g = new(200.1F);
         AsString = g.ToString();
         Assert.That(AsString, Is.EqualTo("2.0010000610351562E+2"));
 
-        using mpfr_t h = new mpfr_t(-200.1);
+        using mpfr_t h = new(-200.1);
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("-2.0009999999999999E+2"));
         Assert.That(h.DigitCount, Is.EqualTo(AsString.Length - 5));
 
-        using mpz_t iz = new mpz_t("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
+        using mpz_t iz = new("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF", 16);
         AsString = iz.ToString(16).ToUpper();
         Assert.That(AsString, Is.EqualTo("10123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"));
 
-        using mpfr_t i = new mpfr_t(iz);
+        using mpfr_t i = new(iz);
         AsString = i.ToString();
         Assert.That(AsString, Is.EqualTo("6.3049999653217329E+57"));
 
-        using mpq_t jq = new mpq_t("222509832503450298345029835740293845720/115756986668303657898962467957");
+        using mpq_t jq = new("222509832503450298345029835740293845720/115756986668303657898962467957");
         AsString = jq.ToString();
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
-        using mpfr_t j = new mpfr_t(jq);
+        using mpfr_t j = new(jq);
         AsString = j.ToString();
         Assert.That(AsString, Is.EqualTo("1.9222151414587357E+9"));
 
-        using mpf_t kf = new mpf_t("22250983250345029834502983.5740293845720");
+        using mpf_t kf = new("22250983250345029834502983.5740293845720");
         AsString = kf.ToString();
         Assert.That(AsString, Is.EqualTo("2.22509832503450298345E+25"));
 
-        using mpfr_t k = new mpfr_t(kf);
+        using mpfr_t k = new(kf);
         AsString = k.ToString();
         Assert.That(AsString, Is.EqualTo("2.2250983250345028E+25"));
 
-        using mpfr_t l = new mpfr_t("22250983250345029834502983.5740293845720");
+        using mpfr_t l = new("22250983250345029834502983.5740293845720");
         AsString = l.ToString();
         Assert.That(AsString, Is.EqualTo("2.2250983250345028E+25"));
 
-        using mpfr_t m = new mpfr_t(iz, 6);
+        using mpfr_t m = new(iz, 6);
         AsString = m.ToString();
         Assert.That(AsString, Is.EqualTo("4.035199977805909E+59"));
 
-        Assert.Throws<ArgumentException>(() => { using (mpfr_t x = new mpfr_t("foo")) { } });
+        Assert.Throws<ArgumentException>(() => { using mpfr_t x = new("foo"); });
     }
 
     [Test]
@@ -186,29 +187,29 @@ public class Create
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        using mpfr_t a = new mpfr_t(10UL, 0);
+        using mpfr_t a = new(10UL, 0);
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        using mpfr_t b = new mpfr_t(1099511627775UL, 0);
+        using mpfr_t b = new(1099511627775UL, 0);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.099511627775E+12"));
 
-        using mpfr_t c = new mpfr_t(10UL, 5);
+        using mpfr_t c = new(10UL, 5);
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("3.2E+2"));
 
-        using mpfr_t d = new mpfr_t(1099511627775UL, 5);
+        using mpfr_t d = new(1099511627775UL, 5);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("3.51843720888E+13"));
 
-        using mpfr_t e = new mpfr_t(10UL, 40);
+        using mpfr_t e = new(10UL, 40);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("1.099511627776E+13"));
 
-        using mpfr_t f = new mpfr_t(1099511627775UL, -80);
+        using mpfr_t f = new(1099511627775UL, -80);
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("9.0949470177210106E-13"));
     }
@@ -218,53 +219,53 @@ public class Create
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        using mpfr_t a = new mpfr_t(10L, 0);
+        using mpfr_t a = new(10L, 0);
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        using mpfr_t b = new mpfr_t(1099511627775L, 0);
+        using mpfr_t b = new(1099511627775L, 0);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.099511627775E+12"));
 
-        using mpfr_t c = new mpfr_t(10L, 5);
+        using mpfr_t c = new(10L, 5);
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("3.2E+2"));
 
-        using mpfr_t d = new mpfr_t(1099511627775L, 5);
+        using mpfr_t d = new(1099511627775L, 5);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("3.51843720888E+13"));
 
-        using mpfr_t e = new mpfr_t(10L, 40);
+        using mpfr_t e = new(10L, 40);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("1.099511627776E+13"));
 
-        using mpfr_t f = new mpfr_t(1099511627775L, -80);
+        using mpfr_t f = new(1099511627775L, -80);
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("9.0949470177210106E-13"));
 
-        using mpfr_t g = new mpfr_t(-10L, 0);
+        using mpfr_t g = new(-10L, 0);
         AsString = g.ToString();
         Assert.That(AsString, Is.EqualTo("-1E+1"));
 
-        using mpfr_t h = new mpfr_t(-1099511627775L, 0);
+        using mpfr_t h = new(-1099511627775L, 0);
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("-1.099511627775E+12"));
 
-        using mpfr_t i = new mpfr_t(-10L, 5);
+        using mpfr_t i = new(-10L, 5);
         AsString = i.ToString();
         Assert.That(AsString, Is.EqualTo("-3.2E+2"));
 
-        using mpfr_t j = new mpfr_t(-1099511627775L, 5);
+        using mpfr_t j = new(-1099511627775L, 5);
         AsString = j.ToString();
         Assert.That(AsString, Is.EqualTo("-3.51843720888E+13"));
 
-        using mpfr_t k = new mpfr_t(-10L, 40);
+        using mpfr_t k = new(-10L, 40);
         AsString = k.ToString();
         Assert.That(AsString, Is.EqualTo("-1.099511627776E+13"));
 
-        using mpfr_t l = new mpfr_t(-1099511627775L, -80);
+        using mpfr_t l = new(-1099511627775L, -80);
         AsString = l.ToString();
         Assert.That(AsString, Is.EqualTo("-9.0949470177210106E-13"));
     }
@@ -274,29 +275,29 @@ public class Create
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        using mpfr_t a = new mpfr_t(10U, 0);
+        using mpfr_t a = new(10U, 0);
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        using mpfr_t b = new mpfr_t(1095116775U, 0);
+        using mpfr_t b = new(1095116775U, 0);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.095116775E+9"));
 
-        using mpfr_t c = new mpfr_t(10U, 5);
+        using mpfr_t c = new(10U, 5);
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("3.2E+2"));
 
-        using mpfr_t d = new mpfr_t(1095116775U, 5);
+        using mpfr_t d = new(1095116775U, 5);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("3.50437368E+10"));
 
-        using mpfr_t e = new mpfr_t(10U, 40);
+        using mpfr_t e = new(10U, 40);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("1.099511627776E+13"));
 
-        using mpfr_t f = new mpfr_t(1095116775U, -80);
+        using mpfr_t f = new(1095116775U, -80);
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("9.0585936476159618E-16"));
     }
@@ -306,53 +307,53 @@ public class Create
     {
         string AsString;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
-        using mpfr_t a = new mpfr_t(10, 0);
+        using mpfr_t a = new(10, 0);
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("1E+1"));
 
-        using mpfr_t b = new mpfr_t(1095116775, 0);
+        using mpfr_t b = new(1095116775, 0);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("1.095116775E+9"));
 
-        using mpfr_t c = new mpfr_t(10, 5);
+        using mpfr_t c = new(10, 5);
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("3.2E+2"));
 
-        using mpfr_t d = new mpfr_t(1095116775, 5);
+        using mpfr_t d = new(1095116775, 5);
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("3.50437368E+10"));
 
-        using mpfr_t e = new mpfr_t(10, 40);
+        using mpfr_t e = new(10, 40);
         AsString = e.ToString();
         Assert.That(AsString, Is.EqualTo("1.099511627776E+13"));
 
-        using mpfr_t f = new mpfr_t(1095116775, -80);
+        using mpfr_t f = new(1095116775, -80);
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("9.0585936476159618E-16"));
 
-        using mpfr_t g = new mpfr_t(-10, 0);
+        using mpfr_t g = new(-10, 0);
         AsString = g.ToString();
         Assert.That(AsString, Is.EqualTo("-1E+1"));
 
-        using mpfr_t h = new mpfr_t(-1095116775, 0);
+        using mpfr_t h = new(-1095116775, 0);
         AsString = h.ToString();
         Assert.That(AsString, Is.EqualTo("-1.095116775E+9"));
 
-        using mpfr_t i = new mpfr_t(-10, 5);
+        using mpfr_t i = new(-10, 5);
         AsString = i.ToString();
         Assert.That(AsString, Is.EqualTo("-3.2E+2"));
 
-        using mpfr_t j = new mpfr_t(-1095116775, 5);
+        using mpfr_t j = new(-1095116775, 5);
         AsString = j.ToString();
         Assert.That(AsString, Is.EqualTo("-3.50437368E+10"));
 
-        using mpfr_t k = new mpfr_t(-10, 40);
+        using mpfr_t k = new(-10, 40);
         AsString = k.ToString();
         Assert.That(AsString, Is.EqualTo("-1.099511627776E+13"));
 
-        using mpfr_t l = new mpfr_t(-1095116775, -80);
+        using mpfr_t l = new(-1095116775, -80);
         AsString = l.ToString();
         Assert.That(AsString, Is.EqualTo("-9.0585936476159618E-16"));
     }
@@ -365,11 +366,11 @@ public class Create
         string AsString;
         int ArrayLength = 10;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         mpfr_t[] TestArray = mpfr_t.CreateArray(ArrayLength);
 
-        Assert.That(TestArray.Length, Is.EqualTo(ArrayLength));
+        Assert.That(TestArray, Has.Length.EqualTo(ArrayLength));
 
         foreach (mpfr_t Item in TestArray)
         {
@@ -388,9 +389,9 @@ public class Create
         mpfr_t[] LargeArray = new mpfr_t[0xFFFF];
         Assert.Throws<ArgumentException>(() => mpfr_t.ClearArray(LargeArray));
 
-        Assert.Throws<NotImplementedException>(() => mpfr.inits(new mpfr_t[0]));
-        Assert.Throws<NotImplementedException>(() => mpfr.inits2(DefaultPrecision, new mpfr_t[0]));
-        Assert.Throws<NotImplementedException>(() => mpfr.clears(new mpfr_t[0]));
+        Assert.Throws<NotImplementedException>(() => mpfr.inits([]));
+        Assert.Throws<NotImplementedException>(() => mpfr.inits2(DefaultPrecision, []));
+        Assert.Throws<NotImplementedException>(() => mpfr.clears([]));
     }
 
     [Test]
@@ -401,11 +402,11 @@ public class Create
         string AsString;
         int ArrayLength = 10;
 
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         mpfr_t[] TestArray = mpfr_t.CreateArray(ArrayLength, CustomPrecision);
 
-        Assert.That(TestArray.Length, Is.EqualTo(ArrayLength));
+        Assert.That(TestArray, Has.Length.EqualTo(ArrayLength));
 
         foreach (mpfr_t Item in TestArray)
         {
@@ -426,7 +427,7 @@ public class Create
         ulong CustomPrecision = mpfr_t.DefaultPrecision + 64;
         string AsString;
 
-        using mpfr_t a = new mpfr_t(200.1F);
+        using mpfr_t a = new(200.1F);
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.0010000610351562E+2"));
 
@@ -440,14 +441,14 @@ public class Create
     [Test]
     public void Exponent()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
 
         string AsString;
 
-        using mpfr_t a = new mpfr_t(200.1F);
+        using mpfr_t a = new(200.1F);
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("2.00100006103515625E+2"));
 
@@ -469,7 +470,7 @@ public class Create
     [Test]
     public void Sign()
     {
-        Assert.That(mpfr_t.LiveObjectCount(), Is.EqualTo(0));
+        Assert.That(mpfr_t.LiveObjectCount(), Is.Zero);
 
         ulong DefaultPrecision = mpfr_t.DefaultPrecision;
         mpfr_t.DefaultPrecision = 128;
@@ -477,29 +478,29 @@ public class Create
         string AsString;
         int SignBit;
 
-        using mpfr_t a = new mpfr_t(-1);
+        using mpfr_t a = new(-1);
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("-1E+0"));
 
         SignBit = a.SignBit;
         Assert.That(SignBit, Is.EqualTo(1));
 
-        using mpfr_t b = new mpfr_t(2);
+        using mpfr_t b = new(2);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2E+0"));
 
         SignBit = b.SignBit;
-        Assert.That(SignBit, Is.EqualTo(0));
+        Assert.That(SignBit, Is.Zero);
 
         a.SetWithSignBit(b, 0);
 
         SignBit = a.SignBit;
-        Assert.That(SignBit, Is.EqualTo(0));
+        Assert.That(SignBit, Is.Zero);
 
         b.CopyWithSignBit(a, b);
 
         SignBit = b.SignBit;
-        Assert.That(SignBit, Is.EqualTo(0));
+        Assert.That(SignBit, Is.Zero);
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("2E+0"));
 

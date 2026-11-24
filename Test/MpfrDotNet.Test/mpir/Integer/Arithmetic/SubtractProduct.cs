@@ -11,15 +11,15 @@ public class SubtractProduct
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("98750293847520938457029384572093480498357");
+        using mpz_t a = new("98750293847520938457029384572093480498357");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("98750293847520938457029384572093480498357"));
 
-        using mpz_t b = new mpz_t("23094582093845093574093845093485039450934");
+        using mpz_t b = new("23094582093845093574093845093485039450934");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("23094582093845093574093845093485039450934"));
 
-        using mpz_t c = new mpz_t("394580293847502987609283945873594873409587");
+        using mpz_t c = new("394580293847502987609283945873594873409587");
         AsString = c.ToString();
         Assert.That(AsString, Is.EqualTo("394580293847502987609283945873594873409587"));
 
@@ -33,11 +33,11 @@ public class SubtractProduct
     {
         string AsString;
 
-        using mpz_t a = new mpz_t("98750293847520938457029384572093480498357");
+        using mpz_t a = new("98750293847520938457029384572093480498357");
         AsString = a.ToString();
         Assert.That(AsString, Is.EqualTo("98750293847520938457029384572093480498357"));
 
-        using mpz_t b = new mpz_t("23094582093845093574093845093485039450934");
+        using mpz_t b = new("23094582093845093574093845093485039450934");
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("23094582093845093574093845093485039450934"));
 

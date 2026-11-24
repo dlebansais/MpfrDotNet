@@ -17,7 +17,7 @@ public partial class mpfr_t : IDisposable
         IsCacheInitialized = true;
     }
 
-    private void DisposeCache()
+    private static void DisposeCache()
     {
         ObjectCount.Value--;
 
@@ -30,7 +30,7 @@ public partial class mpfr_t : IDisposable
         }
     }
 
-    private static ThreadLocal<ulong> ObjectCount = new ThreadLocal<ulong>();
+    private static readonly ThreadLocal<ulong> ObjectCount = new();
 
     /// <summary>
     /// Returns the number of living items in cache.

@@ -59,7 +59,7 @@ public partial class mpfr_t : IDisposable
     public string ToFormattedString(string format)
     {
         ulong SizeInDigits = DigitCount;
-        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
+        StringBuilder Data = new((int)(SizeInDigits + 2));
 
         mpfr_sprintf(Data, format, ref Value, IntPtr.Zero);
 
@@ -77,7 +77,7 @@ public partial class mpfr_t : IDisposable
     public string ToFormattedString(ulong maxLength, string format)
     {
         ulong SizeInDigits = DigitCount;
-        StringBuilder Data = new StringBuilder((int)(SizeInDigits + 2));
+        StringBuilder Data = new((int)(SizeInDigits + 2));
 
         mpfr_snprintf(Data, maxLength, format, ref Value, IntPtr.Zero);
 

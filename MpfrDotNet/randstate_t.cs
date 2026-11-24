@@ -60,7 +60,7 @@ public class randstate_t : IDisposable
                 else if (parameters.Length == 1 && parameters[0] is ulong size)
                     gmp.randinit_lc_2exp_size(this, size);
                 else
-                    throw new ArgumentException();
+                    throw new ArgumentException("Invalid combination of parameters for this algorithm.", nameof(algorithm));
                 break;
         }
     }

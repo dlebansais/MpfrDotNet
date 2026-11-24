@@ -1,6 +1,7 @@
 namespace TestInteger;
 
 using System;
+using System.Runtime.CompilerServices;
 using MpirDotNet;
 using NUnit.Framework;
 
@@ -11,7 +12,7 @@ public class Random
     public void UniformExp()
     {
         using randstate_t state = new();
-        using mpz_t a = new mpz_t();
+        using mpz_t a = new();
 
         ulong n = 60;
 
@@ -32,8 +33,8 @@ public class Random
         bool IsLesserThan;
 
         using randstate_t state = new();
-        using mpz_t a = new mpz_t();
-        using mpz_t b = new mpz_t("622288097498926496141095869268883999563096063592498055290460");
+        using mpz_t a = new();
+        using mpz_t b = new("622288097498926496141095869268883999563096063592498055290460");
 
         mpz.urandomm(a, state, b);
 
@@ -41,6 +42,7 @@ public class Random
         IsPositive = a >= 0;
         IsLesserThan = a < b;
 
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(IsPositive, Is.True);
         Assert.That(IsLesserThan, Is.True);
 
@@ -67,7 +69,7 @@ public class Random
     public void NonUniformExp()
     {
         using randstate_t state = new();
-        using mpz_t a = new mpz_t();
+        using mpz_t a = new();
 
         ulong n = 60;
 
@@ -87,9 +89,9 @@ public class Random
         using randstate_t state0 = randstate_t.Create(RngAlgorithm.MersenneTwister);
         using randstate_t state1 = randstate_t.Create(RngAlgorithm.LinearCongruential, 10UL);
 
-        using mpz_t a = new mpz_t(10);
+        using mpz_t a = new(10);
         using randstate_t state2 = randstate_t.Create(RngAlgorithm.LinearCongruential, a, 10UL, 10UL);
-        using randstate_t state3 = new randstate_t(state2);
+        using randstate_t state3 = new(state2);
 
         using randstate_t state4 = randstate_t.Create(RngAlgorithm.Default);
 
@@ -104,7 +106,7 @@ public class Random
     public void Seed()
     {
         using randstate_t state = new();
-        using mpz_t a = new mpz_t(10);
+        using mpz_t a = new(10);
 
         gmp.randseed(state, a);
         gmp.randseed_ui(state, 10);
@@ -133,14 +135,18 @@ public class Random
     [Test]
     public void Finalizer()
     {
-        randstate_t? x = randstate_t.Create(RngAlgorithm.MersenneTwister);
+        CreateUnreachableForFinalizer();
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static void CreateUnreachableForFinalizer()
+    {
+        randstate_t x = randstate_t.Create(RngAlgorithm.MersenneTwister);
         x.Dispose();
         x.Dispose();
         x.IsDisposed = false;
         GC.ReRegisterForFinalize(x);
-
-        x = null;
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
     }
 }

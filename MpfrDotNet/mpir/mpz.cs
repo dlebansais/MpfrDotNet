@@ -1499,7 +1499,7 @@ public static class mpz
         ulong SizeInDigits = sizeinbase(op, (uint)strBase);
         SizeInDigits += 2;
 
-        StringBuilder Data = new StringBuilder((int)SizeInDigits);
+        StringBuilder Data = new((int)SizeInDigits);
         get_str(Data, strBase, op);
 
         string Content = Data.ToString();

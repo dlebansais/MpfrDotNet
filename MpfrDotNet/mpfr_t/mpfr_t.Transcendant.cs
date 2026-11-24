@@ -718,7 +718,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t EInt()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.eint(Result, this, DefaultRounding);
 
@@ -730,7 +730,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Li2()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.li2(Result, this, DefaultRounding);
 
@@ -742,7 +742,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Gamma()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.gamma(Result, this, DefaultRounding);
 
@@ -755,7 +755,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="operand">The operand.</param>
     public mpfr_t IncompleteGamma(mpfr_t operand)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.gamma_inc(Result, this, operand, DefaultRounding);
 
@@ -767,7 +767,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t LnGamma()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.lngamma(Result, this, DefaultRounding);
 
@@ -780,7 +780,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="sign">The sign of the result upon return.</param>
     public mpfr_t LnGammaAbs(out int sign)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.lgamma(Result, out sign, this, DefaultRounding);
 
@@ -792,7 +792,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Digamma()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.digamma(Result, this, DefaultRounding);
 
@@ -806,7 +806,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     public static mpfr_t Beta(mpfr_t x, mpfr_t y)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.beta(Result, x, y, DefaultRounding);
 
@@ -818,7 +818,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Erf()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.erf(Result, this, DefaultRounding);
 
@@ -830,7 +830,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Erfc()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.erfc(Result, this, DefaultRounding);
 
@@ -842,7 +842,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t BesselFirst0()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.j0(Result, this, DefaultRounding);
 
@@ -854,7 +854,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t BesselFirst1()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.j1(Result, this, DefaultRounding);
 
@@ -867,7 +867,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The order.</param>
     public mpfr_t BesselFirst(int n)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.jn(Result, n, this, DefaultRounding);
 
@@ -879,7 +879,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t BesselSecond0()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.y0(Result, this, DefaultRounding);
 
@@ -891,7 +891,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t BesselSecond1()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.y1(Result, this, DefaultRounding);
 
@@ -904,7 +904,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The order.</param>
     public mpfr_t BesselSecond(int n)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.yn(Result, n, this, DefaultRounding);
 
@@ -918,7 +918,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     public static mpfr_t ArithmeticGeometricMean(mpfr_t x, mpfr_t y)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.agm(Result, x, y, DefaultRounding);
 
@@ -930,7 +930,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     public mpfr_t Airy()
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.ai(Result, this, DefaultRounding);
 
@@ -943,7 +943,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="precision">The precision.</param>
     public static mpfr_t Log2(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         if (precision == ulong.MaxValue)
             mpfr.init2(Result, DefaultPrecision);
@@ -961,7 +961,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="precision">The precision.</param>
     public static mpfr_t Pi(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         if (precision == ulong.MaxValue)
             mpfr.init2(Result, DefaultPrecision);
@@ -979,7 +979,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="precision">The precision.</param>
     public static mpfr_t Euler(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         if (precision == ulong.MaxValue)
             mpfr.init2(Result, DefaultPrecision);
@@ -997,7 +997,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="precision">The precision.</param>
     public static mpfr_t Catalan(ulong precision = ulong.MaxValue)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         if (precision == ulong.MaxValue)
             mpfr.init2(Result, DefaultPrecision);
@@ -1015,7 +1015,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="n">The operand.</param>
     public mpfr_t Compound(long n)
     {
-        mpfr_t Result = new mpfr_t();
+        mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.compound_si(Result, this, n, DefaultRounding);
 
