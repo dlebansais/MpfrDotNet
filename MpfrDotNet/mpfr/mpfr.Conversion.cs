@@ -121,7 +121,7 @@ public static partial class mpfr
     /// <param name="p">The p.</param>
     public static ulong get_str_ndigits(int b, ulong p)
     {
-        return mpfr_get_str_ndigits(b, p);
+        return mpfr_get_str_ndigits(b, ToNativePrecision(p, nameof(p)));
     }
 
     /// <summary>

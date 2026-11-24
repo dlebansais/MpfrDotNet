@@ -15,7 +15,7 @@ public static partial class mpfr
     /// <param name="prec">The precision.</param>
     public static void init2(mpfr_t x, ulong prec)
     {
-        mpfr_init2(ref x.Value, prec);
+        mpfr_init2(ref x.Value, ToNativePrecision(prec, nameof(prec)));
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public static partial class mpfr
     /// <param name="prec">The precision.</param>
     public static void set_default_prec(ulong prec)
     {
-        mpfr_set_default_prec(prec);
+        mpfr_set_default_prec(ToNativePrecision(prec, nameof(prec)));
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public static partial class mpfr
     /// </summary>
     public static ulong get_default_prec()
     {
-        return mpfr_get_default_prec();
+        return (ulong)mpfr_get_default_prec();
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public static partial class mpfr
     /// <param name="prec">The precision.</param>
     public static void set_prec(mpfr_t x, ulong prec)
     {
-        mpfr_set_prec(ref x.Value, prec);
+        mpfr_set_prec(ref x.Value, ToNativePrecision(prec, nameof(prec)));
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public static partial class mpfr
     /// <param name="x">The value.</param>
     public static ulong get_prec(mpfr_t x)
     {
-        return mpfr_get_prec(ref x.Value);
+        return (ulong)mpfr_get_prec(ref x.Value);
     }
 
     /// <summary>
@@ -122,6 +122,6 @@ public static partial class mpfr
     /// <param name="prec">The precision.</param>
     public static void set_prec_raw(mpfr_t x, ulong prec)
     {
-        mpfr_set_prec_raw(ref x.Value, prec);
+        mpfr_set_prec_raw(ref x.Value, ToNativePrecision(prec, nameof(prec)));
     }
 }

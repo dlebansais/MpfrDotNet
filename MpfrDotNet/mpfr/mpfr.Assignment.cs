@@ -127,7 +127,7 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int set_ui_2exp(mpfr_t rop, ulong op, long e, mpfr_rnd_t rnd)
     {
-        return mpfr_set_ui_2exp(ref rop.Value, op, e, (__mpfr_rnd_t)rnd);
+        return mpfr_set_ui_2exp(ref rop.Value, op, ToNativeExponent(e), (__mpfr_rnd_t)rnd);
     }
 
     /// <summary>
@@ -139,7 +139,7 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int set_si_2exp(mpfr_t rop, long op, long e, mpfr_rnd_t rnd)
     {
-        return mpfr_set_si_2exp(ref rop.Value, op, e, (__mpfr_rnd_t)rnd);
+        return mpfr_set_si_2exp(ref rop.Value, op, ToNativeExponent(e), (__mpfr_rnd_t)rnd);
     }
 
     /// <summary>
@@ -175,7 +175,7 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int set_z_2exp(mpfr_t rop, mpz_t op, long e, mpfr_rnd_t rnd)
     {
-        return mpfr_set_z_2exp(ref rop.Value, ref op.Value, e, (__mpfr_rnd_t)rnd);
+        return mpfr_set_z_2exp(ref rop.Value, ref op.Value, ToNativeExponent(e), (__mpfr_rnd_t)rnd);
     }
 
     /// <summary>

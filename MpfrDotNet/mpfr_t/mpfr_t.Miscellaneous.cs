@@ -56,34 +56,41 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="format">The formatting string.</param>
     /// <returns>The formatted number.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="format"/> is <see langword="null"/>.</exception>
+    /// <exception cref="FormatException">MPFR cannot format the number with <paramref name="format"/>.</exception>
     public string ToFormattedString(string format)
     {
-        ulong SizeInDigits = DigitCount;
-        StringBuilder Data = new((int)(SizeInDigits + 2));
+        if (format is null)
+            throw new ArgumentNullException(nameof(format));
 
-        mpfr_sprintf(Data, format, ref Value, IntPtr.Zero);
+        // A first call with no buffer returns the length of the output.
+        int Length = mpfr_snprintf(null, 0, format, ref Value, IntPtr.Zero);
+        if (Length < 0)
+            throw new FormatException($"The number cannot be formatted with '{format}'.");
 
-        string Result = Data.ToString();
+        StringBuilder Data = new(Length + 1);
+        _ = mpfr_snprintf(Data, (ulong)Length + 1, format, ref Value, IntPtr.Zero);
 
-        return Result;
+        return Data.ToString();
     }
 
     /// <summary>
     /// Returns a string that represents the number value.
     /// </summary>
-    /// <param name="maxLength">The maximum number of characters to return.</param>
+    /// <param name="maxLength">The size of the output buffer, including the terminating null character: at most <paramref name="maxLength"/> - 1 characters are returned.</param>
     /// <param name="format">The formatting string.</param>
     /// <returns>The formatted number.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="format"/> is <see langword="null"/>.</exception>
+    /// <exception cref="FormatException">MPFR cannot format the number with <paramref name="format"/>.</exception>
     public string ToFormattedString(ulong maxLength, string format)
     {
-        ulong SizeInDigits = DigitCount;
-        StringBuilder Data = new((int)(SizeInDigits + 2));
+        string Result = ToFormattedString(format);
 
-        mpfr_snprintf(Data, maxLength, format, ref Value, IntPtr.Zero);
+        if (maxLength == 0)
+            return string.Empty;
 
-        string Result = Data.ToString();
-
-        return Result;
+        ulong MaxCharacters = maxLength - 1;
+        return (ulong)Result.Length <= MaxCharacters ? Result : Result[..(int)MaxCharacters];
     }
 
     /// <summary>

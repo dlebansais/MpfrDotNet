@@ -103,6 +103,7 @@ public partial class mpfr_t : IDisposable
 
     private static mpfr_t[] CreateArrayCustomPrecision(int length, ulong precision)
     {
+        int NativePrecision = mpfr.ToNativePrecision(precision, nameof(precision));
         mpfr_t[] Result = new mpfr_t[length];
         for (int i = 0; i < Result.Length; i++)
             Result[i] = new mpfr_t();
@@ -110,7 +111,7 @@ public partial class mpfr_t : IDisposable
         ProcessArray(Result, args =>
         {
             int Index = 0;
-            mpfr_inits2(precision,
+            mpfr_inits2(NativePrecision,
                         args[Index++],
                         args[Index++],
                         args[Index++],

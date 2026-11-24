@@ -68,7 +68,7 @@ internal static partial class NativeMethods
     public static __mpfr_fmod_ui mpfr_fmod_ui { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_fmod_ui>(GetMpfrPointer(nameof(mpfr_fmod_ui)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_fmodquo(ref __mpfr_t r, out long q, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_fmodquo(ref __mpfr_t r, out int q, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
     public static __mpfr_fmodquo mpfr_fmodquo { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_fmodquo>(GetMpfrPointer(nameof(mpfr_fmodquo)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -76,7 +76,7 @@ internal static partial class NativeMethods
     public static __mpfr_remainder mpfr_remainder { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_remainder>(GetMpfrPointer(nameof(mpfr_remainder)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_remquo(ref __mpfr_t r, out long q, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_remquo(ref __mpfr_t r, out int q, ref __mpfr_t x, ref __mpfr_t y, __mpfr_rnd_t rnd);
     public static __mpfr_remquo mpfr_remquo { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_remquo>(GetMpfrPointer(nameof(mpfr_remquo)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -92,11 +92,11 @@ internal static partial class NativeMethods
     public static __mpfr_get_default_rounding_mode mpfr_get_default_rounding_mode { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_default_rounding_mode>(GetMpfrPointer(nameof(mpfr_get_default_rounding_mode)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_prec_round(ref __mpfr_t x, ulong prec, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_prec_round(ref __mpfr_t x, int prec, __mpfr_rnd_t rnd);
     public static __mpfr_prec_round mpfr_prec_round { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_prec_round>(GetMpfrPointer(nameof(mpfr_prec_round)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_can_round(ref __mpfr_t b, int err, __mpfr_rnd_t rnd1, __mpfr_rnd_t rnd2, ulong prec);
+    public delegate int __mpfr_can_round(ref __mpfr_t b, int err, __mpfr_rnd_t rnd1, __mpfr_rnd_t rnd2, int prec);
     public static __mpfr_can_round mpfr_can_round { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_can_round>(GetMpfrPointer(nameof(mpfr_can_round)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

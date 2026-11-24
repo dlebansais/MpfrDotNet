@@ -287,8 +287,8 @@ public static class mpz
     /// <param name="exp">The exponent.</param>
     public static void get_d_2exp(mpz_t op, out double d, out long exp)
     {
-        d = NativeMethods.mpz_get_d_2exp(out NativeMethods.mpir_si expStr, ref op.Value);
-        exp = (long)expStr;
+        d = NativeMethods.mpz_get_d_2exp(out int NativeExponent, ref op.Value);
+        exp = NativeExponent;
     }
 
     /// <summary>

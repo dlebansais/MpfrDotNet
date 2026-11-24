@@ -182,7 +182,10 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int fmodquo(mpfr_t r, out long q, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
     {
-        return mpfr_fmodquo(ref r.Value, out q, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        int Result = mpfr_fmodquo(ref r.Value, out int NativeQuotient, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        q = NativeQuotient;
+
+        return Result;
     }
 
     /// <summary>
@@ -207,7 +210,10 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int remquo(mpfr_t r, out long q, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
     {
-        return mpfr_remquo(ref r.Value, out q, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        int Result = mpfr_remquo(ref r.Value, out int NativeQuotient, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        q = NativeQuotient;
+
+        return Result;
     }
 
     /// <summary>
@@ -235,7 +241,7 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     public static int prec_round(mpfr_t x, ulong prec, mpfr_rnd_t rnd)
     {
-        return mpfr_prec_round(ref x.Value, prec, (__mpfr_rnd_t)rnd);
+        return mpfr_prec_round(ref x.Value, ToNativePrecision(prec, nameof(prec)), (__mpfr_rnd_t)rnd);
     }
 
     /// <summary>
@@ -248,7 +254,7 @@ public static partial class mpfr
     /// <param name="prec">The precision.</param>
     public static bool can_round(mpfr_t b, int err, mpfr_rnd_t rnd1, mpfr_rnd_t rnd2, ulong prec)
     {
-        return mpfr_can_round(ref b.Value, err, (__mpfr_rnd_t)rnd1, (__mpfr_rnd_t)rnd2, prec) != 0;
+        return mpfr_can_round(ref b.Value, err, (__mpfr_rnd_t)rnd1, (__mpfr_rnd_t)rnd2, ToNativePrecision(prec, nameof(prec))) != 0;
     }
 
     /// <summary>

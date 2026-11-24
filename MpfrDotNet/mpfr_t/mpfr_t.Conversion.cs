@@ -116,7 +116,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     public static explicit operator int(mpfr_t value)
     {
-        return mpfr_get_sj(ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        return (int)mpfr_get_sj(ref value.Value, (__mpfr_rnd_t)value.Rounding);
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     public static explicit operator uint(mpfr_t value)
     {
-        return mpfr_get_uj(ref value.Value, (__mpfr_rnd_t)value.Rounding);
+        return (uint)mpfr_get_uj(ref value.Value, (__mpfr_rnd_t)value.Rounding);
     }
 
     /// <summary>

@@ -20,11 +20,11 @@ internal static partial class NativeMethods
     public static __mpfr_set_si mpfr_set_si { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_si>(GetMpfrPointer(nameof(mpfr_set_si)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_set_uj(ref __mpfr_t rop, uint op, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_set_uj(ref __mpfr_t rop, ulong op, __mpfr_rnd_t rnd);
     public static __mpfr_set_uj mpfr_set_uj { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_uj>(GetMpfrPointer($"__g{nameof(mpfr_set_uj)}"));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_set_sj(ref __mpfr_t rop, int op, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_set_sj(ref __mpfr_t rop, long op, __mpfr_rnd_t rnd);
     public static __mpfr_set_sj mpfr_set_sj { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_sj>(GetMpfrPointer($"__g{nameof(mpfr_set_sj)}"));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -48,23 +48,23 @@ internal static partial class NativeMethods
     public static __mpfr_set_f mpfr_set_f { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_f>(GetMpfrPointer(nameof(mpfr_set_f)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_set_ui_2exp(ref __mpfr_t rop, ulong op, long e, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_set_ui_2exp(ref __mpfr_t rop, ulong op, int e, __mpfr_rnd_t rnd);
     public static __mpfr_set_ui_2exp mpfr_set_ui_2exp { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_ui_2exp>(GetMpfrPointer(nameof(mpfr_set_ui_2exp)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_set_si_2exp(ref __mpfr_t rop, long op, long e, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_set_si_2exp(ref __mpfr_t rop, long op, int e, __mpfr_rnd_t rnd);
     public static __mpfr_set_si_2exp mpfr_set_si_2exp { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_si_2exp>(GetMpfrPointer(nameof(mpfr_set_si_2exp)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_set_uj_2exp(ref __mpfr_t rop, uint op, long e, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_set_uj_2exp(ref __mpfr_t rop, ulong op, long e, __mpfr_rnd_t rnd);
     public static __mpfr_set_uj_2exp mpfr_set_uj_2exp { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_uj_2exp>(GetMpfrPointer($"__g{nameof(mpfr_set_uj_2exp)}"));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_set_sj_2exp(ref __mpfr_t rop, int op, long e, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_set_sj_2exp(ref __mpfr_t rop, long op, long e, __mpfr_rnd_t rnd);
     public static __mpfr_set_sj_2exp mpfr_set_sj_2exp { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_sj_2exp>(GetMpfrPointer($"__g{nameof(mpfr_set_sj_2exp)}"));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_set_z_2exp(ref __mpfr_t rop, ref __mpz_t op, long e, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_set_z_2exp(ref __mpfr_t rop, ref __mpz_t op, int e, __mpfr_rnd_t rnd);
     public static __mpfr_set_z_2exp mpfr_set_z_2exp { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_set_z_2exp>(GetMpfrPointer(nameof(mpfr_set_z_2exp)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]

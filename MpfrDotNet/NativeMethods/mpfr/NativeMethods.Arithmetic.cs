@@ -85,11 +85,11 @@ internal static partial class NativeMethods
     public static __mpfr_mul_ui mpfr_mul_ui { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_mul_ui>(GetMpfrPointer(nameof(mpfr_mul_ui)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_mul_2ui(ref __mpfr_t rop, ref __mpfr_t op1, ulong op2, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_mul_2ui(ref __mpfr_t rop, ref __mpfr_t op1, uint op2, __mpfr_rnd_t rnd);
     public static __mpfr_mul_2ui mpfr_mul_2ui { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_mul_2ui>(GetMpfrPointer(nameof(mpfr_mul_2ui)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_mul_2si(ref __mpfr_t rop, ref __mpfr_t op1, long op2, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_mul_2si(ref __mpfr_t rop, ref __mpfr_t op1, int op2, __mpfr_rnd_t rnd);
     public static __mpfr_mul_2si mpfr_mul_2si { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_mul_2si>(GetMpfrPointer(nameof(mpfr_mul_2si)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

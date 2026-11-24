@@ -26,11 +26,11 @@ internal static partial class NativeMethods
     public static __mpfr_get_ui mpfr_get_ui { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_ui>(GetMpfrPointer(nameof(mpfr_get_ui)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_get_sj(ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public delegate long __mpfr_get_sj(ref __mpfr_t op, __mpfr_rnd_t rnd);
     public static __mpfr_get_sj mpfr_get_sj { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_sj>(GetMpfrPointer($"__gmpfr_{nameof(mpfr_get_sj)}"));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate uint __mpfr_get_uj(ref __mpfr_t op, __mpfr_rnd_t rnd);
+    public delegate ulong __mpfr_get_uj(ref __mpfr_t op, __mpfr_rnd_t rnd);
     public static __mpfr_get_uj mpfr_get_uj { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_uj>(GetMpfrPointer($"__gmpfr_{nameof(mpfr_get_uj)}"));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -58,7 +58,7 @@ internal static partial class NativeMethods
     public static __mpfr_get_f mpfr_get_f { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_f>(GetMpfrPointer(nameof(mpfr_get_f)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate ulong __mpfr_get_str_ndigits(int b, ulong p);
+    public delegate ulong __mpfr_get_str_ndigits(int b, int p);
     public static __mpfr_get_str_ndigits mpfr_get_str_ndigits { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_get_str_ndigits>(GetMpfrPointer(nameof(mpfr_get_str_ndigits)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -90,11 +90,7 @@ internal static partial class NativeMethods
     public static __mpfr_fits_sshort_p mpfr_fits_sshort_p { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_fits_sshort_p>(GetMpfrPointer(nameof(mpfr_fits_sshort_p)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public delegate int __mpfr_sprintf(StringBuilder buf, string format, ref __mpfr_t op, IntPtr end);
-    public static __mpfr_sprintf mpfr_sprintf { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_sprintf>(GetMpfrPointer(nameof(mpfr_sprintf)));
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    public delegate int __mpfr_snprintf(StringBuilder buf, ulong n, string format, ref __mpfr_t op, IntPtr end);
+    public delegate int __mpfr_snprintf(StringBuilder? buf, ulong n, string format, ref __mpfr_t op, IntPtr end);
     public static __mpfr_snprintf mpfr_snprintf { get; } = Marshal.GetDelegateForFunctionPointer<__mpfr_snprintf>(GetMpfrPointer(nameof(mpfr_snprintf)));
 }
 #pragma warning restore SA1601 // Partial elements should be documented

@@ -112,7 +112,7 @@ internal static partial class NativeMethods
     public static __mpf_get_d mpf_get_d { get; } = Marshal.GetDelegateForFunctionPointer<__mpf_get_d>(GetMpirPointer(nameof(mpf_get_d)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate double __mpf_get_d_2exp(out mpir_si exp, ref __mpf_t op);
+    public delegate double __mpf_get_d_2exp(out int exp, ref __mpf_t op);
     public static __mpf_get_d_2exp mpf_get_d_2exp { get; } = Marshal.GetDelegateForFunctionPointer<__mpf_get_d_2exp>(GetMpirPointer(nameof(mpf_get_d_2exp)));
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
