@@ -54,11 +54,11 @@ after_build:
       $options = $env:CUSTOM_PACKAGER_OPTIONS | ConvertFrom-Json                         # Get options as JSON array
       if ($env:CONFIGURATION -eq 'Release') {
         & $fullpath $options --prefix=$env:PACKAGE_PREFIX                                # Execute the packager: the output is nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec
-        if ($LastExitCode -lt 0) { exit 1 }
+        if ($LastExitCode -ne 0) { exit 1 }
         nuget pack "nuget\$env:PACKAGE_PREFIX.$env:APPVEYOR_PROJECT_NAME.nuspec"
       } else {
         & $fullpath $options --prefix=$env:PACKAGE_PREFIX --debug                        # Execute the packager: the output is nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec
-        if ($LastExitCode -lt 0) { exit 1 }
+        if ($LastExitCode -ne 0) { exit 1 }
         nuget pack "nuget-debug\$env:PACKAGE_PREFIX.$env:APPVEYOR_PROJECT_NAME-Debug.nuspec"
       }
       $xml = [xml](Get-Content .\$env:APPVEYOR_PROJECT_NAME\$env:APPVEYOR_PROJECT_NAME.csproj)
@@ -69,11 +69,14 @@ after_build:
   - echo Version is "%VERSION_TAG%"
 
 test_script:
-  - dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%.xml --results-directory TestResults
+  # One run per target framework, so that each writes its own coverage report.
+  - dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 -f net481 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%-net481.xml --results-directory TestResults
+  - dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 -f net10.0-windows --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%-net10.0-windows.xml --results-directory TestResults
 
 after_test:
   - ps: Get-Content TestResults/Coverage-*.xml -Head 3
-  - if '%CONFIGURATION%' == 'Debug' if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_uploader_version%\Tools\codecov.exe -f "TestResults\Coverage-%APPVEYOR_PROJECT_NAME%.xml"
+  # Codecov merges the reports uploaded for the same commit.
+  - if '%CONFIGURATION%' == 'Debug' if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_uploader_version%\Tools\codecov.exe -f "TestResults\Coverage-%APPVEYOR_PROJECT_NAME%-net481.xml" -f "TestResults\Coverage-%APPVEYOR_PROJECT_NAME%-net10.0-windows.xml"
 
 artifacts:
   - path: $(PACKAGE_PREFIX).$(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg
