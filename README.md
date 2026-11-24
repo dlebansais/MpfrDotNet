@@ -23,7 +23,9 @@ Resulting files are in the `MpfrDotNet\bin\x64` subdirectory:
 
 # Package
 
-This project is also available as a package. See the right pane of the project page for links.
+This project is also available as a package. See the nuget badge at the top for a link. The package supports:
++ Windows and Linux.
++ The x64 platform only.
 
 The package includes: 
 
@@ -31,10 +33,12 @@ The package includes:
   * `mpfr` static class with bindings to almost all functions listed in [the MPFR documentation](https://www.mpfr.org/mpfr-current/mpfr.pdf).
   * `mpfr_t` an implementation of a Multiple Precision Floating-Point type.
 + In the `MpirDotNet` namespace.
-  * `mpir` static class with bindings to almost all functions listed in [the MPIR documentation](http://mpir.org/mpir-3.0.0.pdf).
+  * `mpq`, `mpz`, `mpf` and `gmp`: static classes with bindings to almost all functions listed in [the MPIR documentation](http://mpir.org/mpir-3.0.0.pdf).
   * `mpz_t` an implementation of a Multiple Precision Integer type.
   * `mpq_t` an implementation of a Multiple Precision Rational type.
   * `mpf_t` an implementation of a Multiple Precision Floating-Point type. This type has less features than the more complete `mpfr_t`. 
+
+On Linux, the package requires .NET 10, GMP and MPFR libraries must be installed separately (for example with `sudo apt install libgmp10 libmpfr6`), the integer types use GMP instead of MPIR, and `mpf.rrandomb` is not available.
 
 # Credits, Copyright, License...
 
