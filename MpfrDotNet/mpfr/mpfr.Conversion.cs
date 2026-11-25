@@ -16,9 +16,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static float get_flt(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_flt(ref op.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_get_flt(ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -26,9 +27,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static double get_d(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_d(ref op.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_get_d(ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -36,9 +38,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static long get_si(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_si(ref op.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_get_si(ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -46,9 +49,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static ulong get_ui(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_ui(ref op.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_get_ui(ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -56,9 +60,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static long get_sj(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_sj(ref op.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_get_sj(ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -66,9 +71,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static ulong get_uj(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_uj(ref op.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_get_uj(ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -77,9 +83,10 @@ public static partial class mpfr
     /// <param name="exp">The exponent.</param>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static double get_d_2exp(out int exp, mpfr_t op, mpfr_rnd_t rnd)
     {
-        double Result = mpfr_get_d_2exp(out CLong NativeExponent, ref op.Value, (__mpfr_rnd_t)rnd);
+        double Result = mpfr_get_d_2exp(out CLong NativeExponent, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
         exp = ToClampedInt(NativeExponent);
 
         return Result;
@@ -92,9 +99,10 @@ public static partial class mpfr
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int frexp(out int exp, mpfr_t x, mpfr_t y, mpfr_rnd_t rnd)
     {
-        int Result = mpfr_frexp(out CLong NativeExponent, ref x.Value, ref y.Value, (__mpfr_rnd_t)rnd);
+        int Result = mpfr_frexp(out CLong NativeExponent, ref x.Value, ref y.Value, ToNativeRounding(rnd, nameof(rnd)));
         exp = ToClampedInt(NativeExponent);
 
         return Result;
@@ -116,9 +124,10 @@ public static partial class mpfr
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int get_z(mpz_t rop, mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_z(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_get_z(ref rop.Value, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -137,9 +146,10 @@ public static partial class mpfr
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int get_f(mpf_t rop, mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_get_f(ref rop.Value, ref op.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_get_f(ref rop.Value, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -147,9 +157,13 @@ public static partial class mpfr
     /// </summary>
     /// <param name="b">The b.</param>
     /// <param name="p">The p.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="p"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="b"/> is not between 2 and 62, or <paramref name="p"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static ulong get_str_ndigits(int b, ulong p)
     {
+        // MPFR aborts the process for another base.
+        if (b is < 2 or > 62)
+            throw new ArgumentOutOfRangeException(nameof(b), b, "The base must be between 2 and 62.");
+
         return mpfr_get_str_ndigits(b, ToNativePrecision(p, nameof(p)));
     }
 
@@ -162,9 +176,24 @@ public static partial class mpfr
     /// <param name="n">The n.</param>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <remarks>The capacity of <paramref name="str"/> is increased to the size of the result, if needed.</remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strbase"/> is not between 2 and 62, or between -36 and -2, or <paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static void get_str(StringBuilder str, out int expptr, int strbase, ulong n, mpfr_t op, mpfr_rnd_t rnd)
     {
-        mpfr_get_str(str, out CLong NativeExponent, strbase, n, ref op.Value, (__mpfr_rnd_t)rnd);
+        // The native function writes as many characters as the value needs into the buffer allocated for the capacity,
+        // and allocates a string that would leak when the buffer is null.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
+        uint DigitCountBase = MpirDotNet.DigitBase.ToDigitCountBase(strbase, nameof(strbase));
+        ulong Digits = n == 0 ? get_str_ndigits((int)DigitCountBase, get_prec(op)) : n;
+
+        // MPFR requires max(n + 2, 7) characters: the digits, a minus sign and the terminating null character, and 7 for
+        // "-@Inf@" whatever the precision.
+        _ = str.EnsureCapacity(checked((int)Math.Max(Digits + 2, 7)));
+
+        mpfr_get_str(str, out CLong NativeExponent, strbase, n, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
         expptr = ToClampedInt(NativeExponent);
     }
 
@@ -173,9 +202,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static bool fits_ulong_p(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_fits_ulong_p(ref op.Value, (__mpfr_rnd_t)rnd) != 0;
+        return mpfr_fits_ulong_p(ref op.Value, ToNativeRounding(rnd, nameof(rnd))) != 0;
     }
 
     /// <summary>
@@ -183,9 +213,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static bool fits_slong_p(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_fits_slong_p(ref op.Value, (__mpfr_rnd_t)rnd) != 0;
+        return mpfr_fits_slong_p(ref op.Value, ToNativeRounding(rnd, nameof(rnd))) != 0;
     }
 
     /// <summary>
@@ -193,9 +224,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static bool fits_uint_p(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_fits_uint_p(ref op.Value, (__mpfr_rnd_t)rnd) != 0;
+        return mpfr_fits_uint_p(ref op.Value, ToNativeRounding(rnd, nameof(rnd))) != 0;
     }
 
     /// <summary>
@@ -203,9 +235,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static bool fits_sint_p(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_fits_sint_p(ref op.Value, (__mpfr_rnd_t)rnd) != 0;
+        return mpfr_fits_sint_p(ref op.Value, ToNativeRounding(rnd, nameof(rnd))) != 0;
     }
 
     /// <summary>
@@ -213,9 +246,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static bool fits_ushort_p(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_fits_ushort_p(ref op.Value, (__mpfr_rnd_t)rnd) != 0;
+        return mpfr_fits_ushort_p(ref op.Value, ToNativeRounding(rnd, nameof(rnd))) != 0;
     }
 
     /// <summary>
@@ -223,9 +257,10 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static bool fits_sshort_p(mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_fits_sshort_p(ref op.Value, (__mpfr_rnd_t)rnd) != 0;
+        return mpfr_fits_sshort_p(ref op.Value, ToNativeRounding(rnd, nameof(rnd))) != 0;
     }
 
     /// <summary>

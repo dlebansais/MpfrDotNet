@@ -29,6 +29,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Log(uint op, mpfr_rnd_t rounding = DefaultRounding)
     {
         mpfr_t z = new();
@@ -43,6 +44,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Log2(mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
@@ -59,6 +61,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Log10(mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
@@ -75,6 +78,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Log1p(mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
@@ -91,6 +95,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Log2p1(mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
@@ -107,6 +112,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Log10p1(mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
@@ -284,6 +290,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Pow(ulong op1, ulong op2, mpfr_rnd_t rounding = DefaultRounding)
     {
         mpfr_t z = new();
@@ -317,6 +324,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Powr(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);

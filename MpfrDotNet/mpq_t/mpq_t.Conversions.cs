@@ -28,17 +28,9 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     {
         ThrowIfDisposed(this);
 
-        uint DigitCountBase = DigitBase.ToDigitCountBase(resultbase, nameof(resultbase));
+        _ = DigitBase.ToDigitCountBase(resultbase, nameof(resultbase));
 
-        using mpz_t Numerator = new();
-        mpq.get_num(Numerator, this);
-
-        using mpz_t Denominator = new();
-        mpq.get_den(Denominator, this);
-
-        ulong SizeInDigits = (ulong)mpz_sizeinbase(ref Numerator.Value, DigitCountBase) + (ulong)mpz_sizeinbase(ref Denominator.Value, DigitCountBase);
-
-        StringBuilder Data = new((int)(SizeInDigits + 3));
+        StringBuilder Data = new();
         mpq.get_str(Data, resultbase, this);
 
         string Result = Data.ToString();

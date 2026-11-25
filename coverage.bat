@@ -37,7 +37,7 @@ rem Release, because some mutants remove a check and make MPIR or MPFR abort, an
 rem opens a dialog that waits for a click.
 set Platform=x64
 pushd .\Test\%TESTPROJECTNAME%
-dotnet stryker -p %PROJECTNAME%.csproj --configuration Release --target-framework net10.0 --output . --reporter markdown --reporter html
+dotnet stryker -p %PROJECTNAME%.csproj --configuration Release --target-framework net10.0 --output . --reporter progress --reporter markdown --reporter html
 if exist .gitignore del .gitignore
 popd
 goto end

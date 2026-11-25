@@ -399,8 +399,21 @@ public static class mpz
     /// <param name="str">The string.</param>
     /// <param name="strBase">The base.</param>
     /// <param name="op">The operand.</param>
+    /// <remarks>The capacity of <paramref name="str"/> is increased to the size of the result, if needed.</remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strBase"/> is not between 2 and 62, or between -36 and -2.</exception>
     public static void get_str(StringBuilder str, int strBase, mpz_t op)
     {
+        // The native function writes as many characters as the value needs into the buffer allocated for the capacity,
+        // and allocates a string that would leak when the buffer is null.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
+        uint DigitCountBase = DigitBase.ToDigitCountBase(strBase, nameof(strBase));
+
+        // The digits, a minus sign and the terminating null character.
+        _ = str.EnsureCapacity(checked((int)sizeinbase(op, DigitCountBase) + 2));
+
         NativeMethods.mpz_get_str(str, strBase, ref op.Value);
     }
     #endregion
@@ -1805,10 +1818,7 @@ public static class mpz
         if (strBase < 2 || strBase > 62)
             throw new ArgumentOutOfRangeException(nameof(strBase));
 
-        ulong SizeInDigits = sizeinbase(op, (uint)strBase);
-        SizeInDigits += 2;
-
-        StringBuilder Data = new((int)SizeInDigits);
+        StringBuilder Data = new();
         get_str(Data, strBase, op);
 
         string Content = Data.ToString();
@@ -1945,8 +1955,19 @@ public static class mpz
     /// <param name="endian">The endianess.</param>
     /// <param name="nails">The nails count.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="op"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="size"/> is zero, <paramref name="nails"/> is not less than the bits of a word, or <paramref name="count"/> words of <paramref name="size"/> bytes do not fit in <paramref name="op"/>.</exception>
     public static void import(mpz_t rop, ulong count, int order, ulong size, int endian, ulong nails, byte[] op)
     {
+        // The native function reads count * size bytes from op, whatever its length.
+        if (op is null)
+            throw new ArgumentNullException(nameof(op));
+
+        CheckWordFormat(size, nails);
+
+        if (count > (ulong)op.LongLength / size)
+            throw new ArgumentOutOfRangeException(nameof(count), count, "The words do not fit in the array.");
+
         NativeMethods.mpz_import(ref rop.Value, (NativeMethods.size_t)count, order, (NativeMethods.size_t)size, endian, (NativeMethods.size_t)nails, op);
     }
 
@@ -1960,10 +1981,41 @@ public static class mpz
     /// <param name="endian">The endianess.</param>
     /// <param name="nails">The nails count.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="rop"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="size"/> is zero, or <paramref name="nails"/> is not less than the bits of a word.</exception>
+    /// <exception cref="ArgumentException"><paramref name="rop"/> is too small for the words of <paramref name="op"/>.</exception>
     public static void export(byte[] rop, out ulong countp, int order, ulong size, int endian, ulong nails, mpz_t op)
     {
+        // The native function writes as many words as the value needs, whatever the length of rop, and allocates
+        // an array that would leak when rop is null.
+        if (rop is null)
+            throw new ArgumentNullException(nameof(rop));
+
+        CheckWordFormat(size, nails);
+
+        if (sgn(op) != 0 && (size > (ulong)rop.LongLength || ExportWordCount(op, size, nails) > (ulong)rop.LongLength / size))
+            throw new ArgumentException("The array is too small for the value.", nameof(rop));
+
         NativeMethods.mpz_export(rop, out NativeMethods.size_t countpStruct, order, (NativeMethods.size_t)size, endian, (NativeMethods.size_t)nails, ref op.Value);
         countp = (ulong)countpStruct;
+    }
+
+    private static void CheckWordFormat(ulong size, ulong nails)
+    {
+        if (size == 0)
+            throw new ArgumentOutOfRangeException(nameof(size), size, "The size of a word cannot be zero.");
+
+        // nails >= 8 * size, computed without overflow.
+        if (nails / 8 >= size)
+            throw new ArgumentOutOfRangeException(nameof(nails), nails, "The nails must be fewer than the bits of a word.");
+    }
+
+    private static ulong ExportWordCount(mpz_t op, ulong size, ulong nails)
+    {
+        // size is at most the length of an array here, so 8 * size does not overflow.
+        ulong WordBits = (8 * size) - nails;
+
+        return (sizeinbase(op, 2) + WordBits - 1) / WordBits;
     }
     #endregion
 
@@ -2095,8 +2147,13 @@ public static class mpz
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="resultbase">The result base.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62.</exception>
     public static ulong sizeinbase(mpz_t op, uint resultbase)
     {
+        // GMP divides by zero for a base of 0 or 1, and reads past its table of bases beyond 256.
+        if (resultbase is < 2 or > 62)
+            throw new ArgumentOutOfRangeException(nameof(resultbase), resultbase, "The base must be between 2 and 62.");
+
         return (ulong)NativeMethods.mpz_sizeinbase(ref op.Value, resultbase);
     }
     #endregion

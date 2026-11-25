@@ -162,8 +162,23 @@ public static class mpq
     /// <param name="str">The string.</param>
     /// <param name="strBase">The base.</param>
     /// <param name="op">The operand.</param>
+    /// <remarks>The capacity of <paramref name="str"/> is increased to the size of the result, if needed.</remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strBase"/> is not between 2 and 62, or between -36 and -2.</exception>
     public static void get_str(StringBuilder str, int strBase, mpq_t op)
     {
+        // The native function writes as many characters as the value needs into the buffer allocated for the capacity,
+        // and allocates a string that would leak when the buffer is null.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
+        uint DigitCountBase = DigitBase.ToDigitCountBase(strBase, nameof(strBase));
+        ulong NumeratorDigits = (ulong)NativeMethods.mpz_sizeinbase(ref op.Value.Numerator, DigitCountBase);
+        ulong DenominatorDigits = (ulong)NativeMethods.mpz_sizeinbase(ref op.Value.Denominator, DigitCountBase);
+
+        // The digits, a minus sign, the slash and the terminating null character.
+        _ = str.EnsureCapacity(checked((int)(NumeratorDigits + DenominatorDigits) + 3));
+
         NativeMethods.mpq_get_str(str, strBase, ref op.Value);
     }
     #endregion

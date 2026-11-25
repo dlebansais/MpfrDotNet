@@ -50,6 +50,47 @@ public static partial class mpfr
         => isNativeLong32 ? uint.MaxValue : ulong.MaxValue;
 
     /// <summary>
+    /// Checks that a rounding mode is supported by the MPFR functions other than mpfr_rint and mpfr_subnormalize.
+    /// </summary>
+    /// <param name="rnd">The rounding mode.</param>
+    /// <param name="paramName">The name of the parameter that holds the rounding mode.</param>
+    /// <returns><paramref name="rnd"/>.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is <see cref="mpfr_rnd_t.MPFR_RNDNA"/> or not a value of <see cref="mpfr_rnd_t"/>.</exception>
+    internal static mpfr_rnd_t CheckRounding(mpfr_rnd_t rnd, string paramName)
+    {
+        // MPFR supports MPFR_RNDNA only in mpfr_rint, and aborts the process in other functions, as with an invalid mode.
+        if (rnd is < mpfr_rnd_t.MPFR_RNDN or > mpfr_rnd_t.MPFR_RNDF)
+            throw new ArgumentOutOfRangeException(paramName, rnd, UnsupportedRoundingMessage);
+
+        return rnd;
+    }
+
+    /// <summary>
+    /// Converts a rounding mode for the MPFR functions other than mpfr_rint and mpfr_subnormalize.
+    /// </summary>
+    /// <param name="rnd">The rounding mode.</param>
+    /// <param name="paramName">The name of the parameter that holds the rounding mode.</param>
+    /// <returns>The native rounding mode.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is <see cref="mpfr_rnd_t.MPFR_RNDNA"/> or not a value of <see cref="mpfr_rnd_t"/>.</exception>
+    internal static __mpfr_rnd_t ToNativeRounding(mpfr_rnd_t rnd, string paramName)
+        => (__mpfr_rnd_t)CheckRounding(rnd, paramName);
+
+    /// <summary>
+    /// Converts a rounding mode for mpfr_rint and mpfr_subnormalize, which also support <see cref="mpfr_rnd_t.MPFR_RNDNA"/>.
+    /// </summary>
+    /// <param name="rnd">The rounding mode.</param>
+    /// <param name="paramName">The name of the parameter that holds the rounding mode.</param>
+    /// <returns>The native rounding mode.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a value of <see cref="mpfr_rnd_t"/>.</exception>
+    internal static __mpfr_rnd_t ToNativeRoundingOrNearestAway(mpfr_rnd_t rnd, string paramName)
+        => rnd == mpfr_rnd_t.MPFR_RNDNA ? __mpfr_rnd_t.MPFR_RNDNA : ToNativeRounding(rnd, paramName);
+
+    /// <summary>
+    /// The message of the exception thrown for a rounding mode that MPFR does not support.
+    /// </summary>
+    internal const string UnsupportedRoundingMessage = "The rounding mode must be MPFR_RNDN, MPFR_RNDZ, MPFR_RNDU, MPFR_RNDD, MPFR_RNDA or MPFR_RNDF.";
+
+    /// <summary>
     /// Converts a value that is in the range of a C long.
     /// </summary>
     /// <param name="value">The value.</param>

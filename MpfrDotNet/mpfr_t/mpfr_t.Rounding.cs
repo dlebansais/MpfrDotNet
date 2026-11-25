@@ -12,6 +12,7 @@ public partial class mpfr_t : IDisposable
     /// Gets or sets the default rounding mode, which new instances take as their <see cref="Rounding"/>.
     /// </summary>
     /// <remarks>MPFR keeps this setting per thread: a value set on one thread does not apply to the other threads, including the thread-pool threads that run the continuations of an await. Optional rounding parameters default to <see cref="DefaultRounding"/>, whatever this setting.</remarks>
+    /// <exception cref="ArgumentOutOfRangeException">The value set is <see cref="mpfr_rnd_t.MPFR_RNDNA"/> or not a value of <see cref="mpfr_rnd_t"/>.</exception>
     public static mpfr_rnd_t DefaultRoundingMode
     {
         get { return mpfr.get_default_rounding_mode(); }
@@ -23,6 +24,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t RoundToInteger(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
@@ -54,6 +56,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Ceil(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
@@ -85,6 +88,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Floor(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
@@ -116,6 +120,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Round(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
@@ -147,6 +152,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t RoundEven(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
@@ -178,6 +184,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Trunc(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
@@ -194,6 +201,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t Fractional(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
@@ -212,6 +220,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="fractional">The fractional part upon return.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public void IntegerAndFractional(out mpfr_t integer, out mpfr_t fractional, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
@@ -231,6 +240,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t FMod(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -250,6 +260,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t FMod(mpfr_t x, ulong y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -269,6 +280,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="q">The quotient upon return.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t FMod(mpfr_t x, mpfr_t y, out long q, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -288,6 +300,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Remainder(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -308,6 +321,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="q">The quotient upon return.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Remainder(mpfr_t x, mpfr_t y, out long q, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -325,7 +339,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="precision">The precision.</param>
     /// <param name="rounding">The rounding mode.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>, or <paramref name="rounding"/> is not a supported rounding mode.</exception>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public void RoundWithPrecision(ulong precision, mpfr_rnd_t rounding)
     {
@@ -341,7 +355,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding1">The number rounding.</param>
     /// <param name="rounding2">The precision rounding.</param>
     /// <param name="precision">The precision.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>, or <paramref name="rounding1"/> is not a supported rounding mode, or <paramref name="rounding2"/> is not a supported rounding mode.</exception>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public bool CanRound(int err, mpfr_rnd_t rounding1, mpfr_rnd_t rounding2, ulong precision)
     {

@@ -974,10 +974,8 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         ThrowIfDisposed(this);
 
-        ulong SizeInDigits = 5;
-        StringBuilder Data = new((int)(SizeInDigits + 2));
-
-        mpf.get_str(Data, out _, mpz_t.DefaultBase, SizeInDigits, this);
+        StringBuilder Data = new();
+        mpf.get_str(Data, out _, mpz_t.DefaultBase, 5UL, this);
 
         return Data.ToString().GetHashCode();
     }

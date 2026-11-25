@@ -1,5 +1,6 @@
 ﻿namespace MpfrDotNet;
 
+using System;
 using static Interop.Mpfr.NativeMethods;
 
 /// <summary>
@@ -79,9 +80,10 @@ public static partial class mpfr
     /// <param name="x">The x.</param>
     /// <param name="t">The t.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int check_range(mpfr_t x, int t, mpfr_rnd_t rnd)
     {
-        return mpfr_check_range(ref x.Value, t, (__mpfr_rnd_t)rnd);
+        return mpfr_check_range(ref x.Value, t, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -90,9 +92,10 @@ public static partial class mpfr
     /// <param name="x">The x.</param>
     /// <param name="t">The t.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a rounding mode of <see cref="mpfr_rnd_t"/>.</exception>
     public static int subnormalize(mpfr_t x, int t, mpfr_rnd_t rnd)
     {
-        return mpfr_subnormalize(ref x.Value, t, (__mpfr_rnd_t)rnd);
+        return mpfr_subnormalize(ref x.Value, t, ToNativeRoundingOrNearestAway(rnd, nameof(rnd)));
     }
 
     /// <summary>

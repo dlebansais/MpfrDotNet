@@ -32,11 +32,8 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     {
         _ = DigitBase.ToDigitCountBase(resultbase, nameof(resultbase));
 
-        ulong SizeInDigits = Precision;
-
-        StringBuilder Data = new((int)(SizeInDigits + 2));
-
-        mpf.get_str(Data, out int Exponent, resultbase, SizeInDigits, this);
+        StringBuilder Data = new();
+        mpf.get_str(Data, out int Exponent, resultbase, Precision, this);
 
         string Result = Data.ToString();
 

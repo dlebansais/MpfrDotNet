@@ -1,5 +1,6 @@
 ﻿namespace MpfrDotNet;
 
+using System;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
@@ -75,6 +76,11 @@ public static partial class mpfr
     /// <param name="op2">The second operand.</param>
     public static int cmp_f(mpfr_t op1, mpf_t op2)
     {
+        // mpfr_cmp_f converts op2 with mpfr_set_f, which gets a wrong exponent for a number far below the exponent range
+        // (see set_f). A regular op1 is farther from zero than such a number.
+        if (mpfr_regular_p(ref op1.Value) != 0 && IsFarBelowExponentRange(op2))
+            return mpfr_sgn(ref op1.Value);
+
         return mpfr_cmp_f(ref op1.Value, ref op2.Value);
     }
 
@@ -262,8 +268,9 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static void reldiff(mpfr_t rop, mpfr_t op1, mpfr_t op2, mpfr_rnd_t rnd)
     {
-        mpfr_reldiff(ref rop.Value, ref op1.Value, ref op2.Value, (__mpfr_rnd_t)rnd);
+        mpfr_reldiff(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 }

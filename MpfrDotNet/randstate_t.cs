@@ -34,7 +34,6 @@ public class randstate_t : IDisposable
     public randstate_t()
     {
         gmp.randinit_default(this);
-        IsNativeStateInitialized = true;
     }
 
     /// <summary>
@@ -49,7 +48,6 @@ public class randstate_t : IDisposable
             throw new ArgumentNullException(nameof(other));
 
         gmp.randinit_set(this, other);
-        IsNativeStateInitialized = true;
     }
 
     /// <summary>
@@ -63,7 +61,6 @@ public class randstate_t : IDisposable
         {
             case RngAlgorithm.MersenneTwister:
                 gmp.randinit_mt(this);
-                IsNativeStateInitialized = true;
                 break;
 
             case RngAlgorithm.LinearCongruential:
@@ -79,21 +76,22 @@ public class randstate_t : IDisposable
                     throw new ArgumentException("Invalid combination of parameters for this algorithm.", nameof(algorithm));
                 }
 
-                IsNativeStateInitialized = true;
-
                 break;
 
             default:
                 // Create leaves only RngAlgorithm.Default.
                 gmp.randinit_default(this);
-                IsNativeStateInitialized = true;
                 break;
         }
     }
 
-    // Set only after a successful initialization: a constructor that throws leaves no native state, and gmp_randclear
-    // would crash on a state that is not initialized.
-    private readonly bool IsNativeStateInitialized;
+    /// <summary>
+    /// Set by the gmp.randinit_* functions after a successful initialization, and cleared by gmp.randclear: a constructor
+    /// that throws leaves no native state, and gmp_randclear would crash on a state that is not initialized.
+    /// </summary>
+#pragma warning disable SA1401 // Fields should be private
+    internal bool IsNativeStateInitialized;
+#pragma warning restore SA1401 // Fields should be private
 
     /// <summary>
     /// Throws if the state has been disposed, since its native memory is then released.
@@ -157,8 +155,8 @@ public class randstate_t : IDisposable
     /// </summary>
     private void DisposeNow()
     {
-        if (IsNativeStateInitialized)
-            gmp.randclear(this);
+        // gmp.randclear does nothing for a state that is not initialized, or already cleared.
+        gmp.randclear(this);
     }
     #endregion
 }

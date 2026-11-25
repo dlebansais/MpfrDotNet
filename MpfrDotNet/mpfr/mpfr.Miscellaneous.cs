@@ -45,9 +45,10 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int min(mpfr_t rop, mpfr_t op1, mpfr_t op2, mpfr_rnd_t rnd)
     {
-        return mpfr_min(ref rop.Value, ref op1.Value, ref op2.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_min(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -57,9 +58,10 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int max(mpfr_t rop, mpfr_t op1, mpfr_t op2, mpfr_rnd_t rnd)
     {
-        return mpfr_max(ref rop.Value, ref op1.Value, ref op2.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_max(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -82,11 +84,12 @@ public static partial class mpfr
     /// <param name="state">The state.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int urandom(mpfr_t rop, randstate_t state, mpfr_rnd_t rnd)
     {
         state.ThrowIfDisposed();
 
-        return mpfr_urandom(ref rop.Value, ref state.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_urandom(ref rop.Value, ref state.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -96,11 +99,12 @@ public static partial class mpfr
     /// <param name="state">The state.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int nrandom(mpfr_t rop1, randstate_t state, mpfr_rnd_t rnd)
     {
         state.ThrowIfDisposed();
 
-        return mpfr_nrandom(ref rop1.Value, ref state.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_nrandom(ref rop1.Value, ref state.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -111,11 +115,12 @@ public static partial class mpfr
     /// <param name="state">The state.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int grandom(mpfr_t rop1, mpfr_t rop2, randstate_t state, mpfr_rnd_t rnd)
     {
         state.ThrowIfDisposed();
 
-        return mpfr_grandom(ref rop1.Value, ref rop2.Value, ref state.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_grandom(ref rop1.Value, ref rop2.Value, ref state.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -125,11 +130,12 @@ public static partial class mpfr
     /// <param name="state">The state.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int erandom(mpfr_t rop1, randstate_t state, mpfr_rnd_t rnd)
     {
         state.ThrowIfDisposed();
 
-        return mpfr_erandom(ref rop1.Value, ref state.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_erandom(ref rop1.Value, ref state.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -177,9 +183,10 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="s">The sign.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int setsign(mpfr_t rop, mpfr_t op, int s, mpfr_rnd_t rnd)
     {
-        return mpfr_setsign(ref rop.Value, ref op.Value, s, (__mpfr_rnd_t)rnd);
+        return mpfr_setsign(ref rop.Value, ref op.Value, s, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>
@@ -189,9 +196,10 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int copysign(mpfr_t rop, mpfr_t op1, mpfr_t op2, mpfr_rnd_t rnd)
     {
-        return mpfr_copysign(ref rop.Value, ref op1.Value, ref op2.Value, (__mpfr_rnd_t)rnd);
+        return mpfr_copysign(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
     /// <summary>

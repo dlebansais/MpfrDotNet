@@ -225,6 +225,7 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// <param name="y">The second number.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t RelativeDifference(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);

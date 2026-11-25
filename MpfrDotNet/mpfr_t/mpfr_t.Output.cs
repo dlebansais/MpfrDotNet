@@ -37,16 +37,14 @@ public partial class mpfr_t : IDisposable
     /// <param name="resultbase">The digit base.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <returns>The number value.</returns>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2, or <paramref name="rounding"/> is not a supported rounding mode.</exception>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToString(int resultbase, mpfr_rnd_t rounding)
     {
         Debug.Assert(IsCacheInitialized);
 
         ulong SizeInDigits = mpfr.get_str_ndigits((int)DigitBase.ToDigitCountBase(resultbase, nameof(resultbase)), Precision);
-
-        // MPFR requires max(n + 2, 7) characters, since "-@Inf@" and its terminator take 7 whatever the precision.
-        StringBuilder Data = new((int)Math.Max(SizeInDigits + 2, 7));
+        StringBuilder Data = new();
 
         mpfr.get_str(Data, out int Exponent, resultbase, SizeInDigits, this, rounding);
 

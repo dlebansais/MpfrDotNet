@@ -16,6 +16,7 @@ public static class gmp
     public static void randinit_default(randstate_t state)
     {
         NativeMethods.mp_randinit_default(ref state.Value);
+        state.IsNativeStateInitialized = true;
     }
 
     /// <summary>
@@ -25,6 +26,7 @@ public static class gmp
     public static void randinit_mt(randstate_t state)
     {
         NativeMethods.mp_randinit_mt(ref state.Value);
+        state.IsNativeStateInitialized = true;
     }
 
     /// <summary>
@@ -42,6 +44,7 @@ public static class gmp
             throw new ArgumentOutOfRangeException(nameof(m2exp), m2exp, "The modulus exponent must be greater than zero.");
 
         NativeMethods.mp_randinit_lc_2exp(ref state.Value, ref a.Value, (NativeMethods.mpir_ui)c, (NativeMethods.mp_bitcnt_t)m2exp);
+        state.IsNativeStateInitialized = true;
     }
 
     /// <summary>
@@ -52,7 +55,10 @@ public static class gmp
     /// <returns><see langword="true"/> if the state is initialized; <see langword="false"/> if <paramref name="size"/> is greater than 128, in which case the state is not initialized.</returns>
     public static bool randinit_lc_2exp_size(randstate_t state, ulong size)
     {
-        return NativeMethods.mp_randinit_lc_2exp_size(ref state.Value, (NativeMethods.mp_bitcnt_t)size) != 0;
+        bool IsInitialized = NativeMethods.mp_randinit_lc_2exp_size(ref state.Value, (NativeMethods.mp_bitcnt_t)size) != 0;
+        state.IsNativeStateInitialized |= IsInitialized;
+
+        return IsInitialized;
     }
 
     /// <summary>
@@ -66,15 +72,23 @@ public static class gmp
         op.ThrowIfDisposed();
 
         NativeMethods.mp_randinit_set(ref rop.Value, ref op.Value);
+        rop.IsNativeStateInitialized = true;
     }
 
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="state">The state.</param>
+    /// <remarks>Clearing a state that is not initialized, or already cleared, does nothing.</remarks>
     public static void randclear(randstate_t state)
     {
+        // The disposal of the state must not free the memory a second time, and gmp_randclear would crash on a
+        // state that is not initialized.
+        if (!state.IsNativeStateInitialized)
+            return;
+
         NativeMethods.mp_randclear(ref state.Value);
+        state.IsNativeStateInitialized = false;
     }
     #endregion
 

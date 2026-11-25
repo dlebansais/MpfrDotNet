@@ -106,6 +106,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t EuclideanNorm(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -125,6 +126,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Dim(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -145,6 +147,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="c">The third operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/> or <paramref name="c"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Fma(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(a);
@@ -166,6 +169,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="c">The third operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/> or <paramref name="c"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Fms(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(a);
@@ -188,6 +192,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="d">The fourth operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/>, <paramref name="c"/> or <paramref name="d"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Fmma(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_t d, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(a);
@@ -211,6 +216,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="d">The fourth operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/>, <paramref name="c"/> or <paramref name="d"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Fmms(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_t d, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(a);

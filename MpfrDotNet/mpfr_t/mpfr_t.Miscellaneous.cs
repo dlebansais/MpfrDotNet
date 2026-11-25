@@ -18,6 +18,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Min(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -37,6 +38,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Max(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
@@ -188,6 +190,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="randomState">The random state.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t UniformRandom(randstate_t randomState, mpfr_rnd_t rounding)
     {
         mpfr_t Result = new();
@@ -202,6 +205,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="randomState">The random state.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t GaussianRandom(randstate_t randomState, mpfr_rnd_t rounding = DefaultRounding)
     {
         mpfr_t Result = new();
@@ -218,6 +222,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rand1">The first random number upon return.</param>
     /// <param name="rand2">The second random number upon return.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static void GaussianRandom(randstate_t randomState, out mpfr_t rand1, out mpfr_t rand2, mpfr_rnd_t rounding = DefaultRounding)
     {
         rand1 = new mpfr_t();
@@ -233,6 +238,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="randomState">The random state.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t ExponentialRandom(randstate_t randomState, mpfr_rnd_t rounding = DefaultRounding)
     {
         mpfr_t Result = new();
@@ -287,6 +293,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="signBit">The sign bit.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="source"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public void SetWithSignBit(mpfr_t source, int signBit, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
@@ -302,6 +309,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="signBitSource">The sign bit source operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException">This number, <paramref name="source"/> or <paramref name="signBitSource"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public void CopyWithSignBit(mpfr_t source, mpfr_t signBitSource, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);

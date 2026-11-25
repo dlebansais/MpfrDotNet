@@ -137,6 +137,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator +(mpfr_t x, mpz_t y)
     {
         ThrowIfDisposed(x);
@@ -155,6 +156,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator +(mpz_t x, mpfr_t y)
     {
         mpz_t.ThrowIfDisposed(x);
@@ -173,6 +175,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator +(mpfr_t x, mpq_t y)
     {
         ThrowIfDisposed(x);
@@ -191,6 +194,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator +(mpq_t x, mpfr_t y)
     {
         mpq_t.ThrowIfDisposed(x);
@@ -331,6 +335,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator -(mpfr_t x, mpz_t y)
     {
         ThrowIfDisposed(x);
@@ -349,6 +354,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator -(mpz_t x, mpfr_t y)
     {
         mpz_t.ThrowIfDisposed(x);
@@ -367,6 +373,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator -(mpfr_t x, mpq_t y)
     {
         ThrowIfDisposed(x);
@@ -385,6 +392,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator -(mpq_t x, mpfr_t y)
     {
         mpq_t.ThrowIfDisposed(x);
@@ -536,6 +544,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpfr_t x, mpz_t y)
     {
         ThrowIfDisposed(x);
@@ -554,6 +563,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpz_t x, mpfr_t y)
     {
         mpz_t.ThrowIfDisposed(x);
@@ -572,6 +582,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpfr_t x, mpq_t y)
     {
         ThrowIfDisposed(x);
@@ -590,6 +601,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpq_t x, mpfr_t y)
     {
         mpq_t.ThrowIfDisposed(x);
@@ -730,6 +742,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator /(mpfr_t x, mpz_t y)
     {
         ThrowIfDisposed(x);
@@ -771,6 +784,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator /(mpfr_t x, mpq_t y)
     {
         ThrowIfDisposed(x);
@@ -789,6 +803,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator /(mpq_t x, mpfr_t y)
     {
         mpq_t.ThrowIfDisposed(x);

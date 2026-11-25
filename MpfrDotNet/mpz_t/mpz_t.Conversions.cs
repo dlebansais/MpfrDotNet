@@ -47,9 +47,9 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     {
         ThrowIfDisposed(this);
 
-        ulong SizeInDigits = mpz.sizeinbase(this, DigitBase.ToDigitCountBase(resultbase, nameof(resultbase)));
+        _ = DigitBase.ToDigitCountBase(resultbase, nameof(resultbase));
 
-        StringBuilder Data = new((int)(SizeInDigits + 2));
+        StringBuilder Data = new();
         mpz.get_str(Data, resultbase, this);
 
         string Result = Data.ToString();

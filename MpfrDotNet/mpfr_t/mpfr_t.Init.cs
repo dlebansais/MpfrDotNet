@@ -137,10 +137,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="other">The other instance.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="other"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(mpfr_t other, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
         ReleaseIfThrows(() => ThrowIfDisposed(other));
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
 
         // The copy has the precision of the original, so that it is exact.
         mpfr.set_prec(this, mpfr.get_prec(other));
@@ -152,9 +154,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(ulong op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_ui(this, op, rounding);
     }
 
@@ -163,9 +168,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(long op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_si(this, op, rounding);
     }
 
@@ -174,9 +182,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(uint op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_uj(this, op, rounding);
     }
 
@@ -185,9 +196,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(int op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_sj(this, op, rounding);
     }
 
@@ -196,9 +210,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(float op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_flt(this, op, rounding);
     }
 
@@ -207,9 +224,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(double op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_d(this, op, rounding);
     }
 
@@ -219,10 +239,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(mpz_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
         ReleaseIfThrows(() => mpz_t.ThrowIfDisposed(op));
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
 
         LastTernaryResult = mpfr.set_z(this, op, rounding);
     }
@@ -233,10 +255,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(mpq_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
         ReleaseIfThrows(() => mpq_t.ThrowIfDisposed(op));
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
 
         LastTernaryResult = mpfr.set_q(this, op, rounding);
     }
@@ -247,10 +271,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(mpf_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
         ReleaseIfThrows(() => mpf_t.ThrowIfDisposed(op));
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
 
         LastTernaryResult = mpfr.set_f(this, op, rounding);
     }
@@ -262,11 +288,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="strbase">The digit base.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strbase"/> is not 0 or between 2 and 62.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strbase"/> is not 0 or between 2 and 62, or <paramref name="rounding"/> is not a supported rounding mode.</exception>
     /// <exception cref="ArgumentException">The combination of <paramref name="str"/> and <paramref name="strbase"/> is invalid.</exception>
     public mpfr_t(string str, uint strbase = 10, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         // MPFR dereferences a null string and aborts the process on an invalid base.
         if (str is null)
         {
@@ -294,9 +322,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The operand.</param>
     /// <param name="e">The shift.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(ulong op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_ui_2exp(this, op, e, rounding);
     }
 
@@ -306,9 +337,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The operand.</param>
     /// <param name="e">The shift.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(long op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_si_2exp(this, op, e, rounding);
     }
 
@@ -318,9 +352,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The operand.</param>
     /// <param name="e">The shift.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(uint op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_uj_2exp(this, op, e, rounding);
     }
 
@@ -330,9 +367,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The operand.</param>
     /// <param name="e">The shift.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(int op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+
         LastTernaryResult = mpfr.set_sj_2exp(this, op, e, rounding);
     }
 
@@ -343,10 +383,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="e">The exponent.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public mpfr_t(mpz_t op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
         ReleaseIfThrows(() => mpz_t.ThrowIfDisposed(op));
+        ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
 
         LastTernaryResult = mpfr.set_z_2exp(this, op, e, rounding);
     }
@@ -374,7 +416,8 @@ public partial class mpfr_t : IDisposable
     /// Gets or sets the rounding mode of the operations that compute a result from this number.
     /// </summary>
     /// <remarks>A new instance takes the value of <see cref="DefaultRoundingMode"/> on the thread that creates it.</remarks>
-    public mpfr_rnd_t Rounding { get; set; } = DefaultRoundingMode;
+    /// <exception cref="ArgumentOutOfRangeException">The value set is <see cref="mpfr_rnd_t.MPFR_RNDNA"/> or not a value of <see cref="mpfr_rnd_t"/>.</exception>
+    public mpfr_rnd_t Rounding { get; set => field = mpfr.CheckRounding(value, nameof(value)); } = DefaultRoundingMode;
 
 #pragma warning disable SA1401 // Fields should be private
 #pragma warning disable SA1600 // Elements should be documented

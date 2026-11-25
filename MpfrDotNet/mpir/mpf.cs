@@ -15,8 +15,11 @@ public static class mpf
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="prec">The default precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is greater than <see cref="MaxPrecision"/>.</exception>
     public static void set_default_prec(ulong prec)
     {
+        CheckPrecision(prec, nameof(prec));
+
         NativeMethods.mpf_set_default_prec((NativeMethods.mp_bitcnt_t)prec);
     }
 
@@ -43,8 +46,11 @@ public static class mpf
     /// </summary>
     /// <param name="x">The value.</param>
     /// <param name="prec">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is greater than <see cref="MaxPrecision"/>.</exception>
     public static void init2(mpf_t x, ulong prec)
     {
+        CheckPrecision(prec, nameof(prec));
+
         NativeMethods.mpf_init2(ref x.Value, (NativeMethods.mp_bitcnt_t)prec);
         x.AllocatedPrecision = x.Value.Precision;
     }
@@ -103,8 +109,11 @@ public static class mpf
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="prec">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is greater than <see cref="MaxPrecision"/>.</exception>
     public static void set_prec(mpf_t op, ulong prec)
     {
+        CheckPrecision(prec, nameof(prec));
+
         NativeMethods.mpf_set_prec(ref op.Value, (NativeMethods.mp_bitcnt_t)prec);
         op.AllocatedPrecision = op.Value.Precision;
     }
@@ -117,16 +126,65 @@ public static class mpf
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is greater than the precision allocated for <paramref name="op"/> by its initialization or by the last call to <see cref="set_prec"/>.</exception>
     public static void set_prec_raw(mpf_t op, ulong prec)
     {
-        int PreviousPrecision = op.Value.Precision;
-        NativeMethods.mpf_set_prec_raw(ref op.Value, (NativeMethods.mp_bitcnt_t)prec);
-
-        // mpf_set_prec_raw only stores the precision, in limbs: a value above the allocated precision would make
-        // the next operations write past the limbs.
-        if (op.Value.Precision > op.AllocatedPrecision)
-        {
-            op.Value.Precision = PreviousPrecision;
+        // mpf_set_prec_raw only stores the precision, in limbs, in an int: a value above the allocated precision would
+        // make the next operations write past the limbs. The count is computed here, before it can be truncated.
+        if (PrecisionToLimbs(prec) > (ulong)op.AllocatedPrecision)
             throw new ArgumentOutOfRangeException(nameof(prec), prec, "The precision cannot be greater than the allocated precision.");
+
+        NativeMethods.mpf_set_prec_raw(ref op.Value, (NativeMethods.mp_bitcnt_t)prec);
+    }
+
+    /// <summary>
+    /// Gets the largest precision, in bits, whose count of limbs fits in the precision field of MPIR and GMP, which is an int.
+    /// </summary>
+    public static ulong MaxPrecision { get; } = ((ulong)int.MaxValue * LimbBits) - LimbBits;
+
+    // The size of a limb, in bits, with MPIR on Windows and with GMP on 64-bit Linux.
+    private const ulong LimbBits = 64;
+
+    // The largest exponent that mpf_rrandomb accepts on Windows.
+    private const int MaxRandomExponent = (1 << 30) - 1;
+
+    /// <summary>
+    /// Gets the count of limbs that MPIR and GMP use for a precision (__GMPF_BITS_TO_PREC).
+    /// </summary>
+    /// <param name="prec">The precision, in bits.</param>
+    /// <returns>The count of limbs, which saturates instead of overflowing.</returns>
+    internal static ulong PrecisionToLimbs(ulong prec)
+    {
+        ulong Bits = Math.Max(53UL, prec);
+
+        return Bits > ulong.MaxValue - ((2 * LimbBits) - 1) ? ulong.MaxValue / LimbBits : (Bits + (2 * LimbBits) - 1) / LimbBits;
+    }
+
+    /// <summary>
+    /// Checks that a precision can be stored by MPIR and GMP.
+    /// </summary>
+    /// <param name="prec">The precision, in bits.</param>
+    /// <param name="paramName">The name of the parameter that holds the precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is greater than <see cref="MaxPrecision"/>.</exception>
+    internal static void CheckPrecision(ulong prec, string paramName)
+    {
+        if (prec > MaxPrecision)
+            throw new ArgumentOutOfRangeException(paramName, prec, $"The precision must be {MaxPrecision} or less.");
+    }
+
+    /// <summary>
+    /// Gets the integer part of the logarithm in base 2 of a number.
+    /// </summary>
+    /// <param name="value">The number, greater than 0.</param>
+    /// <returns>The logarithm.</returns>
+    internal static ulong FloorLog2(uint value)
+    {
+        ulong Result = 0;
+
+        while (value > 1)
+        {
+            value >>= 1;
+            Result++;
         }
+
+        return Result;
     }
     #endregion
 
@@ -331,8 +389,24 @@ public static class mpf
     /// <param name="strBase">The base.</param>
     /// <param name="n_digits">The count of digits.</param>
     /// <param name="op">The operand.</param>
+    /// <remarks>The capacity of <paramref name="str"/> is increased to the size of the result, if needed.</remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strBase"/> is not between 2 and 62, or between -36 and -2.</exception>
     public static void get_str(StringBuilder str, out int expptr, int strBase, ulong n_digits, mpf_t op)
     {
+        // The native function writes as many characters as the value needs into the buffer allocated for the capacity,
+        // and allocates a string that would leak when the buffer is null.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
+        uint DigitCountBase = DigitBase.ToDigitCountBase(strBase, nameof(strBase));
+
+        // MPIR writes at most the significant digits of the precision (MPF_SIGNIFICANT_DIGITS), a minus sign and the
+        // terminating null character. Each digit holds at least floor(log2(base)) bits.
+        ulong MaxDigits = 2 + (((ulong)op.Value.Precision * LimbBits) / FloorLog2(DigitCountBase));
+        ulong Digits = n_digits == 0 ? MaxDigits : Math.Min(n_digits, MaxDigits);
+        _ = str.EnsureCapacity(checked((int)Digits + 2));
+
         NativeMethods.mpf_get_str(str, out CLong NativeExponent, strBase, (NativeMethods.size_t)n_digits, ref op.Value);
 
         // The exponent is a C long, 64-bit on Linux: it is clamped like the other exponents of the API.
@@ -730,11 +804,20 @@ public static class mpf
     /// <param name="exp">The exponent.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
     /// <exception cref="PlatformNotSupportedException">The process does not run on Windows: this function exists in MPIR but not in GMP.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="max_size"/> is greater than <see cref="long.MaxValue"/>, or <paramref name="exp"/> is not between -(2^30 - 1) and 2^30 - 1.</exception>
     public static void rrandomb(mpf_t rop, randstate_t state, ulong max_size, int exp)
     {
         state.ThrowIfDisposed();
 
         ThrowIfNotMpir(NativeMethods.IsMpir, nameof(NativeMethods.mpf_rrandomb));
+
+        // MPIR reads the size as a signed number, and uses its sign as the sign of the result.
+        if (max_size > long.MaxValue)
+            throw new ArgumentOutOfRangeException(nameof(max_size), max_size, $"The size must be {long.MaxValue} or less.");
+
+        // MPIR computes 2 * exp + 1 with the 32-bit exponents of Windows, which overflows beyond 2^30 - 1.
+        if (exp is < -MaxRandomExponent or > MaxRandomExponent)
+            throw new ArgumentOutOfRangeException(nameof(exp), exp, $"The exponent must be between {-MaxRandomExponent} and {MaxRandomExponent}.");
 
         NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.size_t)max_size, new CLong(exp));
     }
