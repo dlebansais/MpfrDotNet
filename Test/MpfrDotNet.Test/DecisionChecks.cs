@@ -257,7 +257,7 @@ internal class DecisionChecks
         // Beyond 2^63 on every platform.
         Assert.That(() => new mpf_t("1e99999999999999999999"), Throws.TypeOf<OverflowException>().With.Message.EqualTo(Expected));
         Assert.That(() => new mpf_t("1.5E-99999999999999999999", 10U), Throws.TypeOf<OverflowException>().With.Message.EqualTo(Expected));
-        Assert.That(() => new mpf_t("1@zzzzzzzzzzzz", 36U), Throws.TypeOf<OverflowException>().With.Message.EqualTo(Expected));
+        Assert.That(() => new mpf_t("1@zzzzzzzzzzzzz", 36U), Throws.TypeOf<OverflowException>().With.Message.EqualTo(Expected));
         Assert.That(() => new mpf_t("1@ZZZZZZZZZZZZ", 62U), Throws.TypeOf<OverflowException>().With.Message.EqualTo(Expected));
         Assert.That(() => mpf.set_str(Value, "1e+99999999999999999999", 10U), Throws.TypeOf<OverflowException>().With.Message.EqualTo(Expected));
         Assert.That(() => mpf.init_set_str(Value, "1e99999999999999999999", 10U), Throws.TypeOf<OverflowException>().With.Message.EqualTo(Expected));
