@@ -72,6 +72,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Initializes a new instance of the <see cref="mpz_t"/> class.
     /// </summary>
     /// <param name="op">The operand.</param>
+    /// <exception cref="OverflowException">The value is NaN or an infinity.</exception>
     public mpz_t(double op)
     {
         mpz.init_set_d(this, op);
@@ -149,9 +150,13 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Creates an array of new instances of the <see cref="mpz_t"/> class.
     /// </summary>
     /// <param name="length">The array length.</param>
-    /// <exception cref="ArgumentException"><paramref name="length"/> is 32 or more.</exception>
+    /// <exception cref="ArgumentException"><paramref name="length"/> is negative, or 32 or more.</exception>
     public static mpz_t[] CreateArray(int length)
     {
+        // A negative length would throw OverflowException when the array is created.
+        if (length < 0)
+            throw new ArgumentException("The length must not be negative.", nameof(length));
+
         if (length >= MaxArrayLength)
             throw new ArgumentException($"The length must be lesser than {MaxArrayLength}.", nameof(length));
 

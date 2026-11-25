@@ -36,13 +36,17 @@ public static class gmp
     /// <param name="a">The value of a.</param>
     /// <param name="c">The value of c.</param>
     /// <param name="m2exp">The value of m2exp.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="m2exp"/> is less than 2.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="m2exp"/> is less than 2, or greater than <see cref="mpf.MaxPrecision"/>.</exception>
     public static void randinit_lc_2exp(randstate_t state, mpz_t a, ulong c, ulong m2exp)
     {
         // GMP and MPIR abort the process when m2exp is zero. With 1, each step yields m2exp / 2 = 0 bits, and every
         // draw loops forever.
         if (m2exp < 2)
             throw new ArgumentOutOfRangeException(nameof(m2exp), m2exp, "The modulus exponent must be at least 2.");
+
+        // The native code allocates m2exp bits for the seed, which wraps or overflows the size of an integer beyond that.
+        if (m2exp > mpf.MaxPrecision)
+            throw new ArgumentOutOfRangeException(nameof(m2exp), m2exp, $"The modulus exponent must be at most {mpf.MaxPrecision}.");
 
         NativeMethods.mp_randinit_lc_2exp(ref state.Value, ref a.Value, (NativeMethods.mpir_ui)c, (NativeMethods.mp_bitcnt_t)m2exp);
         state.IsNativeStateInitialized = true;

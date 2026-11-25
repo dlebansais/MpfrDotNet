@@ -483,7 +483,8 @@ public static class mpf
         if (LimbCount == 0)
             return 0;
 
-        ulong TopLimb = (ulong)Marshal.ReadInt64(op.Value.Limbs, (LimbCount - 1) * sizeof(ulong));
+        // The offset is computed in 64 bits: a number can have more than 2^28 limbs.
+        ulong TopLimb = (ulong)Marshal.ReadInt64(MpfrDotNet.NativeNumberArray.Offset(op.Value.Limbs, (long)(LimbCount - 1) * sizeof(ulong)));
 
         return ((long)op.Value.Exponent.Value * (long)LimbBits) - LeadingZeroCount(TopLimb);
     }
@@ -566,11 +567,45 @@ public static class mpf
         // terminating null character. Each digit holds at least floor(log2(base)) bits.
         ulong MaxDigits = 2 + (((ulong)op.Value.Precision * LimbBits) / FloorLog2(DigitCountBase));
         ulong Digits = n_digits == 0 ? MaxDigits : Math.Min(n_digits, MaxDigits);
-        _ = str.EnsureCapacity(checked((int)Digits + 2));
 
-        NativeMethods.mpf_get_str(str, out CLong NativeExponent, strBase, (NativeMethods.size_t)n_digits, ref op.Value);
+        // MPIR converts in its own buffer, and copies only the digits left once the trailing zeros are removed: none
+        // for zero, and in a base that is a power of two, no more than the bits of the value.
+        int LimbCount = Math.Abs(op.Value.Size);
+        if (LimbCount == 0)
+            Digits = 0;
+        else if ((DigitCountBase & (DigitCountBase - 1)) == 0)
+            Digits = Math.Min(Digits, 2 + ((((ulong)LimbCount + 1UL) * LimbBits) / FloorLog2(DigitCountBase)));
+
+        Digits = LimitToStringLength(Digits, n_digits, out ulong NativeDigits);
+        _ = str.EnsureCapacity((int)Digits + 2);
+
+        NativeMethods.mpf_get_str(str, out CLong NativeExponent, strBase, (NativeMethods.size_t)NativeDigits, ref op.Value);
         expptr = UnwrapExponent((long)NativeExponent.Value, BitExponent(op), DigitCountBase);
     }
+
+    /// <summary>
+    /// Limits a count of digits to what a string can hold.
+    /// </summary>
+    /// <param name="digits">The count of digits that the native function can write.</param>
+    /// <param name="requestedDigits">The count of digits requested, or zero for all the significant digits.</param>
+    /// <param name="nativeDigits">The count of digits to request from the native function upon return.</param>
+    /// <returns>The count of digits the buffer must hold.</returns>
+    internal static ulong LimitToStringLength(ulong digits, ulong requestedDigits, out ulong nativeDigits)
+    {
+        // A string cannot hold more characters: the digits are then limited, and the native function is told so, which
+        // only happens for a precision of billions of bits.
+        if (digits > MaxStringDigits)
+        {
+            nativeDigits = MaxStringDigits;
+            return MaxStringDigits;
+        }
+
+        nativeDigits = requestedDigits;
+        return digits;
+    }
+
+    // Leaves room for the sign and the terminating null character in the largest string.
+    private const ulong MaxStringDigits = int.MaxValue - 64;
 
     /// <summary>
     /// Restores an exponent in a base that MPIR computed in a 32-bit C long on Windows, where it wraps for huge numbers.

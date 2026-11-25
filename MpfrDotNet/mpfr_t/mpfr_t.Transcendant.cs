@@ -622,7 +622,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets the hyperbolic tangent.
+    /// Gets the hyperbolic cotangent.
     /// </summary>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Coth()
@@ -956,6 +956,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="operand">The operand.</param>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="operand"/> is disposed.</exception>
+    /// <exception cref="OverflowException">Gamma of this number is beyond the widest exponent range of MPFR.</exception>
     public mpfr_t IncompleteGamma(mpfr_t operand)
     {
         ThrowIfDisposed(this);
@@ -963,7 +964,16 @@ public partial class mpfr_t : IDisposable
 
         mpfr_t Result = CreateResult(this, operand);
 
-        Result.LastTernaryResult = mpfr.gamma_inc(Result, this, operand, Rounding);
+        try
+        {
+            Result.LastTernaryResult = mpfr.gamma_inc(Result, this, operand, Rounding);
+        }
+        catch
+        {
+            // The guards of the function throw for operands that MPFR does not support: nothing is left to the finalizer.
+            Result.Dispose();
+            throw;
+        }
 
         return Result;
     }
@@ -1183,13 +1193,22 @@ public partial class mpfr_t : IDisposable
 
         mpfr_t Result = CreateResult(this);
 
-        Result.LastTernaryResult = mpfr.ai(Result, this, Rounding);
+        try
+        {
+            Result.LastTernaryResult = mpfr.ai(Result, this, Rounding);
+        }
+        catch
+        {
+            // The guards of the function throw for operands that MPFR does not support: nothing is left to the finalizer.
+            Result.Dispose();
+            throw;
+        }
 
         return Result;
     }
 
     /// <summary>
-    /// Gets the log2.
+    /// Gets the constant ln 2, the natural logarithm of 2 (0.6931...), with a precision. This is not a base-2 logarithm.
     /// </summary>
     /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>

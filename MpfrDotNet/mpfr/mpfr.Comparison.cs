@@ -86,6 +86,7 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="OverflowException"><paramref name="op2"/> has 2^25 limbs or more, and the precision of <paramref name="op1"/> is about 2^31 bits or more.</exception>
     public static int cmp_f(mpfr_t op1, mpf_t op2)
     {
         // mpfr_cmp_f converts op2 with mpfr_set_f, which gets a wrong exponent for a number far below the exponent range

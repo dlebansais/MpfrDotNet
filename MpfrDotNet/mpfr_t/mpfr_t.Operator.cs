@@ -143,6 +143,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         mpz_t.ThrowIfDisposed(y);
 
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckIntegerOperand(y);
+
         mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.add_z(z, x, y, x.Rounding);
@@ -161,6 +164,9 @@ public partial class mpfr_t : IDisposable
     {
         mpz_t.ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckIntegerOperand(x);
 
         mpfr_t z = CreateResult(y);
 
@@ -181,6 +187,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         mpq_t.ThrowIfDisposed(y);
 
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckRationalSumOperand(x, x, y);
+
         mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.add_q(z, x, y, x.Rounding);
@@ -199,6 +208,9 @@ public partial class mpfr_t : IDisposable
     {
         mpq_t.ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckRationalSumOperand(y, y, x);
 
         mpfr_t z = CreateResult(y);
 
@@ -341,6 +353,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         mpz_t.ThrowIfDisposed(y);
 
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckIntegerOperand(y);
+
         mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.sub_z(z, x, y, x.Rounding);
@@ -359,6 +374,9 @@ public partial class mpfr_t : IDisposable
     {
         mpz_t.ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckIntegerOperand(x);
 
         mpfr_t z = CreateResult(y);
 
@@ -379,6 +397,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         mpq_t.ThrowIfDisposed(y);
 
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckRationalSumOperand(x, x, y);
+
         mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.sub_q(z, x, y, x.Rounding);
@@ -397,6 +418,9 @@ public partial class mpfr_t : IDisposable
     {
         mpq_t.ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckRationalSumOperand(y, y, x);
 
         mpfr_t z = CreateResult(y);
 
@@ -553,6 +577,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         mpz_t.ThrowIfDisposed(y);
 
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckIntegerOperand(y);
+
         mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.mul_z(z, x, y, x.Rounding);
@@ -571,6 +598,9 @@ public partial class mpfr_t : IDisposable
     {
         mpz_t.ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckIntegerOperand(x);
 
         mpfr_t z = CreateResult(y);
 
@@ -591,6 +621,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         mpq_t.ThrowIfDisposed(y);
 
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckRationalOperand(y);
+
         mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.mul_q(z, x, y, x.Rounding);
@@ -609,6 +642,9 @@ public partial class mpfr_t : IDisposable
     {
         mpq_t.ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckRationalOperand(x);
 
         mpfr_t z = CreateResult(y);
 
@@ -751,6 +787,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         mpz_t.ThrowIfDisposed(y);
 
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckIntegerOperand(y);
+
         mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.div_z(z, x, y, x.Rounding);
@@ -764,10 +803,14 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException">The operands have more bits than the maximum precision of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator /(mpz_t x, mpfr_t y)
     {
         mpz_t.ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        CheckScaledDivision(mpz.sizeinbase(x, 2), 1UL, y);
 
         mpfr_t z = CreateResult(y);
 
@@ -792,6 +835,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         mpq_t.ThrowIfDisposed(y);
 
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckRationalOperand(y);
+
         mpfr_t z = CreateResult(x);
 
         z.LastTernaryResult = mpfr.div_q(z, x, y, x.Rounding);
@@ -805,17 +851,27 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
-    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException">The numerator, or the denominator plus the precision of <paramref name="y"/>, has more bits than the maximum precision of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator /(mpq_t x, mpfr_t y)
     {
         mpq_t.ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        CheckScaledDivision((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref x.Value.Numerator, 2), (ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref x.Value.Denominator, 2), y);
 
         mpfr_t z = CreateResult(y);
 
         z.LastTernaryResult = InWidestExponentRange(z, y.Rounding, () => DivideRational(z, x, y));
 
         return z;
+    }
+
+    private static void CheckScaledDivision(ulong numeratorBits, ulong denominatorBits, mpfr_t y)
+    {
+        // DivideScaled computes the numerator, and the denominator times y, exactly: each must fit in a precision.
+        if (numeratorBits > mpfr.PrecisionMax || denominatorBits + mpfr.get_prec(y) > mpfr.PrecisionMax)
+            throw new OverflowException("The operands have more bits than the maximum precision of MPFR.");
     }
 
     private static int DivideRational(mpfr_t z, mpq_t x, mpfr_t y)

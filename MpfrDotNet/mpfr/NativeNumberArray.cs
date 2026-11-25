@@ -13,21 +13,38 @@ internal sealed class NativeNumberArray : IDisposable
     /// <summary>
     /// Initializes a new instance of the <see cref="NativeNumberArray"/> class.
     /// </summary>
-    /// <param name="numbers">The numbers, which are not <see langword="null"/>.</param>
+    /// <param name="numbers">The numbers.</param>
+    /// <exception cref="OverflowException">The array is too large for the native memory.</exception>
     public NativeNumberArray(mpfr_t[] numbers)
     {
         // The numbers are copied, because a managed object cannot be pinned: the copies share the significands, which
-        // MPFR only reads.
-        int HeaderSize = Marshal.SizeOf<__mpfr_t>();
-        Headers = Marshal.AllocHGlobal(Math.Max(1, numbers.Length) * HeaderSize);
-        Pointer = Marshal.AllocHGlobal(Math.Max(1, numbers.Length) * IntPtr.Size);
+        // MPFR only reads. The sizes are computed in 64 bits, and checked.
+        long HeaderSize = Marshal.SizeOf<__mpfr_t>();
+        long Count = Math.Max(1, numbers.Length);
+        IntPtr NewHeaders = Marshal.AllocHGlobal(new IntPtr(checked(Count * HeaderSize)));
+        IntPtr NewPointer = IntPtr.Zero;
 
-        for (int i = 0; i < numbers.Length; i++)
+        try
         {
-            IntPtr Header = Headers + (i * HeaderSize);
-            Marshal.StructureToPtr(numbers[i].Value, Header, fDeleteOld: false);
-            Marshal.WriteIntPtr(Pointer, i * IntPtr.Size, Header);
+            NewPointer = Marshal.AllocHGlobal(new IntPtr(checked(Count * IntPtr.Size)));
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                IntPtr Header = Offset(NewHeaders, i * HeaderSize);
+                Marshal.StructureToPtr(numbers[i].Value, Header, fDeleteOld: false);
+                Marshal.WriteIntPtr(Offset(NewPointer, (long)i * IntPtr.Size), Header);
+            }
         }
+        catch
+        {
+            // A null number, or a failed allocation, must not leak the memory already allocated.
+            Marshal.FreeHGlobal(NewPointer);
+            Marshal.FreeHGlobal(NewHeaders);
+            throw;
+        }
+
+        Headers = NewHeaders;
+        Pointer = NewPointer;
     }
     #endregion
 
@@ -42,6 +59,15 @@ internal sealed class NativeNumberArray : IDisposable
     /// </summary>
     public IntPtr Headers { get; }
     #endregion
+
+    /// <summary>
+    /// Gets an address at a 64-bit offset from another.
+    /// </summary>
+    /// <param name="address">The address.</param>
+    /// <param name="offset">The offset, in bytes.</param>
+    /// <returns>The new address.</returns>
+    internal static IntPtr Offset(IntPtr address, long offset)
+        => new(checked(address.ToInt64() + offset));
 
     /// <summary>
     /// Frees the native memory.

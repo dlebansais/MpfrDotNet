@@ -577,6 +577,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpq_t? x, double y)
     {
+        ThrowIfDisposed(x);
+
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
     }
 
@@ -588,6 +590,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(double x, mpq_t? y)
     {
+        ThrowIfDisposed(y);
+
         return y is not null && !double.IsNaN(x) && y.CompareTo(x) > 0;
     }
 
@@ -599,6 +603,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpq_t? x, double y)
     {
+        ThrowIfDisposed(x);
+
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
     }
 
@@ -610,6 +616,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(double x, mpq_t? y)
     {
+        ThrowIfDisposed(y);
+
         return y is not null && !double.IsNaN(x) && y.CompareTo(x) >= 0;
     }
 
@@ -621,6 +629,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpq_t? x, double y)
     {
+        ThrowIfDisposed(x);
+
         return x is not null && !double.IsNaN(y) && x.CompareTo(y) > 0;
     }
 
@@ -632,6 +642,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(double x, mpq_t? y)
     {
+        ThrowIfDisposed(y);
+
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
     }
 
@@ -643,6 +655,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpq_t? x, double y)
     {
+        ThrowIfDisposed(x);
+
         return x is not null && !double.IsNaN(y) && x.CompareTo(y) >= 0;
     }
 
@@ -654,6 +668,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(double x, mpq_t? y)
     {
+        ThrowIfDisposed(y);
+
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
     }
 
@@ -665,6 +681,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpq_t? x, double y)
     {
+        ThrowIfDisposed(x);
+
         return x is not null && !double.IsNaN(y) && x.CompareTo(y) == 0;
     }
 
@@ -676,6 +694,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(double x, mpq_t? y)
     {
+        ThrowIfDisposed(y);
+
         return y is not null && !double.IsNaN(x) && y.CompareTo(x) == 0;
     }
 
@@ -687,6 +707,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpq_t? x, double y)
     {
+        ThrowIfDisposed(x);
+
         return x is null || double.IsNaN(y) || x.CompareTo(y) != 0;
     }
 
@@ -698,6 +720,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(double x, mpq_t? y)
     {
+        ThrowIfDisposed(y);
+
         return y is null || double.IsNaN(x) || y.CompareTo(x) != 0;
     }
 

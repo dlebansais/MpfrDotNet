@@ -123,6 +123,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts from a <see cref="float"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN or an infinity.</exception>
     public static implicit operator mpz_t(float value)
     {
         return new mpz_t((double)value);
@@ -132,6 +133,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts from a <see cref="double"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException">The value is NaN or an infinity.</exception>
     public static implicit operator mpz_t(double value)
     {
         return new mpz_t(value);

@@ -39,8 +39,9 @@ internal static partial class NativeMethods
     public delegate int __mpfr_sum(ref __mpfr_t rop, IntPtr tab, CULong n, __mpfr_rnd_t rnd);
     public static __mpfr_sum mpfr_sum => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_sum>(GetMpfrPointer(nameof(mpfr_sum)));
 
+    // The count is an mpfr_ui, which is 64-bit on both platforms, while mpfr_sum takes an unsigned long.
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int __mpfr_dot(ref __mpfr_t rop, IntPtr a, IntPtr b, CULong n, __mpfr_rnd_t rnd);
+    public delegate int __mpfr_dot(ref __mpfr_t rop, IntPtr a, IntPtr b, ulong n, __mpfr_rnd_t rnd);
     public static __mpfr_dot mpfr_dot => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_dot>(GetMpfrPointer(nameof(mpfr_dot)));
     #endregion
 

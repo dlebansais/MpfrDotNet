@@ -379,7 +379,8 @@ internal class WrapperChecks
     [TestCase(long.MinValue, -1000L, true)]
     [TestCase((long.MinValue / 64L) - 1L, long.MinValue, true)]
     [TestCase(long.MinValue / 64L, long.MinValue, false)]
-    [TestCase(-16L, -1023L, true)]
+    [TestCase(-16L, -1023L, false)]
+    [TestCase(-16L, -1022L, true)]
     [TestCase(-15L, -1023L, false)]
     public void TestFarBelowExponentRange(long limbExponent, long minExponent, bool expected)
     {

@@ -44,6 +44,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public mpz_t Quotient(mpz_t y, Rounding rounding = Rounding.TowardZero)
     {
         ThrowIfDisposed(this);
@@ -79,6 +80,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public mpz_t Remainder(mpz_t y, Rounding rounding = Rounding.TowardZero)
     {
         ThrowIfDisposed(this);
@@ -117,6 +119,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public static void Divide(mpz_t x, mpz_t y, out mpz_t quotient, out mpz_t remainder, Rounding rounding = Rounding.TowardZero)
     {
         ThrowIfDisposed(x);
@@ -151,6 +154,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public mpz_t Quotient(ulong y, Rounding rounding = Rounding.TowardZero)
     {
         ThrowIfDisposed(this);
@@ -185,6 +189,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public mpz_t Remainder(ulong y, Rounding rounding = Rounding.TowardZero)
     {
         ThrowIfDisposed(this);
@@ -222,6 +227,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public static void Divide(mpz_t x, ulong y, out mpz_t quotient, out mpz_t remainder, Rounding rounding = Rounding.TowardZero)
     {
         ThrowIfDisposed(x);
@@ -255,6 +261,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="rounding">The rounding.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public ulong AbsRemainder(ulong y, Rounding rounding = Rounding.TowardZero)
     {
         ThrowIfDisposed(this);
@@ -342,6 +349,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The divider.</param>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public mpz_t DivExact(mpz_t y)
     {
         ThrowIfDisposed(this);
@@ -359,6 +367,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The divider.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="DivideByZeroException">The divisor is zero.</exception>
     public mpz_t DivExact(ulong y)
     {
         ThrowIfDisposed(this);
@@ -514,6 +523,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="n">The root number.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="n"/> is zero, or this number is negative and <paramref name="n"/> is even.</exception>
     public bool IsRootExact(ulong n)
     {
         ThrowIfDisposed(this);
@@ -528,6 +538,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="n">The root.</param>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="n"/> is zero, or this number is negative and <paramref name="n"/> is even.</exception>
     public mpz_t NthRoot(ulong n)
     {
         ThrowIfDisposed(this);
@@ -561,6 +572,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Gets the square root.
     /// </summary>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The number is negative.</exception>
     public mpz_t Sqrt()
     {
         ThrowIfDisposed(this);
@@ -579,6 +591,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="root">The root.</param>
     /// <param name="remainder">The remainder.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The number is negative.</exception>
     public static void SqrtRemainder(mpz_t x, out mpz_t root, out mpz_t remainder)
     {
         ThrowIfDisposed(x);

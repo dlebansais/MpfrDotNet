@@ -764,7 +764,7 @@ public static partial class mpfr
             throw new ArgumentException("The two arrays must have the same length.", nameof(b));
 
         __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
-        CULong Count = new((uint)tab.Length);
+        ulong Count = (ulong)tab.Length;
 
         using NativeNumberArray First = new(tab);
         using NativeNumberArray Second = new(b);

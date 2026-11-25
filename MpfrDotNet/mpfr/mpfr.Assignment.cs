@@ -128,6 +128,7 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException"><paramref name="op"/> has 2^25 limbs or more, and the precision of <paramref name="rop"/> is about 2^31 bits or more.</exception>
     public static int set_f(mpfr_t rop, mpf_t op, mpfr_rnd_t rnd)
     {
         __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
@@ -159,12 +160,18 @@ public static partial class mpfr
         // mpfr_set_f computes the precision of op in an mpfr_prec_t, which is 32-bit on Windows, and mpfr_cmp_f computes
         // it in an int on every platform: both wrap for 2^25 limbs or more.
         ulong LimbCount = (ulong)Math.Abs(op.Value.Size);
-        if ((LimbCount + 1UL) * LimbBits <= Math.Min(PrecisionMax, int.MaxValue))
+        ulong Limit = Math.Min(PrecisionMax, int.MaxValue);
+        if ((LimbCount + 1UL) * LimbBits <= Limit)
             return null;
 
         // The top limbs keep enough bits to round to the precision, and the lowest kept bit is set if a dropped limb
-        // is not zero. This sticky bit is below the precision, so the result rounds and compares like op.
-        mpf_t Reduced = new(precision + (3UL * LimbBits));
+        // is not zero. This sticky bit is below the precision, so the result rounds and compares like op. The copy keeps
+        // up to the limbs of its precision, plus two, which must also fit.
+        ulong ReducedPrecision = precision + (3UL * LimbBits);
+        if ((((ReducedPrecision + LimbBits - 1UL) / LimbBits) + 3UL) * LimbBits > Limit)
+            throw new OverflowException("The float operand has too many limbs for the precision of the number.");
+
+        mpf_t Reduced = new(ReducedPrecision);
         mpf.set(Reduced, op);
 
         int KeptCount = Math.Abs(Reduced.Value.Size);
@@ -182,7 +189,7 @@ public static partial class mpfr
     private static bool HasNonZeroLimb(IntPtr limbs, int count)
     {
         for (int i = 0; i < count; i++)
-            if (Marshal.ReadInt64(limbs, i * sizeof(long)) != 0)
+            if (Marshal.ReadInt64(NativeNumberArray.Offset(limbs, (long)i * sizeof(long))) != 0)
                 return true;
 
         return false;
@@ -201,11 +208,13 @@ public static partial class mpfr
     /// </summary>
     /// <param name="limbExponent">The exponent of the number, in limbs: its magnitude is below 2^(64 * <paramref name="limbExponent"/>).</param>
     /// <param name="minExponent">The smallest exponent of the range, in bits.</param>
-    /// <returns><see langword="true"/> if the number underflows in the range; otherwise, <see langword="false"/>.</returns>
+    /// <returns><see langword="true"/> if the number is below half the smallest positive number of the range; otherwise, <see langword="false"/>.</returns>
     internal static bool IsFarBelowExponentRange(long limbExponent, long minExponent)
     {
-        // The product in bits overflows below long.MinValue / 64, which is far below any range.
-        return limbExponent < long.MinValue / (long)LimbBits || limbExponent * (long)LimbBits < minExponent;
+        // The product in bits overflows below long.MinValue / 64, which is far below any range. A magnitude below
+        // 2^(emin - 1), the smallest positive number, still rounds up to it in some modes: the number must be below
+        // 2^(emin - 2), half of it, to underflow like +1 or -1 scaled by the smallest native power of two.
+        return limbExponent < long.MinValue / (long)LimbBits || (limbExponent * (long)LimbBits) + 1 < minExponent;
     }
 
     /// <summary>

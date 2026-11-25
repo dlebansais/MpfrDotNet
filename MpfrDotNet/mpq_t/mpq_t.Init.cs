@@ -255,9 +255,13 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Creates an array of new instances of the <see cref="mpq_t"/> class.
     /// </summary>
     /// <param name="length">The array length.</param>
-    /// <exception cref="ArgumentException"><paramref name="length"/> is 32 or more.</exception>
+    /// <exception cref="ArgumentException"><paramref name="length"/> is negative, or 32 or more.</exception>
     public static mpq_t[] CreateArray(int length)
     {
+        // A negative length would throw OverflowException when the array is created.
+        if (length < 0)
+            throw new ArgumentException("The length must not be negative.", nameof(length));
+
         if (length >= MaxArrayLength)
             throw new ArgumentException($"The length must be lesser than {MaxArrayLength}.", nameof(length));
 
@@ -273,7 +277,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="array">The array.</param>
     /// <exception cref="ArgumentNullException"><paramref name="array"/> is <see langword="null"/>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="array"/> has 32 elements or more.</exception>
+    /// <exception cref="ArgumentException"><paramref name="array"/> has 32 elements or more, or contains <see langword="null"/>.</exception>
     public static void ClearArray(mpq_t[] array)
     {
         if (array is null)
@@ -281,6 +285,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
 
         if (array.Length >= MaxArrayLength)
             throw new ArgumentException(nameof(array.Length));
+
+        // The elements are checked first, so that no element is disposed when the call throws.
+        foreach (mpq_t Item in array)
+            if (Item is null)
+                throw new ArgumentException("The array must not contain null numbers.", nameof(array));
 
         // Dispose does nothing for an element that is already disposed or listed twice.
         foreach (mpq_t Item in array)

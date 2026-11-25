@@ -58,10 +58,14 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="length">The array length.</param>
     /// <param name="precision">The precision, or <see cref="ulong.MaxValue"/> for <see cref="DefaultPrecision"/>.</param>
-    /// <exception cref="ArgumentException"><paramref name="length"/> is 32 or more.</exception>
+    /// <exception cref="ArgumentException"><paramref name="length"/> is negative, or 32 or more.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is not a precision supported by MPFR.</exception>
     public static mpfr_t[] CreateArray(int length, ulong precision = ulong.MaxValue)
     {
+        // A negative length would throw OverflowException when the array is created.
+        if (length < 0)
+            throw new ArgumentException("The length must not be negative.", nameof(length));
+
         if (length >= MaxArrayLength)
             throw new ArgumentException($"The length must be lesser than {MaxArrayLength}.", nameof(length));
 
@@ -400,7 +404,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="array">The array.</param>
     /// <exception cref="ArgumentNullException"><paramref name="array"/> is <see langword="null"/>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="array"/> has 32 elements or more.</exception>
+    /// <exception cref="ArgumentException"><paramref name="array"/> has 32 elements or more, or contains <see langword="null"/>.</exception>
     public static void ClearArray(mpfr_t[] array)
     {
         if (array is null)
@@ -408,6 +412,11 @@ public partial class mpfr_t : IDisposable
 
         if (array.Length >= MaxArrayLength)
             throw new ArgumentException(nameof(array.Length));
+
+        // The elements are checked first, so that no element is disposed when the call throws.
+        foreach (mpfr_t Item in array)
+            if (Item is null)
+                throw new ArgumentException("The array must not contain null numbers.", nameof(array));
 
         // Dispose does nothing for an element that is already disposed or listed twice.
         foreach (mpfr_t Item in array)
