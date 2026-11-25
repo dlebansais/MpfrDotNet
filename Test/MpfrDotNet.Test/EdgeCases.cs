@@ -128,6 +128,10 @@ internal class EdgeCases
         using mpz_t One = new(1);
         using mpz_t Two = new(2);
         using mpz_t Byte = new(255);
+        using mpz_t NegativeTen = mpz_t.NegativeTen;
+        using mpz_t NegativeThree = mpz_t.NegativeThree;
+        using mpz_t NegativeTwo = mpz_t.NegativeTwo;
+        using mpz_t NegativeOne = mpz_t.NegativeOne;
 
         Bits.ChangeBit(3, isSet: true);
 
@@ -135,10 +139,10 @@ internal class EdgeCases
         Assert.That(Bits.ToString(), Is.EqualTo("8"));
         Assert.That(One.GetHashCode(), Is.Not.EqualTo(Two.GetHashCode()));
         Assert.That(Byte.ToByteArray(), Has.Length.EqualTo(1));
-        Assert.That(mpz_t.NegativeTen.ToString(), Is.EqualTo("-10"));
-        Assert.That(mpz_t.NegativeThree.ToString(), Is.EqualTo("-3"));
-        Assert.That(mpz_t.NegativeTwo.ToString(), Is.EqualTo("-2"));
-        Assert.That(mpz_t.NegativeOne.ToString(), Is.EqualTo("-1"));
+        Assert.That(NegativeTen.ToString(), Is.EqualTo("-10"));
+        Assert.That(NegativeThree.ToString(), Is.EqualTo("-3"));
+        Assert.That(NegativeTwo.ToString(), Is.EqualTo("-2"));
+        Assert.That(NegativeOne.ToString(), Is.EqualTo("-1"));
     }
 
     [Test]

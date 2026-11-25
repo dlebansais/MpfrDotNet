@@ -338,9 +338,10 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets or sets the rounding mode.
+    /// Gets or sets the rounding mode of the operations that compute a result from this number.
     /// </summary>
-    public mpfr_rnd_t Rounding { get; set; } = DefaultRounding;
+    /// <remarks>A new instance takes the value of <see cref="DefaultRoundingMode"/> on the thread that creates it.</remarks>
+    public mpfr_rnd_t Rounding { get; set; } = DefaultRoundingMode;
 
 #pragma warning disable SA1401 // Fields should be private
 #pragma warning disable SA1600 // Elements should be documented

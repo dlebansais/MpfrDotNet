@@ -9,8 +9,9 @@ using static Interop.Mpfr.NativeMethods;
 public partial class mpfr_t : IDisposable
 {
     /// <summary>
-    /// Gets or sets the default rounding mode.
+    /// Gets or sets the default rounding mode, which new instances take as their <see cref="Rounding"/>.
     /// </summary>
+    /// <remarks>MPFR keeps this setting per thread: a value set on one thread does not apply to the other threads, including the thread-pool threads that run the continuations of an await. Optional rounding parameters default to <see cref="DefaultRounding"/>, whatever this setting.</remarks>
     public static mpfr_rnd_t DefaultRoundingMode
     {
         get { return mpfr.get_default_rounding_mode(); }
@@ -262,7 +263,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Rounds to an integer.
+    /// Rounds to a new precision, keeping the value.
     /// </summary>
     /// <param name="precision">The precision.</param>
     /// <param name="rounding">The rounding mode.</param>

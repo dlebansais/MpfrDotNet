@@ -22,14 +22,14 @@ internal static class NativeLibraryLoader
     /// <param name="windowsName">The name of the library on Windows.</param>
     /// <param name="linuxNames">The names of the library on Linux, from the most specific.</param>
     /// <returns>The handle of the loaded library.</returns>
-    /// <exception cref="PlatformNotSupportedException">The process does not run on Windows, and the target framework of this assembly is older than .NET 6.</exception>
+    /// <exception cref="PlatformNotSupportedException">The process does not run on Windows, and this assembly is not the net10.0 build.</exception>
     /// <exception cref="DllNotFoundException">The library cannot be found or loaded.</exception>
     public static IntPtr Load(string windowsName, params string[] linuxNames)
     {
 #if !NET6_0_OR_GREATER
         // Before .NET 6, a C long can only be declared with the size it has on Windows.
         if (!IsWindows)
-            throw new PlatformNotSupportedException("Platforms other than Windows require .NET 6 or later.");
+            throw new PlatformNotSupportedException("Platforms other than Windows require the net10.0 build of this library, which runs on .NET 10 or later.");
 #endif
 
         string DirectoryName = GetAssemblyDirectory(Assembly.GetExecutingAssembly().Location);

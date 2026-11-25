@@ -25,11 +25,12 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the precision.
     /// </summary>
+    /// <remarks>Setting the precision keeps the value, rounded to the new precision with <see cref="Rounding"/>, and updates <see cref="LastTernaryResult"/>.</remarks>
     /// <exception cref="ArgumentOutOfRangeException">The value set is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public ulong Precision
     {
         get { return mpfr.get_prec(this); }
-        set { mpfr.set_prec(this, value); }
+        set { LastTernaryResult = mpfr.prec_round(this, value, Rounding); }
     }
 
     /// <summary>
@@ -53,6 +54,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the default precision.
     /// </summary>
+    /// <remarks>MPFR keeps this setting per thread: a value set on one thread does not apply to the other threads, including the thread-pool threads that run the continuations of an await.</remarks>
     /// <exception cref="ArgumentOutOfRangeException">The value set is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
     public static ulong DefaultPrecision
     {

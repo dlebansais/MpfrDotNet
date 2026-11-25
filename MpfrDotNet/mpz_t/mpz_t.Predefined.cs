@@ -11,47 +11,56 @@ using static Interop.Mpir.NativeMethods;
 public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConvertible, IComparable, IComparable<mpz_t>
 {
     /// <summary>
-    /// Gets the value -10.
+    /// Gets a new instance with the value -10.
     /// </summary>
-    public static mpz_t NegativeTen { get; } = new mpz_t(-10);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t NegativeTen => new(-10);
 
     /// <summary>
-    /// Gets the value -3.
+    /// Gets a new instance with the value -3.
     /// </summary>
-    public static mpz_t NegativeThree { get; } = new mpz_t(-3);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t NegativeThree => new(-3);
 
     /// <summary>
-    /// Gets the value -2.
+    /// Gets a new instance with the value -2.
     /// </summary>
-    public static mpz_t NegativeTwo { get; } = new mpz_t(-2);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t NegativeTwo => new(-2);
 
     /// <summary>
-    /// Gets the value -1.
+    /// Gets a new instance with the value -1.
     /// </summary>
-    public static mpz_t NegativeOne { get; } = new mpz_t(-1);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t NegativeOne => new(-1);
 
     /// <summary>
-    /// Gets the value 0.
+    /// Gets a new instance with the value 0.
     /// </summary>
-    public static mpz_t Zero { get; } = new mpz_t(0);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t Zero => new(0);
 
     /// <summary>
-    /// Gets the value 1.
+    /// Gets a new instance with the value 1.
     /// </summary>
-    public static mpz_t One { get; } = new mpz_t(1);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t One => new(1);
 
     /// <summary>
-    /// Gets the value 2.
+    /// Gets a new instance with the value 2.
     /// </summary>
-    public static mpz_t Two { get; } = new mpz_t(2);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t Two => new(2);
 
     /// <summary>
-    /// Gets the value 3.
+    /// Gets a new instance with the value 3.
     /// </summary>
-    public static mpz_t Three { get; } = new mpz_t(3);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t Three => new(3);
 
     /// <summary>
-    /// Gets the value 10.
+    /// Gets a new instance with the value 10.
     /// </summary>
-    public static mpz_t Ten { get; } = new mpz_t(10);
+    /// <remarks>Each call returns a new instance, which the caller owns and should dispose.</remarks>
+    public static mpz_t Ten => new(10);
 }

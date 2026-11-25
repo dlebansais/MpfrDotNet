@@ -418,7 +418,7 @@ internal class Overloads
             NonWindowsLoader Loader = (NonWindowsLoader)Domain.CreateInstanceAndUnwrap(typeof(NonWindowsLoader).Assembly.FullName, typeof(NonWindowsLoader).FullName);
             string Message = Loader.LoadAsNonWindows();
 
-            Assert.That(Message, Is.EqualTo("Platforms other than Windows require .NET 6 or later."));
+            Assert.That(Message, Is.EqualTo("Platforms other than Windows require the net10.0 build of this library, which runs on .NET 10 or later."));
         }
         finally
         {

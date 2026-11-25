@@ -11,10 +11,16 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the minimum value for the exponent.
     /// </summary>
+    /// <remarks>MPFR keeps this setting per thread: a value set on one thread does not apply to the other threads, including the thread-pool threads that run the continuations of an await.</remarks>
+    /// <exception cref="ArgumentOutOfRangeException">The value set is lesser than <see cref="MinMinExponent"/> or greater than <see cref="MaxMinExponent"/>.</exception>
     public static int MinExponent
     {
         get { return mpfr.get_emin(); }
-        set { mpfr.set_emin(value); }
+        set
+        {
+            if (mpfr.set_emin(value) != 0)
+                throw new ArgumentOutOfRangeException(nameof(value), value, $"The exponent must be between {MinMinExponent} and {MaxMinExponent}.");
+        }
     }
 
     /// <summary>
@@ -36,10 +42,16 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the maximum value for the exponent.
     /// </summary>
+    /// <remarks>MPFR keeps this setting per thread: a value set on one thread does not apply to the other threads, including the thread-pool threads that run the continuations of an await.</remarks>
+    /// <exception cref="ArgumentOutOfRangeException">The value set is lesser than <see cref="MinMaxExponent"/> or greater than <see cref="MaxMaxExponent"/>.</exception>
     public static int MaxExponent
     {
         get { return mpfr.get_emax(); }
-        set { mpfr.set_emax(value); }
+        set
+        {
+            if (mpfr.set_emax(value) != 0)
+                throw new ArgumentOutOfRangeException(nameof(value), value, $"The exponent must be between {MinMaxExponent} and {MaxMaxExponent}.");
+        }
     }
 
     /// <summary>
@@ -79,6 +91,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the underflow flag.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     public static bool Underflow
     {
         get { return mpfr.underflow_p(); }
@@ -94,6 +107,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the overflow flag.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     public static bool Overflow
     {
         get { return mpfr.overflow_p(); }
@@ -109,6 +123,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the divide-by-zero flag.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     public static bool DivideByZero
     {
         get { return mpfr.divby0_p(); }
@@ -124,6 +139,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the nan flag.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     public static bool NaNFlag
     {
         get { return mpfr.nanflag_p(); }
@@ -139,6 +155,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the inexact flag.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     public static bool Inexact
     {
         get { return mpfr.inexflag_p(); }
@@ -154,6 +171,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the erange flag.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     public static bool ERange
     {
         get { return mpfr.erangeflag_p(); }
@@ -169,16 +187,18 @@ public partial class mpfr_t : IDisposable
 #pragma warning restore SA1623 // Property summary documentation should match accessors
 
     /// <summary>
-    /// Clears all global flags.
+    /// Clears all the flags.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     public static void ClearAllFlags()
     {
         mpfr.clear_flags();
     }
 
     /// <summary>
-    /// Clears some global flags.
+    /// Clears some flags.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     /// <param name="mask">The flag mask.</param>
     public static void ClearFlags(uint mask)
     {
@@ -186,8 +206,9 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Sets some global flags.
+    /// Sets some flags.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     /// <param name="mask">The flag mask.</param>
     public static void SetFlags(uint mask)
     {
@@ -195,8 +216,9 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Sets some global flags if present in a mask.
+    /// Sets the flags of a mask to the corresponding flags of a value.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     /// <param name="mask">The flag mask.</param>
     /// <param name="value">The flags value.</param>
     public static void SetFlags(uint mask, uint value)
@@ -205,8 +227,9 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Sets some global flags.
+    /// Gets the flags of a mask that are set.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     /// <param name="mask">The flag mask.</param>
     public static uint TestFlags(uint mask)
     {
@@ -214,8 +237,9 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets all global flags.
+    /// Gets all the flags.
     /// </summary>
+    /// <remarks>MPFR keeps the flags per thread: each thread sees only the flags raised by its own operations.</remarks>
     public static uint GetAllFlags()
     {
         return mpfr.flags_save();

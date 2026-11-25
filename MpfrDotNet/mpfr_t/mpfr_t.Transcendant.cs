@@ -62,7 +62,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets the log1p.
+    /// Gets log(1 + x).
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Log1p(mpfr_rnd_t rounding = DefaultRounding)
@@ -75,7 +75,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets the log2.
+    /// Gets log2(1 + x).
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Log2p1(mpfr_rnd_t rounding = DefaultRounding)
@@ -88,7 +88,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets the log10.
+    /// Gets log10(1 + x).
     /// </summary>
     /// <param name="rounding">The rounding mode.</param>
     public mpfr_t Log10p1(mpfr_rnd_t rounding = DefaultRounding)
@@ -139,7 +139,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets the expm1.
+    /// Gets exp(x) - 1.
     /// </summary>
     public mpfr_t Expm1()
     {
@@ -151,7 +151,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets the exp2.
+    /// Gets 2^x - 1.
     /// </summary>
     public mpfr_t Exp2m1()
     {
@@ -163,7 +163,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets the exp10.
+    /// Gets 10^x - 1.
     /// </summary>
     public mpfr_t Exp10m1()
     {
@@ -563,7 +563,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets tan(2*pi*x/u).acos(x)*u/(2*pi).
+    /// Gets tan(2*pi*x/u).
     /// </summary>
     /// <param name="u">The operand.</param>
     public mpfr_t Tan(ulong u)
@@ -615,7 +615,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets atan(|y/x|)*u/(2*pi) for x &gt; 0, 1-atan(|y/x|)*u/(2*pi) for x &lt; 0.
+    /// Gets atan2(y, x)*u/(2*pi).
     /// </summary>
     /// <param name="y">The numerator, the y coordinate.</param>
     /// <param name="x">The denominator, the x coordinate.</param>
@@ -702,7 +702,7 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Gets atan(|y/x|)/pi for x &gt; 0, 1-atan(|y/x|)/pi for x &lt; 0.
+    /// Gets atan2(y, x)/pi.
     /// </summary>
     /// <param name="y">The numerator, the y coordinate.</param>
     /// <param name="x">The denominator, the x coordinate.</param>
