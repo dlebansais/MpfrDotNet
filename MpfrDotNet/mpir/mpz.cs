@@ -1232,8 +1232,15 @@ public static class mpz
         if (isMpir)
             return NativeMethods.mpz_probable_prime_p(ref n.Value, ref state.Value, prob, (NativeMethods.mpir_ui)div) != 0;
         else
-            return NativeMethods.mpz_probab_prime_p(ref n.Value, Math.Max(1, (prob + 1) / 2)) != 0;
+            return NativeMethods.mpz_probab_prime_p(ref n.Value, Math.Max(1, ProbabilityToRounds(prob))) != 0;
     }
+
+    /// <summary>
+    /// Gets the count of Miller-Rabin rounds that MPIR runs for a probability: one per 2 units, rounded up.
+    /// </summary>
+    /// <param name="prob">The probability exponent.</param>
+    /// <returns>The count of rounds, computed without overflow for <see cref="int.MaxValue"/>.</returns>
+    internal static int ProbabilityToRounds(int prob) => (prob / 2) + (prob % 2);
 
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
@@ -1821,7 +1828,7 @@ public static class mpz
         string Content = reader.ReadToEnd();
 
         // rop is already initialized: mpz_init_set_str would leak its memory. As in MPIR, 0 means that the input is invalid.
-        int Result = NativeMethods.mpz_set_str(ref rop.Value, Content, (uint)strBase);
+        int Result = MpirArgument.IsParsableText(Content) ? NativeMethods.mpz_set_str(ref rop.Value, Content, (uint)strBase) : -1;
 
         return Result == 0 ? Content.Length : 0;
     }
@@ -1838,35 +1845,92 @@ public static class mpz
     }
 
     /// <summary>
+    /// Writes an integer in the raw format of mpz_out_raw: its size in bytes, as a 4-byte big-endian signed number that
+    /// is negative for a negative integer, then its absolute value in big-endian order.
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="writer">The output stream.</param>
     /// <param name="op">The operand.</param>
+    /// <returns>The count of bytes written.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <see langword="null"/>.</exception>
     public static long out_raw(BinaryWriter writer, mpz_t op)
     {
-        ulong SizeInBits = (ulong)NativeMethods.mpz_sizeinbase(ref op.Value, 2);
-        byte[] Content = new byte[(SizeInBits + 7) / 8];
+        if (writer is null)
+            throw new ArgumentNullException(nameof(writer));
 
-        NativeMethods.mpz_export(Content, out NativeMethods.size_t countp, -1, (NativeMethods.size_t)sizeof(byte), -1, (NativeMethods.size_t)0UL, ref op.Value);
+        int Sign = sgn(op);
+        byte[] Magnitude = Sign == 0 ? Array.Empty<byte>() : new byte[((ulong)NativeMethods.mpz_sizeinbase(ref op.Value, 2) + 7) / 8];
 
-        writer.Write(Content);
+        if (Magnitude.Length > 0)
+            NativeMethods.mpz_export(Magnitude, out _, 1, (NativeMethods.size_t)sizeof(byte), 1, (NativeMethods.size_t)0UL, ref op.Value);
 
-        return Content.Length;
+        int Size = Sign < 0 ? -Magnitude.Length : Magnitude.Length;
+        byte[] Header = new byte[] { (byte)(Size >> 24), (byte)(Size >> 16), (byte)(Size >> 8), (byte)Size };
+
+        writer.Write(Header);
+        writer.Write(Magnitude);
+
+        return Header.Length + Magnitude.Length;
     }
 
     /// <summary>
+    /// Reads an integer in the raw format of mpz_out_raw, from the current position of the stream.
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="reader">The input stream.</param>
+    /// <returns>The count of bytes read, or 0 if the stream ends before the integer does.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null"/>.</exception>
     public static long inp_raw(mpz_t rop, BinaryReader reader)
     {
-        int ContentLength = (int)reader.BaseStream.Length;
-        byte[] Content = reader.ReadBytes(ContentLength);
+        if (reader is null)
+            throw new ArgumentNullException(nameof(reader));
 
-        NativeMethods.mpz_import(ref rop.Value, (NativeMethods.size_t)(ulong)Content.Length, -1, (NativeMethods.size_t)sizeof(byte), -1, (NativeMethods.size_t)0UL, Content);
+        const int HeaderLength = 4;
 
-        return Content.Length;
+        byte[] Header = reader.ReadBytes(HeaderLength);
+        if (Header.Length < HeaderLength)
+            return 0;
+
+        int Size = (Header[0] << 24) | (Header[1] << 16) | (Header[2] << 8) | Header[3];
+        if (Size == int.MinValue)
+            return 0;
+
+        int ByteCount = Math.Abs(Size);
+
+        if (!TryReadBytes(reader, ByteCount, out byte[] Magnitude))
+            return 0;
+
+        NativeMethods.mpz_import(ref rop.Value, (NativeMethods.size_t)(ulong)Magnitude.Length, 1, (NativeMethods.size_t)sizeof(byte), 1, (NativeMethods.size_t)0UL, Magnitude);
+
+        if (Size < 0)
+            neg(rop, rop);
+
+        return HeaderLength + ByteCount;
+    }
+
+    private static bool TryReadBytes(BinaryReader reader, int count, out byte[] bytes)
+    {
+        // The size comes from the stream: reading in chunks avoids allocating a large buffer for a stream that ends early.
+        const int ChunkLength = 0x10000;
+
+        using MemoryStream Buffer = new();
+
+        while (Buffer.Length < count)
+        {
+            int Remaining = count - (int)Buffer.Length;
+            byte[] Chunk = reader.ReadBytes(Math.Min(Remaining, ChunkLength));
+            Buffer.Write(Chunk, 0, Chunk.Length);
+
+            if (Chunk.Length == 0)
+            {
+                bytes = Array.Empty<byte>();
+                return false;
+            }
+        }
+
+        bytes = Buffer.ToArray();
+        return true;
     }
     #endregion
 

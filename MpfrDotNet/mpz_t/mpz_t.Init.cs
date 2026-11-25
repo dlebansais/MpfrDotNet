@@ -98,7 +98,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
         if (text is null)
             throw new ArgumentNullException(nameof(text));
 
-        bool Success = mpz.init_set_str(this, text, strBase);
+        bool Success = MpirArgument.IsParsableText(text) && mpz.init_set_str(this, text, strBase);
         if (!Success)
         {
             // MPIR initializes the number even when the text is invalid.

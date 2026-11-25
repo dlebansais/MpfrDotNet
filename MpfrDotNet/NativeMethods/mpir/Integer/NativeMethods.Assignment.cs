@@ -38,7 +38,7 @@ internal static partial class NativeMethods
     public delegate void __mpz_set_f(ref __mpz_t rop, ref __mpf_t op);
     public static __mpz_set_f mpz_set_f => field ??= Marshal.GetDelegateForFunctionPointer<__mpz_set_f>(GetMpirPointer(nameof(mpz_set_f)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpz_set_str(ref __mpz_t rop, string str, uint strbase);
     public static __mpz_set_str mpz_set_str => field ??= Marshal.GetDelegateForFunctionPointer<__mpz_set_str>(GetMpirPointer(nameof(mpz_set_str)));
 

@@ -376,8 +376,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="c">The c.</param>
     /// <param name="d">The d.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="d"/> is negative.</exception>
     public bool IsCongruentPowerOfTwo(mpz_t c, long d)
     {
+        if (d < 0)
+            throw new ArgumentOutOfRangeException(nameof(d), d, "The exponent cannot be negative.");
+
         return mpz.congruent_2exp_p(this, c, (ulong)d);
     }
 

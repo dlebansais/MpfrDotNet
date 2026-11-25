@@ -86,6 +86,25 @@ internal static class MpirArgument
     }
 
     /// <summary>
+    /// Checks that a text can be passed to the native parsing functions, which accept only ASCII characters.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <returns><see langword="true"/> if <paramref name="text"/> has no NUL and no character outside ASCII; otherwise, <see langword="false"/>.</returns>
+    /// <remarks>
+    /// The native functions stop at the first NUL, so the rest of the text would be ignored. On Windows, the ANSI
+    /// conversion also maps some characters to ASCII digits (for example full-width digits), and on Linux the UTF-8
+    /// conversion does not, so without this check the same text would give different numbers.
+    /// </remarks>
+    public static bool IsParsableText(string text)
+    {
+        foreach (char c in text)
+            if (c is '\0' or > '\x7F')
+                return false;
+
+        return true;
+    }
+
+    /// <summary>
     /// Checks that a number is not negative.
     /// </summary>
     /// <param name="op">The number.</param>

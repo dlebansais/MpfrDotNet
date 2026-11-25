@@ -67,19 +67,19 @@ internal static partial class NativeMethods
     public delegate int __mpfr_set_z_2exp(ref __mpfr_t rop, ref __mpz_t op, CLong e, __mpfr_rnd_t rnd);
     public static __mpfr_set_z_2exp mpfr_set_z_2exp => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_set_z_2exp>(GetMpfrPointer(nameof(mpfr_set_z_2exp)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpfr_set_str(ref __mpfr_t rop, string str, uint strbase, __mpfr_rnd_t rnd);
     public static __mpfr_set_str mpfr_set_str => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_set_str>(GetMpfrPointer(nameof(mpfr_set_str)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpfr_set_nan(ref __mpfr_t x);
     public static __mpfr_set_nan mpfr_set_nan => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_set_nan>(GetMpfrPointer(nameof(mpfr_set_nan)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpfr_set_inf(ref __mpfr_t x, int sign);
     public static __mpfr_set_inf mpfr_set_inf => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_set_inf>(GetMpfrPointer(nameof(mpfr_set_inf)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpfr_set_zero(ref __mpfr_t x, int sign);
     public static __mpfr_set_zero mpfr_set_zero => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_set_zero>(GetMpfrPointer(nameof(mpfr_set_zero)));
 

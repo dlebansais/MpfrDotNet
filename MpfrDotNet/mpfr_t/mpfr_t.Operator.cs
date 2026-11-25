@@ -1,7 +1,9 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Runtime.InteropServices;
 using MpirDotNet;
+using static Interop.Mpfr.NativeMethods;
 
 /// <summary>
 /// Represents an arbitrary precision floating-point number.
@@ -320,8 +322,8 @@ public partial class mpfr_t : IDisposable
         _ = mpfr.neg(z, z, y.Rounding);
 
         // An exact zero gets the sign that MPFR gives to x - y: +0, or -0 when rounding toward -infinity,
-        // except that 0 - (-0) is +0.
-        if (z.IsZero)
+        // except that 0 - (-0) is +0. A zero from an underflow is not exact and already has the sign of x - y.
+        if (z.IsZero && z.LastTernaryResult == 0)
         {
             bool IsNegativeZeroOperand = y.IsZero && mpfr.signbit(y) != 0;
             mpfr.set_zero(z, y.Rounding == mpfr_rnd_t.MPFR_RNDD && !IsNegativeZeroOperand ? -1 : +1);
@@ -609,9 +611,12 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = CreateResult(y);
 
-        // x is converted exactly, so that the result is rounded once.
-        using mpfr_t ExactX = CreateExact(x);
-        z.LastTernaryResult = mpfr.div(z, ExactX, y, y.Rounding);
+        z.LastTernaryResult = InWidestExponentRange(z, y.Rounding, () =>
+        {
+            // x is converted exactly, so that the result is rounded once.
+            using mpfr_t ExactX = CreateExact(x);
+            return mpfr.div(z, ExactX, y, y.Rounding);
+        });
 
         return z;
     }
@@ -639,6 +644,13 @@ public partial class mpfr_t : IDisposable
     {
         mpfr_t z = CreateResult(y);
 
+        z.LastTernaryResult = InWidestExponentRange(z, y.Rounding, () => DivideRational(z, x, y));
+
+        return z;
+    }
+
+    private static int DivideRational(mpfr_t z, mpq_t x, mpfr_t y)
+    {
         // With x = n / d, x / y = n / (d * y). Both n and d * y are computed exactly, so that the result is rounded once.
         using mpz_t Numerator = new();
         mpq.get_num(Numerator, x);
@@ -647,32 +659,53 @@ public partial class mpfr_t : IDisposable
 
         using mpfr_t ExactNumerator = CreateExact(Numerator);
 
-        // d * y can overflow when y is near the largest exponent, even if x / y can be represented.
-        // A regular y is therefore written y' * 2^e with y' in [0.5, 1): n / (d * y') cannot overflow,
-        // and the exact scaling by 2^-e only overflows or underflows when the result itself does.
+        // d * y can overflow when y is near the largest exponent of the widest range. A regular y is therefore
+        // written y' * 2^e with y' in [0.5, 1): n / (d * y') cannot overflow, and the scaling by 2^-e is exact in the
+        // widest range, so the check of the range that follows rounds the result once.
         using mpfr_t ScaledY = CreateResult(y);
         _ = mpfr.set(ScaledY, y, mpfr_rnd_t.MPFR_RNDN);
-        int Exponent = 0;
+        long Exponent = 0;
 
         if (mpfr.regular_p(y))
         {
-            Exponent = mpfr.get_exp(y);
+            Exponent = (long)mpfr_get_exp(ref y.Value).Value;
             _ = mpfr.set_exp(ScaledY, 0);
         }
 
         using mpfr_t ExactProduct = CreateWithPrecision(mpz.sizeinbase(Denominator, 2) + mpfr.get_prec(y), nameof(y));
         _ = mpfr.mul_z(ExactProduct, ScaledY, Denominator, mpfr_rnd_t.MPFR_RNDN);
 
-        z.LastTernaryResult = mpfr.div(z, ExactNumerator, ExactProduct, y.Rounding);
+        int Ternary = mpfr.div(z, ExactNumerator, ExactProduct, y.Rounding);
 
-        if (Exponent != 0)
+        // The scaling is exact unless the result is beyond even the widest range, which is only about 2^±2^30 when
+        // exponents are 32-bit: then the scaling overflows or underflows, and gives the ternary.
+        int ScalingTernary = mpfr.mul_2si(z, z, -Exponent, y.Rounding);
+
+        return ScalingTernary != 0 ? ScalingTernary : Ternary;
+    }
+
+    private static int InWidestExponentRange(mpfr_t z, mpfr_rnd_t rounding, Func<int> operation)
+    {
+        // As MPFR does internally (MPFR_SAVE_EXPO), the intermediate results are computed in the widest exponent range,
+        // so that only the final result can overflow or underflow, with a single rounding. The range is per thread.
+        CLong MinExponent = mpfr_get_emin();
+        CLong MaxExponent = mpfr_get_emax();
+        int Ternary;
+
+        _ = mpfr_set_emin(mpfr_get_emin_min());
+        _ = mpfr_set_emax(mpfr_get_emax_max());
+
+        try
         {
-            int ScalingTernary = mpfr.mul_2si(z, z, -(long)Exponent, y.Rounding);
-            if (ScalingTernary != 0)
-                z.LastTernaryResult = ScalingTernary;
+            Ternary = operation();
+        }
+        finally
+        {
+            _ = mpfr_set_emin(MinExponent);
+            _ = mpfr_set_emax(MaxExponent);
         }
 
-        return z;
+        return mpfr.check_range(z, Ternary, rounding);
     }
     #endregion
 

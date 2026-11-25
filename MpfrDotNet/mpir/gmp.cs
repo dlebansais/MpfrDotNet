@@ -132,6 +132,28 @@ public static class gmp
         state.ThrowIfDisposed();
         MpirArgument.CheckDivisor(n);
 
+        return urandomm_ui(state, n, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls gmp_urandomm_ui, or mpz_urandomm when MPIR would truncate the result.
+    /// </summary>
+    /// <param name="state">The state.</param>
+    /// <param name="n">The n.</param>
+    /// <param name="isMpir">True if the library is MPIR.</param>
+    internal static ulong urandomm_ui(randstate_t state, ulong n, bool isMpir)
+    {
+        // MPIR's gmp_urandomm_ui keeps the random limb in an unsigned long, which is 32-bit on Windows: for a bound
+        // above that range, the result would never reach 2^32.
+        if (isMpir && n > uint.MaxValue)
+        {
+            using mpz_t Bound = new(n);
+            using mpz_t Result = new();
+            NativeMethods.mpz_urandomm(ref Result.Value, ref state.Value, ref Bound.Value);
+
+            return (ulong)Result;
+        }
+
         return (ulong)NativeMethods.mp_urandomm_ui(ref state.Value, (NativeMethods.mpir_ui)n);
     }
     #endregion

@@ -48,11 +48,25 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         if (FractionalPart.Length > 0)
             FractionalPart = "." + FractionalPart;
 
-        string ExponentPart = (Exponent - 1).ToString(CultureInfo.InvariantCulture);
-        if (Exponent > 0)
+        // mpf_set_str reads the exponent in the base of the number when the base is positive, and in decimal when it is
+        // negative, so that the text can be read back.
+        long ExponentValue = (long)Exponent - 1;
+        string ExponentPart;
+
+        if (resultbase > 0)
+        {
+            using mpz_t ExponentInteger = new(ExponentValue);
+            ExponentPart = ExponentInteger.ToString(resultbase);
+        }
+        else
+        {
+            ExponentPart = ExponentValue.ToString(CultureInfo.InvariantCulture);
+        }
+
+        if (ExponentValue >= 0)
             ExponentPart = "+" + ExponentPart;
 
-        // MPIR reads '@' as the exponent marker in bases above 10, where 'E' can be a digit. The exponent is written in decimal.
+        // MPIR reads '@' as the exponent marker in bases above 10, where 'E' can be a digit.
         char ExponentMarker = Math.Abs(resultbase) > 10 ? '@' : 'E';
         Result = $"{IntegerPart}{FractionalPart}{ExponentMarker}{ExponentPart}";
 
@@ -200,10 +214,17 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <remarks>The value is rounded once, to the nearest <see cref="float"/>, except in the subnormal range of <see cref="float"/>.</remarks>
     public static explicit operator float(mpf_t value)
     {
-        return (float)(double)value;
+        // Converting through double would round twice. A 24-bit MPFR number is rounded once, and converts exactly.
+        using MpfrDotNet.mpfr_t Rounded = MpfrDotNet.mpfr_t.Create(FloatSignificandBits);
+        _ = MpfrDotNet.mpfr.set_f(Rounded, value, MpfrDotNet.mpfr_rnd_t.MPFR_RNDN);
+
+        return (float)MpfrDotNet.mpfr.get_d(Rounded, MpfrDotNet.mpfr_rnd_t.MPFR_RNDN);
     }
+
+    private const ulong FloatSignificandBits = 24;
 
     /// <summary>
     /// Converts to a <see cref="double"/> value.

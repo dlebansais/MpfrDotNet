@@ -44,7 +44,7 @@ internal static partial class NativeMethods
     public delegate void __mpq_set_si(ref __mpq_t rop, mpir_si op1, mpir_ui op2);
     public static __mpq_set_si mpq_set_si => field ??= Marshal.GetDelegateForFunctionPointer<__mpq_set_si>(GetMpirPointer(nameof(mpq_set_si)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpq_set_str(ref __mpq_t rop, string str, int strbase);
     public static __mpq_set_str mpq_set_str => field ??= Marshal.GetDelegateForFunctionPointer<__mpq_set_str>(GetMpirPointer(nameof(mpq_set_str)));
 
@@ -66,7 +66,7 @@ internal static partial class NativeMethods
     public delegate void __mpq_set_f(ref __mpq_t rop, ref __mpf_t op);
     public static __mpq_set_f mpq_set_f => field ??= Marshal.GetDelegateForFunctionPointer<__mpq_set_f>(GetMpirPointer(nameof(mpq_set_f)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate IntPtr __mpq_get_str(StringBuilder str, int _base, ref __mpq_t op);
     public static __mpq_get_str mpq_get_str => field ??= Marshal.GetDelegateForFunctionPointer<__mpq_get_str>(GetMpirPointer(nameof(mpq_get_str)));
     #endregion

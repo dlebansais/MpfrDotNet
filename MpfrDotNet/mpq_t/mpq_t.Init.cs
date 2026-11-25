@@ -193,7 +193,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
 
         mpq.init(this);
 
-        bool Success = mpq.set_str(this, text, strBase);
+        bool Success = MpirArgument.IsParsableText(text) && mpq.set_str(this, text, strBase);
         if (!Success)
         {
             Dispose();

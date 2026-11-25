@@ -131,9 +131,16 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first number.</param>
     /// <param name="y">The second number.</param>
-    /// <returns>0 if abs(<paramref name="x"/>) and abs(<paramref name="y"/>) are equal, 1 if abs(<paramref name="x"/>) &gt; abs(<paramref name="y"/>), -1 if abs(<paramref name="x"/>) &lt; abs(<paramref name="y"/>).</returns>
+    /// <returns>0 if abs(<paramref name="x"/>) and abs(<paramref name="y"/>) are equal, 1 if abs(<paramref name="x"/>) &gt; abs(<paramref name="y"/>), -1 if abs(<paramref name="x"/>) &lt; abs(<paramref name="y"/>). As in <see cref="CompareTo(mpfr_t)"/>, NaN is smaller than any other number and equal to NaN.</returns>
     public static int CompareAbs(mpfr_t x, mpfr_t y)
     {
+        // mpfr_cmpabs returns 0 when an operand is NaN, and sets the erange flag.
+        bool IsXNaN = x.IsNan;
+        bool IsYNaN = y.IsNan;
+
+        if (IsXNaN || IsYNaN)
+            return IsXNaN ? (IsYNaN ? 0 : -1) : 1;
+
         return mpfr.cmpabs(x, y);
     }
 

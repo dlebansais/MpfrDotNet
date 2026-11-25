@@ -250,7 +250,7 @@ public partial class mpfr_t : IDisposable
             throw new ArgumentOutOfRangeException(nameof(strbase), strbase, "The base must be 0 or between 2 and 62.");
         }
 
-        bool Success = mpfr.set_str(this, str, strbase, rounding);
+        bool Success = MpirArgument.IsParsableText(str) && mpfr.set_str(this, str, strbase, rounding);
         if (!Success)
         {
             Dispose();

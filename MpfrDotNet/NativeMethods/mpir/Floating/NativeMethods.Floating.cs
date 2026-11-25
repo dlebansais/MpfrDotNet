@@ -67,7 +67,7 @@ internal static partial class NativeMethods
     public delegate void __mpf_set_q(ref __mpf_t rop, ref __mpq_t op);
     public static __mpf_set_q mpf_set_q => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_set_q>(GetMpirPointer(nameof(mpf_set_q)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpf_set_str(ref __mpf_t rop, string str, uint strbase);
     public static __mpf_set_str mpf_set_str => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_set_str>(GetMpirPointer(nameof(mpf_set_str)));
 
@@ -93,7 +93,7 @@ internal static partial class NativeMethods
     public delegate void __mpf_init_set_d(ref __mpf_t rop, double op);
     public static __mpf_init_set_d mpf_init_set_d => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_init_set_d>(GetMpirPointer(nameof(mpf_init_set_d)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpf_init_set_str(ref __mpf_t rop, string str, uint strbase);
     public static __mpf_init_set_str mpf_init_set_str => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_init_set_str>(GetMpirPointer(nameof(mpf_init_set_str)));
     #endregion
@@ -115,7 +115,7 @@ internal static partial class NativeMethods
     public delegate mpir_ui __mpf_get_ui(ref __mpf_t op);
     public static __mpf_get_ui mpf_get_ui => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_get_ui>(GetMpirPointer(nameof(mpf_get_ui)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate IntPtr __mpf_get_str(StringBuilder str, out CLong expptr, int _base, size_t n_digits, ref __mpf_t op);
     public static __mpf_get_str mpf_get_str => field ??= Marshal.GetDelegateForFunctionPointer<__mpf_get_str>(GetMpirPointer(nameof(mpf_get_str)));
     #endregion

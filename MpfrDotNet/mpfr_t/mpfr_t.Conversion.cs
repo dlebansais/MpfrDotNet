@@ -200,14 +200,12 @@ public partial class mpfr_t : IDisposable
     /// Converts to a <see cref="BigInteger"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="OverflowException"><paramref name="value"/> is NaN or an infinity.</exception>
     public static explicit operator BigInteger(mpfr_t value)
     {
-        using mpz_t Temporary = new();
+        using mpz_t Integer = value.ToRoundedInteger();
 
-        mpfr.get_z(Temporary, value, value.Rounding);
-
-        BigInteger Result = (BigInteger)Temporary;
-        return Result;
+        return (BigInteger)Integer;
     }
 
     /// <summary>

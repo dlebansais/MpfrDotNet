@@ -334,7 +334,9 @@ public static class mpf
     public static void get_str(StringBuilder str, out int expptr, int strBase, ulong n_digits, mpf_t op)
     {
         NativeMethods.mpf_get_str(str, out CLong NativeExponent, strBase, (NativeMethods.size_t)n_digits, ref op.Value);
-        expptr = (int)NativeExponent.Value;
+
+        // The exponent is a C long, 64-bit on Linux: it is clamped like the other exponents of the API.
+        expptr = MpfrDotNet.mpfr.ToClampedInt(NativeExponent);
     }
     #endregion
 

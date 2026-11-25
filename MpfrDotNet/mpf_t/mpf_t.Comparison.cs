@@ -74,7 +74,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="y">The second number.</param>
     public static mpf_t RelativeDifference(mpf_t x, mpf_t y)
     {
-        mpf_t z = new();
+        mpf_t z = CreateResult(x, y);
 
         mpf.reldiff(z, x, y);
 

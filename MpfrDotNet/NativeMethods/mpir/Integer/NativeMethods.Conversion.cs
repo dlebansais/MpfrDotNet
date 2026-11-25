@@ -32,7 +32,7 @@ internal static partial class NativeMethods
     public delegate double __mpz_get_d_2exp(out CLong exp, ref __mpz_t op);
     public static __mpz_get_d_2exp mpz_get_d_2exp => field ??= Marshal.GetDelegateForFunctionPointer<__mpz_get_d_2exp>(GetMpirPointer(nameof(mpz_get_d_2exp)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate IntPtr __mpz_get_str(StringBuilder str, int _base, ref __mpz_t op);
     public static __mpz_get_str mpz_get_str => field ??= Marshal.GetDelegateForFunctionPointer<__mpz_get_str>(GetMpirPointer(nameof(mpz_get_str)));
 }

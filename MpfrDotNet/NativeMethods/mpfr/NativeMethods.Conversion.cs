@@ -89,7 +89,7 @@ internal static partial class NativeMethods
     public delegate int __mpfr_fits_sshort_p(ref __mpfr_t op, __mpfr_rnd_t rnd);
     public static __mpfr_fits_sshort_p mpfr_fits_sshort_p => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_fits_sshort_p>(GetMpfrPointer(nameof(mpfr_fits_sshort_p)));
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public delegate int __mpfr_snprintf(StringBuilder? buf, ulong n, string format, ref __mpfr_t op, IntPtr end);
     public static __mpfr_snprintf mpfr_snprintf => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_snprintf>(GetMpfrPointer(nameof(mpfr_snprintf)));
 }
