@@ -79,7 +79,9 @@ mpz_bin_ui (mpz_ptr r, mpz_srcptr n, mpir_ui k)
      = ni, and new ni of ni+k-ni = k.  */
   if (mpz_cmp_ui (ni, k) < 0)
     {
-      unsigned long  tmp;
+      /* MpfrDotNet: mpir_ui instead of unsigned long, which is 32-bit with
+         MSVC and truncated k. */
+      mpir_ui        tmp;
       tmp = k;
       k = mpz_get_ui (ni);
       mpz_set_ui (ni, tmp);

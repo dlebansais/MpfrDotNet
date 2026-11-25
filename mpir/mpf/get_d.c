@@ -26,7 +26,8 @@ double
 mpf_get_d (mpf_srcptr src)
 {
   mp_size_t  size, abs_size;
-  long       exp;
+  /* MpfrDotNet: mpir_si instead of long, which is 32-bit with MSVC. */
+  mpir_si    exp;
 
   size = SIZ (src);
   if (UNLIKELY (size == 0))

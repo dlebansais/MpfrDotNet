@@ -42,7 +42,9 @@ mpz_remove (mpz_ptr dest, mpz_srcptr src, mpz_srcptr f)
 
   if (mpz_cmp_ui (f, 2) == 0)
     {
-      unsigned long int s0;
+      /* MpfrDotNet: mp_bitcnt_t, the return type, instead of unsigned long,
+         which is 32-bit with MSVC. */
+      mp_bitcnt_t s0;
       s0 = mpz_scan1 (src, 0);
       mpz_fdiv_q_2exp (dest, src, s0);
       return s0;

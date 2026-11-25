@@ -63,7 +63,9 @@ mpz_gcd_ui (mpz_ptr w, mpz_srcptr u, mpir_ui v)
 	}
       /* Return u if it fits a ulong, otherwise 0. */
       res = PTR(u)[0];
-      return (un == 1 && res <= ULONG_MAX ? res : 0);
+      /* MpfrDotNet: GMP_UI_MAX, the maximum of the return type, instead of
+         ULONG_MAX, which is 2^32 - 1 with MSVC. */
+      return (un == 1 && res <= GMP_UI_MAX ? res : 0);
     }
   else
     res = mpn_gcd_1 (PTR(u), un, (mp_limb_t) v);

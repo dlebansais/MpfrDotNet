@@ -394,8 +394,11 @@ public static class mpz
     /// <param name="exp">The exponent.</param>
     public static void get_d_2exp(mpz_t op, out double d, out long exp)
     {
-        d = NativeMethods.mpz_get_d_2exp(out CLong NativeExponent, ref op.Value);
-        exp = NativeExponent.Value;
+        d = NativeMethods.mpz_get_d_2exp(out _, ref op.Value);
+
+        // The exponent is the number of bits of the integer. MPIR returns it in a C long, which is 32-bit on Windows
+        // and wraps for integers of 2^31 bits or more.
+        exp = sgn(op) == 0 ? 0 : (long)sizeinbase(op, 2U);
     }
 
     /// <summary>

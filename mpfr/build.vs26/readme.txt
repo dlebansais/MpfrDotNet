@@ -158,5 +158,8 @@ must be applied again when MPFR is updated:
 3. src/set_ui_2exp.c: the early underflow test uses sizeof (mpfr_ui), as
    set_si_2exp.c does, instead of sizeof (unsigned long).
 4. src/jn.c: the bounds on the order use MPFR_UI_MAX instead of ULONG_MAX.
+5. src/gamma.c: the integer shortcut keeps x in an mpfr_ui instead of an
+   unsigned long, which made Gamma(2^32 + 5) equal to 4!.
 
-The tests in Test/MpfrDotNet.Test/NativeIntegerLimits.cs check these cases.
+The tests in Test/MpfrDotNet.Test/NativeIntegerLimits.cs and
+NativeLongLimits.cs check these cases.

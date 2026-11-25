@@ -92,7 +92,10 @@ MA 02110-1301, USA. */
 
 
 double
-mpn_get_d (mp_srcptr ptr, mp_size_t size, mp_size_t sign, long exp)
+/* MpfrDotNet: exp is an mpir_si instead of a long, which is 32-bit with MSVC:
+   exponents of large mpf and mpq values wrapped, and operands of more than 2^25
+   limbs were taken as an overflow. */
+mpn_get_d (mp_srcptr ptr, mp_size_t size, mp_size_t sign, mpir_si exp)
 {
   ASSERT (size >= 0);
   ASSERT_MPN (ptr, size);
@@ -104,13 +107,13 @@ mpn_get_d (mp_srcptr ptr, mp_size_t size, mp_size_t sign, long exp)
   /* Adjust exp to a radix point just above {ptr,size}, guarding against
      overflow.	After this exp can of course be reduced to anywhere within
      the {ptr,size} region without underflow.  */
-  if (UNLIKELY ((mpir_ui) (GMP_NUMB_BITS * size)
-		> (mpir_ui) (LONG_MAX - exp)))
+  if (UNLIKELY (exp > 0 && (mpir_ui) (GMP_NUMB_BITS * size)
+		> (mpir_ui) (GMP_SI_MAX - exp)))
     {
       goto ieee_infinity;
 
       /* generic */
-      exp = LONG_MAX;
+      exp = GMP_SI_MAX;
     }
   else
     {

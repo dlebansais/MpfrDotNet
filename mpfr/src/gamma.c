@@ -267,7 +267,10 @@ mpfr_gamma (mpfr_ptr gamma, mpfr_srcptr x, mpfr_rnd_t rnd_mode)
   */
   if (is_integer && mpfr_fits_ulong_p (x, MPFR_RNDN))
     {
-      unsigned long int u;
+      /* MpfrDotNet: mpfr_ui instead of unsigned long, which is 32-bit with
+         MSVC while mpfr_fits_ulong_p accepts any mpfr_ui: Gamma(2^32+5) was
+         computed as 4!. */
+      mpfr_ui u;
       mpfr_prec_t p = MPFR_PREC(gamma);
       u = mpfr_get_ui (x, MPFR_RNDN);
       MPFR_ASSERTD (u >= 2);

@@ -102,7 +102,8 @@ mpq_get_d (mpq_srcptr src)
   mp_size_t dsize = src->_mp_den._mp_size;
   mp_size_t qsize, prospective_qsize, zeros, chop, tsize;
   mp_size_t sign_quotient = nsize;
-  long exp;
+  /* MpfrDotNet: mpir_si instead of long, which is 32-bit with MSVC. */
+  mpir_si exp;
 #define N_QLIMBS (1 + (sizeof (double) + BYTES_PER_MP_LIMB-1) / BYTES_PER_MP_LIMB)
   mp_limb_t qarr[N_QLIMBS + 1];
   mp_ptr qp = qarr;
@@ -124,7 +125,7 @@ mpq_get_d (mpq_srcptr src)
   qsize = N_QLIMBS + 1;                    /* desired qsize */
 
   zeros = qsize - prospective_qsize;       /* padding n to get qsize */
-  exp = (long) -zeros * GMP_NUMB_BITS;     /* relative to low of qp */
+  exp = (mpir_si) -zeros * GMP_NUMB_BITS;  /* relative to low of qp */
 
   chop = MAX (-zeros, 0);                  /* negative zeros means shorten n */
   np += chop;

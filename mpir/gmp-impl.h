@@ -3427,7 +3427,8 @@ union ieee_double_extract
 __GMP_DECLSPEC int __gmp_extract_double(mp_ptr, double);
 
 #define mpn_get_d __gmpn_get_d
-__GMP_DECLSPEC double mpn_get_d(mp_srcptr, mp_size_t, mp_size_t, long) __GMP_ATTRIBUTE_PURE;
+/* MpfrDotNet: the exponent is an mpir_si instead of a long (see mpn/generic/get_d.c). */
+__GMP_DECLSPEC double mpn_get_d(mp_srcptr, mp_size_t, mp_size_t, mpir_si) __GMP_ATTRIBUTE_PURE;
 
 
 /* DOUBLE_NAN_INF_ACTION executes code a_nan if x is a NaN, or executes

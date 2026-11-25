@@ -116,7 +116,9 @@ mpz_si_kronecker (mpir_si a, mpz_srcptr b)
         }
 
       result_bit1 ^= JACOBI_ASGN_SU_BIT1 (a, b_low);
-      a_limb = (unsigned long) ABS(a);
+      /* MpfrDotNet: mpir_ui as in the odd case above: unsigned long is
+         32-bit with MSVC and truncated a. */
+      a_limb = (mpir_ui) ABS(a);
     }
 
   if (a_limb == 1)

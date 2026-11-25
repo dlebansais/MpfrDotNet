@@ -615,8 +615,10 @@ limb_apprsqrt (mp_limb_t x)
   return (CNST_LIMB(1) << (s >> 1)) + (CNST_LIMB(1) << ((s - 1) >> 1));
 }
 
+/* MpfrDotNet: mpir_ui instead of unsigned long, which is 32-bit with MSVC and
+   truncated n and k. */
 static void
-mpz_goetgheluck_bin_uiui (mpz_ptr r, unsigned long int n, unsigned long int k)
+mpz_goetgheluck_bin_uiui (mpz_ptr r, mpir_ui n, mpir_ui k)
 {
   mp_limb_t *sieve, *factors, count;
   mp_limb_t prod, max_prod, j;

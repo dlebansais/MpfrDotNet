@@ -46,7 +46,8 @@ mpf_get_2exp_d (double *r, mpf_srcptr src)
   cnt -= GMP_NAIL_BITS;
 
   *r = mpn_get_d (ptr, abs_size, size,
-                    (long) - (abs_size * GMP_NUMB_BITS - cnt));
+                    /* MpfrDotNet: mpir_si instead of long. */
+                    (mpir_si) - (abs_size * GMP_NUMB_BITS - cnt));
   return (mpir_si)EXP(src) * GMP_NUMB_BITS - cnt;
 }
 
