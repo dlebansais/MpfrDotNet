@@ -1547,8 +1547,11 @@ asm (".section predict_data, \"aw\"; .previous\n"
        _c; }))
 #endif /* MPFR_LONG_WITHIN_LIMB */
 #else
-# define MPFR_INT_CEIL_LOG2(x) \
-  (MPFR_ASSERTN (x <= ULONG_MAX), __gmpfr_int_ceil_log2(x))
+/* MpfrDotNet: in this build, mpfr_ui is 64-bit while unsigned long is 32-bit
+   with MSVC. The original definition asserted x <= ULONG_MAX, which aborted
+   the process for the mpfr_ui arguments of mpfr_mul_ui, mpfr_div_ui,
+   mpfr_cosu, mpfr_fac_ui, mpfr_compound_si... beyond 2^32 - 1. */
+# define MPFR_INT_CEIL_LOG2(x) __gmpfr_int_ceil_log2_ui (x)
 #endif /* __MPFR_GNUC(2,95) || __MPFR_ICC(8,1,0) */
 
 /* Add two integers with overflow handling */
@@ -2411,6 +2414,7 @@ __MPFR_DECLSPEC double        __gmpfr_ceil_exp2     (double);
 __MPFR_DECLSPEC unsigned long __gmpfr_isqrt     (unsigned long);
 __MPFR_DECLSPEC unsigned long __gmpfr_cuberoot  (unsigned long);
 __MPFR_DECLSPEC int       __gmpfr_int_ceil_log2 (unsigned long);
+__MPFR_DECLSPEC int       __gmpfr_int_ceil_log2_ui (mpfr_ui);
 
 __MPFR_DECLSPEC mpfr_exp_t mpfr_ceil_mul (mpfr_exp_t, int, int);
 

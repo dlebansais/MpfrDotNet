@@ -139,5 +139,24 @@ My thanks to:
    readme.txt file giving the build instructions
 5. Alexander Shevchenko for helping in tidying up the build projects.
  
-     Brian Gladman, August 2017 
+     Brian Gladman, August 2017
 
+MpfrDotNet Changes to the MPFR Sources
+--------------------------------------
+
+This build makes mpfr_ui and mpfr_si 64-bit, while unsigned long is 32-bit
+with MSVC. A few places in the MPFR 4.2.1 sources assumed that mpfr_ui fits
+in an unsigned long, and aborted the process with an assertion failure for
+integers beyond 2^32 - 1 (mpfr_mul_ui, mpfr_div_ui and their si versions,
+mpfr_cosu, mpfr_atan2u, mpfr_compound_si, mpfr_fac_ui, mpfr_rootn_ui,
+mpfr_jn, mpfr_ui_pow_ui...). They are marked with "MpfrDotNet" comments, and
+must be applied again when MPFR is updated:
+
+1. src/mpfr-impl.h: the MSVC version of MPFR_INT_CEIL_LOG2 calls the new
+   __gmpfr_int_ceil_log2_ui instead of asserting x <= ULONG_MAX.
+2. src/int_ceil_log2.c: defines __gmpfr_int_ceil_log2_ui for any mpfr_ui.
+3. src/set_ui_2exp.c: the early underflow test uses sizeof (mpfr_ui), as
+   set_si_2exp.c does, instead of sizeof (unsigned long).
+4. src/jn.c: the bounds on the order use MPFR_UI_MAX instead of ULONG_MAX.
+
+The tests in Test/MpfrDotNet.Test/NativeIntegerLimits.cs check these cases.

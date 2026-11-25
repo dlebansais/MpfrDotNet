@@ -46,3 +46,21 @@ __gmpfr_int_ceil_log2 (unsigned long n)
   return mpfr_nbits_ulong (n - 1);
 #endif
 }
+
+/* MpfrDotNet: ceil(log2(n)) for any mpfr_ui n >= 1, which can be wider than
+   unsigned long (see MPFR_INT_CEIL_LOG2 in mpfr-impl.h). It is the number of
+   bits of n - 1. */
+int
+__gmpfr_int_ceil_log2_ui (mpfr_ui n)
+{
+  int b = 0;
+
+  MPFR_ASSERTN (n >= 1);
+  n = n - 1;
+  while (n != 0)
+    {
+      n = n >> 1;
+      b++;
+    }
+  return b;
+}

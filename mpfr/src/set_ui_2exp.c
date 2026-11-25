@@ -44,8 +44,10 @@ mpfr_set_ui_2exp (mpfr_ptr x, mpfr_ui i, mpfr_exp_t e, mpfr_rnd_t rnd_mode)
 
       /* Early underflow/overflow checking is necessary to avoid
          integer overflow or errors due to special exponent values. */
+      /* MpfrDotNet: sizeof (mpfr_ui), as in set_si_2exp.c, since i is an
+         mpfr_ui, which is wider than unsigned long with MSVC. */
       if (MPFR_UNLIKELY (e < __gmpfr_emin - (mpfr_exp_t)
-                         (sizeof (unsigned long) * CHAR_BIT + 1)))
+                         (sizeof (mpfr_ui) * CHAR_BIT + 1)))
         return mpfr_underflow (x, rnd_mode == MPFR_RNDN ?
                                MPFR_RNDZ : rnd_mode, i < 0 ? -1 : 1);
       if (MPFR_UNLIKELY (e >= __gmpfr_emax))

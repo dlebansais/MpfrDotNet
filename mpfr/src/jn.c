@@ -268,8 +268,10 @@ mpfr_jn (mpfr_ptr res, mpfr_si n, mpfr_srcptr z, mpfr_rnd_t r)
           /* Mathematically: absn <= LONG_MAX + 1 <= (ULONG_MAX + 1) / 2,
              and in practice, k is not very large, so that one should have
              k + absn <= ULONG_MAX. */
-          MPFR_ASSERTN (absn <= ULONG_MAX - k);
-          if (k + absn <= ULONG_MAX / k)
+          /* MpfrDotNet: absn is an mpfr_ui, which is wider than unsigned long
+             with MSVC: the bounds use MPFR_UI_MAX instead of ULONG_MAX. */
+          MPFR_ASSERTN (absn <= MPFR_UI_MAX - k);
+          if (k + absn <= MPFR_UI_MAX / k)
             mpfr_div_ui (t, t, k * (k + absn), MPFR_RNDN);
           else
             {
