@@ -152,7 +152,8 @@ public class Misc
         Assert.That(AsString, Is.EqualTo("222509832503450298345029835740293845720/115756986668303657898962467957"));
 
         double d = (double)a;
-        Assert.That(d, Is.EqualTo(1922215141.4587355));
+        // The nearest double; mpq_get_d truncates to 1922215141.4587355.
+        Assert.That(d, Is.EqualTo(1922215141.4587357));
     }
 
     [Test]

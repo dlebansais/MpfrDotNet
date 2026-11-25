@@ -2,6 +2,7 @@
 
 using System;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
@@ -339,5 +340,40 @@ public partial class mpfr_t : IDisposable
         _ = mpfr.get_z(Result, this, Rounding);
 
         return Result;
+    }
+
+    /// <summary>
+    /// Rounds a value once to the nearest <see cref="double"/> or <see cref="float"/>, ties to even, including in their subnormal range.
+    /// </summary>
+    /// <param name="setValue">Sets a number to the value with round to nearest, and returns the ternary value.</param>
+    /// <param name="isSingle">True to round to a <see cref="float"/>, false to round to a <see cref="double"/>.</param>
+    /// <returns>The rounded value, which converts exactly to the target type.</returns>
+    internal static double RoundToBinaryFormat(Func<mpfr_t, int> setValue, bool isSingle)
+    {
+        // The recipe of the MPFR manual for IEEE 754 formats: round to the precision of the format within its exponent
+        // range, then subnormalize. The exponent range is per thread, and is restored before returning.
+        ulong FormatPrecision = isSingle ? 24UL : 53UL;
+        long FormatMinExponent = isSingle ? -148L : -1073L;
+        long FormatMaxExponent = isSingle ? 128L : 1024L;
+
+        using mpfr_t Result = CreateWithPrecision(FormatPrecision, nameof(isSingle));
+        CLong SavedMinExponent = mpfr_get_emin();
+        CLong SavedMaxExponent = mpfr_get_emax();
+
+        _ = mpfr_set_emin(mpfr.ToCLong(FormatMinExponent));
+        _ = mpfr_set_emax(mpfr.ToCLong(FormatMaxExponent));
+
+        try
+        {
+            int Ternary = setValue(Result);
+            _ = mpfr.subnormalize(Result, Ternary, mpfr_rnd_t.MPFR_RNDN);
+        }
+        finally
+        {
+            _ = mpfr_set_emin(SavedMinExponent);
+            _ = mpfr_set_emax(SavedMaxExponent);
+        }
+
+        return mpfr.get_d(Result, mpfr_rnd_t.MPFR_RNDN);
     }
 }

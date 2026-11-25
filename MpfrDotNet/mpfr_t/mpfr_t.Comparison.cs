@@ -7,7 +7,7 @@ using static Interop.Mpfr.NativeMethods;
 /// <summary>
 /// Represents an arbitrary precision floating-point number.
 /// </summary>
-public partial class mpfr_t : IDisposable
+public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_t>, IComparable
 {
     /// <summary>
     /// Compares with another number.
@@ -233,11 +233,21 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Determines whether the specified object is equal to the current object.
     /// </summary>
-    /// <param name="obj">The object to compare with the current object..</param>
+    /// <param name="obj">The object to compare with the current object.</param>
     /// <remarks>As with <see cref="double.Equals(double)"/>, NaN is equal to NaN, unlike with the == operator.</remarks>
     public override bool Equals(object? obj)
     {
-        if (obj is not mpfr_t other)
+        return obj is mpfr_t other && Equals(other);
+    }
+
+    /// <summary>
+    /// Determines whether the specified number is equal to the current number.
+    /// </summary>
+    /// <param name="other">The number to compare with the current number.</param>
+    /// <remarks>As with <see cref="double.Equals(double)"/>, NaN is equal to NaN, unlike with the == operator.</remarks>
+    public bool Equals(mpfr_t? other)
+    {
+        if (other is null)
             return false;
 
         if (IsNan || other.IsNan)
@@ -247,10 +257,33 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
+    /// Compares with another object.
+    /// </summary>
+    /// <param name="obj">The other object.</param>
+    /// <returns>The result of <see cref="CompareTo(mpfr_t)"/> if <paramref name="obj"/> is an <see cref="mpfr_t"/>, and a positive value if it is <see langword="null"/>.</returns>
+    /// <exception cref="ArgumentException"><paramref name="obj"/> is not an <see cref="mpfr_t"/>.</exception>
+    public int CompareTo(object? obj)
+    {
+        if (obj is null)
+            return 1;
+        else if (obj is mpfr_t other)
+            return CompareTo(other);
+        else
+            throw new ArgumentException("Invalid comparison with an object of a different type.", nameof(obj));
+    }
+
+    /// <summary>
     /// Gets a hash of the value.
     /// </summary>
     public override int GetHashCode()
     {
+        // Numbers that are equal must have the same hash: +0 and -0 are equal, and so are all NaNs.
+        if (IsNan)
+            return double.NaN.GetHashCode();
+
+        if (IsZero)
+            return 0.0.GetHashCode();
+
         double d = mpfr.get_d(this, DefaultRounding);
         return d.GetHashCode();
     }

@@ -1,6 +1,7 @@
 ﻿namespace Test;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Text;
@@ -315,6 +316,91 @@ internal class ResultChecks
         Assert.That(() => mpz.inp_raw(Value, NullReader), Throws.ArgumentNullException.With.Property(nameof(ArgumentNullException.ParamName)).EqualTo("reader"));
         Assert.That(mpz.inp_str(Value, Reader, 10), Is.Zero);
         Assert.That(Value.ToString(), Is.EqualTo("5"));
+    }
+
+    [TestCase(54, 3L, 1.0000000000000002)]
+    [TestCase(54, -3L, -1.0000000000000002)]
+    [TestCase(1135, 1L, double.Epsilon)]
+    [TestCase(1135, -1L, -double.Epsilon)]
+    public void TestRationalAndFloatToDouble(int shift, long low, double expected)
+    {
+        // The value is +-(2^54 + 3) / 2^54 or +-(2^60 + 1) / 2^1135, built so that only a single rounding to nearest gives the
+        // expected double: 1 + 3 * 2^-54 truncates to 1, and 2^-1075 * (1 + 2^-60) is just above a tie between 0 and the
+        // smallest subnormal double, so rounding to 53 bits first would give the tie, then 0.
+        using mpz_t Numerator = (new mpz_t(1) << (shift == 54 ? 54 : 60)) + Math.Abs(low);
+        using mpz_t Denominator = new mpz_t(1) << shift;
+        using mpq_t Magnitude = new(Numerator, Denominator);
+        using mpq_t Rational = low < 0 ? -Magnitude : new mpq_t(Magnitude);
+        using mpf_t Float = new(256UL);
+        mpf.set_q(Float, Rational);
+
+        int MinExponent = mpfr_t.MinExponent;
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That((double)Rational, Is.EqualTo(expected));
+        Assert.That((double)Float, Is.EqualTo(expected));
+
+        // The C-named functions truncate, as in MPIR.
+        Assert.That(Math.Abs(mpq.get_d(Rational)), Is.LessThanOrEqualTo(Math.Abs(expected)));
+        Assert.That(Math.Abs(mpf.get_d(Float)), Is.LessThanOrEqualTo(Math.Abs(expected)));
+        Assert.That(mpfr_t.MinExponent, Is.EqualTo(MinExponent));
+    }
+
+    [Test]
+    public void TestRationalAndFloatToFloatLimits()
+    {
+        // 2^-150 * (1 + 2^-60) is just above a tie between 0 and the smallest subnormal float.
+        using mpz_t Numerator = (new mpz_t(1) << 60) + 1;
+        using mpz_t Denominator = new mpz_t(1) << 210;
+        using mpq_t Tiny = new(Numerator, Denominator);
+        using mpf_t TinyFloat = new(256UL);
+        mpf.set_q(TinyFloat, Tiny);
+
+        using mpz_t PowerOf128 = new mpz_t(1) << 128;
+        using mpz_t PowerOf1024 = new mpz_t(1) << 1024;
+        using mpz_t One = new(1);
+        using mpq_t Huge = new(PowerOf128, One);
+        using mpq_t Huger = new(PowerOf1024, One);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That((float)Tiny, Is.EqualTo(float.Epsilon));
+        Assert.That((float)TinyFloat, Is.EqualTo(float.Epsilon));
+        Assert.That((float)Huge, Is.EqualTo(float.PositiveInfinity));
+        Assert.That((double)Huger, Is.EqualTo(double.PositiveInfinity));
+    }
+
+    [Test]
+    public void TestMpfrOrderingInterfaces()
+    {
+        using mpfr_t NaN = mpfr_t.NaN();
+        using mpfr_t OtherNaN = mpfr_t.NaN();
+        using mpfr_t One = new(1);
+        using mpfr_t Two = new(2);
+        using mpfr_t Zero = mpfr_t.Zero();
+        using mpfr_t NegativeZero = mpfr_t.Zero(-1);
+        using mpz_t Integer = new(1);
+        mpfr_t NullNumber = Sample.CreateNull<mpfr_t>();
+        object NullObject = Sample.CreateNull<object>();
+
+        List<mpfr_t> Numbers = [Two, NaN, One];
+        Numbers.Sort();
+
+        HashSet<mpfr_t> Zeros = [Zero, NegativeZero];
+        HashSet<mpfr_t> NaNs = [NaN, OtherNaN];
+        bool IsOneEqualToTwo = EqualityComparer<mpfr_t>.Default.Equals(One, Two);
+        bool IsOneEqualToInteger = One.Equals((object)Integer);
+        bool IsOneEqualToNull = One.Equals(NullNumber);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Numbers, Is.EqualTo(new[] { NaN, One, Two }).AsCollection);
+        Assert.That(Zeros, Has.Count.EqualTo(1));
+        Assert.That(NaNs, Has.Count.EqualTo(1));
+        Assert.That(IsOneEqualToTwo, Is.False);
+        Assert.That(IsOneEqualToInteger, Is.False);
+        Assert.That(IsOneEqualToNull, Is.False);
+        Assert.That(One.CompareTo(NullObject), Is.EqualTo(1));
+        Assert.That(((IComparable)Two).CompareTo(One), Is.Positive);
+        Assert.That(() => One.CompareTo((object)Integer), Throws.ArgumentException.With.Message.StartsWith("Invalid comparison with an object of a different type."));
     }
 
     [Test]

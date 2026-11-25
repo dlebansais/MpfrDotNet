@@ -214,26 +214,23 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
-    /// <remarks>The value is rounded once, to the nearest <see cref="float"/>, except in the subnormal range of <see cref="float"/>.</remarks>
+    /// <remarks>The value is rounded once, to the nearest <see cref="float"/>, ties to even.</remarks>
     public static explicit operator float(mpf_t value)
     {
-        // Converting through double would round twice. A 24-bit MPFR number is rounded once, and converts exactly.
-        using MpfrDotNet.mpfr_t Rounded = MpfrDotNet.mpfr_t.Create(FloatSignificandBits);
-        _ = MpfrDotNet.mpfr.set_f(Rounded, value, MpfrDotNet.mpfr_rnd_t.MPFR_RNDN);
-
-        return (float)MpfrDotNet.mpfr.get_d(Rounded, MpfrDotNet.mpfr_rnd_t.MPFR_RNDN);
+        // Converting through double would round twice: the value is rounded once, to a float, which converts exactly.
+        return (float)MpfrDotNet.mpfr_t.RoundToBinaryFormat(x => MpfrDotNet.mpfr.set_f(x, value, MpfrDotNet.mpfr_rnd_t.MPFR_RNDN), isSingle: true);
     }
-
-    private const ulong FloatSignificandBits = 24;
 
     /// <summary>
     /// Converts to a <see cref="double"/> value.
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <remarks>The value is rounded once, to the nearest <see cref="double"/>, ties to even, like the conversion from <see cref="decimal"/>. <see cref="mpf.get_d(mpf_t)"/> truncates instead.</remarks>
     public static explicit operator double(mpf_t value)
     {
-        return mpf.get_d(value);
+        // mpf.get_d truncates: the value is rounded once, to the nearest double.
+        return MpfrDotNet.mpfr_t.RoundToBinaryFormat(x => MpfrDotNet.mpfr.set_f(x, value, MpfrDotNet.mpfr_rnd_t.MPFR_RNDN), isSingle: false);
     }
 
     /// <summary>
