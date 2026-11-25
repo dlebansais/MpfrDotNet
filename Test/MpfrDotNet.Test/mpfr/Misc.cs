@@ -168,6 +168,13 @@ public class Misc
         Result = x.ToFormattedString(10, "%Rf");
         Assert.That(Result, Is.EqualTo("222509832"));
 
+        // The 33 characters fit exactly in a buffer of 34, with the terminating null character, but not in a buffer of 33.
+        Result = x.ToFormattedString(34, "%Rf");
+        Assert.That(Result, Is.EqualTo("22250983250345029834502983.574029"));
+
+        Result = x.ToFormattedString(33, "%Rf");
+        Assert.That(Result, Is.EqualTo("22250983250345029834502983.57402"));
+
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }
 

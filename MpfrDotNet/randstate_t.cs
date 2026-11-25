@@ -16,9 +16,12 @@ public class randstate_t : IDisposable
     /// <param name="parameters">The algorithm parameters.</param>
     /// <exception cref="ArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="parameters"/> is not a valid combination of parameters for <paramref name="algorithm"/>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The size of a linear congruential generator is greater than 128.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="algorithm"/> is not a value of <see cref="RngAlgorithm"/>, or the size of a linear congruential generator is greater than 128.</exception>
     public static randstate_t Create(RngAlgorithm algorithm = RngAlgorithm.Default, params object[] parameters)
     {
+        if (algorithm is not (RngAlgorithm.Default or RngAlgorithm.MersenneTwister or RngAlgorithm.LinearCongruential))
+            throw new ArgumentOutOfRangeException(nameof(algorithm), algorithm, "The algorithm is not a valid value.");
+
         if (parameters is null)
             throw new ArgumentNullException(nameof(parameters));
 
@@ -58,12 +61,6 @@ public class randstate_t : IDisposable
     {
         switch (algorithm)
         {
-            default:
-            case RngAlgorithm.Default:
-                gmp.randinit_default(this);
-                IsNativeStateInitialized = true;
-                break;
-
             case RngAlgorithm.MersenneTwister:
                 gmp.randinit_mt(this);
                 IsNativeStateInitialized = true;
@@ -84,6 +81,12 @@ public class randstate_t : IDisposable
 
                 IsNativeStateInitialized = true;
 
+                break;
+
+            default:
+                // Create leaves only RngAlgorithm.Default.
+                gmp.randinit_default(this);
+                IsNativeStateInitialized = true;
                 break;
         }
     }

@@ -16,17 +16,38 @@ public static partial class mpfr
     /// <summary>
     /// Gets the smallest value of a C long.
     /// </summary>
-    internal static long NativeLongMin => IsNativeLong32 ? int.MinValue : long.MinValue;
+    internal static long NativeLongMin => GetNativeLongMin(IsNativeLong32);
 
     /// <summary>
     /// Gets the largest value of a C long.
     /// </summary>
-    internal static long NativeLongMax => IsNativeLong32 ? int.MaxValue : long.MaxValue;
+    internal static long NativeLongMax => GetNativeLongMax(IsNativeLong32);
 
     /// <summary>
     /// Gets the largest value of a C unsigned long.
     /// </summary>
-    internal static ulong NativeULongMax => IsNativeLong32 ? uint.MaxValue : ulong.MaxValue;
+    internal static ulong NativeULongMax => GetNativeULongMax(IsNativeLong32);
+
+    /// <summary>
+    /// Gets the smallest value of a C long of the given size.
+    /// </summary>
+    /// <param name="isNativeLong32">True if a C long is 32-bit, false if it is 64-bit.</param>
+    internal static long GetNativeLongMin(bool isNativeLong32)
+        => isNativeLong32 ? int.MinValue : long.MinValue;
+
+    /// <summary>
+    /// Gets the largest value of a C long of the given size.
+    /// </summary>
+    /// <param name="isNativeLong32">True if a C long is 32-bit, false if it is 64-bit.</param>
+    internal static long GetNativeLongMax(bool isNativeLong32)
+        => isNativeLong32 ? int.MaxValue : long.MaxValue;
+
+    /// <summary>
+    /// Gets the largest value of a C unsigned long of the given size.
+    /// </summary>
+    /// <param name="isNativeLong32">True if a C long is 32-bit, false if it is 64-bit.</param>
+    internal static ulong GetNativeULongMax(bool isNativeLong32)
+        => isNativeLong32 ? uint.MaxValue : ulong.MaxValue;
 
     /// <summary>
     /// Converts a value that is in the range of a C long.

@@ -363,14 +363,28 @@ internal class Semantics
         using mpfr_t MpfrMinusTwo = new(-2);
         using mpq_t MinusTwo = new(-2L, 1UL);
 
+        using mpq_t Zero = new(0L, 1UL);
+        using mpfr_t PositiveZero = mpfr_t.Zero(+1);
+        PositiveZero.Rounding = mpfr_rnd_t.MPFR_RNDD;
+        using mpfr_t NegativeZero = mpfr_t.Zero(-1);
+        NegativeZero.Rounding = mpfr_rnd_t.MPFR_RNDD;
+
         using mpfr_t RoundedDown = Two - MpfrTwo;
         using mpfr_t RoundedToNearest = MinusTwo - MpfrMinusTwo;
+        using mpfr_t ZeroMinusPositiveZero = Zero - PositiveZero;
+        using mpfr_t ZeroMinusNegativeZero = Zero - NegativeZero;
 
         using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(RoundedDown.IsZero, Is.True);
         Assert.That(mpfr.signbit(RoundedDown), Is.Not.Zero);
         Assert.That(RoundedToNearest.IsZero, Is.True);
         Assert.That(mpfr.signbit(RoundedToNearest), Is.Zero);
+
+        // Rounding toward -infinity, 0 - (+0) is -0, but 0 - (-0) is +0.
+        Assert.That(ZeroMinusPositiveZero.IsZero, Is.True);
+        Assert.That(mpfr.signbit(ZeroMinusPositiveZero), Is.Not.Zero);
+        Assert.That(ZeroMinusNegativeZero.IsZero, Is.True);
+        Assert.That(mpfr.signbit(ZeroMinusNegativeZero), Is.Zero);
     }
 
     [Test]

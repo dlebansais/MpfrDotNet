@@ -13,8 +13,7 @@ internal static partial class NativeMethods
         // the MPFR_PREC_MIN and MPFR_PREC_MAX macros: 1, and the largest C long minus 256.
         NativeMinPrecision = ReadPrecisionLimit(NativeLibraryLoader.GetExport(hMpfrLib, "mpfr_get_prec_min"), 1UL);
 
-        ulong MaxPrecisionMacro = (ulong)((Marshal.SizeOf<CLong>() == 4 ? int.MaxValue : long.MaxValue) - 256L);
-        NativeMaxPrecision = ReadPrecisionLimit(NativeLibraryLoader.GetExport(hMpfrLib, "mpfr_get_prec_max"), MaxPrecisionMacro);
+        NativeMaxPrecision = ReadPrecisionLimit(NativeLibraryLoader.GetExport(hMpfrLib, "mpfr_get_prec_max"), GetMaxPrecisionMacro(Marshal.SizeOf<CLong>()));
 
         mpfr_get_default_prec = Marshal.GetDelegateForFunctionPointer<__mpfr_get_default_prec>(GetMpfrPointer(nameof(mpfr_get_default_prec)));
         NativeDefaultPrecision = (ulong)mpfr_get_default_prec().Value;
@@ -33,6 +32,13 @@ internal static partial class NativeMethods
 
         return (ulong)Marshal.GetDelegateForFunctionPointer<__mpfr_get_prec_limit>(address)().Value;
     }
+
+    /// <summary>
+    /// Gets the value of the MPFR_PREC_MAX macro, the largest C long minus 256.
+    /// </summary>
+    /// <param name="longSize">The size of a C long, in bytes.</param>
+    internal static ulong GetMaxPrecisionMacro(int longSize)
+        => (ulong)((longSize == 4 ? int.MaxValue : long.MaxValue) - 256L);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate CLong __mpfr_get_prec_limit();

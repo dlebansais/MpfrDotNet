@@ -33,23 +33,26 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The other number.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public mpz_t Quotient(mpz_t y, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         mpz_t quotient = new();
 
         switch (rounding)
         {
-            default:
-            case Rounding.TowardZero:
-                mpz.tdiv_q(quotient, this, y);
-                break;
-
             case Rounding.TowardPositiveInfinity:
                 mpz.cdiv_q(quotient, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
                 mpz.fdiv_q(quotient, this, y);
+                break;
+
+            default:
+                // The check leaves only Rounding.TowardZero.
+                mpz.tdiv_q(quotient, this, y);
                 break;
         }
 
@@ -61,23 +64,26 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The other number.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public mpz_t Remainder(mpz_t y, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         mpz_t remainder = new();
 
         switch (rounding)
         {
-            default:
-            case Rounding.TowardZero:
-                mpz.tdiv_r(remainder, this, y);
-                break;
-
             case Rounding.TowardPositiveInfinity:
                 mpz.cdiv_r(remainder, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
                 mpz.fdiv_r(remainder, this, y);
+                break;
+
+            default:
+                // The check leaves only Rounding.TowardZero.
+                mpz.tdiv_r(remainder, this, y);
                 break;
         }
 
@@ -92,24 +98,27 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="quotient">The quotient.</param>
     /// <param name="remainder">The remainder.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public static void Divide(mpz_t x, mpz_t y, out mpz_t quotient, out mpz_t remainder, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         quotient = new mpz_t();
         remainder = new mpz_t();
 
         switch (rounding)
         {
-            default:
-            case Rounding.TowardZero:
-                mpz.tdiv_qr(quotient, remainder, x, y);
-                break;
-
             case Rounding.TowardPositiveInfinity:
                 mpz.cdiv_qr(quotient, remainder, x, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
                 mpz.fdiv_qr(quotient, remainder, x, y);
+                break;
+
+            default:
+                // The check leaves only Rounding.TowardZero.
+                mpz.tdiv_qr(quotient, remainder, x, y);
                 break;
         }
     }
@@ -119,23 +128,26 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The other number.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public mpz_t Quotient(ulong y, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         mpz_t quotient = new();
 
         switch (rounding)
         {
-            default:
-            case Rounding.TowardZero:
-                mpz.tdiv_q_ui(quotient, this, y);
-                break;
-
             case Rounding.TowardPositiveInfinity:
                 mpz.cdiv_q_ui(quotient, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
                 mpz.fdiv_q_ui(quotient, this, y);
+                break;
+
+            default:
+                // The check leaves only Rounding.TowardZero.
+                mpz.tdiv_q_ui(quotient, this, y);
                 break;
         }
 
@@ -147,23 +159,26 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The other number.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public mpz_t Remainder(ulong y, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         mpz_t remainder = new();
 
         switch (rounding)
         {
-            default:
-            case Rounding.TowardZero:
-                mpz.tdiv_r_ui(remainder, this, y);
-                break;
-
             case Rounding.TowardPositiveInfinity:
                 mpz.cdiv_r_ui(remainder, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
                 mpz.fdiv_r_ui(remainder, this, y);
+                break;
+
+            default:
+                // The check leaves only Rounding.TowardZero.
+                mpz.tdiv_r_ui(remainder, this, y);
                 break;
         }
 
@@ -178,24 +193,27 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="quotient">The quotient.</param>
     /// <param name="remainder">The remainder.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public static void Divide(mpz_t x, ulong y, out mpz_t quotient, out mpz_t remainder, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         quotient = new mpz_t();
         remainder = new mpz_t();
 
         switch (rounding)
         {
-            default:
-            case Rounding.TowardZero:
-                mpz.tdiv_qr_ui(quotient, remainder, x, y);
-                break;
-
             case Rounding.TowardPositiveInfinity:
                 mpz.cdiv_qr_ui(quotient, remainder, x, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
                 mpz.fdiv_qr_ui(quotient, remainder, x, y);
+                break;
+
+            default:
+                // The check leaves only Rounding.TowardZero.
+                mpz.tdiv_qr_ui(quotient, remainder, x, y);
                 break;
         }
     }
@@ -205,8 +223,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The other number.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public ulong AbsRemainder(ulong y, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         return rounding switch
         {
             Rounding.TowardPositiveInfinity => mpz.cdiv_ui(this, y),
@@ -220,23 +241,26 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The other number.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public mpz_t RightShift(ulong y, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         mpz_t quotient = new();
 
         switch (rounding)
         {
-            default:
-            case Rounding.TowardZero:
-                mpz.tdiv_q_2exp(quotient, this, y);
-                break;
-
             case Rounding.TowardPositiveInfinity:
                 mpz.cdiv_q_2exp(quotient, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
                 mpz.fdiv_q_2exp(quotient, this, y);
+                break;
+
+            default:
+                // The check leaves only Rounding.TowardZero.
+                mpz.tdiv_q_2exp(quotient, this, y);
                 break;
         }
 
@@ -248,23 +272,26 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="y">The other number.</param>
     /// <param name="rounding">The rounding.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a value of <see cref="Rounding"/>.</exception>
     public mpz_t RightShiftRemainder(ulong y, Rounding rounding = Rounding.TowardZero)
     {
+        RoundingArgument.Check(rounding, nameof(rounding));
+
         mpz_t remainder = new();
 
         switch (rounding)
         {
-            default:
-            case Rounding.TowardZero:
-                mpz.tdiv_r_2exp(remainder, this, y);
-                break;
-
             case Rounding.TowardPositiveInfinity:
                 mpz.cdiv_r_2exp(remainder, this, y);
                 break;
 
             case Rounding.TowardNegativeInfinity:
                 mpz.fdiv_r_2exp(remainder, this, y);
+                break;
+
+            default:
+                // The check leaves only Rounding.TowardZero.
+                mpz.tdiv_r_2exp(remainder, this, y);
                 break;
         }
 

@@ -663,6 +663,32 @@ public class Comparison
     }
 
     [Test]
+    public void CompareToNaN()
+    {
+        using mpfr_t Nan = mpfr_t.NaN();
+        using mpfr_t One = new(1);
+        using mpz_t IntegerOne = new(1);
+        using mpq_t RationalOne = new(1UL, 1UL);
+        using mpf_t FloatingOne = new(1.0);
+        bool IsNanEqualToNan = Nan.Equals(Nan);
+        bool IsNanEqualToOne = Nan.Equals(One);
+        bool IsOneEqualToNan = One.Equals(Nan);
+
+        // The operators test for NaN before they call CompareTo, so these calls are the only ones that reach the NaN branches.
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Nan.CompareTo(1L), Is.EqualTo(-1));
+        Assert.That(Nan.CompareTo(IntegerOne), Is.EqualTo(-1));
+        Assert.That(Nan.CompareTo(RationalOne), Is.EqualTo(-1));
+        Assert.That(Nan.CompareTo(FloatingOne), Is.EqualTo(-1));
+        Assert.That(Nan.CompareTo(1.0), Is.EqualTo(-1));
+        Assert.That(Nan.CompareTo(double.NaN), Is.Zero);
+        Assert.That(One.CompareTo(double.NaN), Is.EqualTo(1));
+        Assert.That(IsNanEqualToNan, Is.True);
+        Assert.That(IsNanEqualToOne, Is.False);
+        Assert.That(IsOneEqualToNan, Is.False);
+    }
+
+    [Test]
     public void IsLesserOrGreater()
     {
         string AsString;

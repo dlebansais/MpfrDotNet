@@ -117,8 +117,19 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static void set_ux(mpz_t rop, ulong op)
     {
+        set_ux(rop, op, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_set_ux, or its GMP equivalent.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static void set_ux(mpz_t rop, ulong op, bool isMpir)
+    {
         // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
-        if (NativeMethods.IsMpir)
+        if (isMpir)
             NativeMethods.mpz_set_ux(ref rop.Value, (NativeMethods.uintmax_t)op);
         else
             NativeMethods.mpz_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
@@ -131,8 +142,19 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static void set_sx(mpz_t rop, long op)
     {
+        set_sx(rop, op, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_set_sx, or its GMP equivalent.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static void set_sx(mpz_t rop, long op, bool isMpir)
+    {
         // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
-        if (NativeMethods.IsMpir)
+        if (isMpir)
             NativeMethods.mpz_set_sx(ref rop.Value, (NativeMethods.intmax_t)op);
         else
             NativeMethods.mpz_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
@@ -231,8 +253,19 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static void init_set_ux(mpz_t rop, ulong op)
     {
+        init_set_ux(rop, op, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_init_set_ux, or its GMP equivalent.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static void init_set_ux(mpz_t rop, ulong op, bool isMpir)
+    {
         // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
-        if (NativeMethods.IsMpir)
+        if (isMpir)
             NativeMethods.mpz_init_set_ux(ref rop.Value, (NativeMethods.uintmax_t)op);
         else
             NativeMethods.mpz_init_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
@@ -245,8 +278,19 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static void init_set_sx(mpz_t rop, long op)
     {
+        init_set_sx(rop, op, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_init_set_sx, or its GMP equivalent.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static void init_set_sx(mpz_t rop, long op, bool isMpir)
+    {
         // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
-        if (NativeMethods.IsMpir)
+        if (isMpir)
             NativeMethods.mpz_init_set_sx(ref rop.Value, (NativeMethods.intmax_t)op);
         else
             NativeMethods.mpz_init_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
@@ -291,8 +335,18 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static ulong get_ux(mpz_t op)
     {
+        return get_ux(op, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_get_ux, or its GMP equivalent.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static ulong get_ux(mpz_t op, bool isMpir)
+    {
         // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
-        return NativeMethods.IsMpir ? (ulong)NativeMethods.mpz_get_ux(ref op.Value) : (ulong)NativeMethods.mpz_get_ui(ref op.Value);
+        return isMpir ? (ulong)NativeMethods.mpz_get_ux(ref op.Value) : (ulong)NativeMethods.mpz_get_ui(ref op.Value);
     }
 
     /// <summary>
@@ -301,8 +355,18 @@ public static class mpz
     /// <param name="op">The operand.</param>
     public static long get_sx(mpz_t op)
     {
+        return get_sx(op, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_get_sx, or its GMP equivalent.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static long get_sx(mpz_t op, bool isMpir)
+    {
         // GMP has no _sx and _ux functions, but its long is 64-bit on Linux, like intmax_t.
-        return NativeMethods.IsMpir ? (long)NativeMethods.mpz_get_sx(ref op.Value) : (long)NativeMethods.mpz_get_si(ref op.Value);
+        return isMpir ? (long)NativeMethods.mpz_get_sx(ref op.Value) : (long)NativeMethods.mpz_get_si(ref op.Value);
     }
 
     /// <summary>
@@ -1054,8 +1118,20 @@ public static class mpz
     {
         MpirArgument.CheckRoot(op, n, nameof(op), nameof(n));
 
+        nthroot(rop, op, n, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_nthroot, or its GMP equivalent.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="n">The n.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static void nthroot(mpz_t rop, mpz_t op, ulong n, bool isMpir)
+    {
         // GMP has no mpz_nthroot: mpz_root computes the same truncated root.
-        if (NativeMethods.IsMpir)
+        if (isMpir)
             NativeMethods.mpz_nthroot(ref rop.Value, ref op.Value, (NativeMethods.mpir_ui)n);
         else
             _ = NativeMethods.mpz_root(ref rop.Value, ref op.Value, (NativeMethods.mpir_ui)n);
@@ -1135,9 +1211,22 @@ public static class mpz
     {
         state.ThrowIfDisposed();
 
+        return probable_prime_p(n, state, prob, div, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_probable_prime_p, or its GMP equivalent.
+    /// </summary>
+    /// <param name="n">The value.</param>
+    /// <param name="state">The state.</param>
+    /// <param name="prob">The probability.</param>
+    /// <param name="div">The divider.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static bool probable_prime_p(mpz_t n, randstate_t state, int prob, ulong div, bool isMpir)
+    {
         // GMP has no mpz_probable_prime_p. Each Miller-Rabin round of mpz_probab_prime_p errs with a probability of at most 1/4,
         // so prob / 2 rounds bound the error by 2^-prob.
-        if (NativeMethods.IsMpir)
+        if (isMpir)
             return NativeMethods.mpz_probable_prime_p(ref n.Value, ref state.Value, prob, (NativeMethods.mpir_ui)div) != 0;
         else
             return NativeMethods.mpz_probab_prime_p(ref n.Value, Math.Max(1, (prob + 1) / 2)) != 0;
@@ -1154,8 +1243,20 @@ public static class mpz
     {
         state.ThrowIfDisposed();
 
+        return likely_prime_p(n, state, div, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_likely_prime_p, or its GMP equivalent.
+    /// </summary>
+    /// <param name="n">The value.</param>
+    /// <param name="state">The state.</param>
+    /// <param name="div">The divider.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static bool likely_prime_p(mpz_t n, randstate_t state, ulong div, bool isMpir)
+    {
         // GMP has no mpz_likely_prime_p: 25 rounds is the usual choice for mpz_probab_prime_p.
-        if (NativeMethods.IsMpir)
+        if (isMpir)
             return NativeMethods.mpz_likely_prime_p(ref n.Value, ref state.Value, (NativeMethods.mpir_ui)div) != 0;
         else
             return NativeMethods.mpz_probab_prime_p(ref n.Value, 25) != 0;
@@ -1172,8 +1273,20 @@ public static class mpz
     {
         state.ThrowIfDisposed();
 
+        next_prime_candidate(rop, op, state, NativeMethods.IsMpir);
+    }
+
+    /// <summary>
+    /// Calls mpz_next_prime_candidate, or its GMP equivalent.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="state">The state.</param>
+    /// <param name="isMpir">True to call the MPIR function, false to call its GMP equivalent, which MPIR also exports.</param>
+    internal static void next_prime_candidate(mpz_t rop, mpz_t op, randstate_t state, bool isMpir)
+    {
         // GMP has no mpz_next_prime_candidate: mpz_nextprime returns the next probable prime, which is also a candidate.
-        if (NativeMethods.IsMpir)
+        if (isMpir)
             NativeMethods.mpz_next_prime_candidate(ref rop.Value, ref op.Value, ref state.Value);
         else
             NativeMethods.mpz_nextprime(ref rop.Value, ref op.Value);

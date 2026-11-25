@@ -298,6 +298,114 @@ internal class Overloads
         Assert.That(Interop.Mpfr.NativeMethods.ReadPrecisionLimit(DefaultPrecisionAddress, Fallback), Is.EqualTo(mpfr.get_default_prec()));
     }
 
+    [Test]
+    public void TestMaxPrecisionMacro()
+    {
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Interop.Mpfr.NativeMethods.GetMaxPrecisionMacro(longSize: 4), Is.EqualTo(2147483391UL));
+        Assert.That(Interop.Mpfr.NativeMethods.GetMaxPrecisionMacro(longSize: 8), Is.EqualTo(9223372036854775551UL));
+    }
+
+    [Test]
+    public void TestThrowIfNotMpir()
+    {
+        const string FunctionName = "mpf_rrandomb";
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => mpf.ThrowIfNotMpir(isMpir: true, FunctionName), Throws.Nothing);
+        Assert.That(() => mpf.ThrowIfNotMpir(isMpir: false, FunctionName), Throws.TypeOf<PlatformNotSupportedException>().With.Message.EqualTo("mpf_rrandomb is only available with MPIR, on Windows."));
+    }
+
+    [Test]
+    public void TestMpirOrGmpFunctions()
+    {
+        const string Prime = "622288097498926496141095869268883999563096063592498055290461";
+
+        // MPIR also exports the GMP functions, so both choices run on Windows. GMP has none of the MPIR functions.
+        bool[] ChoiceList = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? [true, false] : [false];
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+
+        foreach (bool IsMpir in ChoiceList)
+        {
+            using mpz_t Integer = new();
+            using mpz_t Cube = new(1000000);
+            using mpz_t Root = new();
+            using mpz_t PrimeInteger = new(Prime);
+            using mpz_t Composite = PrimeInteger * 2;
+            using mpz_t BeforePrime = PrimeInteger - 1;
+            using mpz_t NextPrime = new();
+            using randstate_t State = new();
+
+            mpz.set_ux(Integer, ulong.MaxValue, IsMpir);
+            Assert.That(mpz.get_ux(Integer, IsMpir), Is.EqualTo(ulong.MaxValue));
+
+            mpz.set_sx(Integer, long.MinValue, IsMpir);
+            Assert.That(mpz.get_sx(Integer, IsMpir), Is.EqualTo(long.MinValue));
+
+            // The integer is cleared before it is initialized again, so that no memory is leaked and Dispose stays valid.
+            mpz.clears(Integer);
+            mpz.init_set_ux(Integer, ulong.MaxValue, IsMpir);
+            Assert.That(Integer.ToString(), Is.EqualTo("18446744073709551615"));
+
+            mpz.clears(Integer);
+            mpz.init_set_sx(Integer, long.MinValue, IsMpir);
+            Assert.That(Integer.ToString(), Is.EqualTo("-9223372036854775808"));
+
+            mpz.nthroot(Root, Cube, 3, IsMpir);
+            Assert.That(Root.ToString(), Is.EqualTo("100"));
+
+            Assert.That(mpz.probable_prime_p(PrimeInteger, State, 10, 0, IsMpir), Is.True);
+            Assert.That(mpz.probable_prime_p(Composite, State, 10, 0, IsMpir), Is.False);
+            Assert.That(mpz.likely_prime_p(PrimeInteger, State, 0, IsMpir), Is.True);
+            Assert.That(mpz.likely_prime_p(Composite, State, 0, IsMpir), Is.False);
+
+            mpz.next_prime_candidate(NextPrime, BeforePrime, State, IsMpir);
+            Assert.That(NextPrime.ToString(), Is.EqualTo(Prime));
+        }
+    }
+
+    [Test]
+    public void TestInvalidRounding()
+    {
+        const string Message = "The rounding is not a valid value.";
+        const MpirDotNet.Rounding InvalidRounding = (MpirDotNet.Rounding)3;
+
+        using mpz_t MinusSeven = new(-7);
+        using mpz_t Two = new(2);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => MinusSeven.Quotient(Two, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message).And.Property(nameof(ArgumentException.ParamName)).EqualTo("rounding"));
+        Assert.That(() => MinusSeven.Remainder(Two, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message));
+        Assert.That(() => mpz_t.Divide(MinusSeven, Two, out _, out _, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message));
+        Assert.That(() => MinusSeven.Quotient(2UL, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message));
+        Assert.That(() => MinusSeven.Remainder(2UL, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message));
+        Assert.That(() => mpz_t.Divide(MinusSeven, 2UL, out _, out _, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message));
+        Assert.That(() => MinusSeven.AbsRemainder(2UL, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message));
+        Assert.That(() => MinusSeven.RightShift(1UL, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message));
+        Assert.That(() => MinusSeven.RightShiftRemainder(1UL, InvalidRounding), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith(Message));
+    }
+
+    [Test]
+    public void TestInvalidRngAlgorithm()
+    {
+        const RngAlgorithm InvalidAlgorithm = (RngAlgorithm)3;
+
+        Assert.That(() => randstate_t.Create(InvalidAlgorithm), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The algorithm is not a valid value.").And.Property(nameof(ArgumentException.ParamName)).EqualTo("algorithm"));
+    }
+
+    [Test]
+    public void TestNativeLongRange()
+    {
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(mpfr.GetNativeLongMin(isNativeLong32: true), Is.EqualTo(int.MinValue));
+        Assert.That(mpfr.GetNativeLongMin(isNativeLong32: false), Is.EqualTo(long.MinValue));
+        Assert.That(mpfr.GetNativeLongMax(isNativeLong32: true), Is.EqualTo(int.MaxValue));
+        Assert.That(mpfr.GetNativeLongMax(isNativeLong32: false), Is.EqualTo(long.MaxValue));
+        Assert.That(mpfr.GetNativeULongMax(isNativeLong32: true), Is.EqualTo(uint.MaxValue));
+        Assert.That(mpfr.GetNativeULongMax(isNativeLong32: false), Is.EqualTo(ulong.MaxValue));
+    }
+
 #if NETFRAMEWORK
     [Test]
     public void TestOldFrameworkRequiresWindows()

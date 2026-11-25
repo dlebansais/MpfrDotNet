@@ -705,10 +705,21 @@ public static class mpf
     {
         state.ThrowIfDisposed();
 
-        if (!NativeMethods.IsMpir)
-            throw new PlatformNotSupportedException("mpf_rrandomb is only available with MPIR, on Windows.");
+        ThrowIfNotMpir(NativeMethods.IsMpir, nameof(NativeMethods.mpf_rrandomb));
 
         NativeMethods.mpf_rrandomb(ref rop.Value, ref state.Value, (NativeMethods.size_t)max_size, new CLong(exp));
+    }
+
+    /// <summary>
+    /// Checks that a function that exists in MPIR but not in GMP can be called.
+    /// </summary>
+    /// <param name="isMpir">True if the native library is MPIR, false if it is GMP.</param>
+    /// <param name="functionName">The name of the native function.</param>
+    /// <exception cref="PlatformNotSupportedException"><paramref name="isMpir"/> is <see langword="false"/>.</exception>
+    internal static void ThrowIfNotMpir(bool isMpir, string functionName)
+    {
+        if (!isMpir)
+            throw new PlatformNotSupportedException($"{functionName} is only available with MPIR, on Windows.");
     }
     #endregion
 }
