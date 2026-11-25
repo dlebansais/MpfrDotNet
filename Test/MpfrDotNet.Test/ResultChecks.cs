@@ -513,6 +513,7 @@ internal class ResultChecks
     [TestCase(-2147483647L, 2147483649L, 2U, 2147483649L)]
     [TestCase(2147483647L, -2147483649L, 2U, -2147483649L)]
     [TestCase(1000L, 3322L, 10U, 1000L)]
+    [TestCase(1L, 8589934594L, 4U, 4294967297L)]
     [TestCase(0L, 0L, 10U, 0L)]
     public void TestUnwrapExponent(long nativeExponent, long bitExponent, uint digitBase, long expected)
     {

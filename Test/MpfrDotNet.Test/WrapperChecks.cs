@@ -389,7 +389,8 @@ internal class WrapperChecks
     [Test]
     public void TestOperandBitCountLimit()
     {
-        ulong MaxExponent = (ulong)mpfr_t.MaxMaxExponent;
+        // The native limit: mpfr_t.MaxMaxExponent is clamped to int, and the limit is 2^62 - 1 on Linux.
+        ulong MaxExponent = (ulong)(long)Interop.Mpfr.NativeMethods.mpfr_get_emax_max().Value;
 
         using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(() => mpfr.CheckOperandBitCount(MaxExponent - 1UL), Throws.Nothing);
