@@ -40,7 +40,12 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     {
         ThrowIfDisposed(this);
 
-        return new mpz_t(Value.Numerator);
+        // mpq.get_num reads through a reference to this number, which keeps it alive during the copy: a copy of
+        // Value would let a temporary be finalized before its limbs are read.
+        mpz_t Result = new();
+        mpq.get_num(Result, this);
+
+        return Result;
     }
 
     /// <summary>
@@ -65,7 +70,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     {
         ThrowIfDisposed(this);
 
-        return new mpz_t(Value.Denominator);
+        // See GetNumerator.
+        mpz_t Result = new();
+        mpq.get_den(Result, this);
+
+        return Result;
     }
 
     /// <summary>

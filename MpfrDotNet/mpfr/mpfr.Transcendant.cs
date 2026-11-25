@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Runtime.InteropServices;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
@@ -307,8 +308,13 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="ArgumentException"><paramref name="sop"/> and <paramref name="cop"/> are the same number.</exception>
     public static int sin_cos(mpfr_t sop, mpfr_t cop, mpfr_t op, mpfr_rnd_t rnd)
     {
+        // MPFR aborts the process when the two results are the same number.
+        if (ReferenceEquals(sop, cop))
+            throw new ArgumentException("The two results must be different numbers.", nameof(cop));
+
         return mpfr_sin_cos(ref sop.Value, ref cop.Value, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
@@ -441,8 +447,13 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="ArgumentException"><paramref name="sop"/> and <paramref name="cop"/> are the same number.</exception>
     public static int sinh_cosh(mpfr_t sop, mpfr_t cop, mpfr_t op, mpfr_rnd_t rnd)
     {
+        // MPFR aborts the process when the two results are the same number.
+        if (ReferenceEquals(sop, cop))
+            throw new ArgumentException("The two results must be different numbers.", nameof(cop));
+
         return mpfr_sinh_cosh(ref sop.Value, ref cop.Value, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
@@ -741,10 +752,52 @@ public static partial class mpfr
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">Gamma(<paramref name="op"/>) is beyond the widest exponent range of MPFR, which mpfr_gamma_inc does not support.</exception>
     public static int gamma_inc(mpfr_t rop, mpfr_t op, mpfr_t op2, mpfr_rnd_t rnd)
     {
-        return mpfr_gamma_inc(ref rop.Value, ref op.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
+        __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
+
+        // MPFR aborts the process when Gamma(op) overflows, which happens for op beyond about 5e7 with the 32-bit
+        // exponents of Windows, and 1e17 elsewhere: Gamma(1e6) is far from overflowing.
+        if (mpfr_cmp_ui(ref op.Value, 1000000UL) > 0 && IsGammaBeyondWidestRange(op))
+            throw new OverflowException("Gamma of the operand is beyond the exponent range of MPFR.");
+
+        return mpfr_gamma_inc(ref rop.Value, ref op.Value, ref op2.Value, NativeRounding);
     }
+
+    /// <summary>
+    /// Checks whether Gamma of a number overflows the widest exponent range.
+    /// </summary>
+    /// <param name="op">The number.</param>
+    /// <returns><see langword="true"/> if Gamma(<paramref name="op"/>) overflows; otherwise, <see langword="false"/>.</returns>
+    internal static bool IsGammaBeyondWidestRange(mpfr_t op)
+    {
+        // The flags and the exponent range of the thread are restored, so that the check leaves no trace.
+        uint Flags = mpfr_flags_save();
+        CLong MinExponent = mpfr_get_emin();
+        CLong MaxExponent = mpfr_get_emax();
+
+        using mpfr_t Gamma = mpfr_t.CreateWithPrecision(PrecisionMin, nameof(op));
+        _ = mpfr_set_emin(mpfr_get_emin_min());
+        _ = mpfr_set_emax(mpfr_get_emax_max());
+
+        try
+        {
+            // mpfr_gamma_inc rounds toward zero and asserts that no overflow happened: the result is then finite.
+            mpfr_clear_overflow();
+            _ = mpfr_gamma(ref Gamma.Value, ref op.Value, __mpfr_rnd_t.MPFR_RNDZ);
+            return mpfr_overflow_p() != 0;
+        }
+        finally
+        {
+            _ = mpfr_set_emin(MinExponent);
+            _ = mpfr_set_emax(MaxExponent);
+            mpfr_flags_restore(Flags, AllFlags);
+        }
+    }
+
+    // MPFR_FLAGS_ALL.
+    private const uint AllFlags = 63;
 
     /// <summary>
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.

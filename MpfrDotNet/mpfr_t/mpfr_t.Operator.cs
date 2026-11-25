@@ -405,12 +405,15 @@ public partial class mpfr_t : IDisposable
         z.LastTernaryResult = -mpfr.sub_q(z, y, x, OppositeRounding(y.Rounding));
         _ = mpfr.neg(z, z, y.Rounding);
 
-        // An exact zero gets the sign that MPFR gives to x - y: +0, or -0 when rounding toward -infinity,
-        // except that 0 - (-0) is +0. A zero from an underflow is not exact and already has the sign of x - y.
+        // An exact zero gets the sign that MPFR gives to x - y. For x = 0 and y a zero, as for the integers of
+        // mpfr_z_sub: 0 - (+0) = -0 and 0 - (-0) = +0. Otherwise the zero comes from a cancellation: +0, or -0 when
+        // rounding toward -infinity. A zero from an underflow is not exact and already has the sign of x - y.
         if (z.IsZero && z.LastTernaryResult == 0)
         {
-            bool IsNegativeZeroOperand = y.IsZero && mpfr.signbit(y) != 0;
-            mpfr.set_zero(z, y.Rounding == mpfr_rnd_t.MPFR_RNDD && !IsNegativeZeroOperand ? -1 : +1);
+            int Sign = mpq.sgn(x) == 0 && y.IsZero
+                ? (mpfr.signbit(y) != 0 ? +1 : -1)
+                : (y.Rounding == mpfr_rnd_t.MPFR_RNDD ? -1 : +1);
+            mpfr.set_zero(z, Sign);
         }
 
         return z;

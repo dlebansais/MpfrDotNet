@@ -258,8 +258,13 @@ public static class mpf
     /// <param name="rop">The result operand.</param>
     /// <param name="str">The string.</param>
     /// <param name="strbase">The base.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
     public static int set_str(mpf_t rop, string str, uint strbase)
     {
+        // The native function would dereference a null string.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
         return NativeMethods.mpf_set_str(ref rop.Value, str, strbase);
     }
 
@@ -332,8 +337,13 @@ public static class mpf
     /// <param name="rop">The result operand.</param>
     /// <param name="str">The string.</param>
     /// <param name="strbase">The base.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
     public static int init_set_str(mpf_t rop, string str, uint strbase)
     {
+        // The native function would dereference a null string.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
         int Result = NativeMethods.mpf_init_set_str(ref rop.Value, str, strbase);
         rop.AllocatedPrecision = rop.Value.Precision;
 
@@ -346,10 +356,23 @@ public static class mpf
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="op">The operand.</param>
+    /// <remarks>As in MPIR, the value is truncated, and a number beyond the range of double gives an infinity or zero.</remarks>
     public static double get_d(mpf_t op)
     {
+        // MPIR computes the exponent in a C long, which is 32-bit on Windows and wraps for numbers beyond 2^(2^31).
+        long Exponent = BitExponent(op);
+        if (Exponent > DoubleMaxExponent)
+            return sgn(op) > 0 ? double.PositiveInfinity : double.NegativeInfinity;
+
+        if (Exponent < DoubleMinExponent)
+            return sgn(op) > 0 ? 0.0 : -0.0;
+
         return NativeMethods.mpf_get_d(ref op.Value);
     }
+
+    // The exponents of the largest double, in [2^1023, 2^1024), and of the smallest, 2^-1074.
+    private const long DoubleMaxExponent = 1024;
+    private const long DoubleMinExponent = -1073;
 
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.

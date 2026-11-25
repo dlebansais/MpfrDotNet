@@ -118,6 +118,25 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, exactly.
+    /// </summary>
+    /// <param name="op">The value.</param>
+    // Without the integer constructors, C# would pick the constructor from double for a long or a ulong, which rounds it to 53 bits.
+    public mpq_t(long op)
+        : this(op, 1UL)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="mpq_t"/> class, exactly.
+    /// </summary>
+    /// <param name="op">The value.</param>
+    public mpq_t(ulong op)
+        : this(op, 1UL)
+    {
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="mpq_t"/> class.
     /// </summary>
     /// <param name="op">The value.</param>

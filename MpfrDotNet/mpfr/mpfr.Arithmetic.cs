@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Runtime.InteropServices;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
@@ -89,9 +90,13 @@ public static partial class mpfr
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int add_q(mpfr_t rop, mpfr_t op1, mpq_t op2, mpfr_rnd_t rnd)
     {
-        CheckRationalOperand(op2);
+        CheckRationalSumOperand(rop, op1, op2);
+        __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
 
-        return mpfr_add_q(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
+        if (IsInTopBinade(op1))
+            return HalvedRationalSum(rop, op1, op2, NativeRounding, isSubtraction: false);
+
+        return mpfr_add_q(ref rop.Value, ref op1.Value, ref op2.Value, NativeRounding);
     }
     #endregion
 
@@ -230,9 +235,13 @@ public static partial class mpfr
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int sub_q(mpfr_t rop, mpfr_t op1, mpq_t op2, mpfr_rnd_t rnd)
     {
-        CheckRationalOperand(op2);
+        CheckRationalSumOperand(rop, op1, op2);
+        __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
 
-        return mpfr_sub_q(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
+        if (IsInTopBinade(op1))
+            return HalvedRationalSum(rop, op1, op2, NativeRounding, isSubtraction: true);
+
+        return mpfr_sub_q(ref rop.Value, ref op1.Value, ref op2.Value, NativeRounding);
     }
     #endregion
 
@@ -777,6 +786,60 @@ public static partial class mpfr
     {
         CheckOperandBitCount((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op.Value.Numerator, 2));
         CheckOperandBitCount((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op.Value.Denominator, 2));
+    }
+
+    /// <summary>
+    /// Checks that the sum of a number and a rational cannot overflow or underflow inside mpfr_add_q and mpfr_sub_q.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op1">The number.</param>
+    /// <param name="op2">The rational.</param>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op2"/>, plus the precisions, has too many bits.</exception>
+    internal static void CheckRationalSumOperand(mpfr_t rop, mpfr_t op1, mpq_t op2)
+    {
+        // These functions also abort when their intermediate sum overflows or underflows in the widest range. Apart
+        // from an op1 in the top binade, which HalvedRationalSum handles, it takes a rational of nearly the size of the
+        // range, or of an ulp of op1 near the limits: a numerator or a denominator with nearly as many bits as the
+        // range, once a margin for the working precision is added.
+        ulong Precision = (2 * get_prec(rop)) + get_prec(op1) + 64;
+
+        CheckOperandBitCount((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op2.Value.Numerator, 2) + Precision);
+        CheckOperandBitCount((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op2.Value.Denominator, 2) + Precision);
+    }
+
+    /// <summary>
+    /// Checks whether a number is in the binade just below the largest exponent of MPFR.
+    /// </summary>
+    /// <param name="op">The number.</param>
+    /// <returns><see langword="true"/> if <paramref name="op"/> is in the top binade; otherwise, <see langword="false"/>.</returns>
+    internal static bool IsInTopBinade(mpfr_t op)
+        => mpfr_regular_p(ref op.Value) != 0 && mpfr_get_exp(ref op.Value).Value >= mpfr_get_emax_max().Value;
+
+    /// <summary>
+    /// Adds or subtracts a rational to a number in the top binade, as 2 * (op1 / 2 +/- op2 / 2).
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op1">The number, in the top binade.</param>
+    /// <param name="op2">The rational.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    /// <param name="isSubtraction"><see langword="true"/> to subtract the rational; <see langword="false"/> to add it.</param>
+    /// <returns>The ternary value.</returns>
+    internal static int HalvedRationalSum(mpfr_t rop, mpfr_t op1, mpq_t op2, __mpfr_rnd_t rnd, bool isSubtraction)
+    {
+        // mpfr_add_q and mpfr_sub_q round the sum to a working precision before rounding it to rop, and abort when
+        // that sum overflows, which a number this close to the largest one does with almost any rational. Halving
+        // both operands is exact, and the final doubling overflows like any other operation, with its flag and ternary.
+        using mpfr_t HalfNumber = mpfr_t.CreateWithPrecision(get_prec(op1), nameof(op1));
+        using mpq_t HalfRational = new();
+        _ = mpfr_div_2ui(ref HalfNumber.Value, ref op1.Value, 1UL, __mpfr_rnd_t.MPFR_RNDN);
+        mpq.div_2exp(HalfRational, op2, 1UL);
+
+        int Ternary = isSubtraction
+            ? mpfr_sub_q(ref rop.Value, ref HalfNumber.Value, ref HalfRational.Value, rnd)
+            : mpfr_add_q(ref rop.Value, ref HalfNumber.Value, ref HalfRational.Value, rnd);
+        int OverflowTernary = mpfr_mul_2ui(ref rop.Value, ref rop.Value, new CULong(1U), rnd);
+
+        return OverflowTernary != 0 ? OverflowTernary : Ternary;
     }
 
     /// <summary>

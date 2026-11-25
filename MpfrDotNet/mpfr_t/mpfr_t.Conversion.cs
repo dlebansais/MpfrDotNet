@@ -238,10 +238,12 @@ public partial class mpfr_t : IDisposable
     }
 
     /// <summary>
-    /// Convert to integral and fractional parts.
+    /// Splits a number into a significand and a power of two (mpfr_frexp): the result y and the exponent e are such
+    /// that the number is y * 2^e, with the absolute value of y in [0.5, 1).
     /// </summary>
     /// <param name="value">The value.</param>
-    /// <param name="e">The exponent upon return.</param>
+    /// <param name="e">The exponent upon return: unspecified for zero, NaN and infinities, which are returned unchanged.</param>
+    /// <returns>The significand.</returns>
     /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static mpfr_t ToIntegralFractional(mpfr_t value, out int e)
     {

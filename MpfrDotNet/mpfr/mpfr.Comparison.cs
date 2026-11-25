@@ -64,8 +64,11 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op2"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static int cmp_q(mpfr_t op1, mpq_t op2)
     {
+        CheckRationalOperand(op2);
+
         return mpfr_cmp_q(ref op1.Value, ref op2.Value);
     }
 

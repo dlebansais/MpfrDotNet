@@ -202,8 +202,13 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="str">The string.</param>
     /// <param name="strbase">The base.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
     public static int set_str(mpz_t rop, string str, uint strbase)
     {
+        // The native function would dereference a null string.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
         return NativeMethods.mpz_set_str(ref rop.Value, str, strbase);
     }
 
@@ -1846,7 +1851,8 @@ public static class mpz
 
         long Count = 0;
 
-        while (IsWhiteSpace(reader.Peek()))
+        // EndOfStream waits for more data, which Peek does not do on pipes and network streams.
+        while (!reader.EndOfStream && IsWhiteSpace(reader.Peek()))
         {
             _ = reader.Read();
             Count++;
@@ -1854,7 +1860,7 @@ public static class mpz
 
         StringBuilder Token = new();
 
-        while (reader.Peek() >= 0 && !IsWhiteSpace(reader.Peek()))
+        while (!reader.EndOfStream && !IsWhiteSpace(reader.Peek()))
         {
             _ = Token.Append((char)reader.Read());
             Count++;
@@ -1877,8 +1883,13 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="content">The input string.</param>
     /// <param name="strBase">The digit base.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
     public static bool init_set_str(mpz_t rop, string content, uint strBase)
     {
+        // The native function would dereference a null string.
+        if (content is null)
+            throw new ArgumentNullException(nameof(content));
+
         return NativeMethods.mpz_init_set_str(ref rop.Value, content, strBase) == 0;
     }
 
@@ -1984,14 +1995,14 @@ public static class mpz
     /// <param name="nails">The nails count.</param>
     /// <param name="op">The operand.</param>
     /// <exception cref="ArgumentNullException"><paramref name="op"/> is <see langword="null"/>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="size"/> is zero, <paramref name="nails"/> is not less than the bits of a word, or <paramref name="count"/> words of <paramref name="size"/> bytes do not fit in <paramref name="op"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="endian"/> is not -1, 0 or 1, <paramref name="size"/> is zero, <paramref name="nails"/> is not less than the bits of a word, or <paramref name="count"/> words of <paramref name="size"/> bytes do not fit in <paramref name="op"/>.</exception>
     public static void import(mpz_t rop, ulong count, int order, ulong size, int endian, ulong nails, byte[] op)
     {
         // The native function reads count * size bytes from op, whatever its length.
         if (op is null)
             throw new ArgumentNullException(nameof(op));
 
-        CheckWordFormat(size, nails);
+        CheckWordFormat(size, endian, nails);
 
         if (count > (ulong)op.LongLength / size)
             throw new ArgumentOutOfRangeException(nameof(count), count, "The words do not fit in the array.");
@@ -2010,7 +2021,7 @@ public static class mpz
     /// <param name="nails">The nails count.</param>
     /// <param name="op">The operand.</param>
     /// <exception cref="ArgumentNullException"><paramref name="rop"/> is <see langword="null"/>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="size"/> is zero, or <paramref name="nails"/> is not less than the bits of a word.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="endian"/> is not -1, 0 or 1, <paramref name="size"/> is zero, or <paramref name="nails"/> is not less than the bits of a word.</exception>
     /// <exception cref="ArgumentException"><paramref name="rop"/> is too small for the words of <paramref name="op"/>.</exception>
     public static void export(byte[] rop, out ulong countp, int order, ulong size, int endian, ulong nails, mpz_t op)
     {
@@ -2019,7 +2030,7 @@ public static class mpz
         if (rop is null)
             throw new ArgumentNullException(nameof(rop));
 
-        CheckWordFormat(size, nails);
+        CheckWordFormat(size, endian, nails);
 
         if (sgn(op) != 0 && (size > (ulong)rop.LongLength || ExportWordCount(op, size, nails) > (ulong)rop.LongLength / size))
             throw new ArgumentException("The array is too small for the value.", nameof(rop));
@@ -2028,8 +2039,12 @@ public static class mpz
         countp = (ulong)countpStruct;
     }
 
-    private static void CheckWordFormat(ulong size, ulong nails)
+    private static void CheckWordFormat(ulong size, int endian, ulong nails)
     {
+        // The native functions step through the bytes of a word by endian: another value reads or writes outside the array.
+        if (endian is not (-1 or 0 or 1))
+            throw new ArgumentOutOfRangeException(nameof(endian), endian, "The endianness must be -1, 0 or 1.");
+
         if (size == 0)
             throw new ArgumentOutOfRangeException(nameof(size), size, "The size of a word cannot be zero.");
 

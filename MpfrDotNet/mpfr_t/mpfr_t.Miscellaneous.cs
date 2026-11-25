@@ -183,8 +183,12 @@ public partial class mpfr_t : IDisposable
     /// Generates a uniformly distributed random float in the interval 0 ≤ rop &lt; 1.
     /// </summary>
     /// <param name="randomState">The random state.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="randomState"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="randomState"/> is disposed.</exception>
     public static mpfr_t UniformRandom(randstate_t randomState)
     {
+        CheckRandomArguments(randomState);
+
         mpfr_t Result = new();
 
         mpfr.urandomb(Result, randomState);
@@ -198,8 +202,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="randomState">The random state.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="randomState"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="randomState"/> is disposed.</exception>
     public static mpfr_t UniformRandom(randstate_t randomState, mpfr_rnd_t rounding)
     {
+        CheckRandomArguments(randomState);
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.urandom(Result, randomState, rounding);
@@ -213,8 +222,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="randomState">The random state.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="randomState"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="randomState"/> is disposed.</exception>
     public static mpfr_t GaussianRandom(randstate_t randomState, mpfr_rnd_t rounding = DefaultRounding)
     {
+        CheckRandomArguments(randomState);
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.nrandom(Result, randomState, rounding);
@@ -230,8 +244,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="rand2">The second random number upon return.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="randomState"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="randomState"/> is disposed.</exception>
     public static void GaussianRandom(randstate_t randomState, out mpfr_t rand1, out mpfr_t rand2, mpfr_rnd_t rounding = DefaultRounding)
     {
+        CheckRandomArguments(randomState);
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         rand1 = new mpfr_t();
         rand2 = new mpfr_t();
 
@@ -246,13 +265,27 @@ public partial class mpfr_t : IDisposable
     /// <param name="randomState">The random state.</param>
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="randomState"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="randomState"/> is disposed.</exception>
     public static mpfr_t ExponentialRandom(randstate_t randomState, mpfr_rnd_t rounding = DefaultRounding)
     {
+        CheckRandomArguments(randomState);
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t Result = new();
 
         Result.LastTernaryResult = mpfr.erandom(Result, randomState, rounding);
 
         return Result;
+    }
+
+    // The arguments are checked before the results are created, so that no number is left to the finalizer.
+    private static void CheckRandomArguments(randstate_t randomState)
+    {
+        if (randomState is null)
+            throw new ArgumentNullException(nameof(randomState));
+
+        randomState.ThrowIfDisposed();
     }
 
     /// <summary>

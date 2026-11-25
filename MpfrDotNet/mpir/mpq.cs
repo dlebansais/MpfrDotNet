@@ -107,8 +107,13 @@ public static class mpq
     /// <param name="rop">The result operand.</param>
     /// <param name="str">The string.</param>
     /// <param name="strBase">The base.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
     public static bool set_str(mpq_t rop, string str, int strBase)
     {
+        // The native function would dereference a null string.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
         return NativeMethods.mpq_set_str(ref rop.Value, str, strBase) == 0;
     }
 

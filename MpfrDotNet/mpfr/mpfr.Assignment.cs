@@ -233,8 +233,13 @@ public static partial class mpfr
     /// <param name="strbase">The string base.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="strbase"/> is not 0 or between 2 and 62, or <paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
     public static bool set_str(mpfr_t rop, string str, uint strbase, mpfr_rnd_t rnd)
     {
+        // The native function would dereference a null string.
+        if (str is null)
+            throw new ArgumentNullException(nameof(str));
+
         // MPFR aborts the process for another base.
         if (strbase is not (0 or (>= 2 and <= 62)))
             throw new ArgumentOutOfRangeException(nameof(strbase), strbase, "The base must be 0 or between 2 and 62.");
