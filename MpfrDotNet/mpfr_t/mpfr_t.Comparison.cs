@@ -17,6 +17,9 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
     public int CompareTo(mpfr_t? other)
     {
+        ThrowIfDisposed(this);
+        ThrowIfDisposed(other);
+
         if (other is null)
             return 1;
 
@@ -330,6 +333,8 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// <remarks>As with <see cref="double.Equals(double)"/>, NaN is equal to NaN, unlike with the == operator.</remarks>
     public override bool Equals(object? obj)
     {
+        ThrowIfDisposed(this);
+
         return obj is mpfr_t other && Equals(other);
     }
 
@@ -341,6 +346,9 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// <remarks>As with <see cref="double.Equals(double)"/>, NaN is equal to NaN, unlike with the == operator.</remarks>
     public bool Equals(mpfr_t? other)
     {
+        ThrowIfDisposed(this);
+        ThrowIfDisposed(other);
+
         if (other is null)
             return false;
 
@@ -359,6 +367,8 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public int CompareTo(object? obj)
     {
+        ThrowIfDisposed(this);
+
         if (obj is null)
             return 1;
         else if (obj is mpfr_t other)

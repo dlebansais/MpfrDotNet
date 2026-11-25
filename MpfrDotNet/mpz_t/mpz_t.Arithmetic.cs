@@ -454,11 +454,13 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     }
 
     /// <summary>
-    /// Gets the modulo of the number with a power of two.
+    /// Gets the number raised to a power, modulo another number.
     /// </summary>
     /// <param name="exp">The power.</param>
     /// <param name="mod">The modulo.</param>
     /// <exception cref="ObjectDisposedException">This number, <paramref name="exp"/> or <paramref name="mod"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException"><paramref name="mod"/> is zero.</exception>
+    /// <exception cref="ArithmeticException"><paramref name="exp"/> is negative and the number has no inverse modulo <paramref name="mod"/>.</exception>
     public mpz_t PowerMod(mpz_t exp, mpz_t mod)
     {
         ThrowIfDisposed(this);
@@ -473,11 +475,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     }
 
     /// <summary>
-    /// Gets the modulo of the number with a power of two.
+    /// Gets the number raised to a power, modulo another number.
     /// </summary>
     /// <param name="exp">The power.</param>
     /// <param name="mod">The modulo.</param>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="mod"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException"><paramref name="mod"/> is zero.</exception>
     public mpz_t PowerMod(ulong exp, mpz_t mod)
     {
         ThrowIfDisposed(this);

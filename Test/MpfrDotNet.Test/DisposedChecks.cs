@@ -39,19 +39,31 @@ internal class DisposedChecks
             {
                 bool IsInstance = Member is MethodInfo { IsStatic: false };
 
+                List<int> Positions = [];
+
                 if (IsInstance)
-                    yield return CreateCase(NumberType, Member, ThisPosition);
+                    Positions.Add(ThisPosition);
 
                 ParameterInfo[] Parameters = Member.GetParameters();
                 for (int i = 0; i < Parameters.Length; i++)
                     if (!Parameters[i].IsOut && IsNumberOperand(Parameters[i].ParameterType))
-                        yield return CreateCase(NumberType, Member, i);
+                        Positions.Add(i);
+
+                foreach (int Position in Positions)
+                {
+                    yield return CreateCase(NumberType, Member, Position, isOthersNull: false);
+
+                    // The same call with null for the other operands that accept it: a member must not skip the check of
+                    // the disposed operand because another operand is null.
+                    if (Parameters.Where((p, i) => i != Position && IsNullableOperand(p)).Any())
+                        yield return CreateCase(NumberType, Member, Position, isOthersNull: true);
+                }
             }
         }
     }
 
     [TestCaseSource(nameof(DisposedOperandCases))]
-    public void TestDisposedOperand(Type numberType, MethodBase member, int position)
+    public void TestDisposedOperand(Type numberType, MethodBase member, int position, bool isOthersNull)
     {
         List<IDisposable> Created = [];
 
@@ -64,7 +76,7 @@ internal class DisposedChecks
                 Instance = CreateNumber(numberType, isDisposed: position == ThisPosition, Created);
 
             object?[] Arguments = member.GetParameters()
-                .Select((p, i) => CreateArgument(p, isDisposed: i == position, numberType, Created))
+                .Select((p, i) => isOthersNull && i != position && IsNullableOperand(p) ? null : CreateArgument(p, isDisposed: i == position, numberType, Created))
                 .ToArray();
 
             Assert.That(() => Invoke(member, Instance, Arguments), Throws.TypeOf<ObjectDisposedException>().With.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(DisposedType!.Name));
@@ -100,6 +112,37 @@ internal class DisposedChecks
         Assert.That(Mpfr.Dispose, Throws.Nothing);
         Assert.That(() => mpq_t.ClearArray(Rationals), Throws.Nothing);
         Assert.That(() => mpfr_t.ClearArray(Mpfrs), Throws.Nothing);
+    }
+
+    [Test]
+    public void TestDisposedNumberComparedWithNull()
+    {
+        mpz_t Integer = new(1);
+        mpq_t Rational = new(1UL, 2UL);
+        mpf_t Float = new(1.5);
+        mpfr_t Mpfr = new(1.5);
+        object NullObject = Sample.CreateNull<object>();
+        mpz_t NullInteger = Sample.CreateNull<mpz_t>();
+        mpfr_t NullMpfr = Sample.CreateNull<mpfr_t>();
+        Integer.Dispose();
+        Rational.Dispose();
+        Float.Dispose();
+        Mpfr.Dispose();
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => Integer.Equals(NullObject), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Integer.CompareTo(NullObject), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Integer < NullInteger, Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => NullInteger == Integer, Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Rational.Equals(NullObject), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Rational.CompareTo(NullObject), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Float.Equals(NullObject), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Float.CompareTo(NullObject), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Mpfr.Equals(NullObject), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Mpfr.Equals(NullMpfr), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Mpfr.CompareTo(NullObject), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Mpfr.CompareTo(NullMpfr), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => Mpfr > NullInteger, Throws.TypeOf<ObjectDisposedException>());
     }
 
     [Test]
@@ -168,12 +211,24 @@ internal class DisposedChecks
         }
     }
 
-    private static TestCaseData CreateCase(Type numberType, MethodBase member, int position)
+    private static TestCaseData CreateCase(Type numberType, MethodBase member, int position, bool isOthersNull)
     {
         string Parameters = string.Join(", ", member.GetParameters().Select(p => p.ParameterType.Name));
         string Operand = position == ThisPosition ? "this" : member.GetParameters()[position].Name!;
+        string Others = isOthersNull ? " and the others null" : string.Empty;
 
-        return new TestCaseData(numberType, member, position).SetName($"{numberType.Name}.{member.Name}({Parameters}) with {Operand} disposed");
+        return new TestCaseData(numberType, member, position, isOthersNull).SetName($"{numberType.Name}.{member.Name}({Parameters}) with {Operand} disposed{Others}");
+    }
+
+    // A parameter declared nullable, of a number type or object. Nullability annotations can only be read on .NET 6 and later.
+    private static bool IsNullableOperand(ParameterInfo parameter)
+    {
+#if NET6_0_OR_GREATER
+        bool IsOperandType = IsNumberOperand(parameter.ParameterType) || parameter.ParameterType == typeof(object);
+        return !parameter.IsOut && IsOperandType && new NullabilityInfoContext().Create(parameter).ReadState == NullabilityState.Nullable;
+#else
+        return false;
+#endif
     }
 
     private static bool IsNumberOperand(Type type) => NumberTypes.Contains(ElementType(type));

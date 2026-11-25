@@ -160,6 +160,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public byte ToByte(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (byte)this;
     }
 
@@ -258,6 +260,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public double ToDouble(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (double)this;
     }
 
@@ -278,6 +282,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public short ToInt16(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (short)this;
     }
 
@@ -298,6 +304,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public int ToInt32(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (int)this;
     }
 
@@ -318,6 +326,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public long ToInt64(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (long)this;
     }
 
@@ -338,6 +348,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public sbyte ToSByte(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return checked((sbyte)(short)this);
     }
 
@@ -358,6 +370,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public float ToSingle(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (float)this;
     }
 
@@ -378,6 +392,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToString(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return ToString();
     }
 
@@ -454,6 +470,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public ushort ToUInt16(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (ushort)this;
     }
 
@@ -474,6 +492,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public uint ToUInt32(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (uint)this;
     }
 
@@ -494,6 +514,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public ulong ToUInt64(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (ulong)this;
     }
 
@@ -518,6 +540,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public int CompareTo(object? obj)
     {
+        ThrowIfDisposed(this);
+
         if (obj is null)
             return 1;
         else if (obj is mpz_t other)

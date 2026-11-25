@@ -26,6 +26,10 @@ public class randstate_t : IDisposable
         if (parameters is null)
             throw new ArgumentNullException(nameof(parameters));
 
+        // A seed passed here would otherwise be ignored silently: gmp.randseed seeds a state.
+        if (algorithm != RngAlgorithm.LinearCongruential && parameters.Length > 0)
+            throw new ArgumentException("This algorithm takes no parameters.", nameof(parameters));
+
         return new randstate_t(algorithm, parameters);
     }
 
@@ -78,7 +82,7 @@ public class randstate_t : IDisposable
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid combination of parameters for this algorithm.", nameof(algorithm));
+                    throw new ArgumentException("Invalid combination of parameters for this algorithm.", nameof(parameters));
                 }
 
                 break;

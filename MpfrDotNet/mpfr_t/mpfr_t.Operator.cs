@@ -1009,6 +1009,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpfr_t? x, mpz_t? y)
     {
+        ThrowIfDisposed(x);
+        mpz_t.ThrowIfDisposed(y);
+
         return x is not null && (y is null || (!x.IsNan && x.CompareTo(y) > 0));
     }
 
@@ -1020,6 +1023,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpz_t? x, mpfr_t? y)
     {
+        mpz_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is not null && (y is null || (!y.IsNan && y.CompareTo(x) < 0));
     }
 
@@ -1031,6 +1037,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpfr_t? x, mpq_t? y)
     {
+        ThrowIfDisposed(x);
+        mpq_t.ThrowIfDisposed(y);
+
         return x is not null && (y is null || (!x.IsNan && x.CompareTo(y) > 0));
     }
 
@@ -1042,6 +1051,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpq_t? x, mpfr_t? y)
     {
+        mpq_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is not null && (y is null || (!y.IsNan && y.CompareTo(x) < 0));
     }
 
@@ -1053,6 +1065,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpfr_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        mpf_t.ThrowIfDisposed(y);
+
         return x is not null && (y is null || (!x.IsNan && x.CompareTo(y) > 0));
     }
 
@@ -1064,6 +1079,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpf_t? x, mpfr_t? y)
     {
+        mpf_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is not null && (y is null || (!y.IsNan && y.CompareTo(x) < 0));
     }
 
@@ -1155,6 +1173,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpfr_t? x, mpz_t? y)
     {
+        ThrowIfDisposed(x);
+        mpz_t.ThrowIfDisposed(y);
+
         return y is null || (x is not null && (!x.IsNan && x.CompareTo(y) >= 0));
     }
 
@@ -1166,6 +1187,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpz_t? x, mpfr_t? y)
     {
+        mpz_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is null || (x is not null && (!y.IsNan && y.CompareTo(x) <= 0));
     }
 
@@ -1177,6 +1201,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpfr_t? x, mpq_t? y)
     {
+        ThrowIfDisposed(x);
+        mpq_t.ThrowIfDisposed(y);
+
         return y is null || (x is not null && (!x.IsNan && x.CompareTo(y) >= 0));
     }
 
@@ -1188,6 +1215,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpq_t? x, mpfr_t? y)
     {
+        mpq_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is null || (x is not null && (!y.IsNan && y.CompareTo(x) <= 0));
     }
 
@@ -1199,6 +1229,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpfr_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        mpf_t.ThrowIfDisposed(y);
+
         return y is null || (x is not null && (!x.IsNan && x.CompareTo(y) >= 0));
     }
 
@@ -1210,6 +1243,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpf_t? x, mpfr_t? y)
     {
+        mpf_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is null || (x is not null && (!y.IsNan && y.CompareTo(x) <= 0));
     }
 
@@ -1301,6 +1337,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpfr_t? x, mpz_t? y)
     {
+        ThrowIfDisposed(x);
+        mpz_t.ThrowIfDisposed(y);
+
         return y is not null && (x is null || (!x.IsNan && x.CompareTo(y) < 0));
     }
 
@@ -1312,6 +1351,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpz_t? x, mpfr_t? y)
     {
+        mpz_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is not null && (x is null || (!y.IsNan && y.CompareTo(x) > 0));
     }
 
@@ -1323,6 +1365,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpfr_t? x, mpq_t? y)
     {
+        ThrowIfDisposed(x);
+        mpq_t.ThrowIfDisposed(y);
+
         return y is not null && (x is null || (!x.IsNan && x.CompareTo(y) < 0));
     }
 
@@ -1334,6 +1379,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpq_t? x, mpfr_t? y)
     {
+        mpq_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is not null && (x is null || (!y.IsNan && y.CompareTo(x) > 0));
     }
 
@@ -1345,6 +1393,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpfr_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        mpf_t.ThrowIfDisposed(y);
+
         return y is not null && (x is null || (!x.IsNan && x.CompareTo(y) < 0));
     }
 
@@ -1356,6 +1407,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpf_t? x, mpfr_t? y)
     {
+        mpf_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is not null && (x is null || (!y.IsNan && y.CompareTo(x) > 0));
     }
 
@@ -1447,6 +1501,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpfr_t? x, mpz_t? y)
     {
+        ThrowIfDisposed(x);
+        mpz_t.ThrowIfDisposed(y);
+
         return x is null || (y is not null && (!x.IsNan && x.CompareTo(y) <= 0));
     }
 
@@ -1458,6 +1515,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpz_t? x, mpfr_t? y)
     {
+        mpz_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is null || (y is not null && (!y.IsNan && y.CompareTo(x) >= 0));
     }
 
@@ -1469,6 +1529,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpfr_t? x, mpq_t? y)
     {
+        ThrowIfDisposed(x);
+        mpq_t.ThrowIfDisposed(y);
+
         return x is null || (y is not null && (!x.IsNan && x.CompareTo(y) <= 0));
     }
 
@@ -1480,6 +1543,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpq_t? x, mpfr_t? y)
     {
+        mpq_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is null || (y is not null && (!y.IsNan && y.CompareTo(x) >= 0));
     }
 
@@ -1491,6 +1557,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpfr_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        mpf_t.ThrowIfDisposed(y);
+
         return x is null || (y is not null && (!x.IsNan && x.CompareTo(y) <= 0));
     }
 
@@ -1502,6 +1571,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpf_t? x, mpfr_t? y)
     {
+        mpf_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is null || (y is not null && (!y.IsNan && y.CompareTo(x) >= 0));
     }
 
@@ -1593,6 +1665,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpfr_t? x, mpz_t? y)
     {
+        ThrowIfDisposed(x);
+        mpz_t.ThrowIfDisposed(y);
+
         return x is null ? y is null : y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
@@ -1604,6 +1679,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpz_t? x, mpfr_t? y)
     {
+        mpz_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is null ? x is null : x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
@@ -1615,6 +1693,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpfr_t? x, mpq_t? y)
     {
+        ThrowIfDisposed(x);
+        mpq_t.ThrowIfDisposed(y);
+
         return x is null ? y is null : y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
@@ -1626,6 +1707,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpq_t? x, mpfr_t? y)
     {
+        mpq_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is null ? x is null : x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
@@ -1637,6 +1721,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpfr_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        mpf_t.ThrowIfDisposed(y);
+
         return x is null ? y is null : y is not null && !x.IsNan && x.CompareTo(y) == 0;
     }
 
@@ -1648,6 +1735,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpf_t? x, mpfr_t? y)
     {
+        mpf_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is null ? x is null : x is not null && !y.IsNan && y.CompareTo(x) == 0;
     }
 
@@ -1659,6 +1749,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpfr_t? x, mpfr_t? y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return !(x == y);
     }
 
@@ -1736,6 +1829,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpfr_t? x, mpz_t? y)
     {
+        ThrowIfDisposed(x);
+        mpz_t.ThrowIfDisposed(y);
+
         return !(x == y);
     }
 
@@ -1747,6 +1843,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpz_t? x, mpfr_t? y)
     {
+        mpz_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return !(x == y);
     }
 
@@ -1758,6 +1857,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpfr_t? x, mpq_t? y)
     {
+        ThrowIfDisposed(x);
+        mpq_t.ThrowIfDisposed(y);
+
         return !(x == y);
     }
 
@@ -1769,6 +1871,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpq_t? x, mpfr_t? y)
     {
+        mpq_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return !(x == y);
     }
 
@@ -1780,6 +1885,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpfr_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        mpf_t.ThrowIfDisposed(y);
+
         return !(x == y);
     }
 
@@ -1791,6 +1899,9 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpf_t? x, mpfr_t? y)
     {
+        mpf_t.ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return !(x == y);
     }
     #endregion

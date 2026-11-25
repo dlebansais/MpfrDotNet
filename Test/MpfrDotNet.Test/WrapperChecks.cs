@@ -286,6 +286,34 @@ internal class WrapperChecks
     }
 
     [Test]
+    public void TestRandomStateParameters()
+    {
+        const string NoParameters = "This algorithm takes no parameters.";
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => randstate_t.Create(RngAlgorithm.MersenneTwister, 12345UL), Throws.ArgumentException.With.Message.StartsWith(NoParameters).And.Property(nameof(ArgumentException.ParamName)).EqualTo("parameters"));
+        Assert.That(() => randstate_t.Create(RngAlgorithm.Default, 1), Throws.ArgumentException.With.Message.StartsWith(NoParameters).And.Property(nameof(ArgumentException.ParamName)).EqualTo("parameters"));
+        Assert.That(() => randstate_t.Create(RngAlgorithm.LinearCongruential, 1, 2), Throws.ArgumentException.With.Message.StartsWith("Invalid combination of parameters for this algorithm.").And.Property(nameof(ArgumentException.ParamName)).EqualTo("parameters"));
+    }
+
+    [Test]
+    public void TestPowerMod()
+    {
+        using mpz_t Three = new(3);
+        using mpz_t Four = new(4);
+        using mpz_t Five = new(5);
+        using mpz_t Zero = new(0);
+        using mpz_t Power = Three.PowerMod(Four, Five);
+        using mpz_t PowerUI = Three.PowerMod(4UL, Five);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Power.ToString(), Is.EqualTo("1"));
+        Assert.That(PowerUI.ToString(), Is.EqualTo("1"));
+        Assert.That(() => Three.PowerMod(Four, Zero), Throws.TypeOf<DivideByZeroException>());
+        Assert.That(() => Three.PowerMod(4UL, Zero), Throws.TypeOf<DivideByZeroException>());
+    }
+
+    [Test]
     public void TestFloatRandomArgumentLimits()
     {
         const int MaxExponent = (1 << 30) - 1;

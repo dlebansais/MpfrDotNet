@@ -260,6 +260,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public double ToDouble(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (double)this;
     }
 
@@ -372,6 +374,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public float ToSingle(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return (float)this;
     }
 
@@ -392,6 +396,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToString(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         return ToString();
     }
 
@@ -549,6 +555,8 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public int CompareTo(object? obj)
     {
+        ThrowIfDisposed(this);
+
         if (obj is null)
             return 1;
         else if (obj is mpq_t other)

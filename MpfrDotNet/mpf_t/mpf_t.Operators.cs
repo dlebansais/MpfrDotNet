@@ -370,6 +370,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpf_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is not null && (x is null || x.CompareTo(y) < 0);
     }
 
@@ -469,6 +472,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpf_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is null || (y is not null && x.CompareTo(y) <= 0);
     }
 
@@ -568,6 +574,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpf_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is not null && (y is null || x.CompareTo(y) > 0);
     }
 
@@ -667,6 +676,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpf_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return y is null || (x is not null && x.CompareTo(y) >= 0);
     }
 
@@ -766,6 +778,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpf_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return x is null ? y is null : x.Equals(y);
     }
 
@@ -865,6 +880,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpf_t? x, mpf_t? y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         return !(x == y);
     }
 
@@ -963,6 +981,8 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public override bool Equals(object? obj)
     {
+        ThrowIfDisposed(this);
+
         return obj is mpf_t other && Equals(other);
     }
 
