@@ -78,7 +78,9 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(this);
 
-        return mpfr.check_range(this, LastTernaryResult, Rounding);
+        LastTernaryResult = mpfr.check_range(this, LastTernaryResult, Rounding);
+
+        return LastTernaryResult;
     }
 
     /// <summary>
@@ -89,7 +91,9 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(this);
 
-        return mpfr.subnormalize(this, LastTernaryResult, Rounding);
+        LastTernaryResult = mpfr.subnormalize(this, LastTernaryResult, Rounding);
+
+        return LastTernaryResult;
     }
 
 #pragma warning disable SA1623 // Property summary documentation should match accessors

@@ -17,6 +17,7 @@ public class randstate_t : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="parameters"/> is not a valid combination of parameters for <paramref name="algorithm"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="algorithm"/> is not a value of <see cref="RngAlgorithm"/>, or the size of a linear congruential generator is greater than 128, or its m2exp is zero.</exception>
+    /// <exception cref="ObjectDisposedException">The multiplier of a linear congruential generator is disposed.</exception>
     public static randstate_t Create(RngAlgorithm algorithm = RngAlgorithm.Default, params object[] parameters)
     {
         if (algorithm is not (RngAlgorithm.Default or RngAlgorithm.MersenneTwister or RngAlgorithm.LinearCongruential))
@@ -65,7 +66,11 @@ public class randstate_t : IDisposable
 
             case RngAlgorithm.LinearCongruential:
                 if (parameters.Length == 3 && parameters[0] is mpz_t a && parameters[1] is ulong c && parameters[2] is ulong m2exp)
+                {
+                    // gmp.randinit_lc_2exp is a thin wrapper, which does not check that a is not disposed.
+                    mpz_t.ThrowIfDisposed(a);
                     gmp.randinit_lc_2exp(this, a, c, m2exp);
+                }
                 else if (parameters.Length == 1 && parameters[0] is ulong size)
                 {
                     if (!gmp.randinit_lc_2exp_size(this, size))

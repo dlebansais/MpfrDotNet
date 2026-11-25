@@ -1813,10 +1813,13 @@ public static class mpz
     /// <param name="writer">The output stream.</param>
     /// <param name="strBase">The digit base.</param>
     /// <param name="op">The operand.</param>
+    /// <returns>The count of characters written.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strBase"/> is not between 2 and 62, or between -36 and -2 for uppercase digits.</exception>
     public static long out_str(StreamWriter writer, int strBase, mpz_t op)
     {
-        if (strBase < 2 || strBase > 62)
-            throw new ArgumentOutOfRangeException(nameof(strBase));
+        if (writer is null)
+            throw new ArgumentNullException(nameof(writer));
 
         StringBuilder Data = new();
         get_str(Data, strBase, op);
@@ -1833,15 +1836,40 @@ public static class mpz
     /// <param name="rop">The result operand.</param>
     /// <param name="reader">The input stream.</param>
     /// <param name="strBase">The digit base.</param>
+    /// <returns>The count of characters read, including the white space before the number, or 0 if the text is not a valid number.</returns>
+    /// <remarks>As with mpz_inp_str, the white space before the number is skipped, and the number ends before the next white space, which is not read.</remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null"/>.</exception>
     public static long inp_str(mpz_t rop, StreamReader reader, int strBase)
     {
-        string Content = reader.ReadToEnd();
+        if (reader is null)
+            throw new ArgumentNullException(nameof(reader));
+
+        long Count = 0;
+
+        while (IsWhiteSpace(reader.Peek()))
+        {
+            _ = reader.Read();
+            Count++;
+        }
+
+        StringBuilder Token = new();
+
+        while (reader.Peek() >= 0 && !IsWhiteSpace(reader.Peek()))
+        {
+            _ = Token.Append((char)reader.Read());
+            Count++;
+        }
+
+        string Content = Token.ToString();
 
         // rop is already initialized: mpz_init_set_str would leak its memory. As in MPIR, 0 means that the input is invalid.
-        int Result = MpirArgument.IsParsableText(Content) ? NativeMethods.mpz_set_str(ref rop.Value, Content, (uint)strBase) : -1;
+        int Result = Content.Length > 0 && MpirArgument.IsParsableText(Content) ? NativeMethods.mpz_set_str(ref rop.Value, Content, (uint)strBase) : -1;
 
-        return Result == 0 ? Content.Length : 0;
+        return Result == 0 ? Count : 0;
     }
+
+    // The white space of C (isspace in the "C" locale), which mpz_inp_str skips.
+    private static bool IsWhiteSpace(int c) => c is ' ' or '\t' or '\n' or '\v' or '\f' or '\r';
 
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.

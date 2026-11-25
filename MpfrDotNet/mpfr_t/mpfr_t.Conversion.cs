@@ -260,9 +260,10 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     /// <param name="e">The exponent upon return.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
+    /// <exception cref="OverflowException"><paramref name="value"/> is NaN or an infinity.</exception>
     public static mpz_t ToIntegerAndExponent(mpfr_t value, out int e)
     {
-        ThrowIfDisposed(value);
+        ThrowIfSingular(value, "an integer");
 
         mpz_t Result = new();
 
@@ -276,9 +277,10 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
+    /// <exception cref="OverflowException"><paramref name="value"/> is NaN or an infinity.</exception>
     public static mpq_t ToRational(mpfr_t value)
     {
-        ThrowIfDisposed(value);
+        ThrowIfSingular(value, "a rational number");
 
         mpq_t Result = new();
 
@@ -292,9 +294,10 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
+    /// <exception cref="OverflowException"><paramref name="value"/> is NaN or an infinity.</exception>
     public static mpf_t ToFloatingPoint(mpfr_t value)
     {
-        ThrowIfDisposed(value);
+        ThrowIfSingular(value, "an mpf_t");
 
         mpf_t Result = new();
 
@@ -401,11 +404,18 @@ public partial class mpfr_t : IDisposable
         }
     }
 
+    // mpfr_get_z, mpfr_get_z_2exp and mpfr_get_q return 0 for NaN and infinities, and mpfr_get_f returns 0 for NaN and a
+    // number with an exponent beyond the range of mpf_t for infinities.
+    private static void ThrowIfSingular(mpfr_t value, string target)
+    {
+        // IsNumber also checks that value is not disposed.
+        if (!value.IsNumber)
+            throw new OverflowException($"NaN and infinities cannot be converted to {target}.");
+    }
+
     private mpz_t ToRoundedInteger()
     {
-        // mpfr_get_z returns 0 for NaN and infinities.
-        if (!IsNumber)
-            throw new OverflowException("NaN and infinities cannot be converted to an integer.");
+        ThrowIfSingular(this, "an integer");
 
         mpz_t Result = new();
         _ = mpfr.get_z(Result, this, Rounding);

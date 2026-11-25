@@ -38,6 +38,43 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     }
 
     /// <summary>
+    /// Converts from an <see cref="int"/> value, exactly.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static implicit operator mpq_t(int value)
+    {
+        return new mpq_t((long)value, 1UL);
+    }
+
+    /// <summary>
+    /// Converts from a <see cref="uint"/> value, exactly.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static implicit operator mpq_t(uint value)
+    {
+        return new mpq_t((ulong)value, 1UL);
+    }
+
+    /// <summary>
+    /// Converts from a <see cref="long"/> value, exactly.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    // Without the integer conversions, C# would pick the conversion from float for an integer, which rounds it to 24 bits.
+    public static implicit operator mpq_t(long value)
+    {
+        return new mpq_t(value, 1UL);
+    }
+
+    /// <summary>
+    /// Converts from a <see cref="ulong"/> value, exactly.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static implicit operator mpq_t(ulong value)
+    {
+        return new mpq_t(value, 1UL);
+    }
+
+    /// <summary>
     /// Converts from a <see cref="float"/> value.
     /// </summary>
     /// <param name="value">The value.</param>

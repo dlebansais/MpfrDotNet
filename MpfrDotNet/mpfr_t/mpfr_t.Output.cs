@@ -46,7 +46,7 @@ public partial class mpfr_t : IDisposable
         ulong SizeInDigits = mpfr.get_str_ndigits((int)DigitBase.ToDigitCountBase(resultbase, nameof(resultbase)), Precision);
         StringBuilder Data = new();
 
-        mpfr.get_str(Data, out int Exponent, resultbase, SizeInDigits, this, rounding);
+        mpfr.GetString(Data, out long Exponent, resultbase, SizeInDigits, this, rounding);
 
         string Result = Data.ToString();
         Debug.Assert(Result.Length > 0);
@@ -82,7 +82,7 @@ public partial class mpfr_t : IDisposable
         if (FractionalPart.Length > 0)
             FractionalPart = "." + FractionalPart;
 
-        string ExponentPart = (Exponent - 1).ToString(CultureInfo.InvariantCulture);
+        string ExponentPart = (Exponent - 1L).ToString(CultureInfo.InvariantCulture);
         if (Exponent > 0)
             ExponentPart = "+" + ExponentPart;
 

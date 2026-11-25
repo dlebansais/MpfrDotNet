@@ -123,10 +123,15 @@ public static partial class mpfr
     /// Exponents are 32-bit in this API. On Linux, only limits such as the smallest allowed minimum exponent exceed that range.
     /// </remarks>
     internal static int ToClampedInt(CLong value)
-    {
-        long Value = value.Value;
-        return Value > int.MaxValue ? int.MaxValue : Value < int.MinValue ? int.MinValue : (int)Value;
-    }
+        => ClampToInt((long)value.Value);
+
+    /// <summary>
+    /// Converts a value to an <see cref="int"/>, clamping it to the range of <see cref="int"/>.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns>The clamped value.</returns>
+    internal static int ClampToInt(long value)
+        => value > int.MaxValue ? int.MaxValue : value < int.MinValue ? int.MinValue : (int)value;
 
     /// <summary>
     /// Checks that a precision is supported by MPFR and converts it to the native type.

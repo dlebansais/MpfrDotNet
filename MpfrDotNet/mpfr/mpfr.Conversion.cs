@@ -181,6 +181,23 @@ public static partial class mpfr
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="strbase"/> is not between 2 and 62, or between -36 and -2, or <paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static void get_str(StringBuilder str, out int expptr, int strbase, ulong n, mpfr_t op, mpfr_rnd_t rnd)
     {
+        GetString(str, out long Exponent, strbase, n, op, rnd);
+        expptr = ClampToInt(Exponent);
+    }
+
+    /// <summary>
+    /// Calls mpfr_get_str, with the exponent not clamped.
+    /// </summary>
+    /// <param name="str">The string.</param>
+    /// <param name="expptr">The exponent.</param>
+    /// <param name="strbase">The base.</param>
+    /// <param name="n">The n.</param>
+    /// <param name="op">The operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strbase"/> is not between 2 and 62, or between -36 and -2, or <paramref name="rnd"/> is not a supported rounding mode.</exception>
+    internal static void GetString(StringBuilder str, out long expptr, int strbase, ulong n, mpfr_t op, mpfr_rnd_t rnd)
+    {
         // The native function writes as many characters as the value needs into the buffer allocated for the capacity,
         // and allocates a string that would leak when the buffer is null.
         if (str is null)
@@ -194,7 +211,7 @@ public static partial class mpfr
         _ = str.EnsureCapacity(checked((int)Math.Max(Digits + 2, 7)));
 
         mpfr_get_str(str, out CLong NativeExponent, strbase, n, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
-        expptr = ToClampedInt(NativeExponent);
+        expptr = (long)NativeExponent.Value;
     }
 
     /// <summary>

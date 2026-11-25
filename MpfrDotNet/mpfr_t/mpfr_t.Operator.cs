@@ -770,9 +770,8 @@ public partial class mpfr_t : IDisposable
 
         z.LastTernaryResult = InWidestExponentRange(z, y.Rounding, () =>
         {
-            // x is converted exactly, so that the result is rounded once.
-            using mpfr_t ExactX = CreateExact(x);
-            return mpfr.div(z, ExactX, y, y.Rounding);
+            using mpz_t One = new(1);
+            return DivideScaled(z, x, One, y);
         });
 
         return z;
@@ -818,17 +817,24 @@ public partial class mpfr_t : IDisposable
 
     private static int DivideRational(mpfr_t z, mpq_t x, mpfr_t y)
     {
-        // With x = n / d, x / y = n / (d * y). Both n and d * y are computed exactly, so that the result is rounded once.
         using mpz_t Numerator = new();
         mpq.get_num(Numerator, x);
         using mpz_t Denominator = new();
         mpq.get_den(Denominator, x);
 
-        using mpfr_t ExactNumerator = CreateExact(Numerator);
+        return DivideScaled(z, Numerator, Denominator, y);
+    }
 
-        // d * y can overflow when y is near the largest exponent of the widest range. A regular y is therefore
-        // written y' * 2^e with y' in [0.5, 1): n / (d * y') cannot overflow, and the scaling by 2^-e is exact in the
-        // widest range, so the check of the range that follows rounds the result once.
+    private static int DivideScaled(mpfr_t z, mpz_t numerator, mpz_t denominator, mpfr_t y)
+    {
+        // x / y = n / (d * y), with n and d * y computed exactly, so that the result is rounded once. Either can overflow
+        // the widest exponent range, which is only about 2^±2^30 when exponents are 32-bit, even if the result does not.
+        // So n is written n' * 2^k and a regular y is written y' * 2^e, with n' and y' in [0.5, 1): n' / (d * y') cannot
+        // overflow, and the scaling by 2^(k - e) is exact in the widest range unless the result is beyond it.
+        long NumeratorExponent = (long)mpz.sizeinbase(numerator, 2);
+        using mpfr_t ScaledNumerator = CreateWithPrecision(Math.Max((ulong)NumeratorExponent, mpfr.PrecisionMin), nameof(numerator));
+        _ = mpfr.set_z_2exp(ScaledNumerator, numerator, -NumeratorExponent, mpfr_rnd_t.MPFR_RNDN);
+
         using mpfr_t ScaledY = CreateResult(y);
         _ = mpfr.set(ScaledY, y, mpfr_rnd_t.MPFR_RNDN);
         long Exponent = 0;
@@ -839,16 +845,36 @@ public partial class mpfr_t : IDisposable
             _ = mpfr.set_exp(ScaledY, 0);
         }
 
-        using mpfr_t ExactProduct = CreateWithPrecision(mpz.sizeinbase(Denominator, 2) + mpfr.get_prec(y), nameof(y));
-        _ = mpfr.mul_z(ExactProduct, ScaledY, Denominator, mpfr_rnd_t.MPFR_RNDN);
+        using mpfr_t ExactProduct = CreateWithPrecision(mpz.sizeinbase(denominator, 2) + mpfr.get_prec(y), nameof(y));
+        _ = mpfr.mul_z(ExactProduct, ScaledY, denominator, mpfr_rnd_t.MPFR_RNDN);
 
-        int Ternary = mpfr.div(z, ExactNumerator, ExactProduct, y.Rounding);
+        int Ternary = mpfr.div(z, ScaledNumerator, ExactProduct, y.Rounding);
+        long Scaling = NumeratorExponent - Exponent;
+        int Sign = mpfr.sgn(z);
+        bool IsAboveUnderflowMidpoint = IsRoundedDownToUnderflowMidpoint(z, Ternary, Scaling, y.Rounding);
 
-        // The scaling is exact unless the result is beyond even the widest range, which is only about 2^±2^30 when
-        // exponents are 32-bit: then the scaling overflows or underflows, and gives the ternary.
-        int ScalingTernary = mpfr.mul_2si(z, z, -Exponent, y.Rounding);
+        // When the scaling overflows or underflows, it gives the ternary.
+        int ScalingTernary = mpfr.mul_2si(z, z, Scaling, y.Rounding);
+
+        // mpfr_mul_2si decides an underflow from the rounded quotient only, and rounds the midpoint to zero.
+        if (IsAboveUnderflowMidpoint)
+        {
+            _ = mpfr.set_si_2exp(z, Sign, (long)mpfr_get_emin().Value - 1, mpfr_rnd_t.MPFR_RNDN);
+            return Sign;
+        }
 
         return ScalingTernary != 0 ? ScalingTernary : Ternary;
+    }
+
+    private static bool IsRoundedDownToUnderflowMidpoint(mpfr_t z, int ternary, long scaling, mpfr_rnd_t rounding)
+    {
+        // With round to nearest, a quotient rounded down in magnitude to a power of two that scales to half the smallest
+        // number is an exact value above that midpoint, which rounds up to the smallest number.
+        return rounding == mpfr_rnd_t.MPFR_RNDN &&
+               mpfr.regular_p(z) &&
+               ternary * mpfr.sgn(z) < 0 &&
+               mpfr.min_prec(z) == 1 &&
+               (long)mpfr_get_exp(ref z.Value).Value + scaling == (long)mpfr_get_emin().Value - 1;
     }
 
     private static int InWidestExponentRange(mpfr_t z, mpfr_rnd_t rounding, Func<int> operation)
@@ -1782,14 +1808,6 @@ public partial class mpfr_t : IDisposable
             Precision = Math.Max(Precision, mpfr.get_prec(Operand));
 
         return CreateWithPrecision(Precision, nameof(operands));
-    }
-
-    private static mpfr_t CreateExact(mpz_t value)
-    {
-        mpfr_t Result = CreateWithPrecision(Math.Max(mpz.sizeinbase(value, 2), mpfr.PrecisionMin), nameof(value));
-        _ = mpfr.set_z(Result, value, mpfr_rnd_t.MPFR_RNDN);
-
-        return Result;
     }
 
     private static mpfr_rnd_t OppositeRounding(mpfr_rnd_t rounding)

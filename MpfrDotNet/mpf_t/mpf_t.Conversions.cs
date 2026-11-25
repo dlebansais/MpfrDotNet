@@ -33,7 +33,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
         _ = DigitBase.ToDigitCountBase(resultbase, nameof(resultbase));
 
         StringBuilder Data = new();
-        mpf.get_str(Data, out int Exponent, resultbase, Precision, this);
+        mpf.GetString(Data, out long Exponent, resultbase, Precision, this);
 
         string Result = Data.ToString();
 
@@ -49,7 +49,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
 
         // mpf_set_str reads the exponent in the base of the number when the base is positive, and in decimal when it is
         // negative, so that the text can be read back.
-        long ExponentValue = (long)Exponent - 1;
+        long ExponentValue = Exponent - 1;
         string ExponentPart;
 
         if (resultbase > 0)
@@ -90,6 +90,27 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     public static implicit operator mpf_t(int value)
     {
         return new mpf_t(value);
+    }
+
+    /// <summary>
+    /// Converts a <see cref="long"/> value, exactly when it fits in the default precision.
+    /// See http://mpir.org/mpir-3.0.0.pdf.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    // Without the integer conversions, C# would pick the conversion from float for an integer, which rounds it to 24 bits.
+    public static implicit operator mpf_t(long value)
+    {
+        return new mpf_t(value);
+    }
+
+    /// <summary>
+    /// Converts a <see cref="ulong"/> value, exactly when it fits in the default precision.
+    /// See http://mpir.org/mpir-3.0.0.pdf.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static implicit operator mpf_t(ulong value)
+    {
+        return new mpf_t(value, ulong.MaxValue);
     }
 
     /// <summary>

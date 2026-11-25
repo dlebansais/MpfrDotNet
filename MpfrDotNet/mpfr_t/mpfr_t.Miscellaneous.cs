@@ -71,7 +71,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="format">The formatting string.</param>
     /// <returns>The formatted number.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="format"/> is <see langword="null"/>.</exception>
-    /// <exception cref="FormatException"><paramref name="format"/> has more than one conversion, or a conversion that is not for an <see cref="mpfr_t"/> (such as %Rf), or MPFR cannot format the number with it.</exception>
+    /// <exception cref="FormatException"><paramref name="format"/> contains a null character, has more than one conversion, or a conversion that is not for an <see cref="mpfr_t"/> (such as %Rf), or MPFR cannot format the number with it.</exception>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToFormattedString(string format)
     {
@@ -80,19 +80,26 @@ public partial class mpfr_t : IDisposable
         if (format is null)
             throw new ArgumentNullException(nameof(format));
 
+        // MPFR would stop at a null character and ignore the rest of the format.
+        if (format.IndexOf('\0') >= 0)
+            throw new FormatException("The format cannot contain a null character.");
+
         // The native call passes the number as its only argument: a format that reads any other argument would read invalid memory.
         if (!HasAtMostOneMpfrConversion(format))
             throw new FormatException($"The format '{format}' must have at most one conversion, for an mpfr_t such as %Rf.");
 
-        // A first call with no buffer returns the length of the output.
-        int Length = mpfr_snprintf(null, 0, format, ref Value, IntPtr.Zero);
+        // The format and the output are UTF-8 bytes, so that the literal text is the same on all platforms.
+        byte[] Format = Encoding.UTF8.GetBytes(format + "\0");
+
+        // A first call with no buffer returns the length of the output, in bytes.
+        int Length = mpfr_snprintf(null, 0, Format, ref Value, IntPtr.Zero);
         if (Length < 0)
             throw new FormatException($"The number cannot be formatted with '{format}'.");
 
-        StringBuilder Data = new(Length + 1);
-        _ = mpfr_snprintf(Data, (ulong)Length + 1, format, ref Value, IntPtr.Zero);
+        byte[] Data = new byte[Length + 1];
+        _ = mpfr_snprintf(Data, (ulong)Length + 1, Format, ref Value, IntPtr.Zero);
 
-        return Data.ToString();
+        return Encoding.UTF8.GetString(Data, 0, Length);
     }
 
     private static bool HasAtMostOneMpfrConversion(string format)

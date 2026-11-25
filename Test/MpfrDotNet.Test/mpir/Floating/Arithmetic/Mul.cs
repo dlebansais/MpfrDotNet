@@ -132,12 +132,12 @@ public class Mul
         using mpf_t c = a * b;
 
         AsString = c.ToString();
-        Assert.That(AsString, Is.EqualTo("2.20002182292709614035E+33"));
+        Assert.That(AsString, Is.EqualTo("2.20002177842512963966E+33"));
 
         using mpf_t d = b * a;
 
         AsString = d.ToString();
-        Assert.That(AsString, Is.EqualTo("2.20002182292709614035E+33"));
+        Assert.That(AsString, Is.EqualTo("2.20002177842512963966E+33"));
     }
 
     [Test]
@@ -154,11 +154,11 @@ public class Mul
         using mpf_t c = a * b;
 
         AsString = c.ToString();
-        Assert.That(AsString, Is.EqualTo("-2.20002182292709614035E+33"));
+        Assert.That(AsString, Is.EqualTo("-2.20002177842512963966E+33"));
 
         using mpf_t d = b * a;
 
         AsString = d.ToString();
-        Assert.That(AsString, Is.EqualTo("-2.20002182292709614035E+33"));
+        Assert.That(AsString, Is.EqualTo("-2.20002177842512963966E+33"));
     }
 }

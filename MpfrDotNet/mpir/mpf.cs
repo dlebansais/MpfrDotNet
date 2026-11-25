@@ -359,8 +359,45 @@ public static class mpf
     /// <param name="exp">The exponent.</param>
     public static void get_d_2exp(mpf_t op, out double d, out long exp)
     {
-        d = NativeMethods.mpf_get_d_2exp(out CLong NativeExponent, ref op.Value);
-        exp = NativeExponent.Value;
+        d = NativeMethods.mpf_get_d_2exp(out _, ref op.Value);
+
+        // MPIR returns the exponent in a C long, which is 32-bit on Windows and wraps for numbers beyond 2^(2^31): it is
+        // computed here the way MPIR does, from the exponent in limbs.
+        exp = BitExponent(op);
+    }
+
+    /// <summary>
+    /// Gets the exponent in base 2 of a number: the number is in [2^(e - 1), 2^e) in absolute value, or 0 for zero.
+    /// </summary>
+    /// <param name="op">The number.</param>
+    /// <returns>The exponent.</returns>
+    internal static long BitExponent(mpf_t op)
+    {
+        int LimbCount = Math.Abs(op.Value.Size);
+        if (LimbCount == 0)
+            return 0;
+
+        ulong TopLimb = (ulong)Marshal.ReadInt64(op.Value.Limbs, (LimbCount - 1) * sizeof(ulong));
+
+        return ((long)op.Value.Exponent.Value * (long)LimbBits) - LeadingZeroCount(TopLimb);
+    }
+
+    /// <summary>
+    /// Gets the number of leading zero bits of a limb.
+    /// </summary>
+    /// <param name="value">The limb, which is not zero.</param>
+    /// <returns>The number of leading zero bits.</returns>
+    internal static int LeadingZeroCount(ulong value)
+    {
+        int Result = 0;
+
+        while ((value & (1UL << 63)) == 0)
+        {
+            value <<= 1;
+            Result++;
+        }
+
+        return Result;
     }
 
     /// <summary>
@@ -394,6 +431,24 @@ public static class mpf
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="strBase"/> is not between 2 and 62, or between -36 and -2.</exception>
     public static void get_str(StringBuilder str, out int expptr, int strBase, ulong n_digits, mpf_t op)
     {
+        GetString(str, out long Exponent, strBase, n_digits, op);
+
+        // Exponents are clamped to int in the API.
+        expptr = MpfrDotNet.mpfr.ClampToInt(Exponent);
+    }
+
+    /// <summary>
+    /// Calls mpf_get_str, with the exponent not clamped.
+    /// </summary>
+    /// <param name="str">The string.</param>
+    /// <param name="expptr">The exponent.</param>
+    /// <param name="strBase">The base.</param>
+    /// <param name="n_digits">The count of digits.</param>
+    /// <param name="op">The operand.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strBase"/> is not between 2 and 62, or between -36 and -2.</exception>
+    internal static void GetString(StringBuilder str, out long expptr, int strBase, ulong n_digits, mpf_t op)
+    {
         // The native function writes as many characters as the value needs into the buffer allocated for the capacity,
         // and allocates a string that would leak when the buffer is null.
         if (str is null)
@@ -408,9 +463,26 @@ public static class mpf
         _ = str.EnsureCapacity(checked((int)Digits + 2));
 
         NativeMethods.mpf_get_str(str, out CLong NativeExponent, strBase, (NativeMethods.size_t)n_digits, ref op.Value);
+        expptr = UnwrapExponent((long)NativeExponent.Value, BitExponent(op), DigitCountBase);
+    }
 
-        // The exponent is a C long, 64-bit on Linux: it is clamped like the other exponents of the API.
-        expptr = MpfrDotNet.mpfr.ToClampedInt(NativeExponent);
+    /// <summary>
+    /// Restores an exponent in a base that MPIR computed in a 32-bit C long on Windows, where it wraps for huge numbers.
+    /// </summary>
+    /// <param name="nativeExponent">The exponent returned by MPIR, possibly wrapped modulo 2^32.</param>
+    /// <param name="bitExponent">The exponent of the number in base 2, which is not wrapped.</param>
+    /// <param name="digitBase">The base of the exponent.</param>
+    /// <returns>The exponent.</returns>
+    internal static long UnwrapExponent(long nativeExponent, long bitExponent, uint digitBase)
+    {
+        // The exponent in the base is within 2 of the exponent in base 2 divided by log2(base), so the number of wraps is
+        // the nearest integer.
+        const double WrapSize = 4294967296.0;
+
+        double Estimate = bitExponent / Math.Log(digitBase, 2);
+        long Wraps = (long)Math.Round((Estimate - nativeExponent) / WrapSize);
+
+        return nativeExponent + (Wraps << 32);
     }
     #endregion
 
