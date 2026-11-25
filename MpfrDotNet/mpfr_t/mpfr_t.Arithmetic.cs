@@ -10,8 +10,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the square.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Sqr()
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.sqr(z, this, Rounding);
@@ -22,8 +25,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the square root.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Sqrt()
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.sqrt(z, this, Rounding);
@@ -34,8 +40,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the cubic root.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Cbrt()
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.cbrt(z, this, Rounding);
@@ -47,8 +56,11 @@ public partial class mpfr_t : IDisposable
     /// Gets the nth root.
     /// </summary>
     /// <param name="n">The nth.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t NthRoot(ulong n)
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.rootn_ui(z, this, n, Rounding);
@@ -60,8 +72,11 @@ public partial class mpfr_t : IDisposable
     /// Gets the nth root.
     /// </summary>
     /// <param name="n">The nth.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t NthRoot(long n)
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.rootn_si(z, this, n, Rounding);
@@ -72,8 +87,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the absolute value.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Abs()
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.abs(z, this, Rounding);
@@ -87,8 +105,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpfr_t EuclideanNorm(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.hypot(z, x, y, rounding);
@@ -102,8 +124,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpfr_t Dim(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.dim(z, x, y, rounding);
@@ -118,8 +144,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="b">The second operand.</param>
     /// <param name="c">The third operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/> or <paramref name="c"/> is disposed.</exception>
     public static mpfr_t Fma(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(a);
+        ThrowIfDisposed(b);
+        ThrowIfDisposed(c);
+
         mpfr_t Result = CreateResult(a, b, c);
 
         Result.LastTernaryResult = mpfr.fma(Result, a, b, c, rounding);
@@ -134,8 +165,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="b">The second operand.</param>
     /// <param name="c">The third operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/> or <paramref name="c"/> is disposed.</exception>
     public static mpfr_t Fms(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(a);
+        ThrowIfDisposed(b);
+        ThrowIfDisposed(c);
+
         mpfr_t Result = CreateResult(a, b, c);
 
         Result.LastTernaryResult = mpfr.fms(Result, a, b, c, rounding);
@@ -151,8 +187,14 @@ public partial class mpfr_t : IDisposable
     /// <param name="c">The third operand.</param>
     /// <param name="d">The fourth operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/>, <paramref name="c"/> or <paramref name="d"/> is disposed.</exception>
     public static mpfr_t Fmma(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_t d, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(a);
+        ThrowIfDisposed(b);
+        ThrowIfDisposed(c);
+        ThrowIfDisposed(d);
+
         mpfr_t Result = CreateResult(a, b, c, d);
 
         Result.LastTernaryResult = mpfr.fmma(Result, a, b, c, d, rounding);
@@ -168,8 +210,14 @@ public partial class mpfr_t : IDisposable
     /// <param name="c">The third operand.</param>
     /// <param name="d">The fourth operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/>, <paramref name="c"/> or <paramref name="d"/> is disposed.</exception>
     public static mpfr_t Fmms(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_t d, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(a);
+        ThrowIfDisposed(b);
+        ThrowIfDisposed(c);
+        ThrowIfDisposed(d);
+
         mpfr_t Result = CreateResult(a, b, c, d);
 
         Result.LastTernaryResult = mpfr.fmms(Result, a, b, c, d, rounding);
@@ -181,8 +229,11 @@ public partial class mpfr_t : IDisposable
     /// Gets the value multiplied by 2^<paramref name="n"/>.
     /// </summary>
     /// <param name="n">The power.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Mul2(ulong n)
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.mul_2ui(z, this, n, Rounding);
@@ -194,8 +245,11 @@ public partial class mpfr_t : IDisposable
     /// Gets the value multiplied by 2^<paramref name="n"/>.
     /// </summary>
     /// <param name="n">The power.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Mul2(long n)
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.mul_2si(z, this, n, Rounding);
@@ -207,8 +261,11 @@ public partial class mpfr_t : IDisposable
     /// Gets the value divided by 2^<paramref name="n"/>.
     /// </summary>
     /// <param name="n">The power.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Div2(ulong n)
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.div_2ui(z, this, n, Rounding);
@@ -220,8 +277,11 @@ public partial class mpfr_t : IDisposable
     /// Gets the value divided by 2^<paramref name="n"/>.
     /// </summary>
     /// <param name="n">The power.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t Div2(long n)
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.div_2si(z, this, n, Rounding);
@@ -232,8 +292,11 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the reciprocal square root.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpfr_t RecSqrt()
     {
+        ThrowIfDisposed(this);
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.rec_sqrt(z, this, Rounding);

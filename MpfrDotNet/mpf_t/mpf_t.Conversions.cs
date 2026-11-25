@@ -14,6 +14,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <returns>The number value.</returns>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public override string ToString()
     {
         return ToString(mpz_t.DefaultBase);
@@ -26,6 +27,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="resultbase">The base to use for the result.</param>
     /// <returns>The number value.</returns>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2.</exception>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToString(int resultbase)
     {
         _ = DigitBase.ToDigitCountBase(resultbase, nameof(resultbase));
@@ -119,8 +121,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value to convert.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator byte(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         using mpz_t Integer = value.ToTruncatedInteger();
         return (byte)Integer;
     }
@@ -131,8 +136,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value to convert.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator sbyte(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         using mpz_t Integer = value.ToTruncatedInteger();
         return checked((sbyte)(long)Integer);
     }
@@ -143,8 +151,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value to convert.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator ushort(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         using mpz_t Integer = value.ToTruncatedInteger();
         return (ushort)Integer;
     }
@@ -155,8 +166,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value to convert.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator short(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         using mpz_t Integer = value.ToTruncatedInteger();
         return (short)Integer;
     }
@@ -167,8 +181,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value to convert.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator uint(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         using mpz_t Integer = value.ToTruncatedInteger();
         return (uint)Integer;
     }
@@ -179,8 +196,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value to convert.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator int(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         using mpz_t Integer = value.ToTruncatedInteger();
         return (int)Integer;
     }
@@ -191,8 +211,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value to convert.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator ulong(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         using mpz_t Integer = value.ToTruncatedInteger();
         return (ulong)Integer;
     }
@@ -203,8 +226,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value to convert.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator long(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         using mpz_t Integer = value.ToTruncatedInteger();
         return (long)Integer;
     }
@@ -214,9 +240,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     /// <remarks>The value is rounded once, to the nearest <see cref="float"/>, ties to even.</remarks>
     public static explicit operator float(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         // Converting through double would round twice: the value is rounded once, to a float, which converts exactly.
         return (float)MpfrDotNet.mpfr_t.RoundToBinaryFormat(x => MpfrDotNet.mpfr.set_f(x, value, MpfrDotNet.mpfr_rnd_t.MPFR_RNDN), isSingle: true);
     }
@@ -226,9 +255,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     /// <remarks>The value is rounded once, to the nearest <see cref="double"/>, ties to even, like the conversion from <see cref="decimal"/>. <see cref="mpf.get_d(mpf_t)"/> truncates instead.</remarks>
     public static explicit operator double(mpf_t value)
     {
+        ThrowIfDisposed(value);
+
         // mpf.get_d truncates: the value is rounded once, to the nearest double.
         return MpfrDotNet.mpfr_t.RoundToBinaryFormat(x => MpfrDotNet.mpfr.set_f(x, value, MpfrDotNet.mpfr_rnd_t.MPFR_RNDN), isSingle: false);
     }
@@ -238,57 +270,96 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="d">The double upon return.</param>
     /// <param name="exp">The exponent upon return.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public void GetDoubleWithExponent(out double d, out long exp)
     {
+        ThrowIfDisposed(this);
+
         mpf.get_d_2exp(this, out d, out exp);
     }
 
     /// <summary>
     /// Gets a value indicating whether the number can be converted to a <see cref="ulong"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsUnsignedLong
     {
-        get { return mpf.fits_ulong_p(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.fits_ulong_p(this);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="long"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsSignedLong
     {
-        get { return mpf.fits_slong_p(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.fits_slong_p(this);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="uint"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsUnsignedInt
     {
-        get { return mpf.fits_uint_p(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.fits_uint_p(this);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="int"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsSignedInt
     {
-        get { return mpf.fits_sint_p(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.fits_sint_p(this);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="ushort"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsUnsignedShort
     {
-        get { return mpf.fits_ushort_p(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.fits_ushort_p(this);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="short"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsSignedShort
     {
-        get { return mpf.fits_sshort_p(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.fits_sshort_p(this);
+        }
     }
 
     private mpz_t ToTruncatedInteger()

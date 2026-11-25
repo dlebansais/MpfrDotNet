@@ -13,8 +13,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <summary>
     /// Gets the number bytes.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public byte[] ToByteArray()
     {
+        ThrowIfDisposed(this);
+
         ulong SizeInBits = (ulong)mpz_sizeinbase(ref Value, 2);
         byte[] Result = new byte[(SizeInBits + 7) / 8];
 
@@ -27,6 +30,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Returns a string that represents the number value.
     /// </summary>
     /// <returns>The number value.</returns>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public override string ToString()
     {
         return ToString(DefaultBase);
@@ -38,8 +42,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="resultbase">The digit base used in the result.</param>
     /// <returns>The number value.</returns>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2.</exception>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToString(int resultbase)
     {
+        ThrowIfDisposed(this);
+
         ulong SizeInDigits = mpz.sizeinbase(this, DigitBase.ToDigitCountBase(resultbase, nameof(resultbase)));
 
         StringBuilder Data = new((int)(SizeInDigits + 2));
@@ -144,6 +151,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator byte(mpz_t value)
     {
         return checked((byte)(ulong)value);
@@ -154,6 +162,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator int(mpz_t value)
     {
         return checked((int)(long)value);
@@ -164,6 +173,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator uint(mpz_t value)
     {
         return checked((uint)(ulong)value);
@@ -174,6 +184,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator short(mpz_t value)
     {
         return checked((short)(long)value);
@@ -184,6 +195,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator ushort(mpz_t value)
     {
         return checked((ushort)(ulong)value);
@@ -194,8 +206,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator long(mpz_t value)
     {
+        ThrowIfDisposed(value);
+
         if (mpz.cmp_si(value, long.MinValue) < 0 || mpz.cmp_si(value, long.MaxValue) > 0)
             throw new OverflowException("The value is outside the range of the target type.");
 
@@ -214,8 +229,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is outside the range of the target type.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator ulong(mpz_t value)
     {
+        ThrowIfDisposed(value);
+
         if (mpz.cmp_ui(value, 0) < 0 || mpz.cmp_ui(value, ulong.MaxValue) > 0)
             throw new OverflowException("The value is outside the range of the target type.");
 
@@ -231,9 +249,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts to a <see cref="float"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     /// <remarks>The value is rounded to the nearest <see cref="float"/>, ties to even, like the conversion from <see cref="long"/>.</remarks>
     public static explicit operator float(mpz_t value)
     {
+        ThrowIfDisposed(value);
+
         // The rounded value has 24 significant bits, so the conversion to float is exact, or overflows to infinity.
         return (float)RoundToNearest(value, FloatSignificandBits);
     }
@@ -242,9 +263,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts to a <see cref="double"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     /// <remarks>The value is rounded to the nearest <see cref="double"/>, ties to even, like the conversion from <see cref="long"/>. <see cref="mpz.get_d(mpz_t)"/> truncates instead.</remarks>
     public static explicit operator double(mpz_t value)
     {
+        ThrowIfDisposed(value);
+
         return RoundToNearest(value, DoubleSignificandBits);
     }
 
@@ -284,6 +308,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts to a <see cref="BigInteger"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator BigInteger(mpz_t value)
     {
         byte[] Bytes = value.ToByteArray();

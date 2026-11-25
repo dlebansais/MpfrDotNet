@@ -36,6 +36,24 @@ public partial class mpfr_t : IDisposable
         => CreateWithPrecision(precision, nameof(precision));
 
     /// <summary>
+    /// Runs a check in a constructor whose chained constructor has already allocated the number, and releases the
+    /// number if the check throws, so that it does not stay alive until it is finalized.
+    /// </summary>
+    /// <param name="check">The check.</param>
+    private void ReleaseIfThrows(Action check)
+    {
+        try
+        {
+            check();
+        }
+        catch
+        {
+            Dispose();
+            throw;
+        }
+    }
+
+    /// <summary>
     /// Creates an array of new instances of the <see cref="mpfr_t"/> class.
     /// </summary>
     /// <param name="length">The array length.</param>
@@ -118,9 +136,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="other">The other instance.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="other"/> is disposed.</exception>
     public mpfr_t(mpfr_t other, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => ThrowIfDisposed(other));
+
         // The copy has the precision of the original, so that it is exact.
         mpfr.set_prec(this, mpfr.get_prec(other));
         LastTernaryResult = mpfr.set(this, other, rounding);
@@ -197,9 +218,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
     public mpfr_t(mpz_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpz_t.ThrowIfDisposed(op));
+
         LastTernaryResult = mpfr.set_z(this, op, rounding);
     }
 
@@ -208,9 +232,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
     public mpfr_t(mpq_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpq_t.ThrowIfDisposed(op));
+
         LastTernaryResult = mpfr.set_q(this, op, rounding);
     }
 
@@ -219,9 +246,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
     public mpfr_t(mpf_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpf_t.ThrowIfDisposed(op));
+
         LastTernaryResult = mpfr.set_f(this, op, rounding);
     }
 
@@ -312,9 +342,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="op">The operand.</param>
     /// <param name="e">The exponent.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
     public mpfr_t(mpz_t op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        ReleaseIfThrows(() => mpz_t.ThrowIfDisposed(op));
+
         LastTernaryResult = mpfr.set_z_2exp(this, op, e, rounding);
     }
 

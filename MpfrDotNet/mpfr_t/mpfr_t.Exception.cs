@@ -73,16 +73,22 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Checks the relative range of the exactly result of the previous operation.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public int CheckRange()
     {
+        ThrowIfDisposed(this);
+
         return mpfr.check_range(this, LastTernaryResult, Rounding);
     }
 
     /// <summary>
     /// Rounds with subnormal number arithmetic.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public int Subnormalize()
     {
+        ThrowIfDisposed(this);
+
         return mpfr.subnormalize(this, LastTernaryResult, Rounding);
     }
 

@@ -49,6 +49,17 @@ public partial class mpfr_t : IDisposable
 #pragma warning restore SA1401 // Fields should be private
 
     /// <summary>
+    /// Throws if a number has been disposed, since its native memory is then released.
+    /// </summary>
+    /// <param name="value">The number, or <see langword="null"/>, which is left to the caller to check.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
+    internal static void ThrowIfDisposed(mpfr_t? value)
+    {
+        if (value is not null && value.IsDisposed)
+            throw new ObjectDisposedException(nameof(mpfr_t));
+    }
+
+    /// <summary>
     /// Disposes of every reference that must be cleaned up.
     /// </summary>
     private void DisposeNow()

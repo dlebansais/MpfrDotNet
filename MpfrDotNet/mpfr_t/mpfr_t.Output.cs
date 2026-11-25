@@ -15,6 +15,7 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the number of digits necessary to store a string with the current precision.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public ulong DigitCount
     {
         get { return mpfr.get_str_ndigits(mpz_t.DefaultBase, Precision); }
@@ -24,6 +25,7 @@ public partial class mpfr_t : IDisposable
     /// Returns a string that represents the number value.
     /// </summary>
     /// <returns>The number value.</returns>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public override string ToString()
     {
         return ToString(mpz_t.DefaultBase, DefaultRounding);
@@ -36,6 +38,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     /// <returns>The number value.</returns>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="resultbase"/> is not between 2 and 62, or between -36 and -2.</exception>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToString(int resultbase, mpfr_rnd_t rounding)
     {
         Debug.Assert(IsCacheInitialized);

@@ -127,8 +127,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="other">The value.</param>
     /// <param name="useDefaultPrecision">True to use the default precision.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="other"/> is disposed.</exception>
     public mpf_t(mpf_t other, bool useDefaultPrecision = false)
     {
+        ThrowIfDisposed(other);
+
         if (useDefaultPrecision)
         {
             mpf.init_set(this, other);
@@ -145,8 +148,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The precision.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is greater than the precision allocated by the constructor or by the last change of <see cref="Precision"/>.</exception>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public void SetPrecisionRaw(ulong value)
     {
+        ThrowIfDisposed(this);
+
         mpf.set_prec_raw(this, value);
     }
 
@@ -154,8 +160,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Sets the value from an integer.
     /// </summary>
     /// <param name="value">The integer.</param>
+    /// <exception cref="ObjectDisposedException">This number or <paramref name="value"/> is disposed.</exception>
     public void Set(mpz_t value)
     {
+        ThrowIfDisposed(this);
+        mpz_t.ThrowIfDisposed(value);
+
         mpf.set_z(this, value);
     }
 
@@ -163,8 +173,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Sets the value from a rational.
     /// </summary>
     /// <param name="value">The rational.</param>
+    /// <exception cref="ObjectDisposedException">This number or <paramref name="value"/> is disposed.</exception>
     public void Set(mpq_t value)
     {
+        ThrowIfDisposed(this);
+        mpq_t.ThrowIfDisposed(value);
+
         mpf.set_q(this, value);
     }
 
@@ -173,8 +187,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first number.</param>
     /// <param name="y">The second number.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static void Swap(mpf_t x, mpf_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpf.swap(x, y);
     }
 

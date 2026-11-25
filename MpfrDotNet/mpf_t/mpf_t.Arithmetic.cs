@@ -12,8 +12,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <summary>
     /// Gets the absolute value of the number.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpf_t Abs()
     {
+        ThrowIfDisposed(this);
+
         mpf_t z = new(mpf.get_prec(this));
 
         mpf.abs(z, this);
@@ -24,16 +27,25 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <summary>
     /// Gets the value sign.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public int Sign
     {
-        get { return mpf.sgn(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.sgn(this);
+        }
     }
 
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpf_t Sqrt()
     {
+        ThrowIfDisposed(this);
+
         mpf_t Result = new(mpf.get_prec(this));
 
         mpf.sqrt(Result, this);
@@ -45,8 +57,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="exp">The power.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpf_t Pow(ulong exp)
     {
+        ThrowIfDisposed(this);
+
         mpf_t Result = new(mpf.get_prec(this));
 
         mpf.pow_ui(Result, this, exp);

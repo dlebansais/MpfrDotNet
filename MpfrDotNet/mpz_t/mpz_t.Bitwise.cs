@@ -14,8 +14,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Gets a specific bit.
     /// </summary>
     /// <param name="index">The bit index.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public bool GetBit(ulong index)
     {
+        ThrowIfDisposed(this);
+
         return mpz.tstbit(this, index);
     }
 
@@ -23,8 +26,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Sets a specific bit.
     /// </summary>
     /// <param name="index">The bit index.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public void SetBit(ulong index)
     {
+        ThrowIfDisposed(this);
+
         mpz.setbit(this, index);
     }
 
@@ -32,8 +38,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Clears a specific bit.
     /// </summary>
     /// <param name="index">The bit index.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public void ClearBit(ulong index)
     {
+        ThrowIfDisposed(this);
+
         mpz.clrbit(this, index);
     }
 
@@ -41,8 +50,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Toggles a specific bit.
     /// </summary>
     /// <param name="index">The bit index.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public void ComplementBit(ulong index)
     {
+        ThrowIfDisposed(this);
+
         mpz.combit(this, index);
     }
 
@@ -51,8 +63,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="index">The bit index.</param>
     /// <param name="isSet">The bit value.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public void ChangeBit(ulong index, bool isSet)
     {
+        ThrowIfDisposed(this);
+
         if (isSet)
             mpz.setbit(this, index);
         else

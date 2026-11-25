@@ -12,6 +12,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpf_t Ceil()
     {
         mpf_t z = new(Precision);
@@ -24,6 +25,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpf_t Floor()
     {
         mpf_t z = new(Precision);
@@ -36,6 +38,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <summary>
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpf_t Trunc()
     {
         mpf_t z = new(Precision);

@@ -14,8 +14,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpf_t operator +(mpf_t x, mpf_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpf_t z = CreateResult(x, y);
 
         mpf.add(z, x, y);
@@ -28,8 +32,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator +(mpf_t x, long y)
     {
+        ThrowIfDisposed(x);
+
         mpf_t z = CreateResult(x);
 
         if (y >= 0)
@@ -45,8 +52,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpf_t operator +(long x, mpf_t y)
     {
+        ThrowIfDisposed(y);
+
         mpf_t z = CreateResult(y);
 
         if (x >= 0)
@@ -62,8 +72,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator +(mpf_t x, ulong y)
     {
+        ThrowIfDisposed(x);
+
         mpf_t z = CreateResult(x);
 
         mpf.add_ui(z, x, y);
@@ -76,8 +89,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpf_t operator +(ulong x, mpf_t y)
     {
+        ThrowIfDisposed(y);
+
         mpf_t z = CreateResult(y);
 
         mpf.add_ui(z, y, x);
@@ -90,8 +106,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpf_t operator -(mpf_t x, mpf_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpf_t z = CreateResult(x, y);
 
         mpf.sub(z, x, y);
@@ -104,8 +124,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpf_t operator -(long x, mpf_t y)
     {
+        ThrowIfDisposed(y);
+
         if (x >= 0)
         {
             mpf_t z = CreateResult(y);
@@ -130,8 +153,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator -(mpf_t x, long y)
     {
+        ThrowIfDisposed(x);
+
         mpf_t z = CreateResult(x);
 
         if (y >= 0)
@@ -147,8 +173,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpf_t operator -(ulong x, mpf_t y)
     {
+        ThrowIfDisposed(y);
+
         mpf_t z = CreateResult(y);
 
         mpf.ui_sub(z, x, y);
@@ -161,8 +190,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator -(mpf_t x, ulong y)
     {
+        ThrowIfDisposed(x);
+
         mpf_t z = CreateResult(x);
 
         mpf.sub_ui(z, x, y);
@@ -175,8 +207,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpf_t operator *(mpf_t x, mpf_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpf_t z = CreateResult(x, y);
 
         mpf.mul(z, x, y);
@@ -189,8 +225,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpf_t operator *(ulong x, mpf_t y)
     {
+        ThrowIfDisposed(y);
+
         mpf_t z = CreateResult(y);
 
         mpf.mul_ui(z, y, x);
@@ -203,8 +242,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator *(mpf_t x, ulong y)
     {
+        ThrowIfDisposed(x);
+
         mpf_t z = CreateResult(x);
 
         mpf.mul_ui(z, x, y);
@@ -217,8 +259,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The value.</param>
     /// <param name="count">The shift. A negative count shifts to the right.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator <<(mpf_t x, int count)
     {
+        ThrowIfDisposed(x);
+
         mpf_t z = CreateResult(x);
 
         if (count >= 0)
@@ -234,8 +279,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The value.</param>
     /// <param name="count">The shift. A negative count shifts to the left.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator >>(mpf_t x, int count)
     {
+        ThrowIfDisposed(x);
+
         mpf_t z = CreateResult(x);
 
         if (count >= 0)
@@ -250,8 +298,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Negates an operand.
     /// </summary>
     /// <param name="x">The value.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator -(mpf_t x)
     {
+        ThrowIfDisposed(x);
+
         mpf_t z = CreateResult(x);
 
         mpf.neg(z, x);
@@ -264,8 +315,12 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpf_t operator /(mpf_t x, mpf_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpf_t quotient = CreateResult(x, y);
 
         mpf.div(quotient, x, y);
@@ -278,8 +333,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpf_t operator /(mpf_t x, ulong y)
     {
+        ThrowIfDisposed(x);
+
         mpf_t quotient = CreateResult(x);
 
         mpf.div_ui(quotient, x, y);
@@ -292,8 +350,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpf_t operator /(ulong x, mpf_t y)
     {
+        ThrowIfDisposed(y);
+
         mpf_t quotient = CreateResult(y);
 
         mpf.ui_div(quotient, x, y);
@@ -306,6 +367,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpf_t? x, mpf_t? y)
     {
         return y is not null && (x is null || x.CompareTo(y) < 0);
@@ -316,6 +378,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(long x, mpf_t? y)
     {
         return y is not null && y.CompareTo(x) > 0;
@@ -326,6 +389,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpf_t? x, long y)
     {
         return x is null || x.CompareTo(y) < 0;
@@ -336,6 +400,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(ulong x, mpf_t? y)
     {
         return y is not null && y.CompareTo(x) > 0;
@@ -346,6 +411,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpf_t? x, ulong y)
     {
         return x is null || x.CompareTo(y) < 0;
@@ -356,6 +422,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(float x, mpf_t? y)
     {
         return y is not null && (!double.IsNaN(x) && y.CompareTo(x) > 0);
@@ -366,6 +433,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpf_t? x, float y)
     {
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
@@ -376,6 +444,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(double x, mpf_t? y)
     {
         return y is not null && (!double.IsNaN(x) && y.CompareTo(x) > 0);
@@ -386,6 +455,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpf_t? x, double y)
     {
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
@@ -396,6 +466,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpf_t? x, mpf_t? y)
     {
         return x is null || (y is not null && x.CompareTo(y) <= 0);
@@ -406,6 +477,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(long x, mpf_t? y)
     {
         return y is not null && y.CompareTo(x) >= 0;
@@ -416,6 +488,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpf_t? x, long y)
     {
         return x is null || x.CompareTo(y) <= 0;
@@ -426,6 +499,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(ulong x, mpf_t? y)
     {
         return y is not null && y.CompareTo(x) >= 0;
@@ -436,6 +510,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpf_t? x, ulong y)
     {
         return x is null || x.CompareTo(y) <= 0;
@@ -446,6 +521,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(float x, mpf_t? y)
     {
         return y is not null && (!double.IsNaN(x) && y.CompareTo(x) >= 0);
@@ -456,6 +532,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpf_t? x, float y)
     {
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
@@ -466,6 +543,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(double x, mpf_t? y)
     {
         return y is not null && (!double.IsNaN(x) && y.CompareTo(x) >= 0);
@@ -476,6 +554,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpf_t? x, double y)
     {
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
@@ -486,6 +565,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpf_t? x, mpf_t? y)
     {
         return x is not null && (y is null || x.CompareTo(y) > 0);
@@ -496,6 +576,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(long x, mpf_t? y)
     {
         return y is null || y.CompareTo(x) < 0;
@@ -506,6 +587,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpf_t? x, long y)
     {
         return x is not null && x.CompareTo(y) > 0;
@@ -516,6 +598,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(ulong x, mpf_t? y)
     {
         return y is null || y.CompareTo(x) < 0;
@@ -526,6 +609,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpf_t? x, ulong y)
     {
         return x is not null && x.CompareTo(y) > 0;
@@ -536,6 +620,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(float x, mpf_t? y)
     {
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
@@ -546,6 +631,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpf_t? x, float y)
     {
         return x is not null && (!double.IsNaN(y) && x.CompareTo(y) > 0);
@@ -556,6 +642,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(double x, mpf_t? y)
     {
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
@@ -566,6 +653,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpf_t? x, double y)
     {
         return x is not null && (!double.IsNaN(y) && x.CompareTo(y) > 0);
@@ -576,6 +664,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpf_t? x, mpf_t? y)
     {
         return y is null || (x is not null && x.CompareTo(y) >= 0);
@@ -586,6 +675,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(long x, mpf_t? y)
     {
         return y is null || y.CompareTo(x) <= 0;
@@ -596,6 +686,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpf_t? x, long y)
     {
         return x is not null && x.CompareTo(y) >= 0;
@@ -606,6 +697,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(ulong x, mpf_t? y)
     {
         return y is null || y.CompareTo(x) <= 0;
@@ -616,6 +708,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpf_t? x, ulong y)
     {
         return x is not null && x.CompareTo(y) >= 0;
@@ -626,6 +719,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(float x, mpf_t? y)
     {
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
@@ -636,6 +730,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpf_t? x, float y)
     {
         return x is not null && (!double.IsNaN(y) && x.CompareTo(y) >= 0);
@@ -646,6 +741,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(double x, mpf_t? y)
     {
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
@@ -656,6 +752,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpf_t? x, double y)
     {
         return x is not null && (!double.IsNaN(y) && x.CompareTo(y) >= 0);
@@ -666,6 +763,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpf_t? x, mpf_t? y)
     {
         return x is null ? y is null : x.Equals(y);
@@ -676,6 +774,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(long x, mpf_t? y)
     {
         return y is not null && y.CompareTo(x) == 0;
@@ -686,6 +785,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpf_t? x, long y)
     {
         return x is not null && x.CompareTo(y) == 0;
@@ -696,6 +796,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(ulong x, mpf_t? y)
     {
         return y is not null && y.CompareTo(x) == 0;
@@ -706,6 +807,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpf_t? x, ulong y)
     {
         return x is not null && x.CompareTo(y) == 0;
@@ -716,6 +818,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(float x, mpf_t? y)
     {
         return y is not null && !double.IsNaN(x) && y.CompareTo(x) == 0;
@@ -726,6 +829,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpf_t? x, float y)
     {
         return x is not null && !double.IsNaN(y) && x.CompareTo(y) == 0;
@@ -736,6 +840,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(double x, mpf_t? y)
     {
         return y is not null && !double.IsNaN(x) && y.CompareTo(x) == 0;
@@ -746,6 +851,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpf_t? x, double y)
     {
         return x is not null && !double.IsNaN(y) && x.CompareTo(y) == 0;
@@ -756,6 +862,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpf_t? x, mpf_t? y)
     {
         return !(x == y);
@@ -766,6 +873,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(long x, mpf_t? y)
     {
         return y is null || y.CompareTo(x) != 0;
@@ -776,6 +884,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpf_t? x, long y)
     {
         return x is null || x.CompareTo(y) != 0;
@@ -786,6 +895,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(ulong x, mpf_t? y)
     {
         return y is null || y.CompareTo(x) != 0;
@@ -796,6 +906,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpf_t? x, ulong y)
     {
         return x is null || x.CompareTo(y) != 0;
@@ -806,6 +917,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(float x, mpf_t? y)
     {
         return y is null || double.IsNaN(x) || y.CompareTo(x) != 0;
@@ -816,6 +928,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpf_t? x, float y)
     {
         return x is null || double.IsNaN(y) || x.CompareTo(y) != 0;
@@ -826,6 +939,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(double x, mpf_t? y)
     {
         return y is null || double.IsNaN(x) || y.CompareTo(x) != 0;
@@ -836,6 +950,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpf_t? x, double y)
     {
         return x is null || double.IsNaN(y) || x.CompareTo(y) != 0;
@@ -845,6 +960,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Determines whether the specified object is equal to the current object.
     /// </summary>
     /// <param name="obj">The object to compare with the current object..</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public override bool Equals(object? obj)
     {
         return obj is mpf_t other && Equals(other);
@@ -853,8 +969,11 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <summary>
     /// Gets a hash of the value.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public override int GetHashCode()
     {
+        ThrowIfDisposed(this);
+
         ulong SizeInDigits = 5;
         StringBuilder Data = new((int)(SizeInDigits + 2));
 

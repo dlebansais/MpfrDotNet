@@ -21,18 +21,36 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Gets or sets the precision.
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public ulong Precision
     {
-        get { return mpf.get_prec(this); }
-        set { mpf.set_prec(this, value); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.get_prec(this);
+        }
+
+        set
+        {
+            ThrowIfDisposed(this);
+
+            mpf.set_prec(this, value);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether the number is an integer.
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool IsInteger
     {
-        get { return mpf.integer_p(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpf.integer_p(this);
+        }
     }
 }

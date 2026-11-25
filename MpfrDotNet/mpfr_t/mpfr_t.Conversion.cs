@@ -107,6 +107,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator byte(mpfr_t value)
     {
         using mpz_t Integer = value.ToRoundedInteger();
@@ -118,6 +119,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator int(mpfr_t value)
     {
         using mpz_t Integer = value.ToRoundedInteger();
@@ -129,6 +131,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator uint(mpfr_t value)
     {
         using mpz_t Integer = value.ToRoundedInteger();
@@ -140,6 +143,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator short(mpfr_t value)
     {
         using mpz_t Integer = value.ToRoundedInteger();
@@ -151,6 +155,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator ushort(mpfr_t value)
     {
         using mpz_t Integer = value.ToRoundedInteger();
@@ -162,6 +167,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator long(mpfr_t value)
     {
         using mpz_t Integer = value.ToRoundedInteger();
@@ -173,6 +179,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException">The value is NaN, an infinity, or outside the range of the target type after rounding.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator ulong(mpfr_t value)
     {
         using mpz_t Integer = value.ToRoundedInteger();
@@ -183,8 +190,11 @@ public partial class mpfr_t : IDisposable
     /// Converts to a <see cref="float"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator float(mpfr_t value)
     {
+        ThrowIfDisposed(value);
+
         return mpfr.get_flt(value, value.Rounding);
     }
 
@@ -192,8 +202,11 @@ public partial class mpfr_t : IDisposable
     /// Converts to a <see cref="double"/> value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator double(mpfr_t value)
     {
+        ThrowIfDisposed(value);
+
         return mpfr.get_d(value, value.Rounding);
     }
 
@@ -202,6 +215,7 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="OverflowException"><paramref name="value"/> is NaN or an infinity.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static explicit operator BigInteger(mpfr_t value)
     {
         using mpz_t Integer = value.ToRoundedInteger();
@@ -215,8 +229,11 @@ public partial class mpfr_t : IDisposable
     /// <param name="value">The value.</param>
     /// <param name="d">The double upon return.</param>
     /// <param name="e">The exponent upon return.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static void ToDoubleAndExponent(mpfr_t value, out double d, out int e)
     {
+        ThrowIfDisposed(value);
+
         d = mpfr.get_d_2exp(out e, value, value.Rounding);
     }
 
@@ -225,8 +242,11 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <param name="e">The exponent upon return.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static mpfr_t ToIntegralFractional(mpfr_t value, out int e)
     {
+        ThrowIfDisposed(value);
+
         mpfr_t y = CreateResult(value);
 
         y.LastTernaryResult = mpfr.frexp(out e, y, value, value.Rounding);
@@ -239,8 +259,11 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="value">The value.</param>
     /// <param name="e">The exponent upon return.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static mpz_t ToIntegerAndExponent(mpfr_t value, out int e)
     {
+        ThrowIfDisposed(value);
+
         mpz_t Result = new();
 
         e = mpfr.get_z_2exp(Result, value);
@@ -252,8 +275,11 @@ public partial class mpfr_t : IDisposable
     /// Converts to a rational.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static mpq_t ToRational(mpfr_t value)
     {
+        ThrowIfDisposed(value);
+
         mpq_t Result = new();
 
         mpfr.get_q(Result, value);
@@ -265,8 +291,11 @@ public partial class mpfr_t : IDisposable
     /// Converts to a <see cref="mpf_t"/> floating-point value.
     /// </summary>
     /// <param name="value">The value.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
     public static mpf_t ToFloatingPoint(mpfr_t value)
     {
+        ThrowIfDisposed(value);
+
         mpf_t Result = new();
 
         mpfr.get_f(Result, value, value.Rounding);
@@ -277,57 +306,99 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets a value indicating whether the number can be converted to a <see cref="ulong"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsUnsignedLong
     {
-        get { return mpfr.fits_ulong_p(this, Rounding); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpfr.fits_ulong_p(this, Rounding);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="long"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsSignedLong
     {
-        get { return mpfr.fits_slong_p(this, Rounding); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpfr.fits_slong_p(this, Rounding);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="uint"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsUnsignedInt
     {
-        get { return mpfr.fits_uint_p(this, Rounding); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpfr.fits_uint_p(this, Rounding);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="int"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsSignedInt
     {
-        get { return mpfr.fits_sint_p(this, Rounding); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpfr.fits_sint_p(this, Rounding);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="ushort"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsUnsignedShort
     {
-        get { return mpfr.fits_ushort_p(this, Rounding); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpfr.fits_ushort_p(this, Rounding);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether a number can be converted to a <see cref="short"/>.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool FitsSignedShort
     {
-        get { return mpfr.fits_sshort_p(this, Rounding); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpfr.fits_sshort_p(this, Rounding);
+        }
     }
 
     /// <summary>
     /// Gets a value indicating whether the number is an integer.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public bool IsInteger
     {
-        get { return mpfr.integer_p(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpfr.integer_p(this);
+        }
     }
 
     private mpz_t ToRoundedInteger()

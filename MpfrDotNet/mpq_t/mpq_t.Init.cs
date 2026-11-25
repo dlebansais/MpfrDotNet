@@ -24,8 +24,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Initializes a new instance of the <see cref="mpq_t"/> class.
     /// </summary>
     /// <param name="other">The other instance.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="other"/> is disposed.</exception>
     public mpq_t(mpq_t other)
     {
+        ThrowIfDisposed(other);
+
         mpq.init(this);
         mpq.set(this, other);
     }
@@ -34,8 +37,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Initializes a new instance of the <see cref="mpq_t"/> class.
     /// </summary>
     /// <param name="source">The source instance.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="source"/> is disposed.</exception>
     public mpq_t(mpf_t source)
     {
+        mpf_t.ThrowIfDisposed(source);
+
         mpq.init(this);
         mpq.set_f(this, source);
     }
@@ -44,8 +50,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Initializes a new instance of the <see cref="mpq_t"/> class.
     /// </summary>
     /// <param name="source">The source instance.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="source"/> is disposed.</exception>
     public mpq_t(mpz_t source)
     {
+        mpz_t.ThrowIfDisposed(source);
+
         mpq.init(this);
         mpq.set_z(this, source);
     }
@@ -127,8 +136,12 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="numerator">The numerator.</param>
     /// <param name="denominator">The denominator.</param>
     /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="numerator"/> or <paramref name="denominator"/> is disposed.</exception>
     public mpq_t(mpz_t numerator, mpz_t denominator)
     {
+        mpz_t.ThrowIfDisposed(numerator);
+        mpz_t.ThrowIfDisposed(denominator);
+
         if (mpz.sgn(denominator) == 0)
             throw new DivideByZeroException("The denominator cannot be zero.");
 
@@ -145,6 +158,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="denominator">The denominator.</param>
     /// <param name="canonicalize">Ignored: the number is always canonicalized.</param>
     /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="numerator"/> or <paramref name="denominator"/> is disposed.</exception>
     [Obsolete(ObsoleteCanonicalizeMessage)]
     public mpq_t(mpz_t numerator, mpz_t denominator, bool canonicalize)
         : this(numerator, denominator)

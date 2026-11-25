@@ -24,8 +24,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Initializes a new instance of the <see cref="mpz_t"/> class.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="other"/> is disposed.</exception>
     public mpz_t(mpz_t other)
     {
+        ThrowIfDisposed(other);
+
         mpz.init_set(this, other);
     }
 

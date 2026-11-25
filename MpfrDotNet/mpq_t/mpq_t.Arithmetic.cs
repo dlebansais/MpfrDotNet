@@ -12,8 +12,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <summary>
     /// Gets the absolute value of the number.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpq_t Abs()
     {
+        ThrowIfDisposed(this);
+
         mpq_t z = new();
 
         mpq.abs(z, this);
@@ -24,8 +27,11 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <summary>
     /// Gets the inverse of the number.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public mpq_t Inverse()
     {
+        ThrowIfDisposed(this);
+
         mpq_t z = new();
 
         mpq.inv(z, this);

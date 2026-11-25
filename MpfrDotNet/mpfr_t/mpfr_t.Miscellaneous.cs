@@ -17,8 +17,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpfr_t Min(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.min(z, x, y, rounding);
@@ -32,8 +36,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpfr_t Max(mpfr_t x, mpfr_t y, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.max(z, x, y, rounding);
@@ -46,8 +54,12 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <param name="x">The first number.</param>
     /// <param name="y">The second number.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static void Swap(mpfr_t x, mpfr_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpfr.swap(x, y);
     }
 
@@ -58,8 +70,11 @@ public partial class mpfr_t : IDisposable
     /// <returns>The formatted number.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="format"/> is <see langword="null"/>.</exception>
     /// <exception cref="FormatException"><paramref name="format"/> has more than one conversion, or a conversion that is not for an <see cref="mpfr_t"/> (such as %Rf), or MPFR cannot format the number with it.</exception>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToFormattedString(string format)
     {
+        ThrowIfDisposed(this);
+
         if (format is null)
             throw new ArgumentNullException(nameof(format));
 
@@ -143,6 +158,7 @@ public partial class mpfr_t : IDisposable
     /// <returns>The formatted number.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="format"/> is <see langword="null"/>.</exception>
     /// <exception cref="FormatException">MPFR cannot format the number with <paramref name="format"/>.</exception>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToFormattedString(ulong maxLength, string format)
     {
         string Result = ToFormattedString(format);
@@ -231,17 +247,20 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     /// <exception cref="InvalidOperationException">The number is zero, NaN or an infinity.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The new exponent is outside the current exponent range.</exception>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public int Exponent
     {
         get
         {
+            ThrowIfDisposed(this);
+
             return mpfr.get_exp(this);
         }
+
         set
         {
             if (!IsRegular)
                 throw new InvalidOperationException(mpfr.NoExponentMessage);
-
             if (mpfr.set_exp(this, value) != 0)
                 throw new ArgumentOutOfRangeException(nameof(value), value, "The exponent is outside the current exponent range.");
         }
@@ -250,9 +269,15 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets the sign bit.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">The number is disposed.</exception>
     public int SignBit
     {
-        get { return mpfr.signbit(this); }
+        get
+        {
+            ThrowIfDisposed(this);
+
+            return mpfr.signbit(this);
+        }
     }
 
     /// <summary>
@@ -261,8 +286,12 @@ public partial class mpfr_t : IDisposable
     /// <param name="source">The source operand.</param>
     /// <param name="signBit">The sign bit.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException">This number or <paramref name="source"/> is disposed.</exception>
     public void SetWithSignBit(mpfr_t source, int signBit, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(this);
+        ThrowIfDisposed(source);
+
         LastTernaryResult = mpfr.setsign(this, source, signBit, rounding);
     }
 
@@ -272,8 +301,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="source">The source operand.</param>
     /// <param name="signBitSource">The sign bit source operand.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ObjectDisposedException">This number, <paramref name="source"/> or <paramref name="signBitSource"/> is disposed.</exception>
     public void CopyWithSignBit(mpfr_t source, mpfr_t signBitSource, mpfr_rnd_t rounding = DefaultRounding)
     {
+        ThrowIfDisposed(this);
+        ThrowIfDisposed(source);
+        ThrowIfDisposed(signBitSource);
+
         LastTernaryResult = mpfr.copysign(this, source, signBitSource, rounding);
     }
 }

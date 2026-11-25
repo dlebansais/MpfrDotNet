@@ -15,8 +15,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpz_t operator +(mpz_t x, mpz_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.add(z, x, y);
@@ -29,8 +33,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator +(mpz_t x, long y)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         if (y >= 0)
@@ -46,8 +53,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpz_t operator +(long x, mpz_t y)
     {
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         if (x >= 0)
@@ -63,8 +73,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator +(mpz_t x, ulong y)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         mpz.add_ui(z, x, y);
@@ -77,8 +90,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpz_t operator +(ulong x, mpz_t y)
     {
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.add_ui(z, y, x);
@@ -90,8 +106,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Increments an operand.
     /// </summary>
     /// <param name="x">The operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator ++(mpz_t x)
     {
+        ThrowIfDisposed(x);
+
         // The operand is left unchanged: C# assigns the result to the variable, and the operand may be shared.
         mpz_t z = new();
 
@@ -105,8 +124,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpz_t operator -(mpz_t x, mpz_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.sub(z, x, y);
@@ -119,8 +142,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpz_t operator -(long x, mpz_t y)
     {
+        ThrowIfDisposed(y);
+
         if (x >= 0)
         {
             mpz_t z = new();
@@ -145,8 +171,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator -(mpz_t x, long y)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         if (y >= 0)
@@ -162,8 +191,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpz_t operator -(ulong x, mpz_t y)
     {
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.ui_sub(z, x, y);
@@ -176,8 +208,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator -(mpz_t x, ulong y)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         mpz.sub_ui(z, x, y);
@@ -189,8 +224,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Decrements an operand.
     /// </summary>
     /// <param name="x">The operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator --(mpz_t x)
     {
+        ThrowIfDisposed(x);
+
         // The operand is left unchanged: C# assigns the result to the variable, and the operand may be shared.
         mpz_t z = new();
 
@@ -204,8 +242,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpz_t operator *(mpz_t x, mpz_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.mul(z, x, y);
@@ -218,8 +260,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpz_t operator *(long x, mpz_t y)
     {
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.mul_si(z, y, x);
@@ -232,8 +277,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator *(mpz_t x, long y)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         mpz.mul_si(z, x, y);
@@ -246,8 +294,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static mpz_t operator *(ulong x, mpz_t y)
     {
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.mul_ui(z, y, x);
@@ -260,8 +311,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator *(mpz_t x, ulong y)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         mpz.mul_ui(z, x, y);
@@ -274,8 +328,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The operand.</param>
     /// <param name="count">The number of bits to shift. A negative count shifts to the right.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator <<(mpz_t x, int count)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         if (count >= 0)
@@ -291,8 +348,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The operand.</param>
     /// <param name="count">The number of bits to shift. A negative count shifts to the left.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator >>(mpz_t x, int count)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         if (count >= 0)
@@ -310,8 +370,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Negates an operand.
     /// </summary>
     /// <param name="x">The operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator -(mpz_t x)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         mpz.neg(z, x);
@@ -324,8 +387,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpz_t operator /(mpz_t x, mpz_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpz_t quotient = new();
 
         mpz.tdiv_q(quotient, x, y);
@@ -338,8 +405,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator /(mpz_t x, long y)
     {
+        ThrowIfDisposed(x);
+
         if (y >= 0)
         {
             mpz_t quotient = new();
@@ -364,8 +434,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator /(mpz_t x, ulong y)
     {
+        ThrowIfDisposed(x);
+
         mpz_t quotient = new();
 
         mpz.tdiv_q_ui(quotient, x, y);
@@ -379,8 +452,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The operand.</param>
     /// <param name="mod">The divisor.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="mod"/> is disposed.</exception>
     public static mpz_t operator %(mpz_t x, mpz_t mod)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(mod);
+
         mpz_t z = new();
 
         mpz.tdiv_r(z, x, mod);
@@ -393,8 +470,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The operand.</param>
     /// <param name="mod">The divisor.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator %(mpz_t x, long mod)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         // The sign of the divisor does not change the remainder. The negation is unchecked so that long.MinValue gives 2^63.
@@ -409,8 +489,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The operand.</param>
     /// <param name="mod">The divisor.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator %(mpz_t x, ulong mod)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         _ = mpz.tdiv_r_ui(z, x, mod);
@@ -423,6 +506,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <(mpz_t? x, mpz_t? y)
     {
         return y is not null && (x is null || x.CompareTo(y) < 0);
@@ -433,6 +517,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(int x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) > 0;
@@ -443,6 +528,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpz_t? x, int y)
     {
         return x is null || x.CompareTo(y) < 0;
@@ -453,6 +539,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(uint x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) > 0;
@@ -463,6 +550,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpz_t? x, uint y)
     {
         return x is null || x.CompareTo(y) < 0;
@@ -473,6 +561,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(long x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) > 0;
@@ -483,6 +572,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpz_t? x, long y)
     {
         return x is null || x.CompareTo(y) < 0;
@@ -493,6 +583,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(ulong x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) > 0;
@@ -503,6 +594,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpz_t? x, ulong y)
     {
         return x is null || x.CompareTo(y) < 0;
@@ -513,6 +605,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(float x, mpz_t? y)
     {
         return y is not null && (!double.IsNaN(x) && y.CompareTo(x) > 0);
@@ -523,6 +616,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpz_t? x, float y)
     {
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
@@ -533,6 +627,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <(double x, mpz_t? y)
     {
         return y is not null && (!double.IsNaN(x) && y.CompareTo(x) > 0);
@@ -543,6 +638,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <(mpz_t? x, double y)
     {
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
@@ -553,6 +649,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator <=(mpz_t? x, mpz_t? y)
     {
         return x is null || (y is not null && x.CompareTo(y) <= 0);
@@ -563,6 +660,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(int x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) >= 0;
@@ -573,6 +671,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpz_t? x, int y)
     {
         return x is null || x.CompareTo(y) <= 0;
@@ -583,6 +682,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(uint x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) >= 0;
@@ -593,6 +693,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpz_t? x, uint y)
     {
         return x is null || x.CompareTo(y) <= 0;
@@ -603,6 +704,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(long x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) >= 0;
@@ -613,6 +715,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpz_t? x, long y)
     {
         return x is null || x.CompareTo(y) <= 0;
@@ -623,6 +726,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(ulong x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) >= 0;
@@ -633,6 +737,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpz_t? x, ulong y)
     {
         return x is null || x.CompareTo(y) <= 0;
@@ -643,6 +748,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(float x, mpz_t? y)
     {
         return y is not null && (!double.IsNaN(x) && y.CompareTo(x) >= 0);
@@ -653,6 +759,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpz_t? x, float y)
     {
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
@@ -663,6 +770,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator <=(double x, mpz_t? y)
     {
         return y is not null && (!double.IsNaN(x) && y.CompareTo(x) >= 0);
@@ -673,6 +781,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator <=(mpz_t? x, double y)
     {
         return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
@@ -683,6 +792,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >(mpz_t? x, mpz_t? y)
     {
         return x is not null && (y is null || x.CompareTo(y) > 0);
@@ -693,6 +803,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(int x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) < 0;
@@ -703,6 +814,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpz_t? x, int y)
     {
         return x is not null && x.CompareTo(y) > 0;
@@ -713,6 +825,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(uint x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) < 0;
@@ -723,6 +836,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpz_t? x, uint y)
     {
         return x is not null && x.CompareTo(y) > 0;
@@ -733,6 +847,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(long x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) < 0;
@@ -743,6 +858,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpz_t? x, long y)
     {
         return x is not null && x.CompareTo(y) > 0;
@@ -753,6 +869,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(ulong x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) < 0;
@@ -763,6 +880,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpz_t? x, ulong y)
     {
         return x is not null && x.CompareTo(y) > 0;
@@ -773,6 +891,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(float x, mpz_t? y)
     {
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
@@ -783,6 +902,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpz_t? x, float y)
     {
         return x is not null && (!double.IsNaN(y) && x.CompareTo(y) > 0);
@@ -793,6 +913,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >(double x, mpz_t? y)
     {
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
@@ -803,6 +924,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >(mpz_t? x, double y)
     {
         return x is not null && (!double.IsNaN(y) && x.CompareTo(y) > 0);
@@ -813,6 +935,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator >=(mpz_t? x, mpz_t? y)
     {
         return y is null || (x is not null && x.CompareTo(y) >= 0);
@@ -823,6 +946,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(int x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) <= 0;
@@ -833,6 +957,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpz_t? x, int y)
     {
         return x is not null && x.CompareTo(y) >= 0;
@@ -843,6 +968,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(uint x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) <= 0;
@@ -853,6 +979,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpz_t? x, uint y)
     {
         return x is not null && x.CompareTo(y) >= 0;
@@ -863,6 +990,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(long x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) <= 0;
@@ -873,6 +1001,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpz_t? x, long y)
     {
         return x is not null && x.CompareTo(y) >= 0;
@@ -883,6 +1012,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(ulong x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) <= 0;
@@ -893,6 +1023,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpz_t? x, ulong y)
     {
         return x is not null && x.CompareTo(y) >= 0;
@@ -903,6 +1034,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(float x, mpz_t? y)
     {
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
@@ -913,6 +1045,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpz_t? x, float y)
     {
         return x is not null && (!double.IsNaN(y) && x.CompareTo(y) >= 0);
@@ -923,6 +1056,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator >=(double x, mpz_t? y)
     {
         return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
@@ -933,6 +1067,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator >=(mpz_t? x, double y)
     {
         return x is not null && (!double.IsNaN(y) && x.CompareTo(y) >= 0);
@@ -943,6 +1078,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator ==(mpz_t? x, mpz_t? y)
     {
         return x is null ? y is null : x.Equals(y);
@@ -953,6 +1089,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(int x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) == 0;
@@ -963,6 +1100,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpz_t? x, int y)
     {
         return x is not null && x.CompareTo(y) == 0;
@@ -973,6 +1111,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(uint x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) == 0;
@@ -983,6 +1122,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpz_t? x, uint y)
     {
         return x is not null && x.CompareTo(y) == 0;
@@ -993,6 +1133,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(long x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) == 0;
@@ -1003,6 +1144,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpz_t? x, long y)
     {
         return x is not null && x.CompareTo(y) == 0;
@@ -1013,6 +1155,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(ulong x, mpz_t? y)
     {
         return y is not null && y.CompareTo(x) == 0;
@@ -1023,6 +1166,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpz_t? x, ulong y)
     {
         return x is not null && x.CompareTo(y) == 0;
@@ -1033,6 +1177,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(float x, mpz_t? y)
     {
         return y is not null && !double.IsNaN(x) && y.CompareTo(x) == 0;
@@ -1043,6 +1188,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpz_t? x, float y)
     {
         return x is not null && !double.IsNaN(y) && x.CompareTo(y) == 0;
@@ -1053,6 +1199,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator ==(double x, mpz_t? y)
     {
         return y is not null && !double.IsNaN(x) && y.CompareTo(x) == 0;
@@ -1063,6 +1210,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator ==(mpz_t? x, double y)
     {
         return x is not null && !double.IsNaN(y) && x.CompareTo(y) == 0;
@@ -1073,6 +1221,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static bool operator !=(mpz_t? x, mpz_t? y)
     {
         return !(x == y);
@@ -1083,6 +1232,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(int x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) != 0;
@@ -1093,6 +1243,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpz_t? x, int y)
     {
         return x is null || x.CompareTo(y) != 0;
@@ -1103,6 +1254,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(uint x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) != 0;
@@ -1113,6 +1265,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpz_t? x, uint y)
     {
         return x is null || x.CompareTo(y) != 0;
@@ -1123,6 +1276,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(long x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) != 0;
@@ -1133,6 +1287,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpz_t? x, long y)
     {
         return x is null || x.CompareTo(y) != 0;
@@ -1143,6 +1298,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(ulong x, mpz_t? y)
     {
         return y is null || y.CompareTo(x) != 0;
@@ -1153,6 +1309,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpz_t? x, ulong y)
     {
         return x is null || x.CompareTo(y) != 0;
@@ -1163,6 +1320,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(float x, mpz_t? y)
     {
         return y is null || double.IsNaN(x) || y.CompareTo(x) != 0;
@@ -1173,6 +1331,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpz_t? x, float y)
     {
         return x is null || double.IsNaN(y) || x.CompareTo(y) != 0;
@@ -1183,6 +1342,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
     public static bool operator !=(double x, mpz_t? y)
     {
         return y is null || double.IsNaN(x) || y.CompareTo(x) != 0;
@@ -1193,6 +1353,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static bool operator !=(mpz_t? x, double y)
     {
         return x is null || double.IsNaN(y) || x.CompareTo(y) != 0;
@@ -1203,8 +1364,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpz_t operator &(mpz_t x, mpz_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.and(z, x, y);
@@ -1217,8 +1382,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpz_t operator |(mpz_t x, mpz_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.ior(z, x, y);
@@ -1231,8 +1400,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="x">The first operand.</param>
     /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
     public static mpz_t operator ^(mpz_t x, mpz_t y)
     {
+        ThrowIfDisposed(x);
+        ThrowIfDisposed(y);
+
         mpz_t z = new();
 
         mpz.xor(z, x, y);
@@ -1244,8 +1417,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Gets the two's-complement of an operand.
     /// </summary>
     /// <param name="x">The operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
     public static mpz_t operator ~(mpz_t x)
     {
+        ThrowIfDisposed(x);
+
         mpz_t z = new();
 
         mpz.com(z, x);
@@ -1257,6 +1433,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Determines whether the specified object is equal to the current object.
     /// </summary>
     /// <param name="obj">The object to compare with the current object..</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public override bool Equals(object? obj)
     {
         return obj is mpz_t other && Equals(other);
@@ -1265,6 +1442,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <summary>
     /// Gets the hash of the object.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public override int GetHashCode()
     {
         return Convert.ToBase64String(ToByteArray()).GetHashCode();

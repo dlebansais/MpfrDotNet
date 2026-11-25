@@ -49,6 +49,17 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     private bool IsDisposed;
 
     /// <summary>
+    /// Throws if a number has been disposed, since its native memory is then released.
+    /// </summary>
+    /// <param name="value">The number, or <see langword="null"/>, which is left to the caller to check.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
+    internal static void ThrowIfDisposed(mpz_t? value)
+    {
+        if (value is not null && value.IsDisposed)
+            throw new ObjectDisposedException(nameof(mpz_t));
+    }
+
+    /// <summary>
     /// Disposes of every reference that must be cleaned up.
     /// </summary>
     private void DisposeNow()
@@ -64,8 +75,12 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Determines whether the specified object is equal to the current object.
     /// </summary>
     /// <param name="other">The object to compare with the current object.</param>
+    /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
     public bool Equals(mpz_t? other)
     {
+        ThrowIfDisposed(this);
+        ThrowIfDisposed(other);
+
         return other is not null && mpz.cmp(this, other) == 0;
     }
 
@@ -73,6 +88,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Determines whether the specified object is equal to the current object.
     /// </summary>
     /// <param name="other">The object to compare with the current object.</param>
+    /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
     bool IEquatable<mpz_t>.Equals(mpz_t? other)
     {
         return this.Equals(other);
@@ -83,6 +99,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <summary>
     /// Creates a copy of the object.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public object Clone()
     {
         return new mpz_t(this);
@@ -91,6 +108,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <summary>
     /// Creates a copy of the object.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     object ICloneable.Clone()
     {
         return this.Clone();
@@ -101,8 +119,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <summary>
     /// Returns the <see cref="TypeCode"/> for this instance.
     /// </summary>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     TypeCode IConvertible.GetTypeCode()
     {
+        ThrowIfDisposed(this);
+
         return TypeCode.Object;
     }
 
@@ -110,10 +131,13 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="bool"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
 #pragma warning disable CA1822
     public bool ToBoolean(IFormatProvider? provider)
 #pragma warning restore CA1822
     {
+        ThrowIfDisposed(this);
+
         throw new InvalidCastException();
     }
 
@@ -121,8 +145,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="bool"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     bool IConvertible.ToBoolean(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         throw new InvalidCastException();
     }
 
@@ -130,6 +157,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="byte"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public byte ToByte(IFormatProvider? provider)
     {
         return (byte)this;
@@ -139,6 +167,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="byte"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     byte IConvertible.ToByte(IFormatProvider? provider)
     {
         return ToByte(provider);
@@ -148,10 +177,13 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="char"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
 #pragma warning disable CA1822
     public char ToChar(IFormatProvider? provider)
 #pragma warning restore CA1822
     {
+        ThrowIfDisposed(this);
+
         throw new InvalidCastException();
     }
 
@@ -159,8 +191,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="char"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     char IConvertible.ToChar(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         throw new InvalidCastException();
     }
 
@@ -168,10 +203,13 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="DateTime"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
 #pragma warning disable CA1822
     public DateTime ToDateTime(IFormatProvider? provider)
 #pragma warning restore CA1822
     {
+        ThrowIfDisposed(this);
+
         throw new InvalidCastException();
     }
 
@@ -179,8 +217,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="DateTime"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     DateTime IConvertible.ToDateTime(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         throw new InvalidCastException();
     }
 
@@ -188,10 +229,13 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="decimal"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
 #pragma warning disable CA1822
     public decimal ToDecimal(IFormatProvider? provider)
 #pragma warning restore CA1822
     {
+        ThrowIfDisposed(this);
+
         throw new InvalidCastException();
     }
 
@@ -199,8 +243,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="decimal"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     decimal IConvertible.ToDecimal(IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         throw new InvalidCastException();
     }
 
@@ -208,6 +255,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="double"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public double ToDouble(IFormatProvider? provider)
     {
         return (double)this;
@@ -217,6 +265,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="double"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     double IConvertible.ToDouble(IFormatProvider? provider)
     {
         return ToDouble(provider);
@@ -226,6 +275,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="short"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public short ToInt16(IFormatProvider? provider)
     {
         return (short)this;
@@ -235,6 +285,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="short"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     short IConvertible.ToInt16(IFormatProvider? provider)
     {
         return ToInt16(provider);
@@ -244,6 +295,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="int"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public int ToInt32(IFormatProvider? provider)
     {
         return (int)this;
@@ -253,6 +305,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="int"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     int IConvertible.ToInt32(IFormatProvider? provider)
     {
         return ToInt32(provider);
@@ -262,6 +315,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="long"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public long ToInt64(IFormatProvider? provider)
     {
         return (long)this;
@@ -271,6 +325,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="long"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     long IConvertible.ToInt64(IFormatProvider? provider)
     {
         return ToInt64(provider);
@@ -280,6 +335,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="sbyte"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public sbyte ToSByte(IFormatProvider? provider)
     {
         return checked((sbyte)(short)this);
@@ -289,6 +345,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="sbyte"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     sbyte IConvertible.ToSByte(IFormatProvider? provider)
     {
         return ToSByte(provider);
@@ -298,6 +355,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="float"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public float ToSingle(IFormatProvider? provider)
     {
         return (float)this;
@@ -307,6 +365,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="float"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     float IConvertible.ToSingle(IFormatProvider? provider)
     {
         return ToSingle(provider);
@@ -316,6 +375,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="string"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public string ToString(IFormatProvider? provider)
     {
         return ToString();
@@ -325,6 +385,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="string"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     string IConvertible.ToString(IFormatProvider? provider)
     {
         return ToString(provider);
@@ -335,8 +396,11 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="targetType">The type to which the value of this instance is converted.</param>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public object ToType(Type targetType, IFormatProvider? provider)
     {
+        ThrowIfDisposed(this);
+
         if (targetType == typeof(mpz_t))
             return this;
 
@@ -377,6 +441,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="targetType">The type to which the value of this instance is converted.</param>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     object IConvertible.ToType(Type targetType, IFormatProvider? provider)
     {
         return ToType(targetType, provider);
@@ -386,6 +451,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="ushort"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public ushort ToUInt16(IFormatProvider? provider)
     {
         return (ushort)this;
@@ -395,6 +461,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="ushort"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     ushort IConvertible.ToUInt16(IFormatProvider? provider)
     {
         return ToUInt16(provider);
@@ -404,6 +471,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="uint"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public uint ToUInt32(IFormatProvider? provider)
     {
         return (uint)this;
@@ -413,6 +481,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="uint"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     uint IConvertible.ToUInt32(IFormatProvider? provider)
     {
         return ToUInt32(provider);
@@ -422,6 +491,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="ulong"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public ulong ToUInt64(IFormatProvider? provider)
     {
         return (ulong)this;
@@ -431,6 +501,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Converts the value of this instance to an equivalent <see cref="ulong"/> value.
     /// </summary>
     /// <param name="provider">Culture-specific formatting information.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     ulong IConvertible.ToUInt64(IFormatProvider? provider)
     {
         return ToUInt64(provider);
@@ -444,6 +515,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// <param name="obj">An object to compare with this instance.</param>
     /// <returns>A positive value if <paramref name="obj"/> is <see langword="null"/>, as with other .NET types.</returns>
     /// <exception cref="ArgumentException"><paramref name="obj"/> is not an <see cref="mpz_t"/>.</exception>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     public int CompareTo(object? obj)
     {
         if (obj is null)
@@ -458,6 +530,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
     /// </summary>
     /// <param name="obj">An object to compare with this instance.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
     int IComparable.CompareTo(object? obj)
     {
         return CompareTo(obj);
