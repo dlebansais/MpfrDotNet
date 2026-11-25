@@ -27,13 +27,14 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <returns>A negative value, zero or a positive value if this number is less than, equal to or greater than <paramref name="other"/>, and a positive value if <paramref name="other"/> is <see langword="null"/>.</returns>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
-    public int CompareTo(mpz_t other)
+    public int CompareTo(mpz_t? other)
     {
         ThrowIfDisposed(this);
         mpz_t.ThrowIfDisposed(other);
 
-        return mpq.cmp_z(this, other);
+        return other is null ? 1 : mpq.cmp_z(this, other);
     }
 
     /// <summary>

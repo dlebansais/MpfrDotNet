@@ -151,8 +151,13 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="ArgumentException"><paramref name="iop"/> and <paramref name="fop"/> are the same number.</exception>
     public static int modf(mpfr_t iop, mpfr_t fop, mpfr_t op, mpfr_rnd_t rnd)
     {
+        // MPFR aborts the process when the two results are the same number.
+        if (ReferenceEquals(iop, fop))
+            throw new ArgumentException("The integer and fractional parts must be different numbers.", nameof(fop));
+
         return mpfr_modf(ref iop.Value, ref fop.Value, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 

@@ -97,6 +97,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="value"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     /// <remarks>The value is rounded once, to the nearest <see cref="float"/>, ties to even.</remarks>
     public static explicit operator float(mpq_t value)
     {
@@ -111,6 +112,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="value">The value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="value"/> is disposed.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="value"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     /// <remarks>The value is rounded once, to the nearest <see cref="double"/>, ties to even, like the conversion from <see cref="decimal"/>. <see cref="mpq.get_d(mpq_t)"/> truncates instead.</remarks>
     public static explicit operator double(mpq_t value)
     {

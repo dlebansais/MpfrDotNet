@@ -133,7 +133,7 @@ internal class NativeErrorChecks
     {
         using mpz_t a = new(10);
 
-        Assert.That(() => randstate_t.Create(RngAlgorithm.LinearCongruential, a, 1UL, 0UL), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The modulus exponent must be greater than zero.").And.Property(nameof(ArgumentOutOfRangeException.ParamName)).EqualTo("m2exp"));
+        Assert.That(() => randstate_t.Create(RngAlgorithm.LinearCongruential, a, 1UL, 0UL), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The modulus exponent must be at least 2.").And.Property(nameof(ArgumentOutOfRangeException.ParamName)).EqualTo("m2exp"));
     }
 
     [TestCase(12, 1, 0UL, "12")]

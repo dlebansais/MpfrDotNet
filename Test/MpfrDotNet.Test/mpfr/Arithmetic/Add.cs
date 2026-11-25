@@ -36,7 +36,10 @@ public class Add
         AsString = d.ToString();
         Assert.That(AsString, Is.EqualTo("2.225098325257490419438281087997227031224E+25"));
 
-        Assert.Throws<NotImplementedException>(() => mpfr.sum(a, [], mpfr_rnd_t.MPFR_RNDZ));
+        // With no number, the result is an exact +0.
+        using mpfr_t Empty = new(1.0);
+        int EmptyTernary = mpfr.sum(Empty, [], mpfr_rnd_t.MPFR_RNDZ);
+        Assert.That((EmptyTernary, Empty.IsZero), Is.EqualTo((0, true)));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

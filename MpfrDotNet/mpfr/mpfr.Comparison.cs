@@ -54,8 +54,11 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
+    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static int cmp_z(mpfr_t op1, mpz_t op2)
     {
+        CheckIntegerOperand(op2);
+
         return mpfr_cmp_z(ref op1.Value, ref op2.Value);
     }
 
@@ -64,10 +67,16 @@ public static partial class mpfr
     /// </summary>
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
-    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op2"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op2"/> has more bits than the widest exponent range of MPFR, or the precision of <paramref name="op1"/> plus the bits of the denominator exceeds the maximum precision, which only happens on Windows.</exception>
     public static int cmp_q(mpfr_t op1, mpq_t op2)
     {
         CheckRationalOperand(op2);
+
+        // mpfr_cmp_q multiplies op1 by the denominator exactly, in a number with the precision of op1 plus the bits of
+        // the denominator, and aborts when this exceeds the maximum precision.
+        ulong DenominatorBits = (ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op2.Value.Denominator, 2);
+        if (mpfr_regular_p(ref op1.Value) != 0 && get_prec(op1) + DenominatorBits > PrecisionMax)
+            throw new OverflowException("The precision of the number plus the bits of the denominator exceed the maximum precision of MPFR.");
 
         return mpfr_cmp_q(ref op1.Value, ref op2.Value);
     }
@@ -84,7 +93,10 @@ public static partial class mpfr
         if (mpfr_regular_p(ref op1.Value) != 0 && IsFarBelowExponentRange(op2))
             return mpfr_sgn(ref op1.Value);
 
-        return mpfr_cmp_f(ref op1.Value, ref op2.Value);
+        // See set_f.
+        using mpf_t? Reduced = ReduceFloatOperand(op2, get_prec(op1));
+
+        return mpfr_cmp_f(ref op1.Value, ref (Reduced ?? op2).Value);
     }
 
     /// <summary>

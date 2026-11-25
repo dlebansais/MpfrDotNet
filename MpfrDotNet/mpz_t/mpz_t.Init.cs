@@ -135,9 +135,13 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Initializes a new instance of the <see cref="mpz_t"/> class.
     /// </summary>
     /// <param name="bytes">The number raw bytes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="bytes"/> is <see langword="null"/>.</exception>
     public mpz_t(byte[] bytes)
-        : this()
     {
+        if (bytes is null)
+            throw new ArgumentNullException(nameof(bytes));
+
+        mpz.init(this);
         mpz.import(this, (ulong)bytes.LongLength, -1, sizeof(byte), -1, 0UL, bytes);
     }
 

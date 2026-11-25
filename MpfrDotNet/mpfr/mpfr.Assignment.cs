@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Runtime.InteropServices;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
 
@@ -112,8 +113,11 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static int set_q(mpfr_t rop, mpq_t op, mpfr_rnd_t rnd)
     {
+        CheckRationalOperand(op);
+
         return mpfr_set_q(ref rop.Value, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
@@ -137,7 +141,49 @@ public static partial class mpfr
             return mpfr_mul_2si(ref rop.Value, ref rop.Value, ToNativeExponent(long.MinValue), NativeRounding);
         }
 
-        return mpfr_set_f(ref rop.Value, ref op.Value, NativeRounding);
+        // mpfr_set_f also computes the precision of op in bits, which wraps with the 32-bit precisions of Windows for
+        // 2^25 limbs or more: only the top limbs are passed then.
+        using mpf_t? Reduced = ReduceFloatOperand(op, get_prec(rop));
+
+        return mpfr_set_f(ref rop.Value, ref (Reduced ?? op).Value, NativeRounding);
+    }
+
+    /// <summary>
+    /// Gets a copy of a float operand with fewer limbs, when MPFR cannot compute its precision.
+    /// </summary>
+    /// <param name="op">The operand.</param>
+    /// <param name="precision">The precision of the MPFR number it is converted to or compared with.</param>
+    /// <returns>The copy, or <see langword="null"/> if <paramref name="op"/> can be passed to MPFR.</returns>
+    internal static mpf_t? ReduceFloatOperand(mpf_t op, ulong precision)
+    {
+        ulong LimbCount = (ulong)Math.Abs(op.Value.Size);
+        if ((LimbCount + 1UL) * LimbBits <= PrecisionMax)
+            return null;
+
+        // The top limbs keep enough bits to round to the precision, and the lowest kept bit is set if a dropped limb
+        // is not zero. This sticky bit is below the precision, so the result rounds and compares like op.
+        mpf_t Reduced = new(precision + (3UL * LimbBits));
+        mpf.set(Reduced, op);
+
+        int KeptCount = Math.Abs(Reduced.Value.Size);
+        if (HasNonZeroLimb(op.Value.Limbs, (int)LimbCount - KeptCount))
+        {
+            long LowestLimb = Marshal.ReadInt64(Reduced.Value.Limbs);
+            Marshal.WriteInt64(Reduced.Value.Limbs, LowestLimb | 1L);
+        }
+
+        GC.KeepAlive(op);
+
+        return Reduced;
+    }
+
+    private static bool HasNonZeroLimb(IntPtr limbs, int count)
+    {
+        for (int i = 0; i < count; i++)
+            if (Marshal.ReadInt64(limbs, i * sizeof(long)) != 0)
+                return true;
+
+        return false;
     }
 
     /// <summary>

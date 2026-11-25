@@ -24,6 +24,8 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.min(z, x, y, rounding);
@@ -43,6 +45,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(x, y);
 

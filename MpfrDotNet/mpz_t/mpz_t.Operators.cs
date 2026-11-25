@@ -1432,7 +1432,7 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     }
 
     /// <summary>
-    /// Gets the two's-complement of an operand.
+    /// Gets the one's complement of an operand, -x - 1, as for the two's complement representation of integers.
     /// </summary>
     /// <param name="x">The operand.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>

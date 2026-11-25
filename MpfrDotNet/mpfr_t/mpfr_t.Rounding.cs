@@ -29,6 +29,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(this);
 
+        _ = mpfr.ToNativeRoundingOrNearestAway(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.rint(z, this, rounding);
@@ -60,6 +62,8 @@ public partial class mpfr_t : IDisposable
     public mpfr_t Ceil(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(this);
 
@@ -93,6 +97,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(this);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.rint_floor(z, this, rounding);
@@ -124,6 +130,8 @@ public partial class mpfr_t : IDisposable
     public mpfr_t Round(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(this);
 
@@ -157,6 +165,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(this);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.rint_roundeven(z, this, rounding);
@@ -189,6 +199,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(this);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.rint_trunc(z, this, rounding);
@@ -205,6 +217,8 @@ public partial class mpfr_t : IDisposable
     public mpfr_t Fractional(mpfr_rnd_t rounding)
     {
         ThrowIfDisposed(this);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(this);
 
@@ -224,6 +238,8 @@ public partial class mpfr_t : IDisposable
     public void IntegerAndFractional(out mpfr_t integer, out mpfr_t fractional, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         integer = CreateResult(this);
         fractional = CreateResult(this);
@@ -246,6 +262,8 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.fmod(z, x, y, rounding);
@@ -264,6 +282,8 @@ public partial class mpfr_t : IDisposable
     public static mpfr_t FMod(mpfr_t x, ulong y, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(x);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(x);
 
@@ -286,6 +306,8 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.fmodquo(z, out q, x, y, rounding);
@@ -305,6 +327,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(x, y);
 
@@ -326,6 +350,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(x, y);
 

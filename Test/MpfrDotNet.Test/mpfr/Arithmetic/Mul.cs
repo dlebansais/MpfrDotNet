@@ -50,7 +50,10 @@ public class Mul
         AsString = f.ToString();
         Assert.That(AsString, Is.EqualTo("6.953432265732821823282182366884182678746E+23"));
 
-        Assert.Throws<NotImplementedException>(() => mpfr.dot(a, [], [], mpfr_rnd_t.MPFR_RNDZ));
+        // With no number, the result is an exact +0.
+        using mpfr_t Empty = new(1.0);
+        int EmptyTernary = mpfr.dot(Empty, [], [], mpfr_rnd_t.MPFR_RNDZ);
+        Assert.That((EmptyTernary, Empty.IsZero), Is.EqualTo((0, true)));
 
         mpfr_t.DefaultPrecision = DefaultPrecision;
     }

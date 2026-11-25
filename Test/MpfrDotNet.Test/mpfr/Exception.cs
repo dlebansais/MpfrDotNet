@@ -37,6 +37,10 @@ public class Exception
 
         int MaxMaxExponent = mpfr_t.MaxMaxExponent;
         Assert.That(MaxMaxExponent, Is.EqualTo(Sample.IsWindows ? 1073741823 : int.MaxValue));
+
+        // The exponent range is per thread: the next tests expect the default one.
+        mpfr_t.MinExponent = MinExponentOld;
+        mpfr_t.MaxExponent = MaxExponentOld;
     }
 
     [Test]

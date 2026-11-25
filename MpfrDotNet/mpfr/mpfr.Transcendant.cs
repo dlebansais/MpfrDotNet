@@ -758,8 +758,12 @@ public static partial class mpfr
         __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
 
         // MPFR aborts the process when Gamma(op) overflows, which happens for op beyond about 5e7 with the 32-bit
-        // exponents of Windows, and 1e17 elsewhere: Gamma(1e6) is far from overflowing.
-        if (mpfr_cmp_ui(ref op.Value, 1000000UL) > 0 && IsGammaBeyondWidestRange(op))
+        // exponents of Windows, and 1e17 elsewhere: Gamma(1e6) is far from overflowing. Near the pole at 0, Gamma(op)
+        // is about 1/op, which overflows only for |op| below 2^-1000 at least, and MPFR then loops forever. Other
+        // values, including NaN, which mpfr_cmp_ui would flag as an erange error, skip the check.
+        if (mpfr_regular_p(ref op.Value) != 0 &&
+            (mpfr_cmp_ui(ref op.Value, 1000000UL) > 0 || mpfr_get_exp(ref op.Value).Value < -1000) &&
+            IsGammaBeyondWidestRange(op))
             throw new OverflowException("Gamma of the operand is beyond the exponent range of MPFR.");
 
         return mpfr_gamma_inc(ref rop.Value, ref op.Value, ref op2.Value, NativeRounding);
@@ -991,7 +995,7 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
-    /// <exception cref="OverflowException">The working precision that MPFR needs for <paramref name="op"/> exceeds its maximum precision: for a negative number below about -1.7e6 at usual precisions on Windows, where MPFR would abort.</exception>
+    /// <exception cref="OverflowException">The working precision that MPFR needs for <paramref name="op"/> exceeds its maximum precision: for a negative number below about -1.7e6, or a positive number just below the underflow threshold of about 1.08e6, at usual precisions on Windows, where MPFR would abort.</exception>
     public static int ai(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
     {
         __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));

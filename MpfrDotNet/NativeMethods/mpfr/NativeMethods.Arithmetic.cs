@@ -1,5 +1,6 @@
 ﻿namespace Interop.Mpfr;
 
+using System;
 using System.Runtime.InteropServices;
 using static Interop.Mpir.NativeMethods;
 
@@ -31,6 +32,16 @@ internal static partial class NativeMethods
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int __mpfr_add_q(ref __mpfr_t rop, ref __mpfr_t op1, ref __mpq_t op2, __mpfr_rnd_t rnd);
     public static __mpfr_add_q mpfr_add_q => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_add_q>(GetMpfrPointer(nameof(mpfr_add_q)));
+    #endregion
+
+    #region Sum
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_sum(ref __mpfr_t rop, IntPtr tab, CULong n, __mpfr_rnd_t rnd);
+    public static __mpfr_sum mpfr_sum => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_sum>(GetMpfrPointer(nameof(mpfr_sum)));
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int __mpfr_dot(ref __mpfr_t rop, IntPtr a, IntPtr b, CULong n, __mpfr_rnd_t rnd);
+    public static __mpfr_dot mpfr_dot => field ??= Marshal.GetDelegateForFunctionPointer<__mpfr_dot>(GetMpfrPointer(nameof(mpfr_dot)));
     #endregion
 
     #region Sub

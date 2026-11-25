@@ -112,6 +112,8 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(x, y);
 
         z.LastTernaryResult = mpfr.hypot(z, x, y, rounding);
@@ -131,6 +133,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(x, y);
 
@@ -154,6 +158,8 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(b);
         ThrowIfDisposed(c);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t Result = CreateResult(a, b, c);
 
         Result.LastTernaryResult = mpfr.fma(Result, a, b, c, rounding);
@@ -175,6 +181,8 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(a);
         ThrowIfDisposed(b);
         ThrowIfDisposed(c);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t Result = CreateResult(a, b, c);
 
@@ -200,6 +208,8 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(c);
         ThrowIfDisposed(d);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t Result = CreateResult(a, b, c, d);
 
         Result.LastTernaryResult = mpfr.fmma(Result, a, b, c, d, rounding);
@@ -223,6 +233,8 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(b);
         ThrowIfDisposed(c);
         ThrowIfDisposed(d);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t Result = CreateResult(a, b, c, d);
 
@@ -308,5 +320,68 @@ public partial class mpfr_t : IDisposable
         z.LastTernaryResult = mpfr.rec_sqrt(z, this, Rounding);
 
         return z;
+    }
+
+    /// <summary>
+    /// Gets the sum of numbers, rounded once (mpfr_sum).
+    /// </summary>
+    /// <param name="values">The numbers.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    /// <returns>The sum, with the largest precision of <paramref name="values"/>, or zero for no number.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="values"/> or one of its numbers is <see langword="null"/>.</exception>
+    /// <exception cref="ObjectDisposedException">One of the numbers is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    public static mpfr_t Sum(mpfr_t[] values, mpfr_rnd_t rounding = DefaultRounding)
+    {
+        CheckOperandArray(values, nameof(values));
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
+        mpfr_t z = CreateResult(values);
+
+        z.LastTernaryResult = mpfr.sum(z, values, rounding);
+
+        return z;
+    }
+
+    /// <summary>
+    /// Gets the dot product of two vectors of numbers, rounded once (mpfr_dot).
+    /// </summary>
+    /// <param name="x">The first vector.</param>
+    /// <param name="y">The second vector, with the same length.</param>
+    /// <param name="rounding">The rounding mode.</param>
+    /// <returns>The dot product, with the largest precision of the numbers, or zero for empty vectors.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="x"/>, <paramref name="y"/> or one of their numbers is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="x"/> and <paramref name="y"/> do not have the same length.</exception>
+    /// <exception cref="ObjectDisposedException">One of the numbers is disposed.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    public static mpfr_t Dot(mpfr_t[] x, mpfr_t[] y, mpfr_rnd_t rounding = DefaultRounding)
+    {
+        CheckOperandArray(x, nameof(x));
+        CheckOperandArray(y, nameof(y));
+
+        if (x.Length != y.Length)
+            throw new ArgumentException("The two arrays must have the same length.", nameof(y));
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
+        mpfr_t z = CreateResult([.. x, .. y]);
+
+        z.LastTernaryResult = mpfr.dot(z, x, y, rounding);
+
+        return z;
+    }
+
+    private static void CheckOperandArray(mpfr_t[] values, string paramName)
+    {
+        if (values is null)
+            throw new ArgumentNullException(paramName);
+
+        foreach (mpfr_t Value in values)
+        {
+            if (Value is null)
+                throw new ArgumentNullException(paramName);
+
+            ThrowIfDisposed(Value);
+        }
     }
 }

@@ -32,6 +32,8 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Log(uint op, mpfr_rnd_t rounding = DefaultRounding)
     {
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = new();
 
         z.LastTernaryResult = mpfr.log_ui(z, op, rounding);
@@ -48,6 +50,8 @@ public partial class mpfr_t : IDisposable
     public mpfr_t Log2(mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(this);
 
@@ -66,6 +70,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(this);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.log10(z, this, rounding);
@@ -82,6 +88,8 @@ public partial class mpfr_t : IDisposable
     public mpfr_t Log1p(mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(this);
 
@@ -100,6 +108,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(this);
 
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = CreateResult(this);
 
         z.LastTernaryResult = mpfr.log2p1(z, this, rounding);
@@ -116,6 +126,8 @@ public partial class mpfr_t : IDisposable
     public mpfr_t Log10p1(mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(this);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(this);
 
@@ -293,6 +305,8 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
     public static mpfr_t Pow(ulong op1, ulong op2, mpfr_rnd_t rounding = DefaultRounding)
     {
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
         mpfr_t z = new();
 
         z.LastTernaryResult = mpfr.ui_pow_ui(z, op1, op2, rounding);
@@ -329,6 +343,8 @@ public partial class mpfr_t : IDisposable
     {
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(x, y);
 
@@ -1160,7 +1176,7 @@ public partial class mpfr_t : IDisposable
     /// Gets the result of the Airy function.
     /// </summary>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
-    /// <exception cref="OverflowException">The working precision that MPFR needs for this number exceeds its maximum precision: for a negative number below about -1.7e6 at usual precisions on Windows, where MPFR would abort.</exception>
+    /// <exception cref="OverflowException">The working precision that MPFR needs for this number exceeds its maximum precision: for a negative number below about -1.7e6, or a positive number just below the underflow threshold of about 1.08e6, at usual precisions on Windows, where MPFR would abort.</exception>
     public mpfr_t Airy()
     {
         ThrowIfDisposed(this);

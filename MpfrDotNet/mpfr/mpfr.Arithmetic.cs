@@ -86,7 +86,7 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
-    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op2"/>, plus the precisions of <paramref name="rop"/> and <paramref name="op1"/>, has more bits than half the widest exponent range of MPFR, which only happens on Windows.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int add_q(mpfr_t rop, mpfr_t op1, mpq_t op2, mpfr_rnd_t rnd)
     {
@@ -231,7 +231,7 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
-    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op2"/>, plus the precisions of <paramref name="rop"/> and <paramref name="op1"/>, has more bits than half the widest exponent range of MPFR, which only happens on Windows.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int sub_q(mpfr_t rop, mpfr_t op1, mpq_t op2, mpfr_rnd_t rnd)
     {
@@ -723,10 +723,23 @@ public static partial class mpfr
     /// <param name="rop">The result operand.</param>
     /// <param name="tab">The values.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="tab"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int sum(mpfr_t rop, mpfr_t[] tab, mpfr_rnd_t rnd)
     {
-        throw new NotImplementedException();
+        if (tab is null)
+            throw new ArgumentNullException(nameof(tab));
+
+        __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
+        CULong Count = new((uint)tab.Length);
+
+        using NativeNumberArray Values = new(tab);
+        int Result = ComputeInDistinctResult(rop, tab, tab, x => mpfr_sum(ref x.Value, Values.Pointer, Count, NativeRounding));
+
+        // The copies share the significands of the numbers, which must stay alive until the end of the call.
+        GC.KeepAlive(tab);
+
+        return Result;
     }
 
     /// <summary>
@@ -736,10 +749,63 @@ public static partial class mpfr
     /// <param name="tab">The tab values.</param>
     /// <param name="b">The b values.</param>
     /// <param name="rnd">The rounding mode.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="tab"/> or <paramref name="b"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="tab"/> and <paramref name="b"/> do not have the same length.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int dot(mpfr_t rop, mpfr_t[] tab, mpfr_t[] b, mpfr_rnd_t rnd)
     {
-        throw new NotImplementedException();
+        if (tab is null)
+            throw new ArgumentNullException(nameof(tab));
+
+        if (b is null)
+            throw new ArgumentNullException(nameof(b));
+
+        if (tab.Length != b.Length)
+            throw new ArgumentException("The two arrays must have the same length.", nameof(b));
+
+        __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
+        CULong Count = new((uint)tab.Length);
+
+        using NativeNumberArray First = new(tab);
+        using NativeNumberArray Second = new(b);
+        int Result = ComputeInDistinctResult(rop, tab, b, x => mpfr_dot(ref x.Value, First.Pointer, Second.Pointer, Count, NativeRounding));
+
+        // The copies share the significands of the numbers, which must stay alive until the end of the call.
+        GC.KeepAlive(tab);
+        GC.KeepAlive(b);
+
+        return Result;
+    }
+
+    /// <summary>
+    /// Computes a result in a number distinct from the inputs.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="tab">The first inputs.</param>
+    /// <param name="b">The second inputs.</param>
+    /// <param name="compute">The computation, which returns the ternary value.</param>
+    /// <returns>The ternary value.</returns>
+    internal static int ComputeInDistinctResult(mpfr_t rop, mpfr_t[] tab, mpfr_t[] b, Func<mpfr_t, int> compute)
+    {
+        if (!IsAmong(rop, tab) && !IsAmong(rop, b))
+            return compute(rop);
+
+        // MPFR recognizes a result that is also an input by its address, which the copies of the inputs hide: the
+        // result is computed separately, with the same precision, and copied exactly.
+        using mpfr_t Result = mpfr_t.CreateWithPrecision(get_prec(rop), nameof(rop));
+        int Ternary = compute(Result);
+        _ = mpfr_set(ref rop.Value, ref Result.Value, __mpfr_rnd_t.MPFR_RNDN);
+
+        return Ternary;
+    }
+
+    private static bool IsAmong(mpfr_t number, mpfr_t[] numbers)
+    {
+        foreach (mpfr_t Item in numbers)
+            if (ReferenceEquals(Item, number))
+                return true;
+
+        return false;
     }
 
     /// <summary>
@@ -794,17 +860,18 @@ public static partial class mpfr
     /// <param name="rop">The result operand.</param>
     /// <param name="op1">The number.</param>
     /// <param name="op2">The rational.</param>
-    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op2"/>, plus the precisions, has too many bits.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op2"/>, plus the precisions, has more bits than half the range.</exception>
     internal static void CheckRationalSumOperand(mpfr_t rop, mpfr_t op1, mpq_t op2)
     {
         // These functions also abort when their intermediate sum overflows or underflows in the widest range. Apart
         // from an op1 in the top binade, which HalvedRationalSum handles, it takes a rational of nearly the size of the
-        // range, or of an ulp of op1 near the limits: a numerator or a denominator with nearly as many bits as the
-        // range, once a margin for the working precision is added.
+        // range, or of an ulp of op1 near the limits, once a margin for the working precision is added.
         ulong Precision = (2 * get_prec(rop)) + get_prec(op1) + 64;
 
-        CheckOperandBitCount((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op2.Value.Numerator, 2) + Precision);
-        CheckOperandBitCount((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op2.Value.Denominator, 2) + Precision);
+        // A cancellation can also leave a sum of about 2^(-2N) for a denominator of N bits, so the bits are counted
+        // twice: the numerator and the denominator must fit in half of the range.
+        CheckOperandBitCount(2 * ((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op2.Value.Numerator, 2) + Precision));
+        CheckOperandBitCount(2 * ((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op2.Value.Denominator, 2) + Precision));
     }
 
     /// <summary>

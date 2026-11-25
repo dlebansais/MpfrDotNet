@@ -1169,8 +1169,13 @@ public static class mpz
     /// <param name="u">The u.</param>
     /// <param name="n">The n.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="n"/> is zero, or <paramref name="n"/> is even and <paramref name="u"/> is negative.</exception>
+    /// <exception cref="ArgumentException"><paramref name="root"/> and <paramref name="rem"/> are the same number.</exception>
     public static void rootrem(mpz_t root, mpz_t rem, mpz_t u, ulong n)
     {
+        // The native function writes the root through a pointer that the reallocation of the remainder can invalidate.
+        if (ReferenceEquals(root, rem))
+            throw new ArgumentException("The root and the remainder must be different numbers.", nameof(rem));
+
         MpirArgument.CheckRoot(u, n, nameof(u), nameof(n));
 
         NativeMethods.mpz_rootrem(ref root.Value, ref rem.Value, ref u.Value, (NativeMethods.mpir_ui)n);

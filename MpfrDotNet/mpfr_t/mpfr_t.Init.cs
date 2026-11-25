@@ -256,11 +256,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="op"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public mpfr_t(mpq_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
         ReleaseIfThrows(() => mpq_t.ThrowIfDisposed(op));
         ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
+        ReleaseIfThrows(() => mpfr.CheckRationalOperand(op));
 
         LastTernaryResult = mpfr.set_q(this, op, rounding);
     }

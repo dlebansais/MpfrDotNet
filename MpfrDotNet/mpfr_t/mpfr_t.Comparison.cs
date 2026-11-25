@@ -74,11 +74,16 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
-    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
+    /// <returns>A positive value if <paramref name="other"/> is <see langword="null"/>, and otherwise a negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
-    public int CompareTo(mpz_t other)
+    /// <exception cref="OverflowException">See <see cref="mpfr.cmp_z(mpfr_t, mpz_t)"/>.</exception>
+    public int CompareTo(mpz_t? other)
     {
         mpz_t.ThrowIfDisposed(other);
+        ThrowIfDisposed(this);
+
+        if (other is null)
+            return 1;
 
         return IsNan ? -1 : mpfr.cmp_z(this, other);
     }
@@ -87,11 +92,16 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
-    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
+    /// <returns>A positive value if <paramref name="other"/> is <see langword="null"/>, and otherwise a negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
-    public int CompareTo(mpq_t other)
+    /// <exception cref="OverflowException">See <see cref="mpfr.cmp_q(mpfr_t, mpq_t)"/>.</exception>
+    public int CompareTo(mpq_t? other)
     {
         mpq_t.ThrowIfDisposed(other);
+        ThrowIfDisposed(this);
+
+        if (other is null)
+            return 1;
 
         return IsNan ? -1 : mpfr.cmp_q(this, other);
     }
@@ -100,11 +110,15 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
-    /// <returns>A negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
+    /// <returns>A positive value if <paramref name="other"/> is <see langword="null"/>, and otherwise a negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
-    public int CompareTo(mpf_t other)
+    public int CompareTo(mpf_t? other)
     {
         mpf_t.ThrowIfDisposed(other);
+        ThrowIfDisposed(this);
+
+        if (other is null)
+            return 1;
 
         return IsNan ? -1 : mpfr.cmp_f(this, other);
     }
@@ -233,6 +247,8 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     {
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        _ = mpfr.CheckRounding(rounding, nameof(rounding));
 
         mpfr_t z = CreateResult(x, y);
 
