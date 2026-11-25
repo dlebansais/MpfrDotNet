@@ -141,8 +141,8 @@ public static partial class mpfr
             return mpfr_mul_2si(ref rop.Value, ref rop.Value, ToNativeExponent(long.MinValue), NativeRounding);
         }
 
-        // mpfr_set_f also computes the precision of op in bits, which wraps with the 32-bit precisions of Windows for
-        // 2^25 limbs or more: only the top limbs are passed then.
+        // mpfr_set_f also computes the precision of op in bits, which wraps for 2^25 limbs or more: only the top limbs
+        // are passed then.
         using mpf_t? Reduced = ReduceFloatOperand(op, get_prec(rop));
 
         return mpfr_set_f(ref rop.Value, ref (Reduced ?? op).Value, NativeRounding);
@@ -156,8 +156,10 @@ public static partial class mpfr
     /// <returns>The copy, or <see langword="null"/> if <paramref name="op"/> can be passed to MPFR.</returns>
     internal static mpf_t? ReduceFloatOperand(mpf_t op, ulong precision)
     {
+        // mpfr_set_f computes the precision of op in an mpfr_prec_t, which is 32-bit on Windows, and mpfr_cmp_f computes
+        // it in an int on every platform: both wrap for 2^25 limbs or more.
         ulong LimbCount = (ulong)Math.Abs(op.Value.Size);
-        if ((LimbCount + 1UL) * LimbBits <= PrecisionMax)
+        if ((LimbCount + 1UL) * LimbBits <= Math.Min(PrecisionMax, int.MaxValue))
             return null;
 
         // The top limbs keep enough bits to round to the precision, and the lowest kept bit is set if a dropped limb

@@ -255,7 +255,7 @@ internal class FifthReviewChecks
     public void TestFloatWithManyLimbs()
     {
         // 1.5 + 2^-(2^31 - 1), with 2^25 + 2 limbs: the precision of such a float overflowed the 32-bit precisions of
-        // Windows in mpfr_set_f and mpfr_cmp_f. The lowest bit must still count for rounding.
+        // Windows in mpfr_set_f, and an int in mpfr_cmp_f on every platform. The lowest bit must still count for rounding.
         using mpf_t SmallOne = new(1.0);
         using mpf_t Tiny = SmallOne >> int.MaxValue;
         using mpf_t Value = new(1.5, ((1UL << 25) + 2UL) * 64UL);
