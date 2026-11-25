@@ -417,6 +417,7 @@ public class Misc
 
         IConvertible Convertible = a;
         TypeCode TypeCode = Convertible.GetTypeCode();
+        Assert.That(TypeCode, Is.EqualTo(TypeCode.Object));
 
         Assert.Throws<InvalidCastException>(() => a.ToBoolean(null));
         Assert.Throws<InvalidCastException>(() => Convertible.ToBoolean(null));

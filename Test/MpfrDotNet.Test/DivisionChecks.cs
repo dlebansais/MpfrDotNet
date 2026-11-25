@@ -27,6 +27,39 @@ internal class DivisionChecks
     }
 
     [Test]
+    public void TestIntegerDivisionFunctionsByZero()
+    {
+        const string Expected = "The divisor cannot be zero.";
+
+        using mpz_t a = new(7);
+        using mpz_t b = new();
+        using mpz_t Zero = new(0);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(() => mpz.cdiv_q(a, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.cdiv_r(a, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.cdiv_qr(a, b, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.cdiv_q_ui(a, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.cdiv_r_ui(a, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.cdiv_qr_ui(a, b, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.cdiv_ui(a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.fdiv_q(a, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.fdiv_r(a, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.fdiv_qr(a, b, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.fdiv_q_ui(a, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.fdiv_r_ui(a, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.fdiv_qr_ui(a, b, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.tdiv_qr(a, b, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.tdiv_r_ui(a, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.tdiv_qr_ui(a, b, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.tdiv_ui(a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.mod(a, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.divexact_ui(a, a, 0UL), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.powm_ui(a, a, 2UL, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+        Assert.That(() => mpz.invert(a, a, Zero), Throws.TypeOf<DivideByZeroException>().With.Message.EqualTo(Expected));
+    }
+
+    [Test]
     public void TestRationalAndFloatDivisionByZero()
     {
         const string Expected = "The divisor cannot be zero.";
@@ -48,6 +81,7 @@ internal class DivisionChecks
     public void TestRootsOfNegativeNumbers()
     {
         using mpz_t Result = new();
+        using mpz_t Remainder = new();
         using mpz_t MinusEight = new(-8);
         using mpf_t FloatResult = new();
         using mpf_t MinusOne = new(-1.0);
@@ -57,6 +91,9 @@ internal class DivisionChecks
         Assert.That(() => mpz.root(Result, MinusEight, 2UL), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("An even root of a negative number cannot be computed."));
         Assert.That(() => mpz.root(Result, MinusEight, 0UL), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The root index cannot be zero."));
         Assert.That(() => mpf.sqrt(FloatResult, MinusOne), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The operand cannot be negative."));
+        Assert.That(() => mpz.sqrtrem(Result, Remainder, MinusEight), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The operand cannot be negative."));
+        Assert.That(() => mpz.nthroot(Result, MinusEight, 0UL), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The root index cannot be zero."));
+        Assert.That(() => mpz.rootrem(Result, Remainder, MinusEight, 0UL), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The root index cannot be zero."));
 
         // An odd root of a negative number is defined.
         Assert.That(mpz.root(Result, MinusEight, 3UL), Is.True);

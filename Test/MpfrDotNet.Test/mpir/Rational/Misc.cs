@@ -178,12 +178,13 @@ public class Misc
     {
         string AsString;
 
-        using mpq_t a = new("2983/5740293845720");
+        using mpq_t a = new("2984/57");
         AsString = a.ToString();
-        Assert.That(AsString, Is.EqualTo("2983/5740293845720"));
+        Assert.That(AsString, Is.EqualTo("2984/57"));
 
         IConvertible Convertible = a;
         TypeCode TypeCode = Convertible.GetTypeCode();
+        Assert.That(TypeCode, Is.EqualTo(TypeCode.Object));
 
         Assert.Throws<InvalidCastException>(() => a.ToBoolean(null));
         Assert.Throws<InvalidCastException>(() => Convertible.ToBoolean(null));
@@ -207,52 +208,52 @@ public class Misc
         Assert.That(d2, Is.EqualTo((double)a));
 
         sbyte b1 = a.ToSByte(null);
-        Assert.That(b1, Is.Zero);
+        Assert.That(b1, Is.EqualTo(52));
 
         sbyte b2 = Convertible.ToSByte(null);
-        Assert.That(b2, Is.Zero);
+        Assert.That(b2, Is.EqualTo(52));
 
         byte ub1 = a.ToByte(null);
-        Assert.That(ub1, Is.Zero);
+        Assert.That(ub1, Is.EqualTo(52));
 
         byte ub2 = Convertible.ToByte(null);
-        Assert.That(ub2, Is.Zero);
+        Assert.That(ub2, Is.EqualTo(52));
 
         short s1 = a.ToInt16(null);
-        Assert.That(s1, Is.Zero);
+        Assert.That(s1, Is.EqualTo(52));
 
         short s2 = Convertible.ToInt16(null);
-        Assert.That(s2, Is.Zero);
+        Assert.That(s2, Is.EqualTo(52));
 
         ushort us1 = a.ToUInt16(null);
-        Assert.That(us1, Is.Zero);
+        Assert.That(us1, Is.EqualTo(52));
 
         ushort us2 = Convertible.ToUInt16(null);
-        Assert.That(us2, Is.Zero);
+        Assert.That(us2, Is.EqualTo(52));
 
         int i1 = a.ToInt32(null);
-        Assert.That(i1, Is.Zero);
+        Assert.That(i1, Is.EqualTo(52));
 
         int i2 = Convertible.ToInt32(null);
-        Assert.That(i2, Is.Zero);
+        Assert.That(i2, Is.EqualTo(52));
 
         uint ui1 = a.ToUInt32(null);
-        Assert.That(ui1, Is.Zero);
+        Assert.That(ui1, Is.EqualTo(52));
 
         uint ui2 = Convertible.ToUInt32(null);
-        Assert.That(ui2, Is.Zero);
+        Assert.That(ui2, Is.EqualTo(52));
 
         long l1 = a.ToInt64(null);
-        Assert.That(l1, Is.Zero);
+        Assert.That(l1, Is.EqualTo(52));
 
         long l2 = Convertible.ToInt64(null);
-        Assert.That(l2, Is.Zero);
+        Assert.That(l2, Is.EqualTo(52));
 
         ulong ul1 = a.ToUInt64(null);
-        Assert.That(ul1, Is.Zero);
+        Assert.That(ul1, Is.EqualTo(52));
 
         ulong ul2 = Convertible.ToUInt64(null);
-        Assert.That(ul2, Is.Zero);
+        Assert.That(ul2, Is.EqualTo(52));
 
         string str1 = a.ToString(null);
         Assert.That(str1, Is.EqualTo(a.ToString()));

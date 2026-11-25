@@ -192,5 +192,13 @@ public class Fit
 
         Assert.That(IsEven, Is.True);
         Assert.That(IsOdd, Is.False);
+
+        // Multiplying by zero only sets the size to zero, and leaves the odd limb of 3 in memory: odd_p must not read it.
+        using mpz_t d = new(3);
+        mpz.mul_ui(d, d, 0UL);
+
+        IsOdd = mpz.odd_p(d);
+
+        Assert.That(IsOdd, Is.False);
     }
 }

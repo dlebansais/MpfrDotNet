@@ -91,6 +91,8 @@ internal class Semantics
         Assert.That(() => new mpq_t(double.NaN), Throws.TypeOf<OverflowException>().With.Message.EqualTo("NaN and infinities cannot be converted to an MPIR number."));
         Assert.That(() => new mpf_t(double.NegativeInfinity), Throws.TypeOf<OverflowException>().With.Message.EqualTo("NaN and infinities cannot be converted to an MPIR number."));
         Assert.That(() => mpz.cmp_d(new mpz_t(1), double.NaN), Throws.ArgumentException.With.Message.StartsWith("NaN cannot be compared with an MPIR number."));
+        Assert.That(() => mpz.cmpabs_d(new mpz_t(1), double.NaN), Throws.ArgumentException.With.Message.StartsWith("NaN cannot be compared with an MPIR number."));
+        Assert.That(() => mpz.set_d(new mpz_t(1), double.NaN), Throws.TypeOf<OverflowException>().With.Message.EqualTo("NaN and infinities cannot be converted to an MPIR number."));
     }
 
     [Test]
@@ -688,6 +690,9 @@ internal class Semantics
     [Test]
     public void TestRandStateUseAfterDispose()
     {
+        using mpz_t Integer = new(7);
+        using mpf_t Float = new();
+        using mpfr_t Mpfr = new();
         randstate_t State = randstate_t.Create(RngAlgorithm.MersenneTwister);
         State.Dispose();
 
@@ -695,6 +700,21 @@ internal class Semantics
         Assert.That(() => gmp.urandomb_ui(State, 10UL), Throws.TypeOf<ObjectDisposedException>());
         Assert.That(() => mpfr_t.UniformRandom(State), Throws.TypeOf<ObjectDisposedException>());
         Assert.That(() => new randstate_t(State), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpz.probable_prime_p(Integer, State, 10, 0UL), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpz.likely_prime_p(Integer, State, 0UL), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpz.next_prime_candidate(Integer, Integer, State), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpz.urandomb(Integer, State, 10UL), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpz.urandomm(Integer, State, Integer), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpz.rrandomb(Integer, State, 10UL), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpf.urandomb(Float, State, 10UL), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpf.rrandomb(Float, State, 1UL, 1), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpfr.urandom(Mpfr, State, mpfr_rnd_t.MPFR_RNDN), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpfr.nrandom(Mpfr, State, mpfr_rnd_t.MPFR_RNDN), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpfr.grandom(Mpfr, Mpfr, State, mpfr_rnd_t.MPFR_RNDN), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => mpfr.erandom(Mpfr, State, mpfr_rnd_t.MPFR_RNDN), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => gmp.randseed(State, Integer), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => gmp.randseed_ui(State, 10UL), Throws.TypeOf<ObjectDisposedException>());
+        Assert.That(() => gmp.urandomm_ui(State, 10UL), Throws.TypeOf<ObjectDisposedException>());
         Assert.That(State.Dispose, Throws.Nothing);
 
         // The copy that failed must not release a state it never created.

@@ -13,6 +13,7 @@ set CODECOV_VERSION=1.12.2
 set CODECOV=Codecov.%CODECOV_VERSION%
 
 nuget install CodeCov -Version %CODECOV_VERSION% -OutputDirectory packages
+dotnet tool install -g dotnet-stryker --version 4.16.0
 
 if not exist ".\packages\%CODECOV%\tools\codecov.exe" goto error_console1
 
@@ -29,6 +30,16 @@ if not exist %RESULTFILEPATH2% goto error_console2
 
 rem Codecov merges the two reports into one for the commit.
 .\packages\%CODECOV%\tools\codecov -f %RESULTFILEPATH1% %RESULTFILEPATH2% -t %MPFRDOTNET_CODECOV_TOKEN%
+
+rem Mutation testing, on the net10.0 tests only. Stryker builds the projects itself, and MSBuild reads the Platform
+rem environment variable as a property: without it, the native DLLs are not copied next to the tests.
+rem Release, because some mutants remove a check and make MPIR or MPFR abort, and with the Debug C runtime each abort
+rem opens a dialog that waits for a click.
+set Platform=x64
+pushd .\Test\%TESTPROJECTNAME%
+dotnet stryker -p %PROJECTNAME%.csproj --configuration Release --target-framework net10.0 --output . --reporter markdown --reporter html
+if exist .gitignore del .gitignore
+popd
 goto end
 
 :error_console1

@@ -266,6 +266,10 @@ public class Misc
         ICloneable Cloneable = a;
 
         using mpf_t c = (mpf_t)Cloneable.Clone();
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(b, Is.EqualTo(a));
+        Assert.That(c, Is.EqualTo(a));
     }
 
     [Test]
@@ -279,6 +283,7 @@ public class Misc
 
         IConvertible Convertible = a;
         TypeCode TypeCode = Convertible.GetTypeCode();
+        Assert.That(TypeCode, Is.EqualTo(TypeCode.Object));
 
         Assert.Throws<InvalidCastException>(() => a.ToBoolean(null));
         Assert.Throws<InvalidCastException>(() => Convertible.ToBoolean(null));

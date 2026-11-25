@@ -1,0 +1,8 @@
+{
+    "stryker-config": {
+        "test-runner": "mtp",
+        "ignore-methods": [
+            "*GetDelegateForFunctionPointer"
+        ]
+    }
+}

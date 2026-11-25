@@ -34,6 +34,8 @@ bld/
 [Ll]ogs/
 /nuget
 /nuget-debug
+/CoverageReports
+mutation-report.*
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

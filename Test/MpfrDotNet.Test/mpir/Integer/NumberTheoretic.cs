@@ -283,6 +283,11 @@ public class NumberTheoretic
         int JacobiSymbol = mpz.kronecker_si(a, b);
 
         Assert.That(JacobiSymbol, Is.Zero);
+
+        // 3 is not a square modulo 5.
+        using mpz_t Three = new(3);
+
+        Assert.That(mpz.kronecker_si(Three, 5L), Is.EqualTo(-1));
     }
 
     [Test]
@@ -299,6 +304,11 @@ public class NumberTheoretic
         int JacobiSymbol = mpz.si_kronecker(b, a);
 
         Assert.That(JacobiSymbol, Is.Zero);
+
+        // 3 is not a square modulo 5.
+        using mpz_t Five = new(5);
+
+        Assert.That(mpz.si_kronecker(3L, Five), Is.EqualTo(-1));
     }
 
     [Test]

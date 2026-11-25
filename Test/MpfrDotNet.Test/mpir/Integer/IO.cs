@@ -37,6 +37,30 @@ public class IO
         Assert.That(AsString, Is.EqualTo(Content));
     }
 
+    [TestCase(2, "111")]
+    [TestCase(10, "7")]
+    [TestCase(62, "7")]
+    public void OutSmallValue(int strBase, string expected)
+    {
+        using mpz_t a = new(7);
+        using MemoryStream Stream = new();
+        long Length;
+
+        using (StreamWriter Writer = new(Stream, Encoding.Default, 0x1000, leaveOpen: true))
+        {
+            Length = mpz.out_str(Writer, strBase, a);
+        }
+
+        Stream.Seek(0, SeekOrigin.Begin);
+
+        using StreamReader Reader = new(Stream);
+        string Content = Reader.ReadToEnd();
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
+        Assert.That(Content, Is.EqualTo(expected));
+        Assert.That(Length, Is.EqualTo(expected.Length));
+    }
+
     [Test]
     public void In()
     {
@@ -86,9 +110,13 @@ public class IO
         using BinaryReader Reader = new(Stream);
         byte[] Content = Reader.ReadBytes((int)Stream.Length);
 
+        using mpz_t b = new(Content);
+
+        using IDisposable Scope = Assert.EnterMultipleScope();
         Assert.That(Content, Has.Length.EqualTo(Length));
 
-        using mpz_t b = new(Content);
+        // The value has 199 bits, so it fits in 25 bytes.
+        Assert.That(Length, Is.EqualTo(25));
 
         AsString = b.ToString();
         Assert.That(AsString, Is.EqualTo("622288097498926496141095869268883999563096063592498055290461"));
