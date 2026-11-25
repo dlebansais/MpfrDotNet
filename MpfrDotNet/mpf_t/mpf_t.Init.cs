@@ -94,6 +94,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="precision">The precision.</param>
     /// <exception cref="ArgumentNullException"><paramref name="s"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException">The combination of <paramref name="s"/> and <paramref name="strBase"/> is invalid.</exception>
+    /// <exception cref="OverflowException">The exponent in <paramref name="s"/> is beyond the range of a native long, which MPIR does not check: 2^31 - 1 on Windows.</exception>
     public mpf_t(string s, uint strBase, ulong precision = ulong.MaxValue)
     {
         // The native code would dereference a null string.
@@ -102,6 +103,8 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
 
         if (!MpirArgument.IsParsableText(s))
             throw new ArgumentException($"The combination of '{nameof(s)}' and '{nameof(strBase)}' is invalid.");
+
+        mpf.CheckStringExponent(s, strBase);
 
         int Success;
 

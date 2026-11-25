@@ -1160,6 +1160,7 @@ public partial class mpfr_t : IDisposable
     /// Gets the result of the Airy function.
     /// </summary>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="OverflowException">The working precision that MPFR needs for this number exceeds its maximum precision: for a negative number below about -1.7e6 at usual precisions on Windows, where MPFR would abort.</exception>
     public mpfr_t Airy()
     {
         ThrowIfDisposed(this);

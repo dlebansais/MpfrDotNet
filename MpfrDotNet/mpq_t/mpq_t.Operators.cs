@@ -306,6 +306,402 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     }
 
     /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator <(mpq_t? x, long y)
+    {
+        return x is null || x.CompareTo(y) < 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator <(long x, mpq_t? y)
+    {
+        return y is not null && y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator <=(mpq_t? x, long y)
+    {
+        return x is null || x.CompareTo(y) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator <=(long x, mpq_t? y)
+    {
+        return y is not null && y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator >(mpq_t? x, long y)
+    {
+        return x is not null && x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator >(long x, mpq_t? y)
+    {
+        return y is null || y.CompareTo(x) < 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator >=(mpq_t? x, long y)
+    {
+        return x is not null && x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator >=(long x, mpq_t? y)
+    {
+        return y is null || y.CompareTo(x) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator ==(mpq_t? x, long y)
+    {
+        return x is not null && x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator ==(long x, mpq_t? y)
+    {
+        return y is not null && y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator !=(mpq_t? x, long y)
+    {
+        return x is null || x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator !=(long x, mpq_t? y)
+    {
+        return y is null || y.CompareTo(x) != 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator <(mpq_t? x, ulong y)
+    {
+        return x is null || x.CompareTo(y) < 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator <(ulong x, mpq_t? y)
+    {
+        return y is not null && y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator <=(mpq_t? x, ulong y)
+    {
+        return x is null || x.CompareTo(y) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator <=(ulong x, mpq_t? y)
+    {
+        return y is not null && y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator >(mpq_t? x, ulong y)
+    {
+        return x is not null && x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator >(ulong x, mpq_t? y)
+    {
+        return y is null || y.CompareTo(x) < 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator >=(mpq_t? x, ulong y)
+    {
+        return x is not null && x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator >=(ulong x, mpq_t? y)
+    {
+        return y is null || y.CompareTo(x) <= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator ==(mpq_t? x, ulong y)
+    {
+        return x is not null && x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator ==(ulong x, mpq_t? y)
+    {
+        return y is not null && y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator !=(mpq_t? x, ulong y)
+    {
+        return x is null || x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator !=(ulong x, mpq_t? y)
+    {
+        return y is null || y.CompareTo(x) != 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator <(mpq_t? x, double y)
+    {
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) < 0);
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator <(double x, mpq_t? y)
+    {
+        return y is not null && !double.IsNaN(x) && y.CompareTo(x) > 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator <=(mpq_t? x, double y)
+    {
+        return x is null || (!double.IsNaN(y) && x.CompareTo(y) <= 0);
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator <=(double x, mpq_t? y)
+    {
+        return y is not null && !double.IsNaN(x) && y.CompareTo(x) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator >(mpq_t? x, double y)
+    {
+        return x is not null && !double.IsNaN(y) && x.CompareTo(y) > 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator >(double x, mpq_t? y)
+    {
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) < 0);
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator >=(mpq_t? x, double y)
+    {
+        return x is not null && !double.IsNaN(y) && x.CompareTo(y) >= 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator >=(double x, mpq_t? y)
+    {
+        return y is null || (!double.IsNaN(x) && y.CompareTo(x) <= 0);
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator ==(mpq_t? x, double y)
+    {
+        return x is not null && !double.IsNaN(y) && x.CompareTo(y) == 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator ==(double x, mpq_t? y)
+    {
+        return y is not null && !double.IsNaN(x) && y.CompareTo(x) == 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="x"/> is disposed.</exception>
+    public static bool operator !=(mpq_t? x, double y)
+    {
+        return x is null || double.IsNaN(y) || x.CompareTo(y) != 0;
+    }
+
+    /// <summary>
+    /// Compares two operands.
+    /// </summary>
+    /// <param name="x">The first operand.</param>
+    /// <param name="y">The second operand.</param>
+    /// <exception cref="ObjectDisposedException"><paramref name="y"/> is disposed.</exception>
+    public static bool operator !=(double x, mpq_t? y)
+    {
+        return y is null || double.IsNaN(x) || y.CompareTo(x) != 0;
+    }
+
+    /// <summary>
     /// Determines whether the specified object is equal to the current object.
     /// </summary>
     /// <param name="obj">The object to compare with the current object..</param>

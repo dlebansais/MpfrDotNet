@@ -24,7 +24,7 @@ internal class ComparisonOperators
 
     // Each type declares all six operators for each pair of operand types it supports.
     [TestCase(typeof(mpz_t), 78)]
-    [TestCase(typeof(mpq_t), 12)]
+    [TestCase(typeof(mpq_t), 48)]
     [TestCase(typeof(mpf_t), 54)]
     [TestCase(typeof(mpfr_t), 78)]
     public void TestComparisonOperators(Type declaringType, int expectedOverloadCount)

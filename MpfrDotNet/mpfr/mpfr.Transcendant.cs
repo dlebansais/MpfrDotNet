@@ -991,10 +991,75 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The working precision that MPFR needs for <paramref name="op"/> exceeds its maximum precision: for a negative number below about -1.7e6 at usual precisions on Windows, where MPFR would abort.</exception>
     public static int ai(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
     {
-        return mpfr_ai(ref rop.Value, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
+        __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
+
+        if (mpfr_regular_p(ref op.Value) == 0)
+            return mpfr_ai(ref rop.Value, ref op.Value, NativeRounding);
+
+        // MPFR does not handle the underflow of Ai(x) for large positive x, and sizes its working precision from
+        // |x|^(3/2): beyond its maximum precision it aborts the process, and long before it takes a very long time.
+        if (IsAiryUnderflow(op))
+        {
+            // Any positive value below 2^(emin - 2) rounds like this one, with the underflow flag.
+            CLong Exponent = new(mpfr_get_emin().Value - 3);
+            return mpfr_set_ui_2exp(ref rop.Value, 1UL, Exponent, NativeRounding);
+        }
+
+        if (IsAiryPrecisionBeyondMaximum(rop, op))
+            throw new OverflowException("The operand is beyond the range where MPFR can compute the Airy function.");
+
+        return mpfr_ai(ref rop.Value, ref op.Value, NativeRounding);
     }
+
+    /// <summary>
+    /// Checks whether Ai of a number is positive and below 2^(emin - 2), so that it underflows in every rounding mode.
+    /// </summary>
+    /// <param name="op">The number, regular.</param>
+    /// <returns><see langword="true"/> if Ai(<paramref name="op"/>) underflows; otherwise, <see langword="false"/>.</returns>
+    internal static bool IsAiryUnderflow(mpfr_t op)
+    {
+        if (mpfr_signbit(ref op.Value) != 0)
+            return false;
+
+        // For x >= 1, Ai(x) < exp(-2/3 x^(3/2)) = 2^(-c x^(3/2)) with c = 2/3 log2(e), which is above the truncated
+        // constant. x is rounded down, so that the bound stays below the true one.
+        double X = mpfr_get_d(ref op.Value, __mpfr_rnd_t.MPFR_RNDD);
+        if (X < 1.0)
+            return false;
+
+        double LostBits = AiryExponentFactorLow * Math.Pow(X, 1.5) * (1.0 - 1e-12);
+        double MinExponent = mpfr_get_emin().Value;
+
+        return LostBits >= 2.0 - MinExponent + 1.0;
+    }
+
+    /// <summary>
+    /// Checks whether the working precision of mpfr_ai for a number exceeds the maximum precision.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="op">The number, regular.</param>
+    /// <returns><see langword="true"/> if MPFR would abort; otherwise, <see langword="false"/>.</returns>
+    internal static bool IsAiryPrecisionBeyondMaximum(mpfr_t rop, mpfr_t op)
+    {
+        // mpfr_ai2 adds to the precision of the result c |x|^(3/2) lost bits, plus as much again for a positive x as
+        // the expected exponent of Ai(x), plus a few dozen bits. |x| is rounded up, so that the estimate is an upper bound.
+        double X = Math.Abs(mpfr_get_d(ref op.Value, mpfr_signbit(ref op.Value) != 0 ? __mpfr_rnd_t.MPFR_RNDD : __mpfr_rnd_t.MPFR_RNDU));
+        double LostBits = AiryExponentFactorHigh * Math.Pow(X, 1.5) * (1.0 + 1e-12);
+        double Multiplier = mpfr_signbit(ref op.Value) != 0 ? 1.0 : 2.0;
+        double WorkingPrecision = get_prec(rop) + (Multiplier * LostBits) + AiryPrecisionMargin;
+
+        return WorkingPrecision >= PrecisionMax;
+    }
+
+    // 2/3 log2(e) = 0.961796693925975604..., below and above.
+    private const double AiryExponentFactorLow = 0.9617966939;
+    private const double AiryExponentFactorHigh = 0.96179669393;
+
+    // The guard bits and the logarithm of the precision that mpfr_ai2 adds, with room to spare.
+    private const double AiryPrecisionMargin = 1024.0;
 
     /// <summary>
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.

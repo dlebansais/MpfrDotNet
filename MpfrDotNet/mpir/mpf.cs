@@ -259,11 +259,14 @@ public static class mpf
     /// <param name="str">The string.</param>
     /// <param name="strbase">The base.</param>
     /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="OverflowException">The exponent in <paramref name="str"/> is beyond the range of a native long, which MPIR does not check: 2^31 - 1 on Windows.</exception>
     public static int set_str(mpf_t rop, string str, uint strbase)
     {
         // The native function would dereference a null string.
         if (str is null)
             throw new ArgumentNullException(nameof(str));
+
+        CheckStringExponent(str, strbase);
 
         return NativeMethods.mpf_set_str(ref rop.Value, str, strbase);
     }
@@ -338,11 +341,14 @@ public static class mpf
     /// <param name="str">The string.</param>
     /// <param name="strbase">The base.</param>
     /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="OverflowException">The exponent in <paramref name="str"/> is beyond the range of a native long, which MPIR does not check: 2^31 - 1 on Windows.</exception>
     public static int init_set_str(mpf_t rop, string str, uint strbase)
     {
         // The native function would dereference a null string.
         if (str is null)
             throw new ArgumentNullException(nameof(str));
+
+        CheckStringExponent(str, strbase);
 
         int Result = NativeMethods.mpf_init_set_str(ref rop.Value, str, strbase);
         rop.AllocatedPrecision = rop.Value.Precision;
@@ -368,6 +374,83 @@ public static class mpf
             return sgn(op) > 0 ? 0.0 : -0.0;
 
         return NativeMethods.mpf_get_d(ref op.Value);
+    }
+
+    /// <summary>
+    /// Checks that mpf_set_str can read the exponent of a text without overflowing a native long.
+    /// </summary>
+    /// <param name="str">The text.</param>
+    /// <param name="strbase">The base, as passed to mpf_set_str.</param>
+    /// <exception cref="OverflowException">The exponent is beyond the range of a native long.</exception>
+    internal static void CheckStringExponent(string str, uint strbase)
+    {
+        // MPIR reads the exponent digit by digit in a C long without checking for overflow, then subtracts the number
+        // of fractional digits. This follows its parsing: the text ends at the first NUL, the exponent marker is
+        // searched from the right, and the exponent is in the base of the number, or in decimal for a base of 0 or less.
+        int Base = unchecked((int)strbase);
+        int MantissaBase = Base switch
+        {
+            0 => 10,
+            > 0 => Base,
+            >= -62 => -Base,
+            _ => 0,
+        };
+
+        if (MantissaBase < 2 || MantissaBase > 62)
+            return;
+
+        int ExponentBase = Base > 0 ? Base : 10;
+        int Length = str.IndexOf('\0');
+        if (Length < 0)
+            Length = str.Length;
+
+        int MarkerIndex = FindExponentMarker(str, Length, MantissaBase);
+        if (MarkerIndex < 0)
+            return;
+
+        // The fractional digits are fewer than the characters before the marker.
+        ulong Limit = (ulong)MpfrDotNet.mpfr.NativeLongMax - (ulong)MarkerIndex;
+        ulong Exponent = 0;
+        int Index = MarkerIndex + 1;
+
+        if (Index < Length && str[Index] is '+' or '-')
+            Index++;
+
+        for (; Index < Length; Index++)
+        {
+            int Digit = ExponentDigitValue(str[Index], MantissaBase);
+            if (Digit >= ExponentBase)
+                break;
+
+            if (Exponent > (Limit - (ulong)Digit) / (ulong)ExponentBase)
+                throw new OverflowException("The exponent of the text is beyond the range of MPIR on this platform.");
+
+            Exponent = (Exponent * (ulong)ExponentBase) + (ulong)Digit;
+        }
+    }
+
+    private static int FindExponentMarker(string str, int length, int mantissaBase)
+    {
+        for (int i = length - 1; i > 0; i--)
+            if (str[i] == '@' || (mantissaBase <= 10 && str[i] is 'e' or 'E'))
+                return i;
+
+        return -1;
+    }
+
+    // The digit table of MPIR: letters are case-insensitive up to base 36, and lowercase letters follow uppercase ones above.
+    private static int ExponentDigitValue(char c, int mantissaBase)
+    {
+        if (c is >= '0' and <= '9')
+            return c - '0';
+
+        if (c is >= 'A' and <= 'Z')
+            return c - 'A' + 10;
+
+        if (c is >= 'a' and <= 'z')
+            return c - 'a' + (mantissaBase > 36 ? 36 : 10);
+
+        return int.MaxValue;
     }
 
     // The exponents of the largest double, in [2^1023, 2^1024), and of the smallest, 2^-1074.

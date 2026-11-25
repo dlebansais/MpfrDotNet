@@ -142,15 +142,6 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="mpz_t"/> class.
-    /// </summary>
-    /// <param name="value">The value.</param>
-    internal mpz_t(__mpz_t value)
-    {
-        mpz_init_set(ref Value, ref value);
-    }
-
-    /// <summary>
     /// Creates an array of new instances of the <see cref="mpz_t"/> class.
     /// </summary>
     /// <param name="length">The array length.</param>

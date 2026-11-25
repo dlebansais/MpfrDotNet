@@ -40,6 +40,53 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Compares with another number.
     /// </summary>
     /// <param name="other">The other number.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    public int CompareTo(long other)
+    {
+        ThrowIfDisposed(this);
+
+        return mpq.cmp_si(this, other, 1UL);
+    }
+
+    /// <summary>
+    /// Compares with another number.
+    /// </summary>
+    /// <param name="other">The other number.</param>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    public int CompareTo(ulong other)
+    {
+        ThrowIfDisposed(this);
+
+        return mpq.cmp_ui(this, other, 1UL);
+    }
+
+    /// <summary>
+    /// Compares with another number, exactly.
+    /// </summary>
+    /// <param name="other">The other number.</param>
+    /// <returns>A negative value, zero or a positive value if this number is less than, equal to or greater than <paramref name="other"/>, and a positive value if <paramref name="other"/> is NaN.</returns>
+    /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    public int CompareTo(double other)
+    {
+        ThrowIfDisposed(this);
+
+        if (double.IsNaN(other) || double.IsNegativeInfinity(other))
+            return 1;
+
+        if (double.IsPositiveInfinity(other))
+            return -1;
+
+        // A finite double is a rational number: mpq_set_d converts it exactly.
+        using mpq_t Other = new();
+        mpq.set_d(Other, other);
+
+        return mpq.cmp(this, Other);
+    }
+
+    /// <summary>
+    /// Compares with another number.
+    /// </summary>
+    /// <param name="other">The other number.</param>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
     public bool IsEqualTo(mpq_t other)
     {
