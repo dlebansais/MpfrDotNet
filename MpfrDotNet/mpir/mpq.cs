@@ -40,6 +40,9 @@ public static class mpq
     public static void clear(mpq_t rational_number)
     {
         NativeMethods.mpq_clear(ref rational_number.Value);
+
+        // The disposal of the number must not free the memory a second time.
+        rational_number.Value = default;
     }
 
     /// <summary>
@@ -53,7 +56,7 @@ public static class mpq
         ArrayArgument.CheckItems(rationals, nameof(rationals));
 
         foreach (mpq_t Item in rationals)
-            NativeMethods.mpq_clear(ref Item.Value);
+            clear(Item);
     }
 
     /// <summary>
@@ -296,8 +299,11 @@ public static class mpq
     /// <param name="op1">The first operand.</param>
     /// <param name="num2">The numerator.</param>
     /// <param name="den2">The denominator.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="den2"/> is zero.</exception>
     public static int cmp_ui(mpq_t op1, ulong num2, ulong den2)
     {
+        MpirArgument.CheckDenominator(den2);
+
         return NativeMethods.mpq_cmp_ui(ref op1.Value, (NativeMethods.mpir_ui)num2, (NativeMethods.mpir_ui)den2);
     }
 
@@ -307,8 +313,11 @@ public static class mpq
     /// <param name="op1">The first operand.</param>
     /// <param name="num2">The numerator.</param>
     /// <param name="den2">The denominator.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="den2"/> is zero.</exception>
     public static int cmp_si(mpq_t op1, long num2, ulong den2)
     {
+        MpirArgument.CheckDenominator(den2);
+
         return NativeMethods.mpq_cmp_si(ref op1.Value, (NativeMethods.mpir_si)num2, (NativeMethods.mpir_ui)den2);
     }
 

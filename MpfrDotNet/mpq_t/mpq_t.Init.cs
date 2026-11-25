@@ -155,6 +155,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// Initializes a new instance of the <see cref="mpq_t"/> class, in canonical form.
     /// </summary>
     /// <param name="text">The value text.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="text"/> is not a valid number.</exception>
     /// <exception cref="DivideByZeroException">The denominator in <paramref name="text"/> is zero.</exception>
     public mpq_t(string text)
@@ -167,6 +168,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="text">The value text.</param>
     /// <param name="canonicalize">Ignored: the number is always canonicalized.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="text"/> is not a valid number.</exception>
     /// <exception cref="DivideByZeroException">The denominator in <paramref name="text"/> is zero.</exception>
     [Obsolete(ObsoleteCanonicalizeMessage)]
@@ -180,10 +182,15 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// </summary>
     /// <param name="text">The value text.</param>
     /// <param name="strBase">The digit base.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException">The combination of <paramref name="text"/> and <paramref name="strBase"/> is invalid.</exception>
     /// <exception cref="DivideByZeroException">The denominator in <paramref name="text"/> is zero.</exception>
     public mpq_t(string text, int strBase)
     {
+        // The native code would dereference a null string.
+        if (text is null)
+            throw new ArgumentNullException(nameof(text));
+
         mpq.init(this);
 
         bool Success = mpq.set_str(this, text, strBase);
@@ -202,6 +209,7 @@ public partial class mpq_t : IDisposable, IEquatable<mpq_t>, ICloneable, IConver
     /// <param name="text">The value text.</param>
     /// <param name="strBase">The digit base.</param>
     /// <param name="canonicalize">Ignored: the number is always canonicalized.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException">The combination of <paramref name="text"/> and <paramref name="strBase"/> is invalid.</exception>
     /// <exception cref="DivideByZeroException">The denominator in <paramref name="text"/> is zero.</exception>
     [Obsolete(ObsoleteCanonicalizeMessage)]

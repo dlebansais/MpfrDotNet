@@ -53,7 +53,10 @@ public partial class mpfr_t : IDisposable
     /// </summary>
     private void DisposeNow()
     {
-        mpfr.clear(this);
+        // mpfr.clear may already have released the native memory.
+        if (Value.Limbs != IntPtr.Zero)
+            mpfr.clear(this);
+
         DisposeCache();
     }
 }

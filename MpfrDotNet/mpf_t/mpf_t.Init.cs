@@ -78,6 +78,8 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// </summary>
     /// <param name="s">The value.</param>
     /// <param name="precision">The precision.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="s"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="s"/> is not a valid number.</exception>
     public mpf_t(string s, ulong precision = ulong.MaxValue)
         : this(s, mpz_t.DefaultBase, precision)
     {
@@ -90,8 +92,14 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// <param name="s">The value.</param>
     /// <param name="strBase">The base.</param>
     /// <param name="precision">The precision.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="s"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException">The combination of <paramref name="s"/> and <paramref name="strBase"/> is invalid.</exception>
     public mpf_t(string s, uint strBase, ulong precision = ulong.MaxValue)
     {
+        // The native code would dereference a null string.
+        if (s is null)
+            throw new ArgumentNullException(nameof(s));
+
         int Success;
 
         if (precision == ulong.MaxValue)
@@ -133,6 +141,7 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
     /// Sets the exact precision.
     /// </summary>
     /// <param name="value">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is greater than the precision allocated by the constructor or by the last change of <see cref="Precision"/>.</exception>
     public void SetPrecisionRaw(ulong value)
     {
         mpf.set_prec_raw(this, value);
@@ -169,6 +178,9 @@ public partial class mpf_t : IDisposable, IEquatable<mpf_t>, ICloneable, IConver
 #pragma warning disable SA1401 // Fields should be private
 #pragma warning disable SA1600 // Elements should be documented
     internal __mpf_t Value;
+
+    // The precision in limbs allocated by the last initialization or mpf_set_prec, the largest that mpf_set_prec_raw accepts.
+    internal int AllocatedPrecision;
 #pragma warning restore SA1401 // Fields should be private
 #pragma warning restore SA1600 // Elements should be documented
 }

@@ -44,7 +44,7 @@ public partial class mpfr_t : IDisposable
     /// Sets the exact precision.
     /// </summary>
     /// <param name="value">The precision.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>, or greater than the precision allocated for the number, which is the largest precision it has had.</exception>
     public void SetPrecisionRaw(ulong value)
     {
         mpfr.set_prec_raw(this, value);

@@ -14,6 +14,11 @@ internal static class MpirArgument
     public const string ZeroDivisorMessage = "The divisor cannot be zero.";
 
     /// <summary>
+    /// The message of the exception thrown for a zero denominator.
+    /// </summary>
+    public const string ZeroDenominatorMessage = "The denominator cannot be zero.";
+
+    /// <summary>
     /// Checks that a divisor is not zero.
     /// </summary>
     /// <param name="divisor">The divisor.</param>
@@ -66,7 +71,18 @@ internal static class MpirArgument
     {
         // A size of zero means that the denominator is zero.
         if (rational.Value.Denominator.LimbCount == 0)
-            throw new DivideByZeroException("The denominator cannot be zero.");
+            throw new DivideByZeroException(ZeroDenominatorMessage);
+    }
+
+    /// <summary>
+    /// Checks that a denominator is not zero.
+    /// </summary>
+    /// <param name="denominator">The denominator.</param>
+    /// <exception cref="DivideByZeroException"><paramref name="denominator"/> is zero.</exception>
+    public static void CheckDenominator(ulong denominator)
+    {
+        if (denominator == 0)
+            throw new DivideByZeroException(ZeroDenominatorMessage);
     }
 
     /// <summary>

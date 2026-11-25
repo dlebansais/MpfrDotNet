@@ -35,6 +35,7 @@ public static class mpf
     public static void init(mpf_t x)
     {
         NativeMethods.mpf_init(ref x.Value);
+        x.AllocatedPrecision = x.Value.Precision;
     }
 
     /// <summary>
@@ -45,6 +46,7 @@ public static class mpf
     public static void init2(mpf_t x, ulong prec)
     {
         NativeMethods.mpf_init2(ref x.Value, (NativeMethods.mp_bitcnt_t)prec);
+        x.AllocatedPrecision = x.Value.Precision;
     }
 
     /// <summary>
@@ -58,7 +60,7 @@ public static class mpf
         ArrayArgument.CheckItems(floatings, nameof(floatings));
 
         foreach (mpf_t Item in floatings)
-            NativeMethods.mpf_init(ref Item.Value);
+            init(Item);
     }
 
     /// <summary>
@@ -68,6 +70,9 @@ public static class mpf
     public static void clear(mpf_t x)
     {
         NativeMethods.mpf_clear(ref x.Value);
+
+        // The disposal of x must not free the memory a second time.
+        x.Value = default;
     }
 
     /// <summary>
@@ -81,7 +86,7 @@ public static class mpf
         ArrayArgument.CheckItems(floatings, nameof(floatings));
 
         foreach (mpf_t Item in floatings)
-            NativeMethods.mpf_clear(ref Item.Value);
+            clear(Item);
     }
 
     /// <summary>
@@ -101,6 +106,7 @@ public static class mpf
     public static void set_prec(mpf_t op, ulong prec)
     {
         NativeMethods.mpf_set_prec(ref op.Value, (NativeMethods.mp_bitcnt_t)prec);
+        op.AllocatedPrecision = op.Value.Precision;
     }
 
     /// <summary>
@@ -108,9 +114,19 @@ public static class mpf
     /// </summary>
     /// <param name="op">The operand.</param>
     /// <param name="prec">The precision.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is greater than the precision allocated for <paramref name="op"/> by its initialization or by the last call to <see cref="set_prec"/>.</exception>
     public static void set_prec_raw(mpf_t op, ulong prec)
     {
+        int PreviousPrecision = op.Value.Precision;
         NativeMethods.mpf_set_prec_raw(ref op.Value, (NativeMethods.mp_bitcnt_t)prec);
+
+        // mpf_set_prec_raw only stores the precision, in limbs: a value above the allocated precision would make
+        // the next operations write past the limbs.
+        if (op.Value.Precision > op.AllocatedPrecision)
+        {
+            op.Value.Precision = PreviousPrecision;
+            throw new ArgumentOutOfRangeException(nameof(prec), prec, "The precision cannot be greater than the allocated precision.");
+        }
     }
     #endregion
 
@@ -197,6 +213,10 @@ public static class mpf
     public static void swap(mpf_t rop1, mpf_t rop2)
     {
         NativeMethods.mpf_swap(ref rop1.Value, ref rop2.Value);
+
+        int AllocatedPrecision = rop1.AllocatedPrecision;
+        rop1.AllocatedPrecision = rop2.AllocatedPrecision;
+        rop2.AllocatedPrecision = AllocatedPrecision;
     }
     #endregion
 
@@ -209,6 +229,7 @@ public static class mpf
     public static void init_set(mpf_t rop, mpf_t op)
     {
         NativeMethods.mpf_init_set(ref rop.Value, ref op.Value);
+        rop.AllocatedPrecision = rop.Value.Precision;
     }
 
     /// <summary>
@@ -219,6 +240,7 @@ public static class mpf
     public static void init_set_ui(mpf_t rop, ulong op)
     {
         NativeMethods.mpf_init_set_ui(ref rop.Value, (NativeMethods.mpir_ui)op);
+        rop.AllocatedPrecision = rop.Value.Precision;
     }
 
     /// <summary>
@@ -229,6 +251,7 @@ public static class mpf
     public static void init_set_si(mpf_t rop, long op)
     {
         NativeMethods.mpf_init_set_si(ref rop.Value, (NativeMethods.mpir_si)op);
+        rop.AllocatedPrecision = rop.Value.Precision;
     }
 
     /// <summary>
@@ -242,6 +265,7 @@ public static class mpf
         DoubleArgument.CheckFinite(op);
 
         NativeMethods.mpf_init_set_d(ref rop.Value, op);
+        rop.AllocatedPrecision = rop.Value.Precision;
     }
 
     /// <summary>
@@ -252,7 +276,10 @@ public static class mpf
     /// <param name="strbase">The base.</param>
     public static int init_set_str(mpf_t rop, string str, uint strbase)
     {
-        return NativeMethods.mpf_init_set_str(ref rop.Value, str, strbase);
+        int Result = NativeMethods.mpf_init_set_str(ref rop.Value, str, strbase);
+        rop.AllocatedPrecision = rop.Value.Precision;
+
+        return Result;
     }
     #endregion
 

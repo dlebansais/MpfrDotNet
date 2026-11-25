@@ -57,11 +57,15 @@ public partial class mpfr_t : IDisposable
     /// <param name="format">The formatting string.</param>
     /// <returns>The formatted number.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="format"/> is <see langword="null"/>.</exception>
-    /// <exception cref="FormatException">MPFR cannot format the number with <paramref name="format"/>.</exception>
+    /// <exception cref="FormatException"><paramref name="format"/> has more than one conversion, or a conversion that is not for an <see cref="mpfr_t"/> (such as %Rf), or MPFR cannot format the number with it.</exception>
     public string ToFormattedString(string format)
     {
         if (format is null)
             throw new ArgumentNullException(nameof(format));
+
+        // The native call passes the number as its only argument: a format that reads any other argument would read invalid memory.
+        if (!HasAtMostOneMpfrConversion(format))
+            throw new FormatException($"The format '{format}' must have at most one conversion, for an mpfr_t such as %Rf.");
 
         // A first call with no buffer returns the length of the output.
         int Length = mpfr_snprintf(null, 0, format, ref Value, IntPtr.Zero);
@@ -73,6 +77,63 @@ public partial class mpfr_t : IDisposable
 
         return Data.ToString();
     }
+
+    private static bool HasAtMostOneMpfrConversion(string format)
+    {
+        int ConversionCount = 0;
+        int i = 0;
+
+        while (i < format.Length)
+        {
+            if (format[i] != '%')
+                i++;
+            else if (i + 1 < format.Length && format[i + 1] == '%')
+                i += 2;
+            else if (IsMpfrConversion(format, ref i))
+                ConversionCount++;
+            else
+                return false;
+        }
+
+        return ConversionCount <= 1;
+    }
+
+    private static bool IsMpfrConversion(string format, ref int index)
+    {
+        // The syntax is % [flags] [width] [.[precision]] R [rounding] conversion. A '*' width, precision or rounding
+        // would read an extra argument, so it is not accepted.
+        int i = index + 1;
+
+        while (i < format.Length && "-+ #0'".IndexOf(format[i]) >= 0)
+            i++;
+
+        while (i < format.Length && IsDigit(format[i]))
+            i++;
+
+        if (i < format.Length && format[i] == '.')
+        {
+            i++;
+
+            while (i < format.Length && IsDigit(format[i]))
+                i++;
+        }
+
+        if (i >= format.Length || format[i] != 'R')
+            return false;
+
+        i++;
+
+        if (i < format.Length && "NZUDY".IndexOf(format[i]) >= 0)
+            i++;
+
+        if (i >= format.Length || "aAbeEfFgG".IndexOf(format[i]) < 0)
+            return false;
+
+        index = i + 1;
+        return true;
+    }
+
+    private static bool IsDigit(char c) => c is >= '0' and <= '9';
 
     /// <summary>
     /// Returns a string that represents the number value.
@@ -168,10 +229,22 @@ public partial class mpfr_t : IDisposable
     /// <summary>
     /// Gets or sets the exponent.
     /// </summary>
+    /// <exception cref="InvalidOperationException">The number is zero, NaN or an infinity.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The new exponent is outside the current exponent range.</exception>
     public int Exponent
     {
-        get { return mpfr.get_exp(this); }
-        set { mpfr.set_exp(this, value); }
+        get
+        {
+            return mpfr.get_exp(this);
+        }
+        set
+        {
+            if (!IsRegular)
+                throw new InvalidOperationException(mpfr.NoExponentMessage);
+
+            if (mpfr.set_exp(this, value) != 0)
+                throw new ArgumentOutOfRangeException(nameof(value), value, "The exponent is outside the current exponent range.");
+        }
     }
 
     /// <summary>

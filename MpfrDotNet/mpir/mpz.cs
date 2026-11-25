@@ -52,6 +52,9 @@ public static class mpz
     public static void clear(mpz_t integer)
     {
         NativeMethods.mpz_clear(ref integer.Value);
+
+        // The disposal of the integer must not free the memory a second time.
+        integer.Value = default;
     }
 
     /// <summary>
@@ -65,7 +68,7 @@ public static class mpz
         ArrayArgument.CheckItems(x, nameof(x));
 
         foreach (mpz_t Item in x)
-            NativeMethods.mpz_clear(ref Item.Value);
+            clear(Item);
     }
 
     /// <summary>
@@ -1444,7 +1447,26 @@ public static class mpz
     {
         MpirArgument.CheckDivisor(f);
 
-        return (ulong)NativeMethods.mpz_remove(ref rop.Value, ref op.Value, ref f.Value);
+        // MPIR accepts only a factor greater than 1, while GMP also accepts -1, 1 and negative factors: these cases
+        // are computed here, with the results of GMP.
+        if (cmpabs_ui(f, 1UL) == 0)
+        {
+            set(rop, op);
+            return 0;
+        }
+
+        if (sgn(f) > 0)
+            return (ulong)NativeMethods.mpz_remove(ref rop.Value, ref op.Value, ref f.Value);
+
+        // op = f^k * rop = |f|^k * (-1)^k * rop.
+        using mpz_t AbsoluteFactor = new();
+        abs(AbsoluteFactor, f);
+
+        ulong Count = (ulong)NativeMethods.mpz_remove(ref rop.Value, ref op.Value, ref AbsoluteFactor.Value);
+        if (Count % 2 == 1)
+            neg(rop, rop);
+
+        return Count;
     }
 
     /// <summary>
@@ -1903,9 +1925,11 @@ public static class mpz
     /// <param name="state">The state.</param>
     /// <param name="n">The n.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException"><paramref name="n"/> is zero.</exception>
     public static void urandomm(mpz_t rop, randstate_t state, mpz_t n)
     {
         state.ThrowIfDisposed();
+        MpirArgument.CheckDivisor(n);
 
         NativeMethods.mpz_urandomm(ref rop.Value, ref state.Value, ref n.Value);
     }

@@ -78,6 +78,8 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// Initializes a new instance of the <see cref="mpz_t"/> class.
     /// </summary>
     /// <param name="text">The number text.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="text"/> is not a valid number.</exception>
     public mpz_t(string text)
         : this(text, DefaultBase)
     {
@@ -88,8 +90,14 @@ public partial class mpz_t : IDisposable, IEquatable<mpz_t>, ICloneable, IConver
     /// </summary>
     /// <param name="text">The number text.</param>
     /// <param name="strBase">The digit base.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException">The combination of <paramref name="text"/> and <paramref name="strBase"/> is invalid.</exception>
     public mpz_t(string text, uint strBase)
     {
+        // The native code would dereference a null string.
+        if (text is null)
+            throw new ArgumentNullException(nameof(text));
+
         bool Success = mpz.init_set_str(this, text, strBase);
         if (!Success)
         {

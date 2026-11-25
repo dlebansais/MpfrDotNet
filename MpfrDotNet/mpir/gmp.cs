@@ -34,8 +34,13 @@ public static class gmp
     /// <param name="a">The value of a.</param>
     /// <param name="c">The value of c.</param>
     /// <param name="m2exp">The value of m2exp.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="m2exp"/> is zero.</exception>
     public static void randinit_lc_2exp(randstate_t state, mpz_t a, ulong c, ulong m2exp)
     {
+        // GMP and MPIR abort the process when m2exp is zero.
+        if (m2exp == 0)
+            throw new ArgumentOutOfRangeException(nameof(m2exp), m2exp, "The modulus exponent must be greater than zero.");
+
         NativeMethods.mp_randinit_lc_2exp(ref state.Value, ref a.Value, (NativeMethods.mpir_ui)c, (NativeMethods.mp_bitcnt_t)m2exp);
     }
 
@@ -121,9 +126,11 @@ public static class gmp
     /// <param name="state">The state.</param>
     /// <param name="n">The n.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="state"/> is disposed.</exception>
+    /// <exception cref="DivideByZeroException"><paramref name="n"/> is zero.</exception>
     public static ulong urandomm_ui(randstate_t state, ulong n)
     {
         state.ThrowIfDisposed();
+        MpirArgument.CheckDivisor(n);
 
         return (ulong)NativeMethods.mp_urandomm_ui(ref state.Value, (NativeMethods.mpir_ui)n);
     }

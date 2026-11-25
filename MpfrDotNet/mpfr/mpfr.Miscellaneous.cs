@@ -136,10 +136,20 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="x">The operand.</param>
+    /// <exception cref="InvalidOperationException"><paramref name="x"/> is zero, NaN or an infinity.</exception>
     public static int get_exp(mpfr_t x)
     {
+        // MPFR aborts the process for a number that has no exponent.
+        if (mpfr_regular_p(ref x.Value) == 0)
+            throw new InvalidOperationException(NoExponentMessage);
+
         return ToClampedInt(mpfr_get_exp(ref x.Value));
     }
+
+    /// <summary>
+    /// The message of the exception thrown for a number that has no exponent.
+    /// </summary>
+    internal const string NoExponentMessage = "Zero, NaN and infinities have no exponent.";
 
     /// <summary>
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.

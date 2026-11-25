@@ -45,6 +45,9 @@ public static partial class mpfr
     public static void clear(mpfr_t x)
     {
         mpfr_clear(ref x.Value);
+
+        // The disposal of x must not free the memory a second time.
+        x.Value = default;
     }
 
     /// <summary>
@@ -58,7 +61,7 @@ public static partial class mpfr
         ArrayArgument.CheckItems(x, nameof(x));
 
         foreach (mpfr_t Item in x)
-            mpfr_clear(ref Item.Value);
+            clear(Item);
     }
 
     /// <summary>
@@ -142,9 +145,31 @@ public static partial class mpfr
     /// </summary>
     /// <param name="x">The value.</param>
     /// <param name="prec">The precision.</param>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="prec"/> is lesser than <see cref="mpfr.PrecisionMin"/> or greater than <see cref="mpfr.PrecisionMax"/>, or greater than the precision allocated for <paramref name="x"/>.</exception>
     public static void set_prec_raw(mpfr_t x, ulong prec)
     {
-        mpfr_set_prec_raw(ref x.Value, ToNativePrecision(prec, nameof(prec)));
+        CLong NativePrecision = ToNativePrecision(prec, nameof(prec));
+
+        // MPFR aborts the process when the precision needs more limbs than allocated.
+        if (prec > GetAllocatedPrecision(x))
+            throw new ArgumentOutOfRangeException(nameof(prec), prec, "The precision cannot be greater than the allocated precision.");
+
+        mpfr_set_prec_raw(ref x.Value, NativePrecision);
     }
+
+    /// <summary>
+    /// Gets the largest precision that fits in the limbs allocated for a number.
+    /// </summary>
+    /// <param name="x">The number.</param>
+    /// <returns>The precision, in bits.</returns>
+    internal static ulong GetAllocatedPrecision(mpfr_t x)
+    {
+        // MPFR stores the count of allocated limbs (MPFR_GET_ALLOC_SIZE) as a 64-bit mp_size_t just before the limbs,
+        // both with MPIR on Windows and with GMP on Linux.
+        long AllocatedLimbs = Marshal.ReadInt64(x.Value.Limbs, -sizeof(long));
+        return (ulong)AllocatedLimbs * LimbBits;
+    }
+
+    // The size of a limb, in bits, with MPIR on Windows and with GMP on 64-bit Linux.
+    private const ulong LimbBits = 64;
 }

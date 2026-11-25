@@ -41,7 +41,9 @@ public partial class mpfr_t : IDisposable
         Debug.Assert(IsCacheInitialized);
 
         ulong SizeInDigits = mpfr.get_str_ndigits((int)DigitBase.ToDigitCountBase(resultbase, nameof(resultbase)), Precision);
-        StringBuilder Data = new((int)(SizeInDigits + 2));
+
+        // MPFR requires max(n + 2, 7) characters, since "-@Inf@" and its terminator take 7 whatever the precision.
+        StringBuilder Data = new((int)Math.Max(SizeInDigits + 2, 7));
 
         mpfr.get_str(Data, out int Exponent, resultbase, SizeInDigits, this, rounding);
 

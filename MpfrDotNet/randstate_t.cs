@@ -16,7 +16,7 @@ public class randstate_t : IDisposable
     /// <param name="parameters">The algorithm parameters.</param>
     /// <exception cref="ArgumentNullException"><paramref name="parameters"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="parameters"/> is not a valid combination of parameters for <paramref name="algorithm"/>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="algorithm"/> is not a value of <see cref="RngAlgorithm"/>, or the size of a linear congruential generator is greater than 128.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="algorithm"/> is not a value of <see cref="RngAlgorithm"/>, or the size of a linear congruential generator is greater than 128, or its m2exp is zero.</exception>
     public static randstate_t Create(RngAlgorithm algorithm = RngAlgorithm.Default, params object[] parameters)
     {
         if (algorithm is not (RngAlgorithm.Default or RngAlgorithm.MersenneTwister or RngAlgorithm.LinearCongruential))

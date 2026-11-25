@@ -231,9 +231,25 @@ public partial class mpfr_t : IDisposable
     /// <param name="str">The string text.</param>
     /// <param name="strbase">The digit base.</param>
     /// <param name="rounding">The rounding mode.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="strbase"/> is not 0 or between 2 and 62.</exception>
+    /// <exception cref="ArgumentException">The combination of <paramref name="str"/> and <paramref name="strbase"/> is invalid.</exception>
     public mpfr_t(string str, uint strbase = 10, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
+        // MPFR dereferences a null string and aborts the process on an invalid base.
+        if (str is null)
+        {
+            Dispose();
+            throw new ArgumentNullException(nameof(str));
+        }
+
+        if (strbase is not (0 or (>= 2 and <= 62)))
+        {
+            Dispose();
+            throw new ArgumentOutOfRangeException(nameof(strbase), strbase, "The base must be 0 or between 2 and 62.");
+        }
+
         bool Success = mpfr.set_str(this, str, strbase, rounding);
         if (!Success)
         {
