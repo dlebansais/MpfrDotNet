@@ -278,13 +278,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException"><paramref name="op"/> has 2^25 limbs or more, and the precision of <see cref="DefaultPrecision"/> is about 2^31 bits or more, which only happens on Windows.</exception>
     public mpfr_t(mpf_t op, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
         ReleaseIfThrows(() => mpf_t.ThrowIfDisposed(op));
         ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
-
-        LastTernaryResult = mpfr.set_f(this, op, rounding);
+        ReleaseIfThrows(() => LastTernaryResult = mpfr.set_f(this, op, rounding));
     }
 
     /// <summary>
@@ -390,13 +390,13 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="op"/> is disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException"><paramref name="e"/> is beyond the range of a native long, and <paramref name="op"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public mpfr_t(mpz_t op, long e, mpfr_rnd_t rounding = DefaultRounding)
         : this()
     {
         ReleaseIfThrows(() => mpz_t.ThrowIfDisposed(op));
         ReleaseIfThrows(() => mpfr.CheckRounding(rounding, nameof(rounding)));
-
-        LastTernaryResult = mpfr.set_z_2exp(this, op, e, rounding);
+        ReleaseIfThrows(() => LastTernaryResult = mpfr.set_z_2exp(this, op, e, rounding));
     }
 
     /// <summary>

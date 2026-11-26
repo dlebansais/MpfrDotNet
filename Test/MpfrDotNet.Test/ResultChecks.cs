@@ -510,14 +510,16 @@ internal class ResultChecks
         Assert.That(mpf.BitExponent(Zero), Is.Zero);
     }
 
-    [TestCase(-2147483647L, 2147483649L, 2U, 2147483649L)]
-    [TestCase(2147483647L, -2147483649L, 2U, -2147483649L)]
-    [TestCase(1000L, 3322L, 10U, 1000L)]
-    [TestCase(1L, 8589934594L, 4U, 4294967297L)]
-    [TestCase(0L, 0L, 10U, 0L)]
-    public void TestUnwrapExponent(long nativeExponent, long bitExponent, uint digitBase, long expected)
+    [TestCase(-2147483647L, 2147483649L, 2U, true, 2147483649L)]
+    [TestCase(2147483647L, -2147483649L, 2U, true, -2147483649L)]
+    [TestCase(1000L, 3322L, 10U, true, 1000L)]
+    [TestCase(1L, 8589934594L, 4U, true, 4294967297L)]
+    [TestCase(0L, 0L, 10U, true, 0L)]
+    [TestCase(3000000000000000001L, long.MaxValue, 10U, false, 3000000000000000001L)]
+    [TestCase(-2147483647L, 2147483649L, 2U, false, -2147483647L)]
+    public void TestUnwrapExponent(long nativeExponent, long bitExponent, uint digitBase, bool isNativeLong32, long expected)
     {
-        Assert.That(mpf.UnwrapExponent(nativeExponent, bitExponent, digitBase), Is.EqualTo(expected));
+        Assert.That(mpf.UnwrapExponent(nativeExponent, bitExponent, digitBase, isNativeLong32), Is.EqualTo(expected));
     }
 
     [TestCase(2147483648L, int.MaxValue)]

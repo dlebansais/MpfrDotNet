@@ -1,6 +1,7 @@
 ﻿namespace MpfrDotNet;
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using MpirDotNet;
 using static Interop.Mpfr.NativeMethods;
@@ -254,8 +255,11 @@ public static partial class mpfr
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException"><paramref name="op1"/> and <paramref name="op2"/> are regular, and their precisions add up to more than the maximum precision of MPFR, which only happens on Windows.</exception>
     public static int mul(mpfr_t rop, mpfr_t op1, mpfr_t op2, mpfr_rnd_t rnd)
     {
+        CheckProduct(op1, op2);
+
         return mpfr_mul(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
@@ -331,11 +335,12 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
-    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, or <paramref name="op1"/> is regular, <paramref name="op2"/> is not zero, and the precision of <paramref name="op1"/> and the bits of <paramref name="op2"/> (at least 64) add up to more than the maximum precision, which only happens on Windows.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int mul_z(mpfr_t rop, mpfr_t op1, mpz_t op2, mpfr_rnd_t rnd)
     {
         CheckIntegerOperand(op2);
+        CheckIntegerProduct(op1, op2);
 
         return mpfr_mul_z(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
@@ -347,11 +352,12 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
-    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, or the precision of <paramref name="op1"/> plus the bits of the numerator of <paramref name="op2"/> exceeds the maximum precision, which only happens on Windows.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int mul_q(mpfr_t rop, mpfr_t op1, mpq_t op2, mpfr_rnd_t rnd)
     {
         CheckRationalOperand(op2);
+        CheckRationalScaling(op1, op2, isDivision: false);
 
         return mpfr_mul_q(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
@@ -498,11 +504,12 @@ public static partial class mpfr
     /// <param name="op1">The first operand.</param>
     /// <param name="op2">The second operand.</param>
     /// <param name="rnd">The rounding mode.</param>
-    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException"><paramref name="op2"/> has more bits than the widest exponent range of MPFR, or the precision of <paramref name="op1"/> plus the bits of the denominator of <paramref name="op2"/> exceeds the maximum precision, which only happens on Windows.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
     public static int div_q(mpfr_t rop, mpfr_t op1, mpq_t op2, mpfr_rnd_t rnd)
     {
         CheckRationalOperand(op2);
+        CheckRationalScaling(op1, op2, isDivision: true);
 
         return mpfr_div_q(ref rop.Value, ref op1.Value, ref op2.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
@@ -516,8 +523,11 @@ public static partial class mpfr
     /// <param name="op">The operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException"><paramref name="op"/> is regular, and twice its precision add up to more than the maximum precision of MPFR, which only happens on Windows.</exception>
     public static int sqr(mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
     {
+        CheckProduct(op, op);
+
         return mpfr_sqr(ref rop.Value, ref op.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
@@ -655,8 +665,11 @@ public static partial class mpfr
     /// <param name="op3">The third operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The factors are regular, the term is a number, and the precisions of <paramref name="op1"/> and <paramref name="op2"/> add up to more than the maximum precision, which only happens on Windows.</exception>
     public static int fma(mpfr_t rop, mpfr_t op1, mpfr_t op2, mpfr_t op3, mpfr_rnd_t rnd)
     {
+        CheckExactProduct(op1, op2, op3);
+
         return mpfr_fma(ref rop.Value, ref op1.Value, ref op2.Value, ref op3.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
@@ -669,8 +682,11 @@ public static partial class mpfr
     /// <param name="op3">The third operand.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The factors are regular, the term is a number, and the precisions of <paramref name="op1"/> and <paramref name="op2"/> add up to more than the maximum precision, which only happens on Windows.</exception>
     public static int fms(mpfr_t rop, mpfr_t op1, mpfr_t op2, mpfr_t op3, mpfr_rnd_t rnd)
     {
+        CheckExactProduct(op1, op2, op3);
+
         return mpfr_fms(ref rop.Value, ref op1.Value, ref op2.Value, ref op3.Value, ToNativeRounding(rnd, nameof(rnd)));
     }
 
@@ -752,6 +768,8 @@ public static partial class mpfr
     /// <exception cref="ArgumentNullException"><paramref name="tab"/> or <paramref name="b"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentException"><paramref name="tab"/> and <paramref name="b"/> do not have the same length.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The precisions of two factors add up to more than the maximum precision of MPFR, or a product is beyond the widest exponent range of MPFR.</exception>
+    /// <remarks>The products are computed in the widest exponent range, so that only the result is checked against the current range.</remarks>
     public static int dot(mpfr_t rop, mpfr_t[] tab, mpfr_t[] b, mpfr_rnd_t rnd)
     {
         if (tab is null)
@@ -764,17 +782,73 @@ public static partial class mpfr
             throw new ArgumentException("The two arrays must have the same length.", nameof(b));
 
         __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
-        ulong Count = (ulong)tab.Length;
 
-        using NativeNumberArray First = new(tab);
-        using NativeNumberArray Second = new(b);
-        int Result = ComputeInDistinctResult(rop, tab, b, x => mpfr_dot(ref x.Value, First.Pointer, Second.Pointer, Count, NativeRounding));
+        // mpfr_dot computes each product exactly, with the sum of the precisions of its factors, then sums the products
+        // with a single rounding. It aborts when a precision is too large, or when a product overflows or underflows,
+        // which happens in the current exponent range even for a result within it. The same computation is done here,
+        // with the products in the widest exponent range: the result is then checked against the current range.
+        for (int i = 0; i < tab.Length; i++)
+            if (get_prec(tab[i]) + get_prec(b[i]) > PrecisionMax)
+                throw new OverflowException("The precisions of two factors add up to more than the maximum precision of MPFR.");
 
-        // The copies share the significands of the numbers, which must stay alive until the end of the call.
-        GC.KeepAlive(tab);
-        GC.KeepAlive(b);
+        List<mpfr_t> Products = new(tab.Length);
 
-        return Result;
+        try
+        {
+            for (int i = 0; i < tab.Length; i++)
+                Products.Add(mpfr_t.CreateWithPrecision(get_prec(tab[i]) + get_prec(b[i]), nameof(b)));
+
+            return InWidestExponentRange(rop, NativeRounding, () =>
+            {
+                for (int i = 0; i < tab.Length; i++)
+                    MultiplyExactly(Products[i], tab[i], b[i]);
+
+                return sum(rop, Products.ToArray(), rnd);
+            });
+        }
+        finally
+        {
+            foreach (mpfr_t Product in Products)
+                Product.Dispose();
+        }
+    }
+
+    private static void MultiplyExactly(mpfr_t product, mpfr_t op1, mpfr_t op2)
+    {
+        // With the sum of the precisions, the product is inexact only when it overflows or underflows.
+        if (mpfr_mul(ref product.Value, ref op1.Value, ref op2.Value, __mpfr_rnd_t.MPFR_RNDZ) != 0)
+            throw new OverflowException("A product is beyond the widest exponent range of MPFR.");
+    }
+
+    /// <summary>
+    /// Runs a computation in the widest exponent range, as MPFR does internally, then checks the result against the
+    /// current range, so that only the result can overflow or underflow, with a single rounding.
+    /// </summary>
+    /// <param name="rop">The result operand.</param>
+    /// <param name="rnd">The rounding mode.</param>
+    /// <param name="compute">The computation, which returns the ternary value.</param>
+    /// <returns>The ternary value.</returns>
+    internal static int InWidestExponentRange(mpfr_t rop, __mpfr_rnd_t rnd, Func<int> compute)
+    {
+        // The exponent range is per thread.
+        CLong MinExponent = mpfr_get_emin();
+        CLong MaxExponent = mpfr_get_emax();
+        int Ternary;
+
+        _ = mpfr_set_emin(mpfr_get_emin_min());
+        _ = mpfr_set_emax(mpfr_get_emax_max());
+
+        try
+        {
+            Ternary = compute();
+        }
+        finally
+        {
+            _ = mpfr_set_emin(MinExponent);
+            _ = mpfr_set_emax(MaxExponent);
+        }
+
+        return mpfr_check_range(ref rop.Value, Ternary, rnd);
     }
 
     /// <summary>
@@ -836,6 +910,88 @@ public static partial class mpfr
     #endregion
 
     /// <summary>
+    /// Checks that mpfr_mul_q or mpfr_div_q can multiply a number exactly by the numerator or the denominator of a rational operand.
+    /// </summary>
+    /// <param name="op1">The number.</param>
+    /// <param name="op2">The rational operand.</param>
+    /// <param name="isDivision"><see langword="true"/> for mpfr_div_q, which multiplies by the denominator; <see langword="false"/> for mpfr_mul_q, which multiplies by the numerator.</param>
+    /// <exception cref="OverflowException">The precision of <paramref name="op1"/> plus the bits of the factor exceeds the maximum precision.</exception>
+    internal static void CheckRationalScaling(mpfr_t op1, mpq_t op2, bool isDivision)
+    {
+        // Unless the numerator or the denominator is zero, MPFR multiplies op1 by the factor in a number with the
+        // precision of op1 plus the bits of the factor, whatever the value of op1, then with mpfr_mul_z, and aborts
+        // when either exceeds the maximum precision.
+        ulong FactorPrecision = IntegerPrecision(ref isDivision ? ref op2.Value.Denominator : ref op2.Value.Numerator);
+        if (get_prec(op1) + FactorPrecision > PrecisionMax &&
+            op2.Value.Numerator.LimbCount != 0 &&
+            op2.Value.Denominator.LimbCount != 0)
+        {
+            throw new OverflowException("The precision of the number plus the bits of the rational operand exceed the maximum precision of MPFR.");
+        }
+    }
+
+    /// <summary>
+    /// Checks that mpfr_mul or mpfr_sqr can multiply two numbers, which they do exactly before rounding.
+    /// </summary>
+    /// <param name="op1">The first factor.</param>
+    /// <param name="op2">The second factor.</param>
+    /// <exception cref="OverflowException">The factors are regular, and their precisions add up to more than the maximum precision.</exception>
+    internal static void CheckProduct(mpfr_t op1, mpfr_t op2)
+    {
+        // MPFR aborts when the precisions of regular factors add up to more than the maximum precision.
+        if (get_prec(op1) + get_prec(op2) > PrecisionMax &&
+            mpfr_regular_p(ref op1.Value) != 0 &&
+            mpfr_regular_p(ref op2.Value) != 0)
+        {
+            throw new OverflowException("The sum of the precisions of the factors exceeds the maximum precision of MPFR.");
+        }
+    }
+
+    /// <summary>
+    /// Checks that mpfr_mul_z can multiply a number by an integer, which it converts to a number first.
+    /// </summary>
+    /// <param name="op1">The number.</param>
+    /// <param name="op2">The integer.</param>
+    /// <exception cref="OverflowException">The number is regular, the integer is not zero, and the precision of the number and the precision of the integer add up to more than the maximum precision.</exception>
+    internal static void CheckIntegerProduct(mpfr_t op1, mpz_t op2)
+    {
+        if (get_prec(op1) + IntegerPrecision(ref op2.Value) > PrecisionMax &&
+            mpfr_regular_p(ref op1.Value) != 0 &&
+            op2.Value.LimbCount != 0)
+        {
+            throw new OverflowException("The sum of the precisions of the factors exceeds the maximum precision of MPFR.");
+        }
+    }
+
+    /// <summary>
+    /// Gets the precision of the number that MPFR creates from an integer for an operation: its bits, and at least 64.
+    /// </summary>
+    /// <param name="op">The integer.</param>
+    /// <returns>The precision.</returns>
+    internal static ulong IntegerPrecision(ref Interop.Mpir.NativeMethods.__mpz_t op)
+        => Math.Max((ulong)Interop.Mpir.NativeMethods.mpz_sizeinbase(ref op, 2), 64UL);
+
+    /// <summary>
+    /// Checks that mpfr_fma or mpfr_fms can compute the product of two operands exactly.
+    /// </summary>
+    /// <param name="op1">The first factor.</param>
+    /// <param name="op2">The second factor.</param>
+    /// <param name="op3">The term.</param>
+    /// <exception cref="OverflowException">The factors are regular, the term is a number, and the precisions of the factors add up to more than the maximum precision.</exception>
+    internal static void CheckExactProduct(mpfr_t op1, mpfr_t op2, mpfr_t op3)
+    {
+        // When the factors are regular and the term is a number, even zero, MPFR multiplies the factors (mpfr_mul, or
+        // exactly in a number with the sum of their precisions), and aborts when this sum exceeds the maximum precision.
+        if (get_prec(op1) + get_prec(op2) > PrecisionMax &&
+            mpfr_regular_p(ref op1.Value) != 0 &&
+            mpfr_regular_p(ref op2.Value) != 0 &&
+            mpfr_number_p(ref op3.Value) != 0)
+        {
+            throw new OverflowException("The sum of the precisions of the factors exceeds the maximum precision of MPFR.");
+        }
+    }
+
+    /// <summary>
     /// Checks that an integer operand can be converted by MPFR in its widest exponent range.
     /// </summary>
     /// <param name="op">The operand.</param>
@@ -895,18 +1051,23 @@ public static partial class mpfr
     {
         // mpfr_add_q and mpfr_sub_q round the sum to a working precision before rounding it to rop, and abort when
         // that sum overflows, which a number this close to the largest one does with almost any rational. Halving
-        // both operands is exact, and the final doubling overflows like any other operation, with its flag and ternary.
+        // both operands is exact in the widest exponent range, whatever the range of the caller, and so is the final
+        // doubling unless it overflows. The result is then checked against the range of the caller, as MPFR does.
         using mpfr_t HalfNumber = mpfr_t.CreateWithPrecision(get_prec(op1), nameof(op1));
         using mpq_t HalfRational = new();
-        _ = mpfr_div_2ui(ref HalfNumber.Value, ref op1.Value, 1UL, __mpfr_rnd_t.MPFR_RNDN);
         mpq.div_2exp(HalfRational, op2, 1UL);
 
-        int Ternary = isSubtraction
-            ? mpfr_sub_q(ref rop.Value, ref HalfNumber.Value, ref HalfRational.Value, rnd)
-            : mpfr_add_q(ref rop.Value, ref HalfNumber.Value, ref HalfRational.Value, rnd);
-        int OverflowTernary = mpfr_mul_2ui(ref rop.Value, ref rop.Value, new CULong(1U), rnd);
+        return InWidestExponentRange(rop, rnd, () =>
+        {
+            _ = mpfr_div_2ui(ref HalfNumber.Value, ref op1.Value, 1UL, __mpfr_rnd_t.MPFR_RNDN);
 
-        return OverflowTernary != 0 ? OverflowTernary : Ternary;
+            int SumTernary = isSubtraction
+                ? mpfr_sub_q(ref rop.Value, ref HalfNumber.Value, ref HalfRational.Value, rnd)
+                : mpfr_add_q(ref rop.Value, ref HalfNumber.Value, ref HalfRational.Value, rnd);
+            int OverflowTernary = mpfr_mul_2ui(ref rop.Value, ref rop.Value, new CULong(1U), rnd);
+
+            return OverflowTernary != 0 ? OverflowTernary : SumTernary;
+        });
     }
 
     /// <summary>

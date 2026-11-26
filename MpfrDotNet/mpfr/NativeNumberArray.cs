@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using static Interop.Mpfr.NativeMethods;
 
 /// <summary>
-/// Represents an array of pointers to the numbers of an array, as mpfr_sum and mpfr_dot take it.
+/// Represents an array of pointers to the numbers of an array, as mpfr_sum takes it.
 /// </summary>
 internal sealed class NativeNumberArray : IDisposable
 {

@@ -108,11 +108,15 @@ public static class mpq
     /// <param name="str">The string.</param>
     /// <param name="strBase">The base.</param>
     /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <remarks>The result is <see langword="false"/> for a text with a NUL or a character outside ASCII, which cannot be a number.</remarks>
     public static bool set_str(mpq_t rop, string str, int strBase)
     {
         // The native function would dereference a null string.
         if (str is null)
             throw new ArgumentNullException(nameof(str));
+
+        if (!MpirArgument.IsParsableText(str))
+            return false;
 
         return NativeMethods.mpq_set_str(ref rop.Value, str, strBase) == 0;
     }
@@ -133,8 +137,12 @@ public static class mpq
     /// See http://mpir.org/mpir-3.0.0.pdf.
     /// </summary>
     /// <param name="op">The operand.</param>
+    /// <exception cref="DivideByZeroException">The denominator of <paramref name="op"/> is zero.</exception>
     public static double get_d(mpq_t op)
     {
+        // The native function divides by the denominator.
+        MpirArgument.CheckDenominator(op);
+
         return NativeMethods.mpq_get_d(ref op.Value);
     }
 

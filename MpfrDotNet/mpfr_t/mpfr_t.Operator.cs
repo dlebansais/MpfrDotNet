@@ -451,10 +451,14 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
+    /// <exception cref="OverflowException"><paramref name="x"/> and <paramref name="y"/> are regular, and their precisions add up to more than the maximum precision of MPFR, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpfr_t x, mpfr_t y)
     {
         ThrowIfDisposed(x);
         ThrowIfDisposed(y);
+
+        // The operands are checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckProduct(x, y);
 
         mpfr_t z = CreateResult(x, y);
 
@@ -571,7 +575,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
-    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException"><paramref name="y"/> has more bits than the widest exponent range of MPFR, or the precision of <paramref name="x"/> and the bits of <paramref name="y"/> (at least 64) add up to more than the maximum precision, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpfr_t x, mpz_t y)
     {
         ThrowIfDisposed(x);
@@ -579,6 +583,7 @@ public partial class mpfr_t : IDisposable
 
         // The operand is checked before the result is created, so that nothing is left to the finalizer.
         mpfr.CheckIntegerOperand(y);
+        mpfr.CheckIntegerProduct(x, y);
 
         mpfr_t z = CreateResult(x);
 
@@ -593,7 +598,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
-    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException"><paramref name="x"/> has more bits than the widest exponent range of MPFR, or the precision of <paramref name="y"/> and the bits of <paramref name="x"/> (at least 64) add up to more than the maximum precision, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpz_t x, mpfr_t y)
     {
         mpz_t.ThrowIfDisposed(x);
@@ -601,6 +606,7 @@ public partial class mpfr_t : IDisposable
 
         // The operand is checked before the result is created, so that nothing is left to the finalizer.
         mpfr.CheckIntegerOperand(x);
+        mpfr.CheckIntegerProduct(y, x);
 
         mpfr_t z = CreateResult(y);
 
@@ -615,7 +621,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
-    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="y"/> has more bits than the widest exponent range of MPFR, or the precision of <paramref name="x"/> plus the bits of the numerator of <paramref name="y"/> exceeds the maximum precision, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpfr_t x, mpq_t y)
     {
         ThrowIfDisposed(x);
@@ -623,6 +629,7 @@ public partial class mpfr_t : IDisposable
 
         // The operand is checked before the result is created, so that nothing is left to the finalizer.
         mpfr.CheckRationalOperand(y);
+        mpfr.CheckRationalScaling(x, y, isDivision: false);
 
         mpfr_t z = CreateResult(x);
 
@@ -637,7 +644,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
-    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="x"/> has more bits than the widest exponent range of MPFR, or the precision of <paramref name="y"/> plus the bits of the numerator of <paramref name="x"/> exceeds the maximum precision, which only happens on Windows.</exception>
     public static mpfr_t operator *(mpq_t x, mpfr_t y)
     {
         mpq_t.ThrowIfDisposed(x);
@@ -645,6 +652,7 @@ public partial class mpfr_t : IDisposable
 
         // The operand is checked before the result is created, so that nothing is left to the finalizer.
         mpfr.CheckRationalOperand(x);
+        mpfr.CheckRationalScaling(y, x, isDivision: false);
 
         mpfr_t z = CreateResult(y);
 
@@ -829,7 +837,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
-    /// <exception cref="OverflowException">An integer or rational operand has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException">The numerator or the denominator of <paramref name="y"/> has more bits than the widest exponent range of MPFR, or the precision of <paramref name="x"/> plus the bits of the denominator of <paramref name="y"/> exceeds the maximum precision, which only happens on Windows.</exception>
     public static mpfr_t operator /(mpfr_t x, mpq_t y)
     {
         ThrowIfDisposed(x);
@@ -837,6 +845,7 @@ public partial class mpfr_t : IDisposable
 
         // The operand is checked before the result is created, so that nothing is left to the finalizer.
         mpfr.CheckRationalOperand(y);
+        mpfr.CheckRationalScaling(x, y, isDivision: true);
 
         mpfr_t z = CreateResult(x);
 
@@ -851,7 +860,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="x">The first value.</param>
     /// <param name="y">The second value.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="x"/> or <paramref name="y"/> is disposed.</exception>
-    /// <exception cref="OverflowException">The numerator, or the denominator plus the precision of <paramref name="y"/>, has more bits than the maximum precision of MPFR, which only happens on Windows.</exception>
+    /// <exception cref="OverflowException">The numerator, or the denominator plus the precision of <paramref name="y"/>, has more bits than the maximum precision of MPFR, or the denominator has more bits than the widest exponent range, which only happens on Windows.</exception>
     public static mpfr_t operator /(mpq_t x, mpfr_t y)
     {
         mpq_t.ThrowIfDisposed(x);
@@ -870,8 +879,12 @@ public partial class mpfr_t : IDisposable
     private static void CheckScaledDivision(ulong numeratorBits, ulong denominatorBits, mpfr_t y)
     {
         // DivideScaled computes the numerator, and the denominator times y, exactly: each must fit in a precision.
-        if (numeratorBits > mpfr.PrecisionMax || denominatorBits + mpfr.get_prec(y) > mpfr.PrecisionMax)
+        // MPFR gives the denominator at least 64 bits of precision when it multiplies by it.
+        if (numeratorBits > mpfr.PrecisionMax || Math.Max(denominatorBits, 64UL) + mpfr.get_prec(y) > mpfr.PrecisionMax)
             throw new OverflowException("The operands have more bits than the maximum precision of MPFR.");
+
+        // The product by the denominator is computed with mpfr_mul_z, which MPFR only supports in its exponent range.
+        mpfr.CheckOperandBitCount(denominatorBits);
     }
 
     private static int DivideRational(mpfr_t z, mpq_t x, mpfr_t y)

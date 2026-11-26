@@ -107,7 +107,7 @@ internal class SixthReviewChecks
         using mpz_t a = new(5);
 
         // The native size of the seed wrapped for a modulus of 2^64 - 1 bits.
-        Assert.That(() => randstate_t.Create(RngAlgorithm.LinearCongruential, a, 1UL, ulong.MaxValue), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith($"The modulus exponent must be at most {mpf.MaxPrecision}.").And.Property(nameof(ArgumentOutOfRangeException.ParamName)).EqualTo("m2exp"));
+        Assert.That(() => randstate_t.Create(RngAlgorithm.LinearCongruential, a, 1UL, ulong.MaxValue), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.StartsWith("The modulus exponent must be at most 4294967295.").And.Property(nameof(ArgumentOutOfRangeException.ParamName)).EqualTo("m2exp"));
     }
 
     [Test]

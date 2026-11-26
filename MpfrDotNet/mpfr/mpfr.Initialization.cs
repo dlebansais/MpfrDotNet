@@ -42,8 +42,13 @@ public static partial class mpfr
     /// See https://www.mpfr.org/mpfr-current/mpfr.pdf.
     /// </summary>
     /// <param name="x">The value.</param>
+    /// <remarks>A number that is already cleared is left unchanged.</remarks>
     public static void clear(mpfr_t x)
     {
+        // A cleared number has no significand, and mpfr_clear would read the allocated size just before it.
+        if (x.Value.Limbs == IntPtr.Zero)
+            return;
+
         mpfr_clear(ref x.Value);
 
         // The disposal of x must not free the memory a second time.

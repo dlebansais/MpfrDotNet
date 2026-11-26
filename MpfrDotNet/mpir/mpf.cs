@@ -247,8 +247,12 @@ public static class mpf
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="DivideByZeroException">The denominator of <paramref name="op"/> is zero.</exception>
     public static void set_q(mpf_t rop, mpq_t op)
     {
+        // The native function divides by the denominator.
+        MpirArgument.CheckDenominator(op);
+
         NativeMethods.mpf_set_q(ref rop.Value, ref op.Value);
     }
 
@@ -260,11 +264,15 @@ public static class mpf
     /// <param name="strbase">The base.</param>
     /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
     /// <exception cref="OverflowException">The exponent in <paramref name="str"/> is beyond the range of a native long, which MPIR does not check: 2^31 - 1 on Windows.</exception>
+    /// <remarks>As in MPIR, the result is -1 for a text with a NUL or a character outside ASCII, which cannot be a number.</remarks>
     public static int set_str(mpf_t rop, string str, uint strbase)
     {
         // The native function would dereference a null string.
         if (str is null)
             throw new ArgumentNullException(nameof(str));
+
+        if (!MpirArgument.IsParsableText(str))
+            return -1;
 
         CheckStringExponent(str, strbase);
 
@@ -342,11 +350,18 @@ public static class mpf
     /// <param name="strbase">The base.</param>
     /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
     /// <exception cref="OverflowException">The exponent in <paramref name="str"/> is beyond the range of a native long, which MPIR does not check: 2^31 - 1 on Windows.</exception>
+    /// <remarks>As in MPIR, <paramref name="rop"/> is initialized even when the text is not a number, and the result is -1 for a text with a NUL or a character outside ASCII.</remarks>
     public static int init_set_str(mpf_t rop, string str, uint strbase)
     {
         // The native function would dereference a null string.
         if (str is null)
             throw new ArgumentNullException(nameof(str));
+
+        if (!MpirArgument.IsParsableText(str))
+        {
+            init(rop);
+            return -1;
+        }
 
         CheckStringExponent(str, strbase);
 
@@ -463,6 +478,7 @@ public static class mpf
     /// <param name="op">The operand.</param>
     /// <param name="d">The double value.</param>
     /// <param name="exp">The exponent.</param>
+    /// <remarks>On Linux, the exponent of a number beyond 2^(2^63) or below 2^(-2^63) is saturated to the range of <see cref="long"/>.</remarks>
     public static void get_d_2exp(mpf_t op, out double d, out long exp)
     {
         d = NativeMethods.mpf_get_d_2exp(out _, ref op.Value);
@@ -486,7 +502,25 @@ public static class mpf
         // The offset is computed in 64 bits: a number can have more than 2^28 limbs.
         ulong TopLimb = (ulong)Marshal.ReadInt64(MpfrDotNet.NativeNumberArray.Offset(op.Value.Limbs, (long)(LimbCount - 1) * sizeof(ulong)));
 
-        return ((long)op.Value.Exponent.Value * (long)LimbBits) - LeadingZeroCount(TopLimb);
+        return ToBitExponent((long)op.Value.Exponent.Value, LeadingZeroCount(TopLimb));
+    }
+
+    /// <summary>
+    /// Gets the exponent in base 2 of a number from its exponent in limbs, saturated to the range of <see cref="long"/>.
+    /// </summary>
+    /// <param name="limbExponent">The exponent in limbs.</param>
+    /// <param name="leadingZeroCount">The number of leading zero bits of the top limb.</param>
+    /// <returns>The exponent.</returns>
+    internal static long ToBitExponent(long limbExponent, int leadingZeroCount)
+    {
+        // On Linux, the exponent in limbs is a 64-bit C long, and a huge number has an exponent in bits beyond 2^63.
+        if (limbExponent > long.MaxValue / (long)LimbBits)
+            return long.MaxValue;
+
+        if (limbExponent <= long.MinValue / (long)LimbBits)
+            return long.MinValue;
+
+        return (limbExponent * (long)LimbBits) - leadingZeroCount;
     }
 
     /// <summary>
@@ -580,7 +614,7 @@ public static class mpf
         _ = str.EnsureCapacity((int)Digits + 2);
 
         NativeMethods.mpf_get_str(str, out CLong NativeExponent, strBase, (NativeMethods.size_t)NativeDigits, ref op.Value);
-        expptr = UnwrapExponent((long)NativeExponent.Value, BitExponent(op), DigitCountBase);
+        expptr = UnwrapExponent((long)NativeExponent.Value, BitExponent(op), DigitCountBase, MpfrDotNet.mpfr.NativeLongMax == int.MaxValue);
     }
 
     /// <summary>
@@ -613,9 +647,14 @@ public static class mpf
     /// <param name="nativeExponent">The exponent returned by MPIR, possibly wrapped modulo 2^32.</param>
     /// <param name="bitExponent">The exponent of the number in base 2, which is not wrapped.</param>
     /// <param name="digitBase">The base of the exponent.</param>
+    /// <param name="isNativeLong32">True if a C long is 32-bit, false if it is 64-bit.</param>
     /// <returns>The exponent.</returns>
-    internal static long UnwrapExponent(long nativeExponent, long bitExponent, uint digitBase)
+    internal static long UnwrapExponent(long nativeExponent, long bitExponent, uint digitBase, bool isNativeLong32)
     {
+        // A 64-bit exponent does not wrap, and the exponent in base 2 may be saturated.
+        if (!isNativeLong32)
+            return nativeExponent;
+
         // The exponent in the base is within 2 of the exponent in base 2 divided by log2(base), so the number of wraps is
         // the nearest integer.
         const double WrapSize = 4294967296.0;

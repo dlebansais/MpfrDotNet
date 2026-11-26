@@ -11,9 +11,13 @@ public partial class mpfr_t : IDisposable
     /// Gets the square.
     /// </summary>
     /// <exception cref="ObjectDisposedException">This number is disposed.</exception>
+    /// <exception cref="OverflowException">This number is regular, and twice its precision exceeds the maximum precision of MPFR, which only happens on Windows.</exception>
     public mpfr_t Sqr()
     {
         ThrowIfDisposed(this);
+
+        // The operand is checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckProduct(this, this);
 
         mpfr_t z = CreateResult(this);
 
@@ -152,6 +156,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/> or <paramref name="c"/> is disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The factors are regular, the term is a number, and the precisions of <paramref name="a"/> and <paramref name="b"/> add up to more than the maximum precision, which only happens on Windows.</exception>
     public static mpfr_t Fma(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(a);
@@ -159,6 +164,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(c);
 
         _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
+        // The operands are checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckExactProduct(a, b, c);
 
         mpfr_t Result = CreateResult(a, b, c);
 
@@ -176,6 +184,7 @@ public partial class mpfr_t : IDisposable
     /// <param name="rounding">The rounding mode.</param>
     /// <exception cref="ObjectDisposedException"><paramref name="a"/>, <paramref name="b"/> or <paramref name="c"/> is disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The factors are regular, the term is a number, and the precisions of <paramref name="a"/> and <paramref name="b"/> add up to more than the maximum precision, which only happens on Windows.</exception>
     public static mpfr_t Fms(mpfr_t a, mpfr_t b, mpfr_t c, mpfr_rnd_t rounding = DefaultRounding)
     {
         ThrowIfDisposed(a);
@@ -183,6 +192,9 @@ public partial class mpfr_t : IDisposable
         ThrowIfDisposed(c);
 
         _ = mpfr.CheckRounding(rounding, nameof(rounding));
+
+        // The operands are checked before the result is created, so that nothing is left to the finalizer.
+        mpfr.CheckExactProduct(a, b, c);
 
         mpfr_t Result = CreateResult(a, b, c);
 
@@ -354,6 +366,7 @@ public partial class mpfr_t : IDisposable
     /// <exception cref="ArgumentException"><paramref name="x"/> and <paramref name="y"/> do not have the same length.</exception>
     /// <exception cref="ObjectDisposedException">One of the numbers is disposed.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rounding"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException">The precisions of two factors add up to more than the maximum precision of MPFR, or a product is beyond the widest exponent range of MPFR.</exception>
     public static mpfr_t Dot(mpfr_t[] x, mpfr_t[] y, mpfr_rnd_t rounding = DefaultRounding)
     {
         CheckOperandArray(x, nameof(x));
@@ -366,7 +379,16 @@ public partial class mpfr_t : IDisposable
 
         mpfr_t z = CreateResult([.. x, .. y]);
 
-        z.LastTernaryResult = mpfr.dot(z, x, y, rounding);
+        try
+        {
+            z.LastTernaryResult = mpfr.dot(z, x, y, rounding);
+        }
+        catch
+        {
+            // The products can only be checked by computing them: the result is released rather than left to the finalizer.
+            z.Dispose();
+            throw;
+        }
 
         return z;
     }

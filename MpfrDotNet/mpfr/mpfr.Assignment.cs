@@ -277,9 +277,18 @@ public static partial class mpfr
     /// <param name="e">The exponent.</param>
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="rnd"/> is not a supported rounding mode.</exception>
+    /// <exception cref="OverflowException"><paramref name="e"/> is beyond the range of a native long, and <paramref name="op"/> has more bits than the widest exponent range of MPFR, which only happens on Windows.</exception>
     public static int set_z_2exp(mpfr_t rop, mpz_t op, long e, mpfr_rnd_t rnd)
     {
-        return mpfr_set_z_2exp(ref rop.Value, ref op.Value, ToNativeExponent(e), ToNativeRounding(rnd, nameof(rnd)));
+        __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
+
+        // The clamped exponent gives the same overflow or underflow as the exponent only when the integer has fewer bits
+        // than the exponent range.
+        CLong NativeExponent = ToNativeExponent(e);
+        if ((long)NativeExponent.Value != e)
+            CheckIntegerOperand(op);
+
+        return mpfr_set_z_2exp(ref rop.Value, ref op.Value, NativeExponent, NativeRounding);
     }
 
     /// <summary>
@@ -291,6 +300,7 @@ public static partial class mpfr
     /// <param name="rnd">The rounding mode.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="strbase"/> is not 0 or between 2 and 62, or <paramref name="rnd"/> is not a supported rounding mode.</exception>
     /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <remarks>The result is <see langword="false"/> for a text with a NUL or a character outside ASCII, which cannot be a number.</remarks>
     public static bool set_str(mpfr_t rop, string str, uint strbase, mpfr_rnd_t rnd)
     {
         // The native function would dereference a null string.
@@ -301,7 +311,11 @@ public static partial class mpfr
         if (strbase is not (0 or (>= 2 and <= 62)))
             throw new ArgumentOutOfRangeException(nameof(strbase), strbase, "The base must be 0 or between 2 and 62.");
 
-        return mpfr_set_str(ref rop.Value, str, strbase, ToNativeRounding(rnd, nameof(rnd))) == 0;
+        __mpfr_rnd_t NativeRounding = ToNativeRounding(rnd, nameof(rnd));
+        if (!MpirArgument.IsParsableText(str))
+            return false;
+
+        return mpfr_set_str(ref rop.Value, str, strbase, NativeRounding) == 0;
     }
 
     /// <summary>

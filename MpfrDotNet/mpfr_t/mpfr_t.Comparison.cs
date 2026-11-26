@@ -112,6 +112,7 @@ public partial class mpfr_t : IDisposable, IEquatable<mpfr_t>, IComparable<mpfr_
     /// <param name="other">The other number.</param>
     /// <returns>A positive value if <paramref name="other"/> is <see langword="null"/>, and otherwise a negative value if this number is NaN, which sorts before any number, as with <see cref="double.CompareTo(double)"/>.</returns>
     /// <exception cref="ObjectDisposedException">This number or <paramref name="other"/> is disposed.</exception>
+    /// <exception cref="OverflowException"><paramref name="other"/> has 2^25 limbs or more, and the precision of this number is about 2^31 bits or more, which only happens on Windows.</exception>
     public int CompareTo(mpf_t? other)
     {
         mpf_t.ThrowIfDisposed(other);

@@ -181,8 +181,12 @@ public static class mpz
     /// </summary>
     /// <param name="rop">The result operand.</param>
     /// <param name="op">The operand.</param>
+    /// <exception cref="DivideByZeroException">The denominator of <paramref name="op"/> is zero.</exception>
     public static void set_q(mpz_t rop, mpq_t op)
     {
+        // The native function divides by the denominator.
+        MpirArgument.CheckDenominator(op);
+
         NativeMethods.mpz_set_q(ref rop.Value, ref op.Value);
     }
 
@@ -203,11 +207,15 @@ public static class mpz
     /// <param name="str">The string.</param>
     /// <param name="strbase">The base.</param>
     /// <exception cref="ArgumentNullException"><paramref name="str"/> is <see langword="null"/>.</exception>
+    /// <remarks>As in MPIR, the result is -1 for a text with a NUL or a character outside ASCII, which cannot be a number.</remarks>
     public static int set_str(mpz_t rop, string str, uint strbase)
     {
         // The native function would dereference a null string.
         if (str is null)
             throw new ArgumentNullException(nameof(str));
+
+        if (!MpirArgument.IsParsableText(str))
+            return -1;
 
         return NativeMethods.mpz_set_str(ref rop.Value, str, strbase);
     }
@@ -1892,11 +1900,18 @@ public static class mpz
     /// <param name="content">The input string.</param>
     /// <param name="strBase">The digit base.</param>
     /// <exception cref="ArgumentNullException"><paramref name="content"/> is <see langword="null"/>.</exception>
+    /// <remarks>As in MPIR, <paramref name="rop"/> is initialized even when the text is not a number, and the result is <see langword="false"/> for a text with a NUL or a character outside ASCII.</remarks>
     public static bool init_set_str(mpz_t rop, string content, uint strBase)
     {
         // The native function would dereference a null string.
         if (content is null)
             throw new ArgumentNullException(nameof(content));
+
+        if (!MpirArgument.IsParsableText(content))
+        {
+            init(rop);
+            return false;
+        }
 
         return NativeMethods.mpz_init_set_str(ref rop.Value, content, strBase) == 0;
     }
