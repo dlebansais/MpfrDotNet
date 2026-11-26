@@ -54,10 +54,14 @@ for:
       - dotnet build ./Test/$APPVEYOR_PROJECT_NAME.Test/$APPVEYOR_PROJECT_NAME.Test.csproj -c $CONFIGURATION -p:Platform=x64 --no-restore
     after_build:
       - echo Packaging is done on Windows.
+    # Tests run on master only: a deployment build packages code that master has already tested.
     test_script:
-      - dotnet test --project ./Test/$APPVEYOR_PROJECT_NAME.Test/$APPVEYOR_PROJECT_NAME.Test.csproj -c $CONFIGURATION -p:Platform=x64 -f net10.0 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-$APPVEYOR_PROJECT_NAME-linux.xml --results-directory TestResults
+      - |
+        if [ "$APPVEYOR_REPO_BRANCH" != "deployment" ]; then
+          dotnet test --project ./Test/$APPVEYOR_PROJECT_NAME.Test/$APPVEYOR_PROJECT_NAME.Test.csproj -c $CONFIGURATION -p:Platform=x64 -f net10.0 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-$APPVEYOR_PROJECT_NAME-linux.xml --results-directory TestResults
+        fi
     after_test:
-      - head -n 3 TestResults/Coverage-*.xml
+      - if [ "$APPVEYOR_REPO_BRANCH" != "deployment" ]; then head -n 3 TestResults/Coverage-*.xml; fi
       # The CodecovUploader NuGet package only contains the Windows uploader: download the Linux build of the same version,
       # and check its checksum before running it. Codecov merges this report with the Windows ones for the same commit.
       - |
@@ -111,12 +115,13 @@ after_build:
   - echo Version is "%VERSION_TAG%"
 
 test_script:
-  # One run per target framework, so that each writes its own coverage report.
-  - dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 -f net481 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%-net481.xml --results-directory TestResults
-  - dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 -f net10.0 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%-net10.0.xml --results-directory TestResults
+  # One run per target framework, so that each writes its own coverage report. Tests run on master only: a deployment
+  # build packages code that master has already tested.
+  - if not '%APPVEYOR_REPO_BRANCH%' == 'deployment' dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 -f net481 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%-net481.xml --results-directory TestResults
+  - if not '%APPVEYOR_REPO_BRANCH%' == 'deployment' dotnet test --project ./Test/%APPVEYOR_PROJECT_NAME%.Test/%APPVEYOR_PROJECT_NAME%.Test.csproj -c %CONFIGURATION% -p:Platform=x64 -f net10.0 --no-build --output detailed --coverage --coverage-output-format cobertura --coverage-output Coverage-%APPVEYOR_PROJECT_NAME%-net10.0.xml --results-directory TestResults
 
 after_test:
-  - ps: Get-Content TestResults/Coverage-*.xml -Head 3
+  - ps: if ($env:APPVEYOR_REPO_BRANCH -ne 'deployment') { Get-Content TestResults/Coverage-*.xml -Head 3 }
   # Codecov merges the reports uploaded for the same commit.
   - if '%CONFIGURATION%' == 'Debug' if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_uploader_version%\Tools\codecov.exe -f "TestResults\Coverage-%APPVEYOR_PROJECT_NAME%-net481.xml" -f "TestResults\Coverage-%APPVEYOR_PROJECT_NAME%-net10.0.xml"
 
