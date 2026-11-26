@@ -6,6 +6,7 @@ This binding is up to date with version 4.2.1 of the [mpfr library](https://www.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/4w46tqucudnkb1u3?svg=true)](https://ci.appveyor.com/project/dlebansais/MpfrDotNet)
 [![codecov](https://codecov.io/gh/dlebansais/MpfrDotNet/branch/master/graph/badge.svg?token=HMNSZ9X5U2)](https://codecov.io/gh/dlebansais/MpfrDotNet)
+[![NuGet](https://img.shields.io/nuget/v/dlebansais.MpfrDotNet.svg)](https://www.nuget.org/packages/dlebansais.MpfrDotNet)
 
 # Instructions
 
