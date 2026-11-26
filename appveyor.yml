@@ -28,6 +28,9 @@ environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   CUSTOM_PACKAGER_OPTIONS: "[]"           # Override in settings -> Environment -> Environment variables
   PACKAGE_PREFIX: dlebansais
+  # GitHub token, the same as the release deployments below, used to start the nuget.org publishing workflow.
+  GITHUB_DEPLOY_TOKEN:
+    secure: wGFKd2yoaaq7+B6Evl2OZeePPHUzTDlYnDf7DCH26mJZc/nrYGjQ5XGiTZfTWmvW
 
 matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
@@ -66,6 +69,8 @@ for:
           ./codecov -f "TestResults/Coverage-$APPVEYOR_PROJECT_NAME-linux.xml"
         fi
     deploy: off
+    on_success:
+      - echo Publishing is started from Windows.
 
 before_build:
   - nuget restore %APPVEYOR_PROJECT_NAME%.slnx
@@ -130,6 +135,7 @@ deploy:
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Release
     draft: false
     prerelease: false
+    force_update: true
     on:
       branch: deployment
       configuration: Release
@@ -141,22 +147,7 @@ deploy:
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Debug
     draft: false
     prerelease: false
-    on:
-      branch: deployment
-      configuration: Debug
-  - provider: NuGet
-    artifact: $(APPVEYOR_PROJECT_NAME)-Package-Release
-    skip_symbols: true
-    api_key:
-      secure: nVIiaAk/COoMNi/OIDQ40dFBluznaIlKbpIUkxdA8HFxINY4YNkyis2sBjxByluw
-    on:
-      branch: deployment
-      configuration: Release
-  - provider: NuGet
-    artifact: $(APPVEYOR_PROJECT_NAME)-Package-Debug
-    symbol_server: https://api.nuget.org/v3/index.json
-    api_key:
-      secure: nVIiaAk/COoMNi/OIDQ40dFBluznaIlKbpIUkxdA8HFxINY4YNkyis2sBjxByluw
+    force_update: true
     on:
       branch: deployment
       configuration: Debug
@@ -180,3 +171,28 @@ deploy:
     on:
       branch: deployment
       configuration: Release
+
+# nuget.org only accepts Trusted Publishing from GitHub Actions: the Windows Release job of a deployment build starts
+# the publish-nuget.yml workflow, which waits until this whole build has succeeded, then pushes the packages attached
+# to the GitHub release.
+on_success:
+  - ps: |
+      if ($env:APPVEYOR_REPO_BRANCH -eq 'deployment' -and $env:CONFIGURATION -eq 'Release') {
+        $body = @{
+          event_type = 'appveyor-deployment'
+          client_payload = @{
+            tag = $env:VERSION_TAG
+            appveyor_account = $env:APPVEYOR_ACCOUNT_NAME
+            appveyor_project = $env:APPVEYOR_PROJECT_SLUG
+            appveyor_build = $env:APPVEYOR_BUILD_VERSION
+            package_prefix = $env:PACKAGE_PREFIX
+          }
+        } | ConvertTo-Json
+        $headers = @{
+          Authorization = "Bearer $env:GITHUB_DEPLOY_TOKEN"
+          Accept = 'application/vnd.github+json'
+          'X-GitHub-Api-Version' = '2022-11-28'
+        }
+        Invoke-RestMethod -Method Post -Uri "https://api.github.com/repos/$env:APPVEYOR_REPO_NAME/dispatches" -Headers $headers -Body $body -ContentType 'application/json'
+        Write-Host "Started nuget.org publishing of $env:VERSION_TAG."
+      }
