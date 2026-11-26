@@ -404,6 +404,11 @@
     <ClInclude Include="..\..\src\random_deviate.h" />
     <ClInclude Include="..\mparam.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="mpfr_version.rc">
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

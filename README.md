@@ -39,7 +39,7 @@ The package includes:
   * `mpq_t` an implementation of a Multiple Precision Rational type.
   * `mpf_t` an implementation of a Multiple Precision Floating-Point type. This type has less features than the more complete `mpfr_t`. 
 
-On Linux, the package requires .NET 10, GMP and MPFR libraries must be installed separately (for example with `sudo apt install libgmp10 libmpfr6`), the integer types use GMP instead of MPIR, and `mpf.rrandomb` is not available.
+On Linux, the package requires .NET 10, and the GMP and MPFR libraries, installed separately (for example with `sudo apt install libgmp10 libmpfr6`). The integer types use GMP instead of MPIR, and `mpf.rrandomb` is not available.
 
 # Credits, Copyright, License...
 

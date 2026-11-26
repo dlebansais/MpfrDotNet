@@ -686,6 +686,9 @@ call .\postbuild.bat "$(TargetPath)" 26
     <ClCompile Include="..\..\..\mpn\generic\zero_p.c" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="mpir_version.rc">
+      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 <ItemGroup>

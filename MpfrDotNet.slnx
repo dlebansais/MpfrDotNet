@@ -13,12 +13,7 @@
     <BuildDependency Project="mpir/mpir_dll_x64.vcxproj" />
     <Platform Project="x64" />
   </Project>
-  <Project Path="mpir/mpir_dll_x64.vcxproj" Id="693e7c92-7c84-4ee3-a017-18506ae4a317">
-    <BuildDependency Project="PreBuild/PreBuild.csproj" />
-  </Project>
-  <Project Path="PreBuild/PreBuild.csproj">
-    <Platform Project="x64" />
-  </Project>
+  <Project Path="mpir/mpir_dll_x64.vcxproj" Id="693e7c92-7c84-4ee3-a017-18506ae4a317" />
   <Project Path="Test/MpfrDotNet.Test/MpfrDotNet.Test.csproj">
     <Platform Project="x64" />
   </Project>

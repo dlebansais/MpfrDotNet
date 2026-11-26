@@ -14,7 +14,7 @@
         <Company />
         <Product />
         <Description>Binding of MPFR and MPIR (Multiple Precision Floating-Point and Integer) for .NET</Description>
-        <Copyright>Copyright © 2021 David Le Bansais</Copyright>
+        <Copyright>Copyright © 2026 David Le Bansais</Copyright>
         <AssemblyVersion>1.1.1.18</AssemblyVersion>
         <FileVersion>1.1.1.18</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/MpfrDotNet</RepositoryUrl>
